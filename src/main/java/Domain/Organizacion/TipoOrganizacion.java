@@ -1,4 +1,4 @@
-package Domain;
+package Domain.Organizacion;
 
 public enum TipoOrganizacion {
   Gubernamental,
