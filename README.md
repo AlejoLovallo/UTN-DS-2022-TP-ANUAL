@@ -1,18 +1,15 @@
-# utn-ds-java-base-project
+# Diseño de Sistemas Tp Anual
 
-* Design systems utn java base project
+* Trabajo práctico anual 2022.
 
-### Pom.xml
+### Descripción de la solución
 
-* Update your pom.xml with the following parameters
+### Consigna
 
-```xml
-  <groupId>your_organization</groupId>
-  <artifactId>your_project_name</artifactId>
-  <version>1.0</version>
+### Diagrama de clases
 
-  <name>your_project_name</name>
-  <url>your_github_url_repo</url>
-```
+### Diagrama Entidad Relacion
+
+### Integrantes
 
 
