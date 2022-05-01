@@ -1,12 +1,16 @@
 package Domain.Organizacion;
-
+import Domain.Miembro.Miembro;
 import Domain.Ubicacion;
 
+import java.util.List;
+
 public class Organizacion {
+  private String razonSocial;
   private TipoOrganizacion tipo;
   private ClasificacionOrganizacion clasificacion;
-  private String razonSocial;
   private Ubicacion ubicacion;
+  private List<Sector>  sectores;
+  private List<Miembro> miembros;
 
   public TipoOrganizacion getTipo() {
     return tipo;
@@ -38,5 +42,21 @@ public class Organizacion {
 
   public void setUbicacion(Ubicacion ubicacion) {
     this.ubicacion = ubicacion;
+  }
+
+  public List<Sector> getSectores() {
+    return sectores;
+  }
+
+  public void setSectores(List<Sector> sectores) {
+    this.sectores = sectores;
+  }
+
+  public List<Miembro> getMiembros() {
+    return miembros;
+  }
+
+  public void setMiembros(List<Miembro> miembros) {
+    this.miembros = miembros;
   }
 }
