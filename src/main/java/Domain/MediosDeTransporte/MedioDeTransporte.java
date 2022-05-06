@@ -1,4 +1,4 @@
 package Domain.MediosDeTransporte;
 
-public class MedioDeTransporte {
+public abstract class MedioDeTransporte {
 }
