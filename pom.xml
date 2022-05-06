@@ -6,11 +6,11 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>ar.edu.utn.frba.dds</groupId>
-    <artifactId>Proyecto_Base_Template</artifactId>
+    <artifactId>Tp_Anual_Diseño_de_Sistemas</artifactId>
     <version>1.0</version>
 
-    <name>Proyecto_Base_Template</name>
-    <url>https://github.com/AlejoLovallo/utn-ds-java-base-project</url>
+    <name>Tp_Anual_Diseño_de_Sistemas</name>
+    <url>https://github.com/AlejoLovallo/UTN-DS-2022-TP-ANUAL</url>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>

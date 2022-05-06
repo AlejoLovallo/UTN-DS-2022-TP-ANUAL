@@ -1,18 +1,48 @@
-# utn-ds-java-base-project
+# Diseño de Sistemas Tp Anual
 
-* Design systems utn java base project
+* Trabajo práctico anual 2022.
 
-### Pom.xml
+### Descripción de la solución
 
-* Update your pom.xml with the following parameters
+### Consigna
 
-```xml
-  <groupId>your_organization</groupId>
-  <artifactId>your_project_name</artifactId>
-  <version>1.0</version>
+### Diagrama de clases
 
-  <name>your_project_name</name>
-  <url>your_github_url_repo</url>
-```
+### Diagrama Entidad Relacion
+
+### Integrantes
+
+****
+
+## Funcionalidades alto nivel
+
+• Calculadora de HC a nivel Organizacional
+• Mi impacto de HC personal en las Organizaciones
+• HC departamental y provincial
+• Reportes de seguimiento
+
+### Organizaciones
+
+Debe poder
+* Registar mediciones
+* Aceptar y vincular trabajadores
+* Ejecutar calculadora de HC
+* Visualizar reportes
+
+### Miembro de la organizacion
+
+Debe poder
+* Ejecutar calculadora de HC
+* Visualizar reportes
+* Vincular a trabajadores con la organizacion
+* Registrar **trayectos**
+
+### Agente sectorial
+
+Debe poder
+* Visualizar reportes
+* Visualizar recomendaciones
+
+
 
 
