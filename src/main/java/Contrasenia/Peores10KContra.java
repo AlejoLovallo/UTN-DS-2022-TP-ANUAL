@@ -6,14 +6,10 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Peores10KContra implements CriterioValidacion {
-  //todo
+
   public boolean validarContrasenia(String contrasenia) {
-
-
-
     ArrayList<String> peoresContras = new ArrayList<>();
     String st;
-
 
     try {
       File file = new File("10kPasswords.txt");
@@ -25,8 +21,7 @@ public class Peores10KContra implements CriterioValidacion {
       myReader.close();
     } catch (FileNotFoundException e) {
       //todo poner una mejor excepcion
-      System.out.println("An error occurred.");
-      e.printStackTrace();
+      throw new ArchivoInaccesibleException();
     }
 
     //todo testear 
