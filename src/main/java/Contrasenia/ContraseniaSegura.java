@@ -2,7 +2,7 @@ package Contrasenia;
 
 public class ContraseniaSegura implements CriterioValidacion{
   //todo
-  public boolean validarContrasenia(Contrasenia contrasenia) {
+  public boolean validarContrasenia(String contrasenia) {
     return false;
   }
 }
