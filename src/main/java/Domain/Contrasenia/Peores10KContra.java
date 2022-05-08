@@ -1,4 +1,4 @@
-package Contrasenia;
+package Domain.Contrasenia;
 
 import java.io.File;
 import java.io.FileNotFoundException;

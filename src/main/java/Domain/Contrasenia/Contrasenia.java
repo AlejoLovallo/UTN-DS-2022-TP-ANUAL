@@ -1,4 +1,4 @@
-package Contrasenia;
+package Domain.Contrasenia;
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
@@ -7,28 +7,32 @@ import java.util.ArrayList;
 
 public class Contrasenia {
   private String salt;
-  private String contra;
-  private String contraPlana;
+  private String contraHasheada;
 
   private ArrayList<CriterioValidacion> validadoresContrasenia;
 
   public Contrasenia(String contra) {
-    this.contra = contra;
-    if(isValida(this.contra)){
+    if(isValida(contra)){
       throw new ContraseniaEsInvalidaException("no pasa por alguna de las validaciones de seguridad");
     }
-    byte[] unSalt = getSalt();
+    byte[] unSalt = getSaltRandom();
 
     this.salt = new String(unSalt, StandardCharsets.UTF_8);
 
     try {
-      this.contraPlana = generateHash(contra, unSalt);
+      this.contraHasheada = generateHash(contra, unSalt);
     } catch (NoSuchAlgorithmException e) {
       e.printStackTrace();
     }
   }
 
+  public String getSalt() {
+    return salt;
+  }
+
   private boolean isValida(String contra){
+
+    this.validadoresContrasenia = new ArrayList<>();
 
     this.validadoresContrasenia.add(new Peores10KContra());
     this.validadoresContrasenia.add(new CriterioLongitud(8,80));
@@ -41,7 +45,7 @@ public class Contrasenia {
     return true;
   }
 
-  public static byte[] getSalt()  {
+  public static byte[] getSaltRandom()  {
     SecureRandom secureRandom = new SecureRandom();
     byte[] salt = new byte[30];
     secureRandom.nextBytes(salt); // proxima semilla
@@ -63,9 +67,5 @@ public class Contrasenia {
     return sb.toString();
   }
 
-
-  public String getContra() {
-    return contra;
-  }
 
 }
