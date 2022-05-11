@@ -11,12 +11,6 @@ public class CriterioLongitud implements CriterioValidacion{
 
   //todo testearlo
   public boolean validarContrasenia(String contrasenia) {
-      if(contrasenia.length()>=this.minimo){
-        if(contrasenia.length()<=this.maximo){
-          return true;
-        }
-        return false;
-      }
-      return false;
+      return contrasenia.length()>=this.minimo && contrasenia.length()<=this.maximo;
   }
 }

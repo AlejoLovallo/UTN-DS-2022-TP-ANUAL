@@ -25,6 +25,6 @@ public class Peores10KContra implements CriterioValidacion {
     }
 
     //todo testear 
-    return peoresContras.stream().anyMatch(contrasenia::equals);
+    return peoresContras.stream().noneMatch(contrasenia::equals);
   }
 }
