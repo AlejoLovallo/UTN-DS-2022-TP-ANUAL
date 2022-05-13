@@ -14,14 +14,14 @@ public class CriterioUltimoIntento implements CriterioValidacion{
   }
 
   public CriterioUltimoIntento() {
-    this.intento = 0;
+    this.intento = 1;
     this.ultimoAcceso = LocalDateTime.now();
   }
 
   //todo testearlo
   public boolean validarContrasenia(String contrasenia) {
     if(Duration.between(this.ultimoAcceso,LocalDateTime.now()).toMillis()>formulaDeUltimaSesion()){
-      this.intento = 0;
+      this.intento = 1;
       return true;
     }
     this.ultimoAcceso = LocalDateTime.now();
