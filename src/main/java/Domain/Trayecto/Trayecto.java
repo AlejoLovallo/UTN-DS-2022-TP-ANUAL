@@ -6,20 +6,22 @@ import java.util.List;
 
 public class Trayecto {
   private List<Tramo> tramos;
-  // EN DUDA ESTE CAMPO
   private Organizacion organizacion;
 
-  /**
-   * Estos campos de abajo los manejas logicamente
-   * extrayendo
-   */
+  //////////////////////////////////  GETTERS
 
+  public String getPuntoDePartida() {
+    Tramo tramoInicial = tramos.get(0);
+    return tramoInicial.getPuntoPartida();
+  }
 
-  //public Ubicacion getPuntoPartida(){
+  public String getPuntoDeLlegada(){
+    Tramo tramoFinal = tramos.get(tramos.size()-1);
+    return tramoFinal.getPuntoLlegada();
+  }
 
-  //}
+  //////////////////////////////////  SETTERS
 
-  //public Ubicacion getPuntoLlegada(){
+  //////////////////////////////////  INTERFACE
 
-  //}
 }

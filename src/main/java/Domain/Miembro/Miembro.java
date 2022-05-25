@@ -13,4 +13,14 @@ public class Miembro {
   private String documento;
   private List<Trayecto> trayectos;
   HashMap<Organizacion, Sector> sectorPorOrganizacion;
+
+  //////////////////////////////////  GETTERS
+
+
+  //////////////////////////////////  SETTERS
+
+
+  //////////////////////////////////  INTERFACE
+
+
 }
