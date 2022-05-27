@@ -6,7 +6,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>ar.edu.utn.frba.dds</groupId>
-    <artifactId>Tp_Anual_Diseño_de_Sistemas</artifactId>
+    <artifactId>TpAnualDisenodeSistemas</artifactId>
     <version>1.0</version>
 
     <name>Tp_Anual_Diseño_de_Sistemas</name>
@@ -24,6 +24,17 @@
             <artifactId>junit-jupiter</artifactId>
             <version>5.8.2</version>
             <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.mockito</groupId>
+            <artifactId>mockito-core</artifactId>
+            <version>4.5.1</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.hibernate</groupId>
+            <artifactId>hibernate-core</artifactId>
+            <version>6.0.0.Final</version>
         </dependency>
     </dependencies>
 

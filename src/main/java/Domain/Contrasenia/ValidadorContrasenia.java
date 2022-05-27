@@ -1,4 +1,5 @@
-package Domain.Administracion;
+package Domain.Contrasenia;
 
 public class ValidadorContrasenia {
+
 }

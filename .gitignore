@@ -14,3 +14,10 @@
 *.zip
 *.tar.gz
 *.rar
+
+target/*
+.idea/*
+
+tasks.md
+
+Proyecto_Base_Template.iml
