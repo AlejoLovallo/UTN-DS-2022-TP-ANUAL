@@ -33,4 +33,26 @@ public class OrganizacionTest {
     Assertions.assertNull(this.organizacionEmpresa.getSectores());
   }
 
+  @Test
+  public void setRazonSocial(){
+
+  }
+
+  @Test
+  public void setTipo(){
+    //GIVEN
+    TipoOrganizacion tipoActual = this.organizacionEmpresa.getTipo();
+    TipoOrganizacion nuevoTipo = TipoOrganizacion.Gubernamental;
+    //WHEN
+    this.organizacionEmpresa.setTipo(nuevoTipo);
+    //THEN
+    Assertions.assertEquals(tipoActual,TipoOrganizacion.Empresa);
+    Assertions.assertEquals(nuevoTipo,this.organizacionEmpresa.getTipo());
+  }
+
+  @Test
+  public void setClasificacion(){
+
+  }
+
 }
