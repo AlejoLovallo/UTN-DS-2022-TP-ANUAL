@@ -1,5 +1,7 @@
 package Domain.Contrasenia;
 
+import Domain.Contrasenia.Excepciones.ArchivoInaccesibleException;
+
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;

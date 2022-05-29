@@ -1,4 +1,6 @@
 package Domain.Contrasenia;
+import Domain.Contrasenia.Excepciones.ContraseniaEsInvalidaException;
+
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;

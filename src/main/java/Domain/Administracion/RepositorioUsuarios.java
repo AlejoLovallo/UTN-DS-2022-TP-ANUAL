@@ -13,4 +13,7 @@ public class RepositorioUsuarios {
     return instance;
   }
 
+  public void iniciarSesion(String mail, String contrasenia){
+
+  }
 }
