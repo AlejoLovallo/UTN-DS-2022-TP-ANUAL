@@ -1,14 +1,14 @@
 package Domain.Organizacion;
 import Domain.Miembro.Miembro;
 
-import java.util.List;
+import java.util.ArrayList;
 
 public class Organizacion {
   private String razonSocial;
   private TipoOrganizacion tipo;
   private ClasificacionOrganizacion clasificacion;
-  private List<Sector>  sectores;
-  private List<Miembro> miembros;
+  private ArrayList<Sector> sectores;
+  private ArrayList<Miembro> miembros;
 
   //////////////////////////////////  CONSTRUCTORES
   public Organizacion(String _razonSocial, TipoOrganizacion _tipo, ClasificacionOrganizacion _clasificacion){
@@ -30,11 +30,11 @@ public class Organizacion {
     return razonSocial;
   }
 
-  public List<Sector> getSectores(){
+  public ArrayList<Sector> getSectores(){
     return this.sectores;
   }
 
-  public List<Miembro> getMiembros(){
+  public ArrayList<Miembro> getMiembros(){
     return  this.miembros;
   }
 

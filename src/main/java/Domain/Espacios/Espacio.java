@@ -25,8 +25,18 @@ public class Espacio {
   }
 
   //////////////////////////////////  SETTERS
+  public void setCalle(String _calle){
+    this.calle = _calle;
+  }
 
+  public void setAltura(Integer _altura){
+    this.altura = _altura;
+  }
 
+  public void setTipoEspacio(TipoEspacio _tipoEspacio){
+    this.tipoEspacio = _tipoEspacio;
+  }
   //////////////////////////////////  INTERFACE
+
 
 }
