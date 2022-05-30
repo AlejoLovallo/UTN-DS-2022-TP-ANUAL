@@ -7,8 +7,10 @@ public class Usuario {
   private String nombre;
   private Contrasenia contrasenia;
 
-  public Usuario(){
-
+  public Usuario(String _nombre, String _mail, String _contrasenia){
+    this.nombre = _nombre;
+    this.mail = _mail;
+    this.contrasenia = new Contrasenia(_contrasenia);
   }
 
 }

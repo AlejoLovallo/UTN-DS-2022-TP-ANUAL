@@ -2,13 +2,21 @@ package Domain.Trayecto;
 
 import Domain.Organizacion.Organizacion;
 
-import java.util.List;
+import java.util.ArrayList;
 
 public class Trayecto {
-  private List<Tramo> tramos;
+  private ArrayList<Tramo> tramos;
   private Organizacion organizacion;
 
   //////////////////////////////////  GETTERS
+
+  public ArrayList<Tramo> getTramos(){
+    return this.tramos;
+  }
+
+  public Organizacion getOrganizacion(){
+    return this.organizacion;
+  }
 
   public String getPuntoDePartida() {
     Tramo tramoInicial = tramos.get(0);

@@ -16,4 +16,10 @@ public class RepositorioUsuarios {
   public void iniciarSesion(String mail, String contrasenia){
 
   }
+
+  public void crearUsuario(String nombre, String mail, String contrasenia){
+    Usuario usuario = new Usuario(nombre,mail,contrasenia);
+    usuarios.add(usuario);
+  }
+
 }

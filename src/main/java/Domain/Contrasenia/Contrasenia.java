@@ -13,8 +13,8 @@ public class Contrasenia {
 
   private ArrayList<CriterioValidacion> validadoresContrasenia;
 
-  public Contrasenia(String contra) {
-    if(isValida(contra)){
+  public Contrasenia(String _contrasenia) {
+    if(isValida(_contrasenia)){
       throw new ContraseniaEsInvalidaException("no pasa por alguna de las validaciones de seguridad");
     }
     byte[] unSalt = getSaltRandom();
@@ -22,7 +22,7 @@ public class Contrasenia {
     this.salt = new String(unSalt, StandardCharsets.UTF_8);
 
     try {
-      this.contraHasheada = generateHash(contra, unSalt);
+      this.contraHasheada = generateHash(_contrasenia, unSalt);
     } catch (NoSuchAlgorithmException e) {
       e.printStackTrace();
     }

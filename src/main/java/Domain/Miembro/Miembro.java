@@ -1,4 +1,5 @@
 package Domain.Miembro;
+import Domain.Miembro.Excepciones.MiembroNoPerteneceAOrganizacionException;
 import Domain.Miembro.Excepciones.UnicoSectorPorOrganizacionException;
 import Domain.Organizacion.Organizacion;
 import Domain.Organizacion.Sector;
@@ -69,19 +70,20 @@ public class Miembro {
   //////////////////////////////////  INTERFACE
 
   public void vincularseAOrganizacion(Organizacion organizacion, Sector sector){
-    if (sectorPorOrganizacion.containsKey(organizacion))
+    if (this.miembroPerteneceAOrganizacion(organizacion))
       throw new UnicoSectorPorOrganizacionException();
     organizacion.aceptarVinculacion(this);
     sectorPorOrganizacion.put(organizacion,sector);
   }
 
-  /**
-   * QUE NOS PASE LA ORGANIZACION ES PARA VALIDAR QUE ESTA EFECTIVAMENTE EN LAS ORGANZIACIONES QUE TRABAJA??
-   * @param organizacion
-   * @param trayecto
-   */
   public void registrarTrayecto(Organizacion organizacion, Trayecto trayecto){
+    if (!this.miembroPerteneceAOrganizacion(organizacion))
+      throw new MiembroNoPerteneceAOrganizacionException(organizacion.getRazonSocial());
+    trayectos.add(trayecto);
+  }
 
+  public Boolean miembroPerteneceAOrganizacion(Organizacion organizacion){
+    return sectorPorOrganizacion.containsKey(organizacion);
   }
 
 }

@@ -40,12 +40,12 @@ public class OrganizacionTest {
 
   @Test
   public void setTipo(){
-    //GIVEN
+    //GIVEN DADO
     TipoOrganizacion tipoActual = this.organizacionEmpresa.getTipo();
     TipoOrganizacion nuevoTipo = TipoOrganizacion.Gubernamental;
-    //WHEN
+    //WHEN CUANDO
     this.organizacionEmpresa.setTipo(nuevoTipo);
-    //THEN
+    //THEN ENTONCES
     Assertions.assertEquals(tipoActual,TipoOrganizacion.Empresa);
     Assertions.assertEquals(nuevoTipo,this.organizacionEmpresa.getTipo());
   }
