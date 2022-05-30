@@ -54,5 +54,7 @@ public class OrganizacionTest {
   public void setClasificacion(){
 
   }
+@Test
+  public void set(){}
 
 }
