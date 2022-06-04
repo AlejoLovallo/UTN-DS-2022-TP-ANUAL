@@ -1,25 +1,29 @@
-package Domain.Contrasenia;
+package Domain.Usuarios;
 
 import java.time.Duration;
 import java.time.LocalDateTime;
 
-public class CriterioUltimoIntento implements CriterioValidacion{
-
+public class UltimoIntento {
+  //////////////////////////////////  VARIABLES
   private LocalDateTime ultimoAcceso;
   private int intento;
-
-
   private int formulaDeUltimaSesion(){
     return this.intento * 3;
   }
 
-  public CriterioUltimoIntento() {
+
+  //////////////////////////////////  CONSTRUCTORES
+  public UltimoIntento() {
     this.intento = 1;
     this.ultimoAcceso = LocalDateTime.now();
   }
 
-  //todo testearlo
-  public boolean validarContrasenia(String contrasenia) {
+  //////////////////////////////////  GETTERS
+
+  //////////////////////////////////  SETTERS
+
+  //////////////////////////////////  INTERFACE
+  public boolean validar_acceso() {
     if(Duration.between(this.ultimoAcceso,LocalDateTime.now()).toMillis()>formulaDeUltimaSesion()){
       this.intento = 1;
       return true;
