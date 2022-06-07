@@ -7,12 +7,11 @@ import java.util.HashMap;
 import java.util.List;
 
 public class Miembro {
-  private String nombre;
-  private String apellido;
-  private TipoDocumento tipoDocumento;
-  private String documento;
+  private float id;
   private List<Trayecto> trayectos;
-  HashMap<Organizacion, Sector> sectorPorOrganizacion;
+  //HashMap<Organizacion, Sector> sectorPorOrganizacion;
+  private Organizacion organizacion;
+  private List<Sector> listaSectores;
 
   //////////////////////////////////  GETTERS
 
