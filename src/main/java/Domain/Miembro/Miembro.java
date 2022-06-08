@@ -13,12 +13,15 @@ public class Miembro {
   private String apellido;
   private TipoDocumento tipoDocumento;
   private String documento;
-  private ArrayList<Trayecto> trayectos;
+  private ArrayList<Trayecto> trayectos=new ArrayList();
   private HashMap<Organizacion, Sector> sectorPorOrganizacion;
 
   //////////////////////////////////  CONSTRUCTOR
-  public Miembro(){
-
+  public Miembro(String _nombre,String _apellido,TipoDocumento _tipoDocumento,String _documento){
+    this.nombre=_nombre;
+    this.apellido=_apellido;
+    this.tipoDocumento=_tipoDocumento;
+    this.documento=_documento;
   }
 
   //////////////////////////////////  GETTERS

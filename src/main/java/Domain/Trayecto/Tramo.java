@@ -8,7 +8,7 @@ public class Tramo {
   private Espacio puntoLLegada;
   private MedioDeTransporte medio;
 
-  private Integrer cantPasajeros;
+  private Integer cantPasajeros;
 
 
   //////////////////////////////////  GETTERS
@@ -24,7 +24,7 @@ public class Tramo {
     return this.medio;
   }
 
-  public Integrer getCantPasajeros() {
+  public Integer getCantPasajeros() {
     return cantPasajeros;
   }
 
@@ -43,7 +43,7 @@ public class Tramo {
     this.medio = medio;
   }
 
-  public void setCantPasajeros(Integrer cantPasajeros) {
+  public void setCantPasajeros(Integer cantPasajeros) {
     this.cantPasajeros = cantPasajeros;
   }
 
