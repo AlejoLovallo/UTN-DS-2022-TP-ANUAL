@@ -1,4 +1,4 @@
-package Domain.Contrasenia;
+package Domain.Contrasenia.Excepciones;
 
 public class ContraseniaEsInvalidaException extends RuntimeException {
   public ContraseniaEsInvalidaException(String causa) {
