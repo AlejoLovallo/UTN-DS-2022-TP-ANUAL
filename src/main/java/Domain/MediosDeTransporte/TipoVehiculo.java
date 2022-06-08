@@ -4,5 +4,8 @@ public enum TipoVehiculo {
   Moto,
   Auto,
   Camioneta,
-  ServicioContratado
+  Uber,
+  Cabify,
+  Remis,
+  Taxi
 }
