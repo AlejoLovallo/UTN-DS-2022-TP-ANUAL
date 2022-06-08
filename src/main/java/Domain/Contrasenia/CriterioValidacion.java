@@ -1,4 +1,4 @@
-package Domain.Usuarios;
+package Domain.Contrasenia;
 
 public interface CriterioValidacion {
 

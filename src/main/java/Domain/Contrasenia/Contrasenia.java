@@ -38,7 +38,7 @@ public class Contrasenia {
 
     this.validadoresContrasenia.add(new Peores10KContra());
     this.validadoresContrasenia.add(new CriterioLongitud(8,80));
-    this.validadoresContrasenia.add(new CriterioUltimoIntento());
+    // this.validadoresContrasenia.add(new CriterioUltimoIntento());
 
     for (CriterioValidacion criterioValidacion : this.validadoresContrasenia) {
       if (!criterioValidacion.validarContrasenia(contra))

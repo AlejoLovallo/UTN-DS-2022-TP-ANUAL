@@ -1,6 +1,8 @@
-package Domain.Usuarios;
+package Domain.Contrasenia;
 
-public class CriterioLongitud implements CriterioValidacion{
+import Domain.Contrasenia.CriterioValidacion;
+
+public class CriterioLongitud implements CriterioValidacion {
   //////////////////////////////////  VARIABLES
   private int minimo;
   private int maximo;
