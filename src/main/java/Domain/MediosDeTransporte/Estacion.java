@@ -4,6 +4,10 @@ public class Estacion {
   private String nombre;
   private Integer numeroDeEstacion;
 
+  private Float distEstAnt;
+
+  private Float distEstPos;
+
 
   //////////////////////////////////  GETTERS
 
@@ -15,6 +19,14 @@ public class Estacion {
     return numeroDeEstacion;
   }
 
+  public Float getDistEstAnt(){
+    return distEstAnt;
+  }
+
+  public Float getDistEstPos() {
+    return distEstPos;
+  }
+
   //////////////////////////////////  SETTERS
 
   public void setNombre(String nombre) {
@@ -23,6 +35,14 @@ public class Estacion {
 
   public void setNumeroDeEstacion(Integer numeroDeEstacion) {
     this.numeroDeEstacion = numeroDeEstacion;
+  }
+
+  public void setDistEstAnt(Float distEstAnt) {
+    this.distEstAnt = distEstAnt;
+  }
+
+  public void setDistEstPos(Float distEstPos) {
+    this.distEstPos = distEstPos;
   }
 
   //////////////////////////////////  INTERFACE

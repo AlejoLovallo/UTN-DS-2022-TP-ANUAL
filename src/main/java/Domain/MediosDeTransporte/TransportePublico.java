@@ -40,4 +40,8 @@ public class TransportePublico extends MedioDeTransporte {
   }
 
   //////////////////////////////////  INTERFACE
+
+  public void darDeAltaParada(Estacion estacion){
+    this.paradas.add(estacion);
+  }
 }

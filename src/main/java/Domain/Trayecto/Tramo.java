@@ -50,4 +50,8 @@ public class Tramo {
 
   //////////////////////////////////  INTERFACE
 
+  public Integrer determinarDistancia(){
+    // TODO
+  }
+
 }
