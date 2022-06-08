@@ -8,7 +8,6 @@ public class Tramo {
   private Espacio puntoLLegada;
   private MedioDeTransporte medio;
 
-  private Integrer cantPasajeros;
 
 
   //////////////////////////////////  GETTERS
@@ -51,7 +50,14 @@ public class Tramo {
   //////////////////////////////////  INTERFACE
 
   public Integrer determinarDistancia(){
-    // TODO
+    Float distanciaTotal = 0;
+    if (medio == TransportePublico){
+      Integrer estacionInicial = puntoPartida.numeroDeEstacion();
+      Integrer estacionFinal = puntoLLegada.numeroDeEstacion();
+      for (int i = estacionInicial; i <= estacionFinal; i++){
+        distanciaTotal +=
+      }
+    }
   }
 
 }

@@ -8,6 +8,8 @@ public class VehiculoParticular extends MedioDeTransporte{
   private TipoVehiculo tipoVehiculo;
   private TipoCombustible tipoCombustible;
 
+  private Integer cantPasajeros;
+
   //////////////////////////////////  GETTERS
 
   public TipoVehiculo getTipoVehiculo() {
