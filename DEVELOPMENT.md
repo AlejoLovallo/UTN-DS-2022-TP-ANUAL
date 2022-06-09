@@ -24,11 +24,17 @@ _Traerse cambios de develop:_
 * java: >=8. jdk _
 * jUnit: Para test.
 * apachePoi: Libreria usada para la carga de archivos excel.
+* retrofit2: Libreria usada para la comunicacion de la api de la catedra
 
 ### Compilacion
 
 ```
 ```
+
+### Carga de archivos de actividades
+
+* Deberán ser en Excel y es importante salvarlos en formato .xls y NO .xlsx .
+
 
 ### Tests
 
