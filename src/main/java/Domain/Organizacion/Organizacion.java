@@ -7,7 +7,7 @@ public class Organizacion {
   private String razonSocial;
   private TipoOrganizacion tipo;
   private ClasificacionOrganizacion clasificacion;
-  private ArrayList<Sector> sectores;
+  private ArrayList<Sector> sectores=new ArrayList<>();
   private ArrayList<Miembro> miembros;
 
   //////////////////////////////////  CONSTRUCTORES
