@@ -7,15 +7,13 @@ import retrofit2.http.Query;
 
 import java.util.List;
 
-public interface API {
+public interface Api {
 
-  @GET("countries")
-  Call<List<Pais>> paises();
+  @GET("paises")
+  Call<List<Pais>> paises(@Query("offset") String offset);
 
-  @GET("countries/{name}")
-  Call<ListadoDeProvincias> provincias(@Path("name") String name);
+  @GET("provincias")
+  Call<ListadoProvincias> provincias(@Query("offset") String offset, @Query("paisId") String paisId);
 
-  @GET("states/{nameCity}")
-  Call<ListadoDeCiudades> ciudades(@Path("nameCity") String nameCity);
 
 }
