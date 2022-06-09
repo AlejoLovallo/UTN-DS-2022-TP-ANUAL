@@ -1,4 +1,4 @@
-package Domain.Contrasenia;
+package Domain.Usuarios;
 
 import java.time.Duration;
 import java.time.LocalDateTime;
