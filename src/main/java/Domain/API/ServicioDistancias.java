@@ -11,7 +11,7 @@ import java.util.List;
 public class ServicioDistancias {
 
   private static ServicioDistancias instancia = null;
-  private static String APP_URL = "https://api.mercadolibre.com/";
+  private static String APP_URL = "https://ddstpa.com.ar/api/";
   private Retrofit retrofit;
 
   private ServicioDistancias(){
