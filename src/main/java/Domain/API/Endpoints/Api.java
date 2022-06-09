@@ -8,25 +8,26 @@ import java.util.List;
 public interface Api {
 
   @GET("paises")
-  Call<List<Pais>> paises(@Query("offset") String offset);
+  Call<List<Pais>> paises(@Header("Authorization") String bearerAuth,@Query("offset") String offset);
 
   @GET("provincias")
-  Call<ListadoProvincias> provincias(@Query("offset") String offset, @Query("paisId") String paisId);
-
-  @GET("localidades")
-  Call<ListadoLocalidades> localidades(@Query("offset") String offset, @Query("municipioId") String municipioId);
+  Call<ListadoProvincias> provincias(@Header("Authorization") String bearerAuth, @Query("offset") String offset, @Query("paisId") String paisId);
 
   @GET("municipios")
-  Call<ListadoMunicipios> municipios(@Query("offset") String offset, @Query("provinciaId") String provinciaId);
+  Call<ListadoMunicipios> municipios(@Header("Authorization") String bearerAuth, @Query("offset") String offset, @Query("provinciaId") String provinciaId);
+
+  @GET("localidades")
+  Call<ListadoLocalidades> localidades(@Header("Authorization") String bearerAuth, @Query("offset") String offset, @Query("municipioId") String municipioId);
 
   @GET("distancia")
   //https://ddstpa.com.ar/api/distancia?localidadOrigenId=1&calleOrigen=maipu&alturaOrigen=100&localidadDestinoId=457&calleDestino=O%27Higgins&alturaDestino=200
-  Call<Distancia> distancia(@Query("localidadOrigenId") String localidadOrigenId,
+  Call<Distancia> distancia(@Header("Authorization") String bearerAuth,
+                            @Query("localidadOrigenId") String localidadOrigenId,
                             @Query("alturaOrigen") String alturaOrigen,
                             @Query("localidadDestinoId") String localidadDestinoId,
                             @Query("calleDestino") String calleDestino,
                             @Query("alturaDestino") String alturaDestino
-                            );
+  );
 
   @POST("user")
   Call<User> postUser(@Body User user);
