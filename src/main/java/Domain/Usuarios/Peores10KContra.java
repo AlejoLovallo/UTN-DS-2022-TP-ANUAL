@@ -1,7 +1,6 @@
-package Domain.Contrasenia;
+package Domain.Usuarios;
 
-import Domain.Contrasenia.CriterioValidacion;
-import Domain.Contrasenia.Excepciones.ArchivoInaccesibleException;
+import Domain.Usuarios.Excepciones.ArchivoInaccesibleException;
 
 import java.io.File;
 import java.io.FileNotFoundException;

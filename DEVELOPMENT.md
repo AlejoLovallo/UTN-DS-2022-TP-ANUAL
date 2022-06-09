@@ -41,3 +41,30 @@ _Traerse cambios de develop:_
 ```
 ```
 
+**********
+
+### Entrega 2
+
+Diagramas 
+    * Falta actualizar diagrama de clases con clases interfaz y gestoras
+    * Actualizar DER en caso que sea necesario
+    * Hacer diagramas de secuencia
+
+Codigo
+    * Terminar api y excel (ALEJO)
+    * Agregar lo de la clase Persona y romper la relacion de miembors (ALEJO)
+        * Eliminar hashmap
+    * Armar clases gestoras e interfaz
+    * Fijarse en que quedo lo del calculo de distancias en la parte de organizacion de seba
+    * Fijarse en que quedo lo de transporte
+    * Tests Sabrina
+
+
+
+
+
+
+
+
+
+
