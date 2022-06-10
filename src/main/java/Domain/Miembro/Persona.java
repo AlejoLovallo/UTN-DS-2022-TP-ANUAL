@@ -18,6 +18,7 @@ public class Persona {
     this.setApellido(_apellido);
     this.setTipoDocumento(_tipoDocumento);
     this.setDocumento(_documento);
+    this.listaMiembros = new ArrayList<Miembro>();
   }
 
   //////////////////////////////////  GETTERS
