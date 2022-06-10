@@ -14,6 +14,8 @@ package Domain.Usuarios;
 */
 
 
+import Domain.Usuarios.Excepciones.UsuarioException;
+
 import java.util.ArrayList;
 
 public class RepositorioUsuarios {

@@ -24,10 +24,4 @@ public class InterfazPassword {
     System.out.println(mensaje);
   }
 
-  /*
-  public String pedirString(String mensaje){
-    System.out.println(mensaje);
-    return Main.pedirPorPantallaString();
-  }
-  */
 }
