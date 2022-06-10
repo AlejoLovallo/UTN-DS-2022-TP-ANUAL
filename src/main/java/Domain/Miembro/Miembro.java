@@ -48,7 +48,8 @@ public class Miembro {
   }
 
   public void registrarTrayecto(Organizacion organizacion, Trayecto trayecto){
-    assert this.getOrganizacion()
+    if (!organizacion.equals(this.organizacion))
+        throw new MiembroNoPerteneceAOrganizacionException(organizacion.getRazonSocial());
     trayectos.add(trayecto);
   }
 
