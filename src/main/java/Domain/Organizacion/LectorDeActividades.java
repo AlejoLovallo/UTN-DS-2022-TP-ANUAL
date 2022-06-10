@@ -1,4 +1,6 @@
 package Domain.Organizacion;
+import Domain.Organizacion.Excepciones.ImposibilidadDeCrearWorkbookException;
+import Domain.Organizacion.Excepciones.ImposiblidadDeCerrarWorkbookException;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.ss.usermodel.WorkbookFactory;
 import org.apache.poi.ss.usermodel.Sheet;
@@ -10,30 +12,28 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOError;
 import java.io.IOException;
+import java.security.PublicKey;
 import java.util.Iterator;
 
 public class LectorDeActividades {
-  public static void main(String[] args) throws IOException, IOError {
+  private static LectorDeActividades instance = null;
 
-    // Use a file
-    // Creating a Workbook from an Excel file (.xls or .xlsx)
+  public static LectorDeActividades getInstance(){
+    if (instance == null){
+      instance = new LectorDeActividades();
+    }
+    return instance;
+  }
+
+  public void leerActividades(String fileName) throws  IOException, IOError{
     Workbook workbook = null;
-    try {
-      File f = new File("src/main/java/Domain/Utils/example.xls");
-      workbook = WorkbookFactory.create(f);
-    } catch (IOException e) {
-      e.printStackTrace();
+    try{
+      File file = new File("src/main/java/Domain/Utils/"+ fileName);
+      workbook = WorkbookFactory.create(file);
+    } catch (IOException e){
+      throw new ImposibilidadDeCrearWorkbookException(e.toString());
+      // e.printStackTrace();
     }
-
-    // Retrieving the number of sheets in the Workbook
-    if (workbook != null) {
-      System.out.println("Workbook has " + workbook.getNumberOfSheets() + " Sheets : ");
-    }
-        /*
-           ==================================================================
-           Iterating over all the rows and columns in a Sheet (Multiple ways)
-           ==================================================================
-        */
 
     // Getting the Sheet at index zero
     Sheet sheet = workbook.getSheetAt(0);
@@ -53,37 +53,24 @@ public class LectorDeActividades {
       while (cellIterator.hasNext()) {
         Cell cell = cellIterator.next();
         String cellValue = dataFormatter.formatCellValue(cell);
+
         System.out.print(cellValue + "\t");
       }
       System.out.println();
     }
-
-    // 2. Or you can use a for-each loop to iterate over the rows and columns
-    System.out.println("\n\nIterating over Rows and Columns using for-each loop\n");
-    for (Row row: sheet) {
-      for(Cell cell: row) {
-        String cellValue = dataFormatter.formatCellValue(cell);
-        System.out.print(cellValue + "\t");
-      }
-      System.out.println();
-    }
-
-    // 3. Or you can use Java 8 forEach loop with lambda
-    System.out.println("\n\nIterating over Rows and Columns using Java 8 forEach with lambda\n");
-    sheet.forEach(row -> {
-      row.forEach(cell -> {
-        String cellValue = dataFormatter.formatCellValue(cell);
-        System.out.print(cellValue + "\t");
-      });
-      System.out.println();
-    });
 
     // Closing the workbook
     try {
       workbook.close();
     } catch (IOException e) {
-      e.printStackTrace();
+      throw new ImposiblidadDeCerrarWorkbookException(e.toString());
+      // e.printStackTrace();
     }
+
   }
 
+  public static void main(String[] args) throws IOException, IOError {
+    LectorDeActividades lector = LectorDeActividades.getInstance();
+    lector.leerActividades("example.xls");
+  }
 }
