@@ -9,59 +9,30 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 public class Miembro {
-  private String nombre;
-  private String apellido;
-  private TipoDocumento tipoDocumento;
-  private String documento;
+  private String id;
+  private Organizacion organizacion;
+  private Sector sector;
   private ArrayList<Trayecto> trayectos;
-  private HashMap<Organizacion, Sector> sectorPorOrganizacion;
+
 
   //////////////////////////////////  CONSTRUCTOR
-  public Miembro(){
-
+  public Miembro(String _id, Organizacion _organizacion, Sector _sector){
+    this.id = _id;
+    this.organizacion = _organizacion;
+    this.sector = _sector;
   }
 
   //////////////////////////////////  GETTERS
-  public String getNombre() {
-    return nombre;
-  }
-
-  public String getApellido() {
-    return apellido;
-  }
-
-  public TipoDocumento getTipoDocumento() {
-    return tipoDocumento;
-  }
-
-  public String getDocumento() {
-    return documento;
-  }
 
   public ArrayList<Trayecto> getTrayectos() {
     return trayectos;
   }
 
-  public HashMap<Organizacion, Sector> getSectorPorOrganizacion() {
-    return sectorPorOrganizacion;
+  public Organizacion getOrganizacion(){
+    return  this.organizacion;
   }
 
   //////////////////////////////////  SETTERS
-  public void setNombre(String nombre) {
-    this.nombre = nombre;
-  }
-
-  public void setApellido(String apellido) {
-    this.apellido = apellido;
-  }
-
-  public void setTipoDocumento(TipoDocumento tipoDocumento) {
-    this.tipoDocumento = tipoDocumento;
-  }
-
-  public void setDocumento(String documento) {
-    this.documento = documento;
-  }
 
   public void setTrayectos(ArrayList<Trayecto> trayectos) {
     this.trayectos = trayectos;
@@ -69,21 +40,16 @@ public class Miembro {
 
   //////////////////////////////////  INTERFACE
 
-  public void vincularseAOrganizacion(Organizacion organizacion, Sector sector){
-    if (this.miembroPerteneceAOrganizacion(organizacion))
+  public void vincularSector(Sector _sector){
+    if (this.sector != null)
       throw new UnicoSectorPorOrganizacionException();
     organizacion.aceptarVinculacion(this);
-    sectorPorOrganizacion.put(organizacion,sector);
+    this.sector = _sector;
   }
 
   public void registrarTrayecto(Organizacion organizacion, Trayecto trayecto){
-    if (!this.miembroPerteneceAOrganizacion(organizacion))
-      throw new MiembroNoPerteneceAOrganizacionException(organizacion.getRazonSocial());
+    assert this.getOrganizacion()
     trayectos.add(trayecto);
-  }
-
-  public Boolean miembroPerteneceAOrganizacion(Organizacion organizacion){
-    return sectorPorOrganizacion.containsKey(organizacion);
   }
 
 }
