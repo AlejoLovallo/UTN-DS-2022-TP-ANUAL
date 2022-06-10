@@ -55,13 +55,11 @@ public class TrayectoTest {
     }
 
 
-
     @Test
     public void trayectoCreadoCorrectamente() {
         Assertions.assertEquals(tramosTest,this.trayectoTest.getTramos());
         Assertions.assertEquals(organizacionTest, this.trayectoTest.getOrganizacion());
     }
-
 
     @Test
     public void getTramos(){
@@ -75,8 +73,6 @@ public class TrayectoTest {
         Assertions.assertEquals(tramosTest,this.trayectoTest.getTramos());
     }
 
-
-
     @Test
     public void getOrganizacion(){
         Assertions.assertEquals(organizacionTest,this.trayectoTest.getOrganizacion());
@@ -86,7 +82,6 @@ public class TrayectoTest {
     public void getPuntoDePartida(){
         Assertions.assertEquals(tramo1.getPuntoPartida(),this.trayectoTest.getPuntoDePartida());
     }
-
 
     @Test
     public void getPuntoDeLlegada(){

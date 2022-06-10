@@ -14,7 +14,8 @@ public class CriterioLongitud implements CriterioValidacion {
   }
 
   //////////////////////////////////  GETTERS
-
+  public int getMinimo(){return minimo;}
+  public int getMaximo(){return maximo;}
   //////////////////////////////////  SETTERS
 
   //////////////////////////////////  INTERFACE

@@ -14,6 +14,7 @@ public class Peores10KContra implements CriterioValidacion {
 
   //////////////////////////////////  CONSTRUCTORES
 
+  public Peores10KContra(){}
   //////////////////////////////////  GETTERS
 
   //////////////////////////////////  SETTERS

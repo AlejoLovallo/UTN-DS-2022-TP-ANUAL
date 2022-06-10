@@ -1,10 +1,8 @@
 package MediosDeTransporte;
 
-import Domain.Espacios.Espacio;
 import Domain.MediosDeTransporte.Estacion;
 import Domain.MediosDeTransporte.TipoTransportePublico;
 import Domain.MediosDeTransporte.TransportePublico;
-import Domain.Trayecto.Tramo;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -40,7 +38,6 @@ public class TransportePublicoTest {
 
     }
 
-
     @Test
     public void transportePublicoCreadoCorrectamente() {
         Assertions.assertEquals(tipoTransportePublico,this.transportePublicoTest.getTipoTransportePublico());
@@ -48,7 +45,6 @@ public class TransportePublicoTest {
         Assertions.assertEquals(paradas, this.transportePublicoTest.getParadas());
 
     }
-
 
     @Test
     public void setTipoTransportePublico(){
@@ -62,7 +58,6 @@ public class TransportePublicoTest {
         Assertions.assertEquals(nuevoTipoTransportePublico,this.transportePublicoTest.getTipoTransportePublico());
     }
 
-
     @Test
     public void setLinea(){
         //GIVEN DADO
@@ -74,8 +69,6 @@ public class TransportePublicoTest {
         Assertions.assertEquals(lineaActual,"LineaDeEjemplo");
         Assertions.assertEquals(nuevaLinea,this.transportePublicoTest.getLinea());
     }
-
-
 
     @Test
     public void setParadas(){
@@ -95,7 +88,5 @@ public class TransportePublicoTest {
         //Assertions.assertEquals(paradasActual,  );
         Assertions.assertEquals(nuevasParadas,this.transportePublicoTest.getParadas());
     }
-
-
 
 }

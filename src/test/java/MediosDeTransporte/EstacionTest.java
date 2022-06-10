@@ -8,15 +8,13 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 public class EstacionTest {
-
     protected Estacion estacionTest;
-
     protected String nombre = "EstacionTest";
     protected Integer numeroDeEstacion = 11;
-
     private void initializeEstacion(){
         this.estacionTest = new Estacion(nombre, numeroDeEstacion);
     }
+
 
     @BeforeEach
     public void initialize() {
@@ -46,7 +44,6 @@ public class EstacionTest {
         Assertions.assertEquals(nombreActual,"EstacionTest");
         Assertions.assertEquals(nuevoNombre,this.estacionTest.getNombre());
     }
-
 
     @Test
     public void setNumeroDeEstacion(){
