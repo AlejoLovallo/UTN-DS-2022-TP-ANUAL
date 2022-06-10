@@ -4,6 +4,11 @@ public class Estacion {
   private String nombre;
   private Integer numeroDeEstacion;
 
+  //////////////////////////////////  CONSTRUCTORES
+  public Estacion(String _nombre, Integer _numeroDeEstacion){
+    this.nombre = _nombre;
+    this.numeroDeEstacion = _numeroDeEstacion;
+  }
 
   //////////////////////////////////  GETTERS
 

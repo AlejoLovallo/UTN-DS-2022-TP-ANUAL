@@ -1,5 +1,7 @@
 package Domain.Trayecto;
 
+import Domain.Espacios.Espacio;
+import Domain.MediosDeTransporte.MedioDeTransporte;
 import Domain.Organizacion.Organizacion;
 
 import java.util.ArrayList;
@@ -7,6 +9,13 @@ import java.util.ArrayList;
 public class Trayecto {
   private ArrayList<Tramo> tramos;
   private Organizacion organizacion;
+
+  //////////////////////////////////  CONSTRUCTOR
+
+  public Trayecto(ArrayList<Tramo> _tramos, Organizacion _organizacion){
+    this.tramos = _tramos;
+    this.organizacion = _organizacion;
+  }
 
   //////////////////////////////////  GETTERS
 

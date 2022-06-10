@@ -10,6 +10,14 @@ public class Tramo {
 
   private Integer cantPasajeros;
 
+  //////////////////////////////////  CONSTRUCTOR
+
+  public Tramo(Espacio _puntoPartida, Espacio _puntoLLegada, MedioDeTransporte _medio, Integer _cantPasajeros){
+    this.puntoPartida = _puntoPartida;
+    this.puntoLLegada = _puntoLLegada;
+    this.medio = _medio;
+    this.cantPasajeros = _cantPasajeros;
+  }
 
   //////////////////////////////////  GETTERS
   public String getPuntoPartida(){
