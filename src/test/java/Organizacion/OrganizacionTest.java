@@ -4,6 +4,7 @@ import Domain.Espacios.TipoEspacio;
 import Domain.Miembro.Miembro;
 import Domain.Miembro.TipoDocumento;
 import Domain.Organizacion.*;
+import Utils.Common;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.BeforeEach;
@@ -86,16 +87,15 @@ public class OrganizacionTest {
 
 @Test
 public void getMiembro(){
-  Miembro unmiembro=new Miembro("Sabrina","Garcia", TipoDocumento.DNI,"123456789");
-  Miembro otromiembro=new Miembro("Ester","Exposito",TipoDocumento.DNI,"456789546");
+    ArrayList<Miembro> miembros = Common.getMiembros(this.organizacionEmpresa,2);
 
-    organizacionEmpresa.aceptarVinculacion(unmiembro);
-    organizacionEmpresa.aceptarVinculacion(otromiembro);
+    miembros.forEach(miembro -> this.organizacionEmpresa.aceptarVinculacion(miembro));
 
     //Assertions.assertEquals(Arrays.asList(unmiembro,otromiembro),this.organizacionEmpresa.getMiembros());
-    Assertions.assertTrue(this.organizacionEmpresa.aceptarVinculacion(unmiembro));
-  Assertions.assertTrue(this.organizacionEmpresa.aceptarVinculacion(otromiembro));
+    Assertions.assertTrue(this.organizacionEmpresa.aceptarVinculacion(miembros.get(0)));
+    Assertions.assertTrue(this.organizacionEmpresa.aceptarVinculacion(miembros.get(1)));
   }
+
 @Test
   public void RepoOrganizaciones(){
   RepositorioOrganizaciones repoOrg = null;

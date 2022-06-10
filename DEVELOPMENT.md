@@ -45,18 +45,25 @@ _Traerse cambios de develop:_
 
 ### Entrega 2
 
+Correciones entrega 1 
+
+
+
+
+
+
 Diagramas 
     * Falta actualizar diagrama de clases con clases interfaz y gestoras
     * Actualizar DER en caso que sea necesario
     * Hacer diagramas de secuencia
 
 Codigo
-    * Terminar api y excel (ALEJO)
-    * Agregar lo de la clase Persona y romper la relacion de miembors (ALEJO)
-        * Eliminar hashmap
-    * Armar clases gestoras e interfaz
+    * Terminar api y excel (ALEJO) --> LISTO
+    * Agregar lo de la clase Persona y romper la relacion de miembors (ALEJO) --> LISTO
     * Fijarse en que quedo lo del calculo de distancias en la parte de organizacion de seba
-    * Fijarse en que quedo lo de transporte
+    * Fijarse en que quedo lo de transporte --> SEBA --> ENTIENDO QUE LISTO
+    * Fijarse que hacer con la clase BICI/PIE
+    * Armar clases gestoras e interfaz
     * Tests Sabrina
 
 
