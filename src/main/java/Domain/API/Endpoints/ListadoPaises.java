@@ -24,4 +24,8 @@ public class ListadoPaises {
     this.paises = paises;
   }
 
+  public List<Pais> getPaises(){
+    return paises;
+  }
+
 }

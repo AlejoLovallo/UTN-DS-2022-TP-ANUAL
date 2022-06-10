@@ -23,6 +23,7 @@ public interface Api {
   //https://ddstpa.com.ar/api/distancia?localidadOrigenId=1&calleOrigen=maipu&alturaOrigen=100&localidadDestinoId=457&calleDestino=O%27Higgins&alturaDestino=200
   Call<Distancia> distancia(@Header("Authorization") String bearerAuth,
                             @Query("localidadOrigenId") String localidadOrigenId,
+                            @Query("calleOrigen") String calleOrigen,
                             @Query("alturaOrigen") String alturaOrigen,
                             @Query("localidadDestinoId") String localidadDestinoId,
                             @Query("calleDestino") String calleDestino,

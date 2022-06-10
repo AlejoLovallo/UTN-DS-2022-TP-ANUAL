@@ -5,6 +5,8 @@ import retrofit2.Call;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
+import retrofit2.http.Header;
+import retrofit2.http.Query;
 
 import java.io.IOException;
 import java.util.List;
@@ -24,7 +26,7 @@ public class ServicioDistancias {
   }
 
   public static void setAuthToken(String _authToken) {
-    authToken = _authToken;
+    authToken = "Bearer " + _authToken;
   }
 
   public static ServicioDistancias getInstance() {
@@ -38,6 +40,8 @@ public class ServicioDistancias {
     Api apiService = this.retrofit.create(Api.class);
     Call<List<Pais>> request = apiService.paises(authToken, offset);
     Response<List<Pais>> response = request.execute();
+    System.out.println("ACA LLEGO BIEN");
+    System.out.println(response.toString());
     List<Pais> listaPaises = response.body();
     ListadoPaises listado = ListadoPaises.getInstance();
     listado.setPaises(listaPaises);
@@ -70,6 +74,35 @@ public class ServicioDistancias {
     ListadoLocalidades listadoDeLocalidades = response.body();
 
     return listadoDeLocalidades;
+  }
+
+  public Distancia distancia(Localidad localidadOrigen,
+                             Localidad localidadDestino,
+                             String calleOrigen,
+                             String alturaOrigen,
+                             String calleDestino,
+                             String alturaDestino)
+      throws IOException{
+    Api apiService = this.retrofit.create(Api.class);
+    Call<Distancia> request = apiService.distancia(authToken,
+        localidadOrigen.id(),
+        localidadDestino.id(),
+        calleOrigen,
+        alturaOrigen,
+        calleDestino,
+        alturaDestino
+    );
+    Response<Distancia> response = request.execute();
+    Distancia distancia = response.body();
+    return distancia;
+  }
+
+  public static void main(String [] args) throws IOException {
+    ServicioDistancias.setAuthToken("8MaZ8WdbaW+IhLyWfzV/T7oK54b6ILRxUDpW8+9Ba0c=");
+    ServicioDistancias servicioDistancias = ServicioDistancias.getInstance();
+    List<Pais> paises = servicioDistancias.listadoDePaises("1");
+    String paisNombre = paises.get(0).getNombre();
+    System.out.println("NOMBRE OBTENIDO "+ paisNombre);
   }
 
 }

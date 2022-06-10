@@ -69,8 +69,9 @@ public class LectorDeActividades {
 
   }
 
-  public static void main(String[] args) throws IOException, IOError {
+  /*public static void main(String[] args) throws IOException, IOError {
     LectorDeActividades lector = LectorDeActividades.getInstance();
     lector.leerActividades("example.xls");
   }
+   */
 }
