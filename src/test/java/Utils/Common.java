@@ -7,6 +7,7 @@ import Domain.Organizacion.ClasificacionOrganizacion;
 import Domain.Organizacion.Organizacion;
 import Domain.Organizacion.Sector;
 import Domain.Organizacion.TipoOrganizacion;
+import Domain.Usuarios.Usuario;
 
 import java.util.ArrayList;
 
@@ -55,4 +56,7 @@ public class Common {
     return listaDeMiembros;
   }
 
+  public static Usuario getUsuario(){
+      return new Usuario("juan98","juan98@gmail.com","juan1998",true);
+  }
 }
