@@ -1,10 +1,10 @@
 package Organizacion;
 import Domain.Espacios.Espacio;
 import Domain.Espacios.TipoEspacio;
-import Domain.Organizacion.ClasificacionOrganizacion;
-import Domain.Organizacion.Organizacion;
-import Domain.Organizacion.Sector;
-import Domain.Organizacion.TipoOrganizacion;
+import Domain.Miembro.Miembro;
+import Domain.Miembro.TipoDocumento;
+import Domain.Organizacion.*;
+import Utils.Common;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.BeforeEach;
@@ -35,8 +35,8 @@ public class OrganizacionTest {
     Assertions.assertEquals("OrganizacionTest",this.organizacionEmpresa.getRazonSocial());
     Assertions.assertEquals(TipoOrganizacion.Empresa, this.organizacionEmpresa.getTipo());
     Assertions.assertEquals(ClasificacionOrganizacion.EmpresaSectorPrimario, this.organizacionEmpresa.getClasificacion());
-    Assertions.assertNull(this.organizacionEmpresa.getMiembros());
-    Assertions.assertNull(this.organizacionEmpresa.getSectores());
+    Assertions.assertEquals(Arrays.asList(),this.organizacionEmpresa.getMiembros());
+    Assertions.assertEquals(Arrays.asList(),this.organizacionEmpresa.getSectores());
   }
 
   @Test
@@ -85,4 +85,30 @@ public class OrganizacionTest {
   Assertions.assertEquals(Arrays.asList(sector1,sector2),this.organizacionEmpresa.getSectores());
 }
 
+@Test
+public void getMiembro(){
+    ArrayList<Miembro> miembros = Common.getMiembros(this.organizacionEmpresa,2);
+
+    miembros.forEach(miembro -> this.organizacionEmpresa.aceptarVinculacion(miembro));
+
+    //Assertions.assertEquals(Arrays.asList(unmiembro,otromiembro),this.organizacionEmpresa.getMiembros());
+    Assertions.assertTrue(this.organizacionEmpresa.aceptarVinculacion(miembros.get(0)));
+    Assertions.assertTrue(this.organizacionEmpresa.aceptarVinculacion(miembros.get(1)));
+  }
+
+@Test
+  public void RepoOrganizaciones(){
+  RepositorioOrganizaciones repoOrg = null;
+
+  Assertions.assertNull(repoOrg);
+  Assertions.assertNotNull(repoOrg.GetInstance());
+  }
+
+@Test
+public void RepoSectores(){
+  RepositorioSectores repoSector = null;
+
+  Assertions.assertNull(repoSector);
+  Assertions.assertNotNull(repoSector.getInstance());
+  }
 }

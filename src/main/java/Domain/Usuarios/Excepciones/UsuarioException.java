@@ -1,4 +1,4 @@
-package Domain.Usuarios;
+package Domain.Usuarios.Excepciones;
 
 public class UsuarioException extends RuntimeException {
   public UsuarioException(String causa) {

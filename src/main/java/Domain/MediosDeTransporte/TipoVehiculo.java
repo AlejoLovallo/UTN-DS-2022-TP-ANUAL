@@ -7,5 +7,6 @@ public enum TipoVehiculo {
   Uber,
   Cabify,
   Remis,
-  Taxi
+  Taxi,
+  BiciPie
 }
