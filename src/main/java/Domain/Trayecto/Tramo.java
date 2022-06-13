@@ -1,5 +1,6 @@
 package Domain.Trayecto;
 
+import Domain.MediosDeTransporte.Estacion;
 import Domain.MediosDeTransporte.MedioDeTransporte;
 import Domain.Espacios.Espacio;
 
@@ -8,7 +9,13 @@ public class Tramo {
   private Espacio puntoLLegada;
   private MedioDeTransporte medio;
 
+  //////////////////////////////////  CONSTRUCTOR
 
+  public Tramo(Espacio puntoPartida, Espacio puntoLLegada, MedioDeTransporte medio) {
+    this.puntoPartida = puntoPartida;
+    this.puntoLLegada = puntoLLegada;
+    this.medio = medio;
+  }
 
   //////////////////////////////////  GETTERS
   public String getPuntoPartida(){
@@ -23,9 +30,6 @@ public class Tramo {
     return this.medio;
   }
 
-  public Integer getCantPasajeros() {
-    return cantPasajeros;
-  }
 
   //////////////////////////////////  SETTERS
 
@@ -42,20 +46,16 @@ public class Tramo {
     this.medio = medio;
   }
 
-  public void setCantPasajeros(Integer cantPasajeros) {
-    this.cantPasajeros = cantPasajeros;
-  }
-
 
   //////////////////////////////////  INTERFACE
 
-  public Integrer determinarDistancia(){
+  public int determinarDistancia(){
     Float distanciaTotal = 0;
-    if (medio == TransportePublico){
-      Integrer estacionInicial = puntoPartida.numeroDeEstacion();
-      Integrer estacionFinal = puntoLLegada.numeroDeEstacion();
+    if (medio == "TransportePublico"){
+      int estacionInicial = puntoPartida.numeroDeEstacion;
+      int estacionFinal = estacion2.numeroDeEstacion;
       for (int i = estacionInicial; i <= estacionFinal; i++){
-        distanciaTotal +=
+        distanciaTotal += medio.paradas(i).distEstPost;
       }
     }
   }

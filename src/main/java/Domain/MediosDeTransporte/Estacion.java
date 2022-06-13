@@ -1,30 +1,41 @@
 package Domain.MediosDeTransporte;
 
-public class Estacion {
+import Domain.Espacios.Espacio;
+import Domain.Espacios.TipoEspacio;
+
+public class Estacion extends Espacio {
   private String nombre;
-  private Integer numeroDeEstacion;
+  public Integer numeroDeEstacion;
+  public double distEstAnt;
+  public double distEstPos;
 
-  private Float distEstAnt;
+  //////////////////////////////////  CONSTRUCTOR
 
-  private Float distEstPos;
+  public Estacion(String _calle, Integer _altura, String nombre, Integer numeroDeEstacion, Float distEstAnt, Float distEstPos) {
+    super("", 0, TipoEspacio.Estacion);
+    this.nombre = nombre;
+    this.numeroDeEstacion = numeroDeEstacion;
+    this.distEstAnt = distEstAnt;
+    this.distEstPos = distEstPos;
+  }
 
 
   //////////////////////////////////  GETTERS
 
   public String getNombre() {
-    return nombre;
+    return this.nombre;
   }
 
   public Integer getNumeroDeEstacion() {
-    return numeroDeEstacion;
+    return this.numeroDeEstacion;
   }
 
-  public Float getDistEstAnt(){
-    return distEstAnt;
+  public double getDistEstAnt(){
+    return this.distEstAnt;
   }
 
-  public Float getDistEstPos() {
-    return distEstPos;
+  public double getDistEstPos() {
+    return this.distEstPos;
   }
 
   //////////////////////////////////  SETTERS
