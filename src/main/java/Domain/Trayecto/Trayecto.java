@@ -2,16 +2,16 @@ package Domain.Trayecto;
 
 import Domain.Organizacion.Organizacion;
 import Domain.Trayecto.Tramo;
+import java.util.List;
 
-import java.util.ArrayList;
 
 public class Trayecto {
-  private ArrayList<Tramo> tramos;
+  private List <Tramo> tramos;
   private Organizacion organizacion;
 
   //////////////////////////////////  GETTERS
 
-  public ArrayList<Tramo> getTramos(){
+  public List<Tramo> getTramos(){
     return this.tramos;
   }
 
@@ -41,9 +41,9 @@ public class Trayecto {
 
   //////////////////////////////////  INTERFACE
 
-  public Float determinarDistanciaTotal(){
+  public double determinarDistanciaTotal(){
 
-    Float distanciaTotal = 0;
+    double distanciaTotal = 0.0;
 
     for(Tramo tramo : getTramos()){
       distanciaTotal += tramo.determinarDistancia();

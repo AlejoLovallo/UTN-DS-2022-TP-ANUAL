@@ -5,27 +5,35 @@ import Domain.MediosDeTransporte.Estacion;
 import Domain.MediosDeTransporte.MedioDeTransporte;
 import Domain.MediosDeTransporte.TransportePublico;
 
-public class TramoTransportePublico extends Tramo2{
+public class TramoTransportePublico extends Tramo{
 
     private Estacion puntoPartida;
     private Estacion puntoLLegada;
 
     private TransportePublico transportePublico;
-    //////////////////////////////////  CONSTRUCTOR
 
-    public TramoTransportePublico(Estacion puntoPartida, Estacion puntoLLegada, MedioDeTransporte medio) {
+
+    //////////////////////////////////  CONSTRUCTOR
+    public TramoTransportePublico(Estacion puntoPartida, Estacion puntoLLegada, TransportePublico transportePublico) {
         this.puntoPartida = puntoPartida;
         this.puntoLLegada = puntoLLegada;
+        this.transportePublico = transportePublico;
     }
 
     //////////////////////////////////  GETTERS
-    public String getPuntoPartida(){
-        return this.puntoPartida.toString();
+
+    public Estacion getPuntoPartida() {
+        return puntoPartida;
     }
 
-    public String getPuntoLlegada(){
-        return this.puntoLLegada.toString();
+    public Estacion getPuntoLLegada() {
+        return puntoLLegada;
     }
+
+    public TransportePublico getTransportePublico() {
+        return transportePublico;
+    }
+
 
     //////////////////////////////////  SETTERS
 
@@ -37,14 +45,22 @@ public class TramoTransportePublico extends Tramo2{
         this.puntoLLegada = puntoLLegada;
     }
 
+    public void setTransportePublico(TransportePublico transportePublico) {
+        this.transportePublico = transportePublico;
+    }
+
+
     //////////////////////////////////  INTERFACE
 
     public double determinarDistancia(){
         double distanciaTotal = 0.0;
         int estacionInicial = puntoPartida.numeroDeEstacion;
         int estacionFinal = puntoLLegada.numeroDeEstacion;
-        for (int i = estacionInicial; i <= estacionFinal; i++){
-            distanciaTotal += transportePublico.paradas.get(i).getDistEstPos();
+        for (int i = 0; i < transportePublico.getParadas().size(); i ++){
+            if(transportePublico.paradas.get(i).getNumeroDeEstacion() > estacionInicial
+                && transportePublico.getParadas().get(i).getNumeroDeEstacion() < estacionFinal){
+                distanciaTotal += transportePublico.getParadas().get(i).getDistEstPos();
+            }
         }
         return distanciaTotal;
     }

@@ -4,7 +4,7 @@ import Domain.Espacios.Espacio;
 import Domain.MediosDeTransporte.MedioDeTransporte;
 import Domain.MediosDeTransporte.VehiculoParticular;
 
-public class TramoVehiculoParticular {
+public class TramoVehiculoParticular extends Tramo {
 
     private Espacio puntoPartida;
     private Espacio puntoLLegada;
@@ -13,23 +13,26 @@ public class TramoVehiculoParticular {
 
     //////////////////////////////////  CONSTRUCTOR
 
-    public TramoVehiculoParticular(Espacio puntoPartida, Espacio puntoLLegada) {
+    public TramoVehiculoParticular(Espacio puntoPartida, Espacio puntoLLegada, VehiculoParticular vehiculoParticular) {
         this.puntoPartida = puntoPartida;
         this.puntoLLegada = puntoLLegada;
+        this.vehiculoParticular = vehiculoParticular;
     }
 
     //////////////////////////////////  GETTERS
-    public String getPuntoPartida(){
-        return this.puntoPartida.toString();
+    public Espacio getPuntoLLegada() {
+        return puntoLLegada;
     }
 
-    public String getPuntoLlegada(){
-        return this.puntoLLegada.toString();
+    public Espacio getPuntoPartida() {
+        return puntoPartida;
     }
 
+    public VehiculoParticular getVehiculoParticular() {
+        return vehiculoParticular;
+    }
 
     //////////////////////////////////  SETTERS
-
 
     public void setPuntoPartida(Espacio puntoPartida) {
         this.puntoPartida = puntoPartida;
@@ -37,6 +40,10 @@ public class TramoVehiculoParticular {
 
     public void setPuntoLLegada(Espacio puntoLLegada) {
         this.puntoLLegada = puntoLLegada;
+    }
+
+    public void setVehiculoParticular(VehiculoParticular vehiculoParticular) {
+        this.vehiculoParticular = vehiculoParticular;
     }
 
 
