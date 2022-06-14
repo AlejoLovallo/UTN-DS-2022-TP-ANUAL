@@ -13,6 +13,8 @@ public class Contrasenia {
 
   private ArrayList<CriterioValidacion> validadoresContrasenia;
 
+  public Contrasenia() {}
+
   public Contrasenia(String _contrasenia) {
     if(isValida(_contrasenia)){
       throw new ContraseniaEsInvalidaException("no pasa por alguna de las validaciones de seguridad");
@@ -32,7 +34,8 @@ public class Contrasenia {
     return salt;
   }
 
-  private boolean isValida(String contra){
+//cambie isValida de private a public para poder testearlo
+  public boolean isValida(String contra){
 
     this.validadoresContrasenia = new ArrayList<>();
 

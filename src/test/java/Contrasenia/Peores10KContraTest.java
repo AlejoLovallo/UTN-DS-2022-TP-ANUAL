@@ -1,5 +1,6 @@
 package Contrasenia;
 
+import Domain.Contrasenia.Excepciones.ArchivoInaccesibleException;
 import Domain.Contrasenia.Peores10KContra;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
@@ -24,11 +25,30 @@ public class Peores10KContraTest {
     public void clean(){
 
     }
-    //////////////////////////////////  TODO
-    /*
+
+
+    //////////////////////////////////  TODO validarContraseniaExcepcion da mal porque SI lee el txt
+
     @Test
-    public void validarContrasenia(){
+    public void validarContraseniaExcepcion(){
         String contraseniaTest = "123456";
-        Assertions.assertThrows(ArchivoInaccesibleException,peores10KContraTest.validarContrasenia(contraseniaTest));
-    }*/
+        Assertions.assertThrows(ArchivoInaccesibleException.class,
+                () -> {
+                    this.peores10KContraTest.validarContrasenia(contraseniaTest);
+                } );
+    }
+
+    @Test
+    public void validarContraseniaInvalida(){
+        String contraseniaTest = "123456";
+        Assertions.assertFalse(this.peores10KContraTest.validarContrasenia(contraseniaTest));
+
+    }
+
+    @Test
+    public void validarContraseniaValida(){
+        String contraseniaTest = "unaContraseniaReDificilDeAdivinar";
+        Assertions.assertTrue(this.peores10KContraTest.validarContrasenia(contraseniaTest));
+
+    }
 }
