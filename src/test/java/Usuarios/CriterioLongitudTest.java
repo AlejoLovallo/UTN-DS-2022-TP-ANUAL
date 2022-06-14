@@ -1,6 +1,6 @@
-package Contrasenia;
+package Usuarios;
 
-import Domain.Contrasenia.CriterioLongitud;
+import Domain.Usuarios.CriterioLongitud;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -34,14 +34,14 @@ public class CriterioLongitudTest {
     }
 
     @Test
-    public void validarContrasenia(){
+    public void validarContraseniaValida(){
         String contraseniaTest = "contraseniaEntreOchoYSesentaCaracteres";
         Assertions.assertTrue(criterioLongitudTest.validarContrasenia(contraseniaTest));
     }
 
     @Test
     public void validarContraseniaLarga(){
-        String contraseniaTest = "contraseniaEntreDeMasDeSesentaCaractereseeeeeeeeeeeeeeeeeeeeeeeeeeeeee";
+        String contraseniaTest = "contraseniaDeMasDeSesentaCaractereseeeeeeeeeeeeeeeeeeeeeeeeeeeeee";
         Assertions.assertFalse(criterioLongitudTest.validarContrasenia(contraseniaTest));
     }
 

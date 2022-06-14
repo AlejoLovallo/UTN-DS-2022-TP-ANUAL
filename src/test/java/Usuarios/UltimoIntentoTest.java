@@ -1,6 +1,6 @@
-package Contrasenia;
+package Usuarios;
 
-import Domain.Contrasenia.UltimoIntento;
+import Domain.Usuarios.UltimoIntento;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;

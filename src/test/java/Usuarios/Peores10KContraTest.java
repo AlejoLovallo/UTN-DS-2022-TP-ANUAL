@@ -1,7 +1,7 @@
-package Contrasenia;
+package Usuarios;
 
-import Domain.Contrasenia.Excepciones.ArchivoInaccesibleException;
-import Domain.Contrasenia.Peores10KContra;
+import Domain.Usuarios.Excepciones.ArchivoInaccesibleException;
+import Domain.Usuarios.Peores10KContra;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -31,10 +31,10 @@ public class Peores10KContraTest {
 
     @Test
     public void validarContraseniaExcepcion(){
-        String contraseniaTest = "123456";
+        String contraseniaTest1 = "123456";
         Assertions.assertThrows(ArchivoInaccesibleException.class,
                 () -> {
-                    this.peores10KContraTest.validarContrasenia(contraseniaTest);
+                    this.peores10KContraTest.validarContrasenia(contraseniaTest1);
                 } );
     }
 
