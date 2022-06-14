@@ -9,7 +9,7 @@ import java.util.Scanner;
 
 public class Peores10KContra implements CriterioValidacion {
   //////////////////////////////////  VARIABLES
-  private static String rutaPeoresContra = "10kPasswords.txt";
+  private String rutaPeoresContra = "src/main/java/Domain/Usuarios/10kPasswords.txt";
 
   //////////////////////////////////  CONSTRUCTORES
 
@@ -17,13 +17,18 @@ public class Peores10KContra implements CriterioValidacion {
 
   //////////////////////////////////  SETTERS
 
+
+  public void setRutaPeoresContra(String rutaPeoresContra) {
+    this.rutaPeoresContra = rutaPeoresContra;
+  }
+
   //////////////////////////////////  INTERFACE
   public boolean validarContrasenia(String contrasenia) {
     ArrayList<String> peoresContras = new ArrayList<>();
     String st;
 
     try {
-      File file = new File(rutaPeoresContra);
+      File file = new File(this.rutaPeoresContra);
       Scanner myReader = new Scanner(file);
       while (myReader.hasNextLine()) {
         st = myReader.nextLine();

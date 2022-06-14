@@ -50,7 +50,7 @@ public class Usuario {
   //////////////////////////////////  INTERFACE
   public boolean isColision(String contraAProbar){
     if(this.contraHasheada == null){
-      //todo buscar contrasenia si el usuario no tiene la contra
+      //todo buscar contrasenia em DB si el usuario no tiene la contra
 
     }
     String contraHasheada = generateHash(contraAProbar);
