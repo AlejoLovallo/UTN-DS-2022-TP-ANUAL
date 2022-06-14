@@ -18,7 +18,6 @@ public class TransportePublico extends MedioDeTransporte {
     this.paradas = paradas;
   }
 
-
   //////////////////////////////////  GETTERS
 
   public TipoTransportePublico getTipoTransportePublico() {

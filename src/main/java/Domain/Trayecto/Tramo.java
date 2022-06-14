@@ -1,16 +1,20 @@
 package Domain.Trayecto;
 
-public class Tramo {
+import Domain.Espacios.Espacio;
+import Domain.MediosDeTransporte.Estacion;
+import org.apache.poi.ddf.EscherRecord;
 
+public class Tramo {
     //////////////////////////////////  INTERFACE
     public double determinarDistancia(){
         return 0.0;
     }
 
-    public interface getPuntoDePartida {
+    Espacio getPuntoPartida() {
+        return null;
     }
 
-    public interface getPuntoDeLlegada{
+    Espacio getPuntoLlegada() {
+        return null;
     }
-
 }

@@ -1,5 +1,6 @@
 package Domain.Trayecto;
 
+import Domain.Espacios.Espacio
 import Domain.Organizacion.Organizacion;
 import Domain.Trayecto.Tramo;
 import java.util.List;
@@ -19,12 +20,12 @@ public class Trayecto {
     return this.organizacion;
   }
 
-  public String getPuntoDePartida() {
+  public Espacio getPuntoDePartida() {
     Tramo tramoInicial = tramos.get(0);
     return tramoInicial.getPuntoPartida();
   }
 
-  public String getPuntoDeLlegada(){
+  public Espacio getPuntoDeLlegada(){
     Tramo tramoFinal = tramos.get(tramos.size()-1);
     return tramoFinal.getPuntoLlegada();
   }
