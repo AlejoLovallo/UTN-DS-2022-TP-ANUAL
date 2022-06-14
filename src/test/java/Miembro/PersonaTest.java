@@ -30,7 +30,7 @@ public class PersonaTest {
     public void clean(){}
 
   @Test
-  public void miembroCreadoCorrectamente(){
+  public void personaCreadoCorrectamente(){
     Assertions.assertEquals("Ester",this.unaPersona.getNombre());
     Assertions.assertEquals("Exposito",this.unaPersona.getApellido());
     Assertions.assertEquals(TipoDocumento.DNI,this.unaPersona.getTipoDocumento());
