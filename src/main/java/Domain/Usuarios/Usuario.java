@@ -21,7 +21,7 @@ public class Usuario {
 
   //////////////////////////////////  CONSTRUCTORES
   public Usuario(String username,String email,String contra,boolean validado) {
-    if(isContraseniaValida(contra)){
+    if(!isContraseniaValida(contra)){
       throw new ContraseniaEsInvalidaException("no pasa por alguna de las validaciones de seguridad");
     }
     this.validado = validado;

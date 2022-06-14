@@ -83,8 +83,6 @@ public class MiembroTest {
 
         Assertions.assertEquals(nuevoSector,MiembroSinSector.getSector());
 
-
-
     }
 
 }

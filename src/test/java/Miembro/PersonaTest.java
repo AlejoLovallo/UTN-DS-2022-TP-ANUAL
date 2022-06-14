@@ -80,7 +80,7 @@ public class PersonaTest {
     Assertions.assertEquals("456789546",docActual);
     Assertions.assertEquals(docNuevo,this.unaPersona.getDocumento());
   }
-/*
+
   @Test
   public void setUsuario(){
       Usuario user= Common.getUsuario();
@@ -89,7 +89,7 @@ public class PersonaTest {
 
       Assertions.assertEquals(user,this.unaPersona.getUsuario());
   }
-*/
+
 
   @Test
   public void agregarMiembro(){

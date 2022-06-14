@@ -23,7 +23,7 @@ public class Peores10KContra implements CriterioValidacion {
     String st;
 
     try {
-      File file = new File(rutaPeoresContra);
+      File file = new File("src/main/java/Domain/Usuarios/10kPasswords.txt");
       Scanner myReader = new Scanner(file);
       while (myReader.hasNextLine()) {
         st = myReader.nextLine();
