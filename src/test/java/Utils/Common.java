@@ -1,6 +1,8 @@
 package Utils;
 
+import Domain.Espacios.Direccion;
 import Domain.Espacios.Espacio;
+import Domain.Espacios.TipoDireccion;
 import Domain.Espacios.TipoEspacio;
 import Domain.Miembro.Miembro;
 import Domain.Organizacion.ClasificacionOrganizacion;
@@ -32,12 +34,12 @@ public class Common {
   }
 
   public static Sector getSectorTrabajo(){
-    Espacio espacio = new Espacio("calle test",123,TipoEspacio.Trabajo);
+    Espacio espacio = new Direccion("calle test",123, TipoDireccion.Trabajo);
     return new Sector("Sector test",espacio);
   }
 
-  public static Sector getSector(String nombreSector, TipoEspacio tipoEspacio){
-    Espacio espacio = new Espacio("esp test",123,tipoEspacio);
+  public static Sector getSector(String nombreSector, TipoDireccion tipoEspacio){
+    Espacio espacio = new Direccion("esp test",123,tipoEspacio);
     return new Sector(nombreSector,espacio);
   }
 
@@ -49,7 +51,7 @@ public class Common {
   public static ArrayList<Miembro> getMiembros(Organizacion org, Integer cantMiembros){
     ArrayList<Miembro> listaDeMiembros = new ArrayList<Miembro>();
     for(int i= 0; i < cantMiembros; i++){
-      Sector sector = getSector("Sector"+Integer.toString(i),TipoEspacio.Trabajo);
+      Sector sector = getSector("Sector"+Integer.toString(i),TipoDireccion.Trabajo);
       listaDeMiembros.add(new Miembro("miembro"+Integer.toString(i),org,sector));
     }
     return listaDeMiembros;

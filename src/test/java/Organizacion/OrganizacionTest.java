@@ -1,5 +1,7 @@
 package Organizacion;
+import Domain.Espacios.Direccion;
 import Domain.Espacios.Espacio;
+import Domain.Espacios.TipoDireccion;
 import Domain.Espacios.TipoEspacio;
 import Domain.Miembro.Miembro;
 import Domain.Miembro.TipoDocumento;
@@ -75,7 +77,7 @@ public class OrganizacionTest {
   }
 @Test
   public void setRegistrarSector(){
-  Espacio espacio=new Espacio("Cordoba",3000, TipoEspacio.Trabajo);
+  Espacio espacio=new Direccion("Cordoba",3000, TipoDireccion.Trabajo);
   Sector sector1=new Sector("Administracion",espacio);
   Sector sector2=new Sector("direccion",espacio);
 
