@@ -1,4 +1,4 @@
-package Domain.Contrasenia.Excepciones;
+package Domain.Usuarios.Excepciones;
 
 public class ArchivoInaccesibleException extends RuntimeException {
   public ArchivoInaccesibleException() {

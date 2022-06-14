@@ -1,6 +1,5 @@
 package Contrasenia;
 
-import Domain.Contrasenia.Contrasenia;
 import Domain.Contrasenia.Excepciones.ArchivoInaccesibleException;
 import Domain.Contrasenia.UltimoIntento;
 import org.junit.jupiter.api.AfterEach;
