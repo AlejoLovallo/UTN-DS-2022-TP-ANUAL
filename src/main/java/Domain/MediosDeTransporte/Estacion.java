@@ -1,7 +1,7 @@
 package Domain.MediosDeTransporte;
 
 import Domain.Espacios.Espacio;
-import Domain.Espacios.TipoEspacio;
+import Domain.Espacios.TipoDireccion;
 
 public class Estacion extends Espacio {
   private String nombre;

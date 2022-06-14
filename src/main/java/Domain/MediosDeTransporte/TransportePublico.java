@@ -1,6 +1,8 @@
 package Domain.MediosDeTransporte;
 
 import java.util.List;
+
+import Domain.Espacios.Espacio;
 import Domain.MediosDeTransporte.TipoTransportePublico;
 import Domain.MediosDeTransporte.Estacion;
 
@@ -48,8 +50,8 @@ public class TransportePublico extends MedioDeTransporte {
   }
 
   //////////////////////////////////  INTERFACE
-
   public void darDeAltaParada(Estacion estacion){
     this.paradas.add(estacion);
   }
+
 }

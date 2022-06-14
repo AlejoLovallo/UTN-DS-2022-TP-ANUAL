@@ -48,6 +48,7 @@ public class oldTramo {
 
   //////////////////////////////////  INTERFACE
 
+  /*
   public int determinarDistancia(){
     Float distanciaTotal = 0;
     if (medio == "TransportePublico"){
@@ -58,5 +59,7 @@ public class oldTramo {
       }
     }
   }
+
+   */
 
 }

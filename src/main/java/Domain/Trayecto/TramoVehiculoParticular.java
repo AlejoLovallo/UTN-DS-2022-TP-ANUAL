@@ -1,19 +1,19 @@
 package Domain.Trayecto;
 
+import Domain.Espacios.Direccion;
 import Domain.Espacios.Espacio;
 import Domain.MediosDeTransporte.MedioDeTransporte;
 import Domain.MediosDeTransporte.VehiculoParticular;
 
 public class TramoVehiculoParticular extends Tramo {
 
-    private Espacio puntoPartida;
-    private Espacio puntoLLegada;
-
+    private Direccion puntoPartida;
+    private Direccion puntoLLegada;
     private VehiculoParticular vehiculoParticular;
 
     //////////////////////////////////  CONSTRUCTOR
 
-    public TramoVehiculoParticular(Espacio puntoPartida, Espacio puntoLLegada, VehiculoParticular vehiculoParticular) {
+    public TramoVehiculoParticular(Direccion puntoPartida, Direccion puntoLLegada, VehiculoParticular vehiculoParticular) {
         this.puntoPartida = puntoPartida;
         this.puntoLLegada = puntoLLegada;
         this.vehiculoParticular = vehiculoParticular;
@@ -34,11 +34,11 @@ public class TramoVehiculoParticular extends Tramo {
 
     //////////////////////////////////  SETTERS
 
-    public void setPuntoPartida(Espacio puntoPartida) {
+    public void setPuntoPartida(Direccion puntoPartida) {
         this.puntoPartida = puntoPartida;
     }
 
-    public void setPuntoLLegada(Espacio puntoLLegada) {
+    public void setPuntoLLegada(Direccion puntoLLegada) {
         this.puntoLLegada = puntoLLegada;
     }
 
