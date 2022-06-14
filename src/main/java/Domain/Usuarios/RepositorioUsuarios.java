@@ -14,6 +14,7 @@ package Domain.Usuarios;
 */
 
 
+import Domain.Usuarios.Excepciones.ContraseniaEsInvalidaException;
 import Domain.Usuarios.Excepciones.UsuarioException;
 
 import java.util.ArrayList;
@@ -79,11 +80,11 @@ public class RepositorioUsuarios {
       if(usuarioConUsername.intentoAcceso()){
         return usuarioConUsername;
       }
-      else return null;
+      throw new ContraseniaEsInvalidaException("no paso el tiempo de inicio de sesion");
     }
     //Y esto esta por la contrasenia es incorrecta se actualizara el intento de acceso
     usuarioConUsername.intentoAcceso();
-    return null;
+    throw new ContraseniaEsInvalidaException("la contrasenia no es la misma a la del usuario");
   }
 
   public Usuario crearUsuario(String username, String email, String contra, boolean validado){
