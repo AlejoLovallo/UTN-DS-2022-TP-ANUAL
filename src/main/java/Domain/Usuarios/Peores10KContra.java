@@ -15,7 +15,9 @@ public class Peores10KContra implements CriterioValidacion {
 
   public Peores10KContra(){}
   //////////////////////////////////  GETTERS
-
+  public String getRutaPeoresContra() {
+    return this.rutaPeoresContra;
+  }
   //////////////////////////////////  SETTERS
 
 

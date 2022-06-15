@@ -11,7 +11,6 @@ import org.junit.jupiter.api.Test;
 public class Peores10KContraTest {
 
     protected Peores10KContra peores10KContraTest;
-
     private void initializePeores10KContra(){
         this.peores10KContraTest = new Peores10KContra();
     }
@@ -27,14 +26,22 @@ public class Peores10KContraTest {
     }
 
 
-    //////////////////////////////////  TODO validarContraseniaExcepcion da mal porque SI lee el txt
-
     @Test
     public void validarContraseniaExcepcion(){
-        String contraseniaTest1 = "123456";
+
+        //GIVEN DADO
+        String rutaActual = this.peores10KContraTest.getRutaPeoresContra();
+        String nuevaRuta = "RutaNoExistente";
+
+        //WHEN CUANDO
+        this.peores10KContraTest.setRutaPeoresContra(nuevaRuta);
+
+        //THEN ENTONCES
+        String contraseniaTest = "contraseniaTest";
+        Assertions.assertEquals(rutaActual, "src/main/java/Domain/Usuarios/10kPasswords.txt");
         Assertions.assertThrows(ArchivoInaccesibleException.class,
                 () -> {
-                    this.peores10KContraTest.validarContrasenia(contraseniaTest1);
+                    this.peores10KContraTest.validarContrasenia(contraseniaTest);
                 } );
     }
 

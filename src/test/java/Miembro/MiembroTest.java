@@ -36,7 +36,7 @@ public class MiembroTest {
 
     @AfterEach
     public void clean(){}
-
+/*
     @Test
     public void setTrayecto(){
         Trayecto trayecto1=new Trayecto();

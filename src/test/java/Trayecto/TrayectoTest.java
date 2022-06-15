@@ -49,7 +49,7 @@ public class TrayectoTest {
         Espacio espacioTest2 = new Espacio(calle2, 200, TipoEspacio.Trabajo);
         VehiculoParticular vehiculoTest = new VehiculoParticular(TipoVehiculo.Auto, TipoCombustible.Nafta);
         Integer cantPasajeros = 4;
-        Tramo tramoEjemplo = new Tramo(espacioTest1, espacioTest2, vehiculoTest, cantPasajeros);;
+        Tramo tramoEjemplo = new Tramo(espacioTest1, espacioTest2, vehiculoTest, cantPasajeros);
 
         return tramoEjemplo;
     }

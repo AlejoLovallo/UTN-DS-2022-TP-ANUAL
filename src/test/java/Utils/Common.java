@@ -7,6 +7,7 @@ import Domain.Organizacion.ClasificacionOrganizacion;
 import Domain.Organizacion.Organizacion;
 import Domain.Organizacion.Sector;
 import Domain.Organizacion.TipoOrganizacion;
+import Domain.Usuarios.Usuario;
 
 import java.util.ArrayList;
 
@@ -54,5 +55,11 @@ public class Common {
     }
     return listaDeMiembros;
   }
+
+  public static Usuario getUsuarioConContraseniaValida(){
+    return new Usuario("usuario", "email", "nuevaContraseniaValida", true);
+  }
+
+
 
 }
