@@ -32,8 +32,8 @@ public class Miembro {
     return  this.organizacion;
   }
 
+  public Sector getSector() { return sector; }
   //////////////////////////////////  SETTERS
-
   public void setTrayectos(ArrayList<Trayecto> trayectos) {
     this.trayectos = trayectos;
   }
@@ -47,10 +47,10 @@ public class Miembro {
     this.sector = _sector;
   }
 
-  public void registrarTrayecto(Organizacion organizacion, Trayecto trayecto){
+  public void registrarTrayectos(Organizacion organizacion, ArrayList<Trayecto> trayectos){
     if (!organizacion.equals(this.organizacion))
-        throw new MiembroNoPerteneceAOrganizacionException(organizacion.getRazonSocial());
-    trayectos.add(trayecto);
+       throw new MiembroNoPerteneceAOrganizacionException(organizacion.getRazonSocial());
+    this.setTrayectos(trayectos);
   }
 
 }
