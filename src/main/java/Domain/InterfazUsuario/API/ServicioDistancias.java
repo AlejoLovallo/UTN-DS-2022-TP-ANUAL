@@ -1,12 +1,10 @@
-package Domain.API;
+package Domain.InterfazUsuario.API;
 
-import Domain.API.Endpoints.*;
+import Domain.InterfazUsuario.API.Endpoints.*;
 import retrofit2.Call;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
-import retrofit2.http.Header;
-import retrofit2.http.Query;
 
 import java.io.IOException;
 import java.util.List;
@@ -49,29 +47,29 @@ public class ServicioDistancias {
     return listaPaises;
   }
 
-  public ListadoProvincias listadoDeProvincias(Pais unPais, String offset) throws IOException {
+  public List<Provincia> listadoDeProvincias(Pais unPais, String offset) throws IOException {
     Api apiService = this.retrofit.create(Api.class);
-    Call<ListadoProvincias> request = apiService.provincias(authToken, offset, unPais.id());
-    Response<ListadoProvincias> response = request.execute();
-    ListadoProvincias listaDeProvincias = response.body();
+    Call<List<Provincia>> request = apiService.provincias(authToken, offset, unPais.id());
+    Response<List<Provincia>> response = request.execute();
+    List<Provincia> listaDeProvincias = response.body();
 
     return listaDeProvincias;
   }
 
-  public ListadoMunicipios listadoDeMunicipios(Provincia unaProvincia,String offset) throws IOException{
+  public List<Municipio> listadoDeMunicipios(Provincia unaProvincia, String offset) throws IOException{
     Api apiService = this.retrofit.create(Api.class);
-    Call<ListadoMunicipios> request = apiService.municipios(authToken,offset,unaProvincia.id());
-    Response<ListadoMunicipios> response = request.execute();
-    ListadoMunicipios listadoDeMunicipios = response.body();
+    Call<List<Municipio>> request = apiService.municipios(authToken,offset,unaProvincia.id());
+    Response<List<Municipio>> response = request.execute();
+    List<Municipio> listadoDeMunicipios = response.body();
 
     return listadoDeMunicipios;
   }
 
-  public ListadoLocalidades listadoDeLocalidades(Municipio unMunicipio, String offset) throws IOException {
+  public List<Localidad> listadoDeLocalidades(Municipio unMunicipio, String offset) throws IOException {
     Api apiService = this.retrofit.create(Api.class);
-    Call<ListadoLocalidades> request = apiService.localidades(authToken, offset, unMunicipio.id());
-    Response<ListadoLocalidades> response = request.execute();
-    ListadoLocalidades listadoDeLocalidades = response.body();
+    Call<List<Localidad>> request = apiService.localidades(authToken, offset, unMunicipio.id());
+    Response<List<Localidad>> response = request.execute();
+    List<Localidad> listadoDeLocalidades = response.body();
 
     return listadoDeLocalidades;
   }

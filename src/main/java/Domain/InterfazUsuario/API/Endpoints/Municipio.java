@@ -1,4 +1,4 @@
-package Domain.API.Endpoints;
+package Domain.InterfazUsuario.API.Endpoints;
 
 public class Municipio {
     private String id;

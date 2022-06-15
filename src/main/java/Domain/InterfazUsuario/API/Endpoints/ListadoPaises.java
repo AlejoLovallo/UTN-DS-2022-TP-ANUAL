@@ -1,4 +1,4 @@
-package Domain.API.Endpoints;
+package Domain.InterfazUsuario.API.Endpoints;
 
 import java.util.List;
 import java.util.Optional;
@@ -18,6 +18,12 @@ public class ListadoPaises {
     return this.paises.stream()
         .filter(unPais -> unPais.id().equals(id))
         .findFirst();
+  }
+
+  public Optional<Pais> getPaisByName(String name){
+    return this.paises.stream()
+            .filter(unPais -> unPais.getNombre().equals(name))
+            .findFirst();
   }
 
   public void setPaises(List<Pais> paises) {

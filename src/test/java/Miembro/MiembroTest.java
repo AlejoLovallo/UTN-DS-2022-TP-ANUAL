@@ -1,7 +1,7 @@
 package Miembro;
 
 import Domain.Espacios.Espacio;
-import Domain.Espacios.TipoEspacio;
+import Domain.Espacios.TipoDireccion;
 import Domain.Miembro.Excepciones.MiembroNoPerteneceAOrganizacionException;
 import Domain.Miembro.Miembro;
 import Domain.Miembro.TipoDocumento;

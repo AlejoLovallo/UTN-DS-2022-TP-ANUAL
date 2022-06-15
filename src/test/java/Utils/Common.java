@@ -3,7 +3,7 @@ package Utils;
 import Domain.Espacios.Direccion;
 import Domain.Espacios.Espacio;
 import Domain.Espacios.TipoDireccion;
-import Domain.Espacios.TipoEspacio;
+import Domain.Espacios.TipoDireccion;
 import Domain.Miembro.Miembro;
 import Domain.Organizacion.ClasificacionOrganizacion;
 import Domain.Organizacion.Organizacion;

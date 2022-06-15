@@ -1,17 +1,11 @@
-package Domain.API.Endpoints;
+package Domain.InterfazUsuario.API.Endpoints;
 
-import java.util.List;
-
-public class Pais {
+public class Localidad {
   private String id;
   private String nombre;
 
   public String id(){
     return this.id;
-  }
-
-  public void setId(String id) {
-    this.id = id;
   }
 
   public String getNombre() {
@@ -22,5 +16,3 @@ public class Pais {
     this.nombre = nombre;
   }
 }
-
-// TOKEN BERARER: 8MaZ8WdbaW+IhLyWfzV/T7oK54b6ILRxUDpW8+9Ba0c=
