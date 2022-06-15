@@ -1,7 +1,10 @@
 package Domain.Trayecto;
 
+import Domain.MediosDeTransporte.Estacion;
 import Domain.MediosDeTransporte.MedioDeTransporte;
 import Domain.Espacios.Espacio;
+import Domain.MediosDeTransporte.TransportePublico;
+import Domain.MediosDeTransporte.VehiculoParticular;
 
 public class Tramo {
   private Espacio puntoPartida;
@@ -9,6 +12,12 @@ public class Tramo {
   private MedioDeTransporte medio;
 
   private Integer cantPasajeros;
+
+  public Tramo(MedioDeTransporte _medio, Espacio _puntoPartida, Espacio _puntoLlegada){
+    this.medio = _medio;
+    this.puntoPartida = _puntoPartida;
+    this.puntoLLegada = _puntoLlegada;
+  }
 
 
   //////////////////////////////////  GETTERS
@@ -49,5 +58,21 @@ public class Tramo {
 
 
   //////////////////////////////////  INTERFACE
+  public Double determinarDistancia(){
+    Double distanciaTotal = 0;
+    if (medio instanceof TransportePublico){
+      Estacion estPartida = (Estacion) this.puntoPartida;
+      Estacion estLlegada = (Estacion) this.puntoLLegada;
+      Integer estacionInicial = estPartida.getNumeroDeEstacion();
+      Integer estacionFinal = estLlegada.getNumeroDeEstacion();
+      for (int i = estacionInicial; i <= estacionFinal; i++){
+        distanciaTotal += medio.paradas(i).distEstPost;
+      }
+    }
+    // else if medio instanceOf VehiculoParticular
+    else {
+      return 0.0;
+    }
+  }
 
 }
