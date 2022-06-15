@@ -2,7 +2,7 @@ package Domain.Trayecto;
 
 import Domain.Espacios.Espacio;
 import Domain.Organizacion.Organizacion;
-import Domain.Trayecto.Tramo;
+
 import java.util.List;
 
 
