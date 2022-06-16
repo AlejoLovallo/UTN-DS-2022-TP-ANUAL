@@ -1,6 +1,8 @@
 package Domain.MediosDeTransporte;
 
 import java.util.List;
+import Domain.MediosDeTransporte.TipoVehiculo;
+import Domain.MediosDeTransporte.TipoCombustible;
 
 public class VehiculoParticular extends MedioDeTransporte{
 
