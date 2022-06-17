@@ -49,7 +49,7 @@ public class TransportePublico extends MedioDeTransporte {
 
   //////////////////////////////////  INTERFACE
   public void darDeAltaParada(Estacion estacion){
-    this.paradas.add(estacion);
+    this.paradas.add(estacion.getNumeroDeEstacion(),estacion);
   }
 
 }

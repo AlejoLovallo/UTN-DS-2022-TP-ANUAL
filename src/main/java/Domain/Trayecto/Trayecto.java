@@ -5,7 +5,8 @@ import Domain.MediosDeTransporte.MedioDeTransporte;
 import Domain.Miembro.Miembro;
 import Domain.Organizacion.Organizacion;
 
-import java.util.List;
+import java.io.IOException;
+import java.util.ArrayList;
 
 
 public class Trayecto {
@@ -22,7 +23,7 @@ public class Trayecto {
 
   //////////////////////////////////  GETTERS
 
-  public List<Tramo> getTramos(){
+  public ArrayList<Tramo> getTramos(){
     return this.tramos;
   }
 
@@ -42,7 +43,7 @@ public class Trayecto {
 
   //////////////////////////////////  SETTERS
 
-  public void setTramos(List<Tramo> tramos) {
+  public void setTramos(ArrayList<Tramo> tramos) {
     this.tramos = tramos;
   }
 
@@ -53,16 +54,16 @@ public class Trayecto {
 
   //////////////////////////////////  INTERFACE
   public Boolean addTramo(Tramo _tramo){
-    tramos.add(_tramo);
+    this.tramos.add(_tramo);
     return true;
   }
 
 
-  public double determinarDistanciaTotal(){
+  public double determinarDistanciaTotal() throws IOException {
 
     double distanciaTotal = 0.0;
 
-    for(Tramo tramo : getTramos()){
+    for(Tramo tramo : this.getTramos()){
       distanciaTotal += tramo.determinarDistancia();
     }
 

@@ -35,25 +35,14 @@ public class Common {
     return new Organizacion("Empresa secundaria test", TipoOrganizacion.Empresa, ClasificacionOrganizacion.EmpresaSectorSecundario);
   }
 
-<<<<<<< HEAD
   public static Sector getSectorTrabajo(){
-    Espacio espacio = new Direccion("calle test",123, TipoDireccion.Trabajo);
+    Espacio espacio = new Direccion("Argentina", "Buenos Aires", "CABA", "CABA","calle test",123, TipoDireccion.Trabajo);
     return new Sector("Sector test",espacio);
   }
 
   public static Sector getSector(String nombreSector, TipoDireccion tipoEspacio){
-    Espacio espacio = new Direccion("esp test",123,tipoEspacio);
+    Espacio espacio = new Direccion("Argentina", "Buenos Aires", "CABA", "CABA","esp test",123,tipoEspacio);
     return new Sector(nombreSector,espacio);
-=======
-  public static Sector getSectorTrabajo() {
-    Espacio espacio = new Espacio("calle test", 123, TipoEspacio.Trabajo);
-    return new Sector("Sector test", espacio);
-  }
-
-  public static Sector getSector(String nombreSector, TipoEspacio tipoEspacio) {
-    Espacio espacio = new Espacio("esp test", 123, tipoEspacio);
-    return new Sector(nombreSector, espacio);
->>>>>>> develop
   }
 
   public static Organizacion initializeOrganizacion(Organizacion org, Sector sector) {
@@ -63,15 +52,9 @@ public class Common {
 
   public static ArrayList<Miembro> getMiembros(Integer cantMiembros) {
     ArrayList<Miembro> listaDeMiembros = new ArrayList<Miembro>();
-<<<<<<< HEAD
-    for(int i= 0; i < cantMiembros; i++){
-      Sector sector = getSector("Sector"+Integer.toString(i),TipoDireccion.Trabajo);
-      listaDeMiembros.add(new Miembro("miembro"+Integer.toString(i),org,sector));
-=======
     for (int i = 0; i < cantMiembros; i++) {
-      Sector sector = getSector("Sector" + Integer.toString(i), TipoEspacio.Trabajo);
+      Sector sector = getSector("Sector" + Integer.toString(i), TipoDireccion.Trabajo);
       listaDeMiembros.add(new Miembro("miembro" + Integer.toString(i), sector));
->>>>>>> develop
     }
     return listaDeMiembros;
   }

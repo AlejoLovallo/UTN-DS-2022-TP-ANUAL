@@ -1,7 +1,8 @@
 package Trayecto;
 
+import Domain.Espacios.Direccion;
 import Domain.Espacios.Espacio;
-import Domain.Espacios.TipoEspacio;
+import Domain.Espacios.TipoDireccion;
 import Domain.MediosDeTransporte.MedioDeTransporte;
 import Domain.MediosDeTransporte.TipoCombustible;
 import Domain.MediosDeTransporte.TipoVehiculo;
@@ -15,13 +16,13 @@ import org.junit.jupiter.api.Test;
 public class TramoTest {
 
     protected Tramo tramoTest;
-    protected Espacio espacioTest1 = new Espacio("CalleEjemplo1", 100, TipoEspacio.Vivienda);
-    protected Espacio espacioTest2 = new Espacio("CalleEjemplo2", 200, TipoEspacio.Trabajo);
+    protected Direccion espacioTest1 = new Direccion("Argentina","Buenos Aires","CABA","CABA","CalleEjemplo1", 100, TipoDireccion.Vivienda);
+    protected Direccion espacioTest2 = new Direccion("Argentina","Buenos Aires","CABA","CABA","CalleEjemplo2", 200, TipoDireccion.Trabajo);
     protected VehiculoParticular vehiculoTest = new VehiculoParticular(TipoVehiculo.Auto, TipoCombustible.Nafta);
     protected Integer cantPasajeros = 4;
 
     private void initializeTramo(){
-        this.tramoTest = new Tramo(espacioTest1, espacioTest2, vehiculoTest, cantPasajeros);
+        this.tramoTest = new Tramo(espacioTest1, espacioTest2, vehiculoTest);
     }
 
 
@@ -41,13 +42,12 @@ public class TramoTest {
         Assertions.assertEquals(espacioTest1.toString(),this.tramoTest.getPuntoPartida());
         Assertions.assertEquals(espacioTest2.toString(), this.tramoTest.getPuntoLlegada());
         Assertions.assertEquals(vehiculoTest, this.tramoTest.getMedioTransporte());
-        Assertions.assertEquals(cantPasajeros, this.tramoTest.getCantPasajeros());
     }
 
     @Test
     public void setPuntoPartida(){
         //GIVEN DADO
-        String puntoPartidaActual = this.tramoTest.getPuntoPartida();
+        Espacio puntoPartidaActual = this.tramoTest.getPuntoPartida();
         Espacio nuevoPuntoDePartida = espacioTest2;
         //WHEN CUANDO
         this.tramoTest.setPuntoPartida(nuevoPuntoDePartida);
@@ -59,7 +59,7 @@ public class TramoTest {
     @Test
     public void setPuntoLlegada(){
         //GIVEN DADO
-        String puntoLlegadaActual = this.tramoTest.getPuntoLlegada();
+        Espacio puntoLlegadaActual = this.tramoTest.getPuntoLlegada();
         Espacio nuevoPuntoDeLlegada = espacioTest1;
         //WHEN CUANDO
         this.tramoTest.setPuntoLLegada(nuevoPuntoDeLlegada);
@@ -83,7 +83,9 @@ public class TramoTest {
         Assertions.assertEquals(nuevoMedioDeTransporte,this.tramoTest.getMedioTransporte());
     }
 
+    /*
     @Test
+
     public void setCantPasajeros(){
 
         Integer cantPasajeros2 = 2;
@@ -97,5 +99,6 @@ public class TramoTest {
         Assertions.assertEquals(cantPasajeroActual, cantPasajeros);
         Assertions.assertEquals(cantPasajeros2,this.tramoTest.getCantPasajeros());
     }
+    */
 
 }

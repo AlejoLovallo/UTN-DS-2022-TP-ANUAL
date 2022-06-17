@@ -1,5 +1,7 @@
 package Domain.Trayecto;
 
+import Domain.CalculadorDistancia.ServicioAPI;
+import Domain.CalculadorDistancia.ServicioManual;
 import Domain.Espacios.Espacio;
 import Domain.Espacios.Direccion;
 import Domain.Espacios.Estacion;
@@ -24,6 +26,12 @@ public class Tramo {
     this.puntoPartida = puntoPartida;
     this.puntoLLegada = puntoLLegada;
     this.medio = medio;
+    if (medio instanceof TransportePublico){
+      this.estrategia = new ServicioManual();
+    } else if(medio instanceof VehiculoParticular){
+      this.estrategia = ServicioAPI.getInstance();
+    }
+
   }
 
   //////////////////////////////////  GETTERS
@@ -57,24 +65,7 @@ public class Tramo {
 
   //////////////////////////////////  INTERFACE
 
-  public Double determinarDistancia(){
-    Double distanciaTotal = 0.0;
-    if (medio instanceof TransportePublico){
-      TransportePublico transportePublico = (TransportePublico) medio;
-      Estacion est = (Estacion) puntoPartida;
-      Estacion est2 = (Estacion) puntoLLegada;
-      Integer estacionInicial = est.getNumeroDeEstacion();
-      Integer estacionFinal = est2.getNumeroDeEstacion();
-      for (int i = 0; i < transportePublico.getParadas().size(); i ++){
-        if(transportePublico.getParadas().get(i).getNumeroDeEstacion() > estacionInicial
-                && transportePublico.getParadas().get(i).getNumeroDeEstacion() < estacionFinal){
-          distanciaTotal += transportePublico.getParadas().get(i).getDistEstPos();
-        }
-      }
-    }else if (medio instanceof VehiculoParticular){
-      estrategia.calcularDistancia()
-    }
-    return distanciaTotal;
+  public Double determinarDistancia() throws IOException {
+    return estrategia.calcularDistancia(medio, puntoPartida, puntoLLegada);
   }
-
 }
