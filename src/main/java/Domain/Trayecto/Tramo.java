@@ -1,45 +1,54 @@
 package Domain.Trayecto;
 
+import Domain.CalculadorDistancia.ServicioAPI;
+import Domain.CalculadorDistancia.ServicioManual;
+import Domain.Espacios.Espacio;
+import Domain.Espacios.Direccion;
+import Domain.Espacios.Estacion;
 import Domain.CalculadorDistancia.ServicioDistancia;
 import Domain.MediosDeTransporte.MedioDeTransporte;
-import Domain.Espacios.Espacio;
+import Domain.MediosDeTransporte.TransportePublico;
+import Domain.MediosDeTransporte.VehiculoParticular;
+
+import java.io.IOException;
+import java.util.List;
 
 public class Tramo {
+
   private ServicioDistancia estrategia;
   private Espacio puntoPartida;
   private Espacio puntoLLegada;
   private MedioDeTransporte medio;
 
-  private Integer cantPasajeros;
-
   //////////////////////////////////  CONSTRUCTOR
 
-  public Tramo(Espacio _puntoPartida, Espacio _puntoLLegada, MedioDeTransporte _medio, Integer _cantPasajeros){
-    this.puntoPartida = _puntoPartida;
-    this.puntoLLegada = _puntoLLegada;
-    this.medio = _medio;
-    this.cantPasajeros = _cantPasajeros;
+  public Tramo(Espacio puntoPartida, Espacio puntoLLegada, MedioDeTransporte medio) {
+    this.puntoPartida = puntoPartida;
+    this.puntoLLegada = puntoLLegada;
+    this.medio = medio;
+    if (medio instanceof TransportePublico){
+      this.estrategia = new ServicioManual();
+    } else if(medio instanceof VehiculoParticular){
+      this.estrategia = ServicioAPI.getInstance();
+    }
+
   }
 
   //////////////////////////////////  GETTERS
-  public String getPuntoPartida(){
-    return this.puntoPartida.toString();
+  public Espacio getPuntoPartida(){
+    return this.puntoPartida;
   }
 
-  public String getPuntoLlegada(){
-    return this.puntoLLegada.toString();
+  public Espacio getPuntoLlegada(){
+    return this.puntoLLegada;
   }
 
   public MedioDeTransporte getMedioTransporte(){
     return this.medio;
   }
 
-  public Integer getCantPasajeros() {
-    return cantPasajeros;
-  }
 
   //////////////////////////////////  SETTERS
-
 
   public void setPuntoPartida(Espacio puntoPartida) {
     this.puntoPartida = puntoPartida;
@@ -53,11 +62,10 @@ public class Tramo {
     this.medio = medio;
   }
 
-  public void setCantPasajeros(Integer cantPasajeros) {
-    this.cantPasajeros = cantPasajeros;
-  }
-
 
   //////////////////////////////////  INTERFACE
 
+  public Double determinarDistancia() throws IOException {
+    return estrategia.calcularDistancia(medio, puntoPartida, puntoLLegada);
+  }
 }

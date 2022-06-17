@@ -4,7 +4,7 @@ public class Pais {
   private String id;
   private String nombre;
 
-  public String id(){
+  public String getId(){
     return this.id;
   }
 

@@ -1,7 +1,9 @@
 package Utils;
 
+import Domain.Espacios.Direccion;
 import Domain.Espacios.Espacio;
-import Domain.Espacios.TipoEspacio;
+import Domain.Espacios.TipoDireccion;
+import Domain.Espacios.TipoDireccion;
 import Domain.Miembro.Miembro;
 import Domain.Organizacion.ClasificacionOrganizacion;
 import Domain.Organizacion.Organizacion;
@@ -33,14 +35,14 @@ public class Common {
     return new Organizacion("Empresa secundaria test", TipoOrganizacion.Empresa, ClasificacionOrganizacion.EmpresaSectorSecundario);
   }
 
-  public static Sector getSectorTrabajo() {
-    Espacio espacio = new Espacio("calle test", 123, TipoEspacio.Trabajo);
-    return new Sector("Sector test", espacio);
+  public static Sector getSectorTrabajo(){
+    Espacio espacio = new Direccion("Argentina", "Buenos Aires", "CABA", "CABA","calle test",123, TipoDireccion.Trabajo);
+    return new Sector("Sector test",espacio);
   }
 
-  public static Sector getSector(String nombreSector, TipoEspacio tipoEspacio) {
-    Espacio espacio = new Espacio("esp test", 123, tipoEspacio);
-    return new Sector(nombreSector, espacio);
+  public static Sector getSector(String nombreSector, TipoDireccion tipoEspacio){
+    Espacio espacio = new Direccion("Argentina", "Buenos Aires", "CABA", "CABA","esp test",123,tipoEspacio);
+    return new Sector(nombreSector,espacio);
   }
 
   public static Organizacion initializeOrganizacion(Organizacion org, Sector sector) {
@@ -51,7 +53,7 @@ public class Common {
   public static ArrayList<Miembro> getMiembros(Integer cantMiembros) {
     ArrayList<Miembro> listaDeMiembros = new ArrayList<Miembro>();
     for (int i = 0; i < cantMiembros; i++) {
-      Sector sector = getSector("Sector" + Integer.toString(i), TipoEspacio.Trabajo);
+      Sector sector = getSector("Sector" + Integer.toString(i), TipoDireccion.Trabajo);
       listaDeMiembros.add(new Miembro("miembro" + Integer.toString(i), sector));
     }
     return listaDeMiembros;

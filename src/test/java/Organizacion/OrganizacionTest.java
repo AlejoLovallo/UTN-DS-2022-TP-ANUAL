@@ -1,6 +1,8 @@
 package Organizacion;
+import Domain.Espacios.Direccion;
 import Domain.Espacios.Espacio;
-import Domain.Espacios.TipoEspacio;
+import Domain.Espacios.TipoDireccion;
+import Domain.Espacios.TipoDireccion;
 import Domain.Miembro.Miembro;
 import Domain.Miembro.TipoDocumento;
 import Domain.Organizacion.*;
@@ -75,8 +77,11 @@ public class OrganizacionTest {
   }
 @Test
   public void setRegistrarSector(){
-  Sector sector1=Common.getSectorTrabajo();
-  Sector sector2=Common.getSectorTrabajo();
+
+  Espacio espacio=new Direccion("Argentina", "Buenos Aires", "CABA", "CABA","Cordoba",3000, TipoDireccion.Trabajo);
+  Sector sector1=new Sector("Administracion",espacio);
+  Sector sector2=new Sector("direccion",espacio);
+
 
   this.organizacionEmpresa.registrarSector(sector1);
   this.organizacionEmpresa.registrarSector(sector2);

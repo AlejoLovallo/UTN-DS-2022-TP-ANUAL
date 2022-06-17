@@ -20,6 +20,12 @@ public class ListadoPaises {
         .findFirst();
   }
 
+  public Optional<Pais> getPaisByName(String name){
+    return this.paises.stream()
+            .filter(unPais -> unPais.getNombre().equals(name))
+            .findFirst();
+  }
+
   public void setPaises(List<Pais> paises) {
     this.paises = paises;
   }

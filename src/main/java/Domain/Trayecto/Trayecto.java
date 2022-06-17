@@ -5,7 +5,9 @@ import Domain.MediosDeTransporte.MedioDeTransporte;
 import Domain.Miembro.Miembro;
 import Domain.Organizacion.Organizacion;
 
+import java.io.IOException;
 import java.util.ArrayList;
+
 
 public class Trayecto {
   private ArrayList<Tramo> tramos;
@@ -29,17 +31,21 @@ public class Trayecto {
     return this.miembro;
   }
 
-  public String getPuntoDePartida() {
+  public Espacio getPuntoDePartida() {
     Tramo tramoInicial = tramos.get(0);
     return tramoInicial.getPuntoPartida();
   }
 
-  public String getPuntoDeLlegada(){
+  public Espacio getPuntoDeLlegada(){
     Tramo tramoFinal = tramos.get(tramos.size()-1);
     return tramoFinal.getPuntoLlegada();
   }
 
   //////////////////////////////////  SETTERS
+
+  public void setTramos(ArrayList<Tramo> tramos) {
+    this.tramos = tramos;
+  }
 
   public Boolean setMiembro(Miembro _miembro){
     this.miembro = _miembro;
@@ -48,9 +54,19 @@ public class Trayecto {
 
   //////////////////////////////////  INTERFACE
   public Boolean addTramo(Tramo _tramo){
-    tramos.add(_tramo);
+    this.tramos.add(_tramo);
     return true;
   }
 
 
+  public double determinarDistanciaTotal() throws IOException {
+
+    double distanciaTotal = 0.0;
+
+    for(Tramo tramo : this.getTramos()){
+      distanciaTotal += tramo.determinarDistancia();
+    }
+
+    return distanciaTotal;
+  }
 }

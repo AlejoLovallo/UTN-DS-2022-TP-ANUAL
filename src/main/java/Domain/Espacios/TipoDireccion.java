@@ -1,6 +1,6 @@
 package Domain.Espacios;
 
-public enum TipoEspacio {
+public enum TipoDireccion {
   Trabajo,
   Vivienda,
   Otro,

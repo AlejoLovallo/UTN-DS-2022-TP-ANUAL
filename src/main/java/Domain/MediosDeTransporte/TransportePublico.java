@@ -1,36 +1,35 @@
 package Domain.MediosDeTransporte;
 
 import java.util.List;
-import Domain.MediosDeTransporte.TipoTransportePublico;
-import Domain.MediosDeTransporte.Estacion;
+
+import Domain.Espacios.Estacion;
 
 public class TransportePublico extends MedioDeTransporte {
 
   private TipoTransportePublico tipoTransportePublico;
   private String linea;
-  private List<Estacion> paradas;
+  public List<Estacion> paradas;
 
   //////////////////////////////////  CONSTRUCTOR
 
-  public TransportePublico(TipoTransportePublico _tipoTransportePublico, String _linea,  List<Estacion> _paradas){
-    this.tipoTransportePublico = _tipoTransportePublico;
-    this.linea = _linea;
-    this.paradas = _paradas;
-
+  public TransportePublico(TipoTransportePublico tipoTransportePublico, String linea, List<Estacion> paradas) {
+    this.tipoTransportePublico = tipoTransportePublico;
+    this.linea = linea;
+    this.paradas = paradas;
   }
 
   //////////////////////////////////  GETTERS
 
   public TipoTransportePublico getTipoTransportePublico() {
-    return tipoTransportePublico;
+    return this.tipoTransportePublico;
   }
 
   public String getLinea() {
-    return linea;
+    return this.linea;
   }
 
   public List<Estacion> getParadas() {
-    return paradas;
+    return this.paradas;
   }
 
   //////////////////////////////////  SETTERS
@@ -49,4 +48,8 @@ public class TransportePublico extends MedioDeTransporte {
   }
 
   //////////////////////////////////  INTERFACE
+  public void darDeAltaParada(Estacion estacion){
+    this.paradas.add(estacion.getNumeroDeEstacion(),estacion);
+  }
+
 }
