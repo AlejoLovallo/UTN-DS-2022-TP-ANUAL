@@ -77,14 +77,11 @@ public class OrganizacionTest {
   }
 @Test
   public void setRegistrarSector(){
-<<<<<<< HEAD
-  Espacio espacio=new Direccion("Cordoba",3000, TipoDireccion.Trabajo);
+
+  Espacio espacio=new Direccion("Argentina", "Buenos Aires", "CABA", "CABA","Cordoba",3000, TipoDireccion.Trabajo);
   Sector sector1=new Sector("Administracion",espacio);
   Sector sector2=new Sector("direccion",espacio);
-=======
-  Sector sector1=Common.getSectorTrabajo();
-  Sector sector2=Common.getSectorTrabajo();
->>>>>>> develop
+
 
   this.organizacionEmpresa.registrarSector(sector1);
   this.organizacionEmpresa.registrarSector(sector2);

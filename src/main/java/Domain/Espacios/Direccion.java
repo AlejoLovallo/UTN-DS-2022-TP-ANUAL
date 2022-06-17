@@ -3,12 +3,20 @@ package Domain.Espacios;
 import org.apache.poi.ss.formula.functions.T;
 
 public class Direccion extends Espacio {
+
+  private String pais;
+
+  private String provincia;
+
+  private String municipio;
+
+  private String localidad;
   private String calle;
   private Integer altura;
   private TipoDireccion tipoDireccion;
 
   //////////////////////////////////  CONSTRUCTORES
-  public Direccion(String _calle, Integer _altura, TipoDireccion tipoDireccion ){
+  public Direccion(String _pais, String _provincia, String _municipio, String _localidad, String _calle, Integer _altura, TipoDireccion tipoDireccion ){
       this.calle = _calle;
       this.altura = _altura;
       this.tipoDireccion = tipoDireccion;

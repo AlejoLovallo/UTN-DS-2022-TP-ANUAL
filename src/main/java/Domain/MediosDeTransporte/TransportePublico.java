@@ -18,15 +18,6 @@ public class TransportePublico extends MedioDeTransporte {
     this.paradas = paradas;
   }
 
-  //////////////////////////////////  CONSTRUCTOR
-
-  public TransportePublico(TipoTransportePublico _tipoTransportePublico, String _linea,  List<Estacion> _paradas){
-    this.tipoTransportePublico = _tipoTransportePublico;
-    this.linea = _linea;
-    this.paradas = _paradas;
-
-  }
-
   //////////////////////////////////  GETTERS
 
   public TipoTransportePublico getTipoTransportePublico() {
