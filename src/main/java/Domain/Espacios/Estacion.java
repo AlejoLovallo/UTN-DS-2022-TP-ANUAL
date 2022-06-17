@@ -1,4 +1,4 @@
-package Domain.MediosDeTransporte;
+package Domain.Espacios;
 
 import Domain.Espacios.Espacio;
 import Domain.Espacios.TipoDireccion;

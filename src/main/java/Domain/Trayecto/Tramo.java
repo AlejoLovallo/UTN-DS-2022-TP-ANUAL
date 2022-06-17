@@ -3,7 +3,7 @@ package Domain.Trayecto;
 import Domain.Espacios.Direccion;
 import Domain.InterfazUsuario.API.Endpoints.*;
 import Domain.InterfazUsuario.API.ServicioDistancias;
-import Domain.MediosDeTransporte.Estacion;
+import Domain.Espacios.Estacion;
 import Domain.MediosDeTransporte.MedioDeTransporte;
 import Domain.Espacios.Espacio;
 import Domain.MediosDeTransporte.TransportePublico;

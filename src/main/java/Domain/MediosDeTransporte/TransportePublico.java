@@ -2,9 +2,7 @@ package Domain.MediosDeTransporte;
 
 import java.util.List;
 
-import Domain.Espacios.Espacio;
-import Domain.MediosDeTransporte.TipoTransportePublico;
-import Domain.MediosDeTransporte.Estacion;
+import Domain.Espacios.Estacion;
 
 public class TransportePublico extends MedioDeTransporte {
 
