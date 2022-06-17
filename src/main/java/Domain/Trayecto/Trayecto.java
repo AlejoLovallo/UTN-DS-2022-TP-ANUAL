@@ -2,20 +2,21 @@ package Domain.Trayecto;
 
 import Domain.Espacios.Espacio;
 import Domain.MediosDeTransporte.MedioDeTransporte;
+import Domain.Miembro.Miembro;
 import Domain.Organizacion.Organizacion;
 
 import java.util.ArrayList;
 
 public class Trayecto {
   private ArrayList<Tramo> tramos;
-  private Organizacion organizacion;
+  private Miembro miembro;
 
   //////////////////////////////////  CONSTRUCTOR
   public Trayecto(){}
 
-  public Trayecto(ArrayList<Tramo> _tramos, Organizacion _organizacion){
+  public Trayecto(ArrayList<Tramo> _tramos, Miembro _miembro){
     this.tramos = _tramos;
-    this.organizacion = _organizacion;
+    this.miembro = _miembro;
   }
 
   //////////////////////////////////  GETTERS
@@ -24,8 +25,8 @@ public class Trayecto {
     return this.tramos;
   }
 
-  public Organizacion getOrganizacion(){
-    return this.organizacion;
+  public Miembro getMiembro(){
+    return this.miembro;
   }
 
   public String getPuntoDePartida() {
@@ -40,6 +41,16 @@ public class Trayecto {
 
   //////////////////////////////////  SETTERS
 
+  public Boolean setMiembro(Miembro _miembro){
+    this.miembro = _miembro;
+    return true;
+  }
+
   //////////////////////////////////  INTERFACE
+  public Boolean addTramo(Tramo _tramo){
+    tramos.add(_tramo);
+    return true;
+  }
+
 
 }
