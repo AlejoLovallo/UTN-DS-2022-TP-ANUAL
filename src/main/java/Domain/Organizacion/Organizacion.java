@@ -58,6 +58,7 @@ public class Organizacion {
   }
 
   public Boolean aceptarVinculacion(Miembro miembro){
+    this.miembros.add(miembro);
     return true;
   }
 

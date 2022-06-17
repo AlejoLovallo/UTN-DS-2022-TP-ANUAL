@@ -108,7 +108,17 @@ public class UsuariosTest {
         Assertions.assertNull(this.repositorioUsuariosTest.iniciarSesion(username,"1234"));
     }
 
+    @Test
+    public void iniciarSesion_UsuarioInvalido(){
+        Assertions.assertNull(this.repositorioUsuariosTest.iniciarSesion("username","1234"));
+    }
 
+    @Test
+    public void crearAdmin() {
+       Admin adminTest = repositorioUsuariosTest.crearAdmin("admin", "admin@gmail.com", "contrartghy6");
+        Assertions.assertEquals("admin",adminTest.getUsername());
+        Assertions.assertEquals("admin@gmail.com", adminTest.getEmail());
+    }
 
     @Test
     public void adminCreadoCorrectamente() {

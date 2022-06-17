@@ -11,6 +11,7 @@ public class Trayecto {
   private Organizacion organizacion;
 
   //////////////////////////////////  CONSTRUCTOR
+  public Trayecto(){}
 
   public Trayecto(ArrayList<Tramo> _tramos, Organizacion _organizacion){
     this.tramos = _tramos;

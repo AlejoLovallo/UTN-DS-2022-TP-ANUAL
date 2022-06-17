@@ -3,6 +3,7 @@ package Miembro;
 import Domain.Espacios.Espacio;
 import Domain.Espacios.TipoEspacio;
 import Domain.Miembro.Excepciones.MiembroNoPerteneceAOrganizacionException;
+import Domain.Miembro.Excepciones.UnicoSectorPorOrganizacionException;
 import Domain.Miembro.Miembro;
 import Domain.Miembro.TipoDocumento;
 import Domain.Organizacion.ClasificacionOrganizacion;
@@ -16,6 +17,8 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.lang.reflect.Array;
+import java.lang.reflect.Executable;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -36,44 +39,50 @@ public class MiembroTest {
 
     @AfterEach
     public void clean(){}
-/*
+
     @Test
-    public void setTrayecto(){
-        Trayecto trayecto1=new Trayecto();
-        Trayecto trayecto2=new Trayecto();
-        ArrayList<Trayecto> trayectos=new ArrayList<>();
-        trayectos.add(trayecto1);
-        trayectos.add(trayecto2);
+    public void registrarTrayectos(){
+        ArrayList<Trayecto> listaTrayectos=Common.getTrayectos(2);
 
-        this.unMiembro.setTrayectos(trayectos);
+        this.unMiembro.registrarTrayectos(this.unMiembro.getOrganizacion(),listaTrayectos);
 
-        Assertions.assertEquals(trayectos,this.unMiembro.getTrayectos());
+        Assertions.assertEquals(listaTrayectos,this.unMiembro.getTrayectos());
     }
 
-    /*
     @Test
-    public void registrarTrayecto(){
-        Organizacion org=new Organizacion("OrganizacionTest", TipoOrganizacion.Empresa, ClasificacionOrganizacion.EmpresaSectorPrimario);
-        Trayecto trayecto1=new Trayecto();
+    public void registrarTrayectoExcepcion(){
+        ArrayList<Trayecto> trayecto1=Common.getTrayectos(1);
+        Organizacion org=Common.getOrganizacionMinisterio(); //organizacion a la q el miembro no pertenece
 
-        this.elMiembro.registrarTrayecto(org,trayecto1);
-
-        Assertions.assertThrows(throw new MiembroNoPerteneceAOrganizacionException(org.getRazonSocial()),this.elMiembro.registrarTrayecto(org,trayecto1));
+        Assertions.assertThrows(MiembroNoPerteneceAOrganizacionException.class,
+                () -> {
+                    this.unMiembro.registrarTrayectos(org,trayecto1);
+                });
     }
 
-*/
-   /* @Test
-    public void vincularseAorg(){
-        Organizacion org=new Organizacion("OrganizacionTest", TipoOrganizacion.Empresa, ClasificacionOrganizacion.EmpresaSectorPrimario);
-        Espacio espacio=new Espacio("Cordoba",3000, TipoEspacio.Trabajo);
-        Sector sector=new Sector("Administracion",espacio);
+    @Test
+    public void vincularSectorExcepcion(){
+        Sector nuevoSector=Common.getSectorTrabajo();
 
-        this.elMiembro.vincularseAOrganizacion(org,sector);
-
-        Assertions.assertNull(this.elMiembro.getSectorPorOrganizacion());
+        Assertions.assertThrows(UnicoSectorPorOrganizacionException.class,
+                () -> {
+                    this.unMiembro.vincularSector(nuevoSector);
+                });
 
 
     }
-*/
+
+    @Test
+    public void vincularSector(){
+        Sector nuevoSector=Common.getSectorTrabajo();
+        Organizacion orgTest = Common.getOrganizacionEmpresaPrimaria();
+        orgTest = Common.initializeOrganizacion(orgTest,nuevoSector);
+        Miembro MiembroSinSector=new Miembro("miembro1",orgTest,null);
+
+        MiembroSinSector.vincularSector(nuevoSector);
+
+        Assertions.assertEquals(nuevoSector,MiembroSinSector.getSector());
+
+    }
 
 }

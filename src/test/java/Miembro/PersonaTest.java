@@ -1,12 +1,17 @@
 package Miembro;
 
+import Domain.Miembro.Miembro;
 import Domain.Miembro.Persona;
 import Domain.Miembro.TipoDocumento;
+import Domain.Organizacion.Organizacion;
+import Domain.Usuarios.Usuario;
+import Utils.Common;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 
 public class PersonaTest {
@@ -25,7 +30,7 @@ public class PersonaTest {
     public void clean(){}
 
   @Test
-  public void miembroCreadoCorrectamente(){
+  public void personaCreadoCorrectamente(){
     Assertions.assertEquals("Ester",this.unaPersona.getNombre());
     Assertions.assertEquals("Exposito",this.unaPersona.getApellido());
     Assertions.assertEquals(TipoDocumento.DNI,this.unaPersona.getTipoDocumento());
@@ -74,6 +79,28 @@ public class PersonaTest {
 
     Assertions.assertEquals("456789546",docActual);
     Assertions.assertEquals(docNuevo,this.unaPersona.getDocumento());
+  }
+
+  @Test
+  public void setUsuario(){
+      Usuario user= Common.getUsuario();
+
+      this.unaPersona.setUsuario(user);
+
+      Assertions.assertEquals(user,this.unaPersona.getUsuario());
+  }
+
+
+  @Test
+  public void agregarMiembro(){
+    Organizacion org=Common.getOrganizacionMinisterio();
+    ArrayList<Miembro> lista=Common.getMiembros(org,3);
+
+    this.unaPersona.agregarMiembro(lista.get(0));
+    this.unaPersona.agregarMiembro(lista.get(1));
+    this.unaPersona.agregarMiembro(lista.get(2));
+
+    Assertions.assertEquals(lista,this.unaPersona.getMiembros());
   }
 
 }
