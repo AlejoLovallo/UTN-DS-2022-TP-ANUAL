@@ -1,7 +1,7 @@
 package Espacios;
 
 import Domain.Espacios.Espacio;
-import Domain.Espacios.TipoEspacio;
+import Domain.Espacios.TipoDireccion;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -11,7 +11,7 @@ public class EspaciosTest {
     protected Espacio unEspacio;
 
     private void initializeEspacio(){
-        this.unEspacio=new Espacio("SiempreViva",355, TipoEspacio.Trabajo);
+        this.unEspacio=new Espacio("SiempreViva",355, TipoDireccion.Trabajo);
     }
 
     @BeforeEach

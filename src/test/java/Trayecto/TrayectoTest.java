@@ -1,7 +1,7 @@
 package Trayecto;
 
 import Domain.Espacios.Espacio;
-import Domain.Espacios.TipoEspacio;
+import Domain.Espacios.TipoDireccion;
 import Domain.MediosDeTransporte.TipoCombustible;
 import Domain.MediosDeTransporte.TipoVehiculo;
 import Domain.MediosDeTransporte.VehiculoParticular;
@@ -45,8 +45,8 @@ public class TrayectoTest {
 
     private Tramo getTramoTest(String calle1, String calle2) {
 
-        Espacio espacioTest1 = new Espacio(calle1, 100, TipoEspacio.Vivienda);
-        Espacio espacioTest2 = new Espacio(calle2, 200, TipoEspacio.Trabajo);
+        Espacio espacioTest1 = new Espacio(calle1, 100, TipoDireccion.Vivienda);
+        Espacio espacioTest2 = new Espacio(calle2, 200, TipoDireccion.Trabajo);
         VehiculoParticular vehiculoTest = new VehiculoParticular(TipoVehiculo.Auto, TipoCombustible.Nafta);
         Integer cantPasajeros = 4;
         Tramo tramoEjemplo = new Tramo(espacioTest1, espacioTest2, vehiculoTest, cantPasajeros);

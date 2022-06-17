@@ -16,7 +16,7 @@ public class ListadoPaises {
 
   public Optional<Pais> getPaisById(String id){
     return this.paises.stream()
-        .filter(unPais -> unPais.id().equals(id))
+        .filter(unPais -> unPais.getId().equals(id))
         .findFirst();
   }
 
