@@ -44,6 +44,7 @@ public class MiembroTest {
     public void registrarTrayectos(){
         ArrayList<Trayecto> listaTrayectos=Common.getTrayectos(2);
         Organizacion orgTest = Common.getOrganizacionEmpresaPrimaria();
+        this.unMiembro.getSector().setOrganizacion(orgTest);
         orgTest = Common.initializeOrganizacion(orgTest,this.unMiembro.getSector());
         this.unMiembro.registrarTrayectos(orgTest,listaTrayectos);
 
@@ -53,7 +54,9 @@ public class MiembroTest {
     @Test
     public void registrarTrayectoExcepcion(){
         ArrayList<Trayecto> trayecto1=Common.getTrayectos(1);
-        Organizacion org=Common.getOrganizacionMinisterio(); //organizacion a la q el miembro no pertenece
+        Organizacion org=Common.getOrganizacionMinisterio();
+        this.unMiembro.getSector().setOrganizacion(Common.getOrganizacionEmpresaPrimaria());
+
 
         Assertions.assertThrows(MiembroNoPerteneceAOrganizacionException.class,
                 () -> {
@@ -80,6 +83,8 @@ public class MiembroTest {
         orgTest = Common.initializeOrganizacion(orgTest,nuevoSector);
         Miembro MiembroSinSector=new Miembro("miembro1",null);
 
+
+        nuevoSector.setOrganizacion(orgTest);
         MiembroSinSector.vincularSector(nuevoSector);
 
         Assertions.assertEquals(nuevoSector,MiembroSinSector.getSector());
