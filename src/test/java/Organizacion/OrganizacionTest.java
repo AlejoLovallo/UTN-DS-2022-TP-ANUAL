@@ -86,7 +86,7 @@ public class OrganizacionTest {
 
 @Test
 public void aceptarvinculacion(){
-    ArrayList<Miembro> miembros = Common.getMiembros(this.organizacionEmpresa,2);
+    ArrayList<Miembro> miembros = Common.getMiembros(2);
 
     miembros.forEach(miembro -> this.organizacionEmpresa.aceptarVinculacion(miembro));
 

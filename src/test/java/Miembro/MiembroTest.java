@@ -31,7 +31,7 @@ public class MiembroTest {
         Organizacion orgTest = Common.getOrganizacionEmpresaPrimaria();
         Sector sectorTest = Common.getSectorTrabajo();
         orgTest = Common.initializeOrganizacion(orgTest,sectorTest);
-        this.unMiembro = new Miembro("miembro1",orgTest,sectorTest);
+        this.unMiembro = new Miembro("miembro1",sectorTest);
     }
 
     @BeforeEach
@@ -43,8 +43,9 @@ public class MiembroTest {
     @Test
     public void registrarTrayectos(){
         ArrayList<Trayecto> listaTrayectos=Common.getTrayectos(2);
-
-        this.unMiembro.registrarTrayectos(this.unMiembro.getOrganizacion(),listaTrayectos);
+        Organizacion orgTest = Common.getOrganizacionEmpresaPrimaria();
+        orgTest = Common.initializeOrganizacion(orgTest,this.unMiembro.getSector());
+        this.unMiembro.registrarTrayectos(orgTest,listaTrayectos);
 
         Assertions.assertEquals(listaTrayectos,this.unMiembro.getTrayectos());
     }
@@ -77,7 +78,7 @@ public class MiembroTest {
         Sector nuevoSector=Common.getSectorTrabajo();
         Organizacion orgTest = Common.getOrganizacionEmpresaPrimaria();
         orgTest = Common.initializeOrganizacion(orgTest,nuevoSector);
-        Miembro MiembroSinSector=new Miembro("miembro1",orgTest,null);
+        Miembro MiembroSinSector=new Miembro("miembro1",null);
 
         MiembroSinSector.vincularSector(nuevoSector);
 

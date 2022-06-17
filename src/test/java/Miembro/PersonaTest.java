@@ -94,7 +94,7 @@ public class PersonaTest {
   @Test
   public void agregarMiembro(){
     Organizacion org=Common.getOrganizacionMinisterio();
-    ArrayList<Miembro> lista=Common.getMiembros(org,3);
+    ArrayList<Miembro> lista=Common.getMiembros(3);
 
     this.unaPersona.agregarMiembro(lista.get(0));
     this.unaPersona.agregarMiembro(lista.get(1));

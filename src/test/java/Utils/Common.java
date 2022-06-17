@@ -48,11 +48,11 @@ public class Common {
     return org;
   }
 
-  public static ArrayList<Miembro> getMiembros(Organizacion org, Integer cantMiembros) {
+  public static ArrayList<Miembro> getMiembros(Integer cantMiembros) {
     ArrayList<Miembro> listaDeMiembros = new ArrayList<Miembro>();
     for (int i = 0; i < cantMiembros; i++) {
       Sector sector = getSector("Sector" + Integer.toString(i), TipoEspacio.Trabajo);
-      listaDeMiembros.add(new Miembro("miembro" + Integer.toString(i), org, sector));
+      listaDeMiembros.add(new Miembro("miembro" + Integer.toString(i), sector));
     }
     return listaDeMiembros;
   }
