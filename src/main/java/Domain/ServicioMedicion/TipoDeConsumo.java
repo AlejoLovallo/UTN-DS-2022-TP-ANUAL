@@ -1,4 +1,4 @@
-package Domain.Organizacion;
+package Domain.ServicioMedicion;
 
 public enum TipoDeConsumo {
   GAS_NATURAL,

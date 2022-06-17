@@ -1,9 +1,9 @@
 package Organizacion;
 
-import Domain.Organizacion.Actividad;
-import Domain.Organizacion.TipoDeActividad;
-import Domain.Organizacion.TipoDeConsumo;
-import Domain.Organizacion.UnidadDeConsumo;
+import Domain.ServicioMedicion.Actividad;
+import Domain.ServicioMedicion.TipoDeActividad;
+import Domain.ServicioMedicion.TipoDeConsumo;
+import Domain.ServicioMedicion.UnidadDeConsumo;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
