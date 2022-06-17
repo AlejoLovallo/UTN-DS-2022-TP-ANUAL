@@ -1,9 +1,11 @@
 package Domain.Trayecto;
 
+import Domain.CalculadorDistancia.ServicioDistancia;
 import Domain.MediosDeTransporte.MedioDeTransporte;
 import Domain.Espacios.Espacio;
 
 public class Tramo {
+  private ServicioDistancia estrategia;
   private Espacio puntoPartida;
   private Espacio puntoLLegada;
   private MedioDeTransporte medio;

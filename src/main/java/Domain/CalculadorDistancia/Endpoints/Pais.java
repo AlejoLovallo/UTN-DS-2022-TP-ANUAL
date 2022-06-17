@@ -1,6 +1,4 @@
-package Domain.API.Endpoints;
-
-import java.util.List;
+package Domain.CalculadorDistancia.Endpoints;
 
 public class Pais {
   private String id;

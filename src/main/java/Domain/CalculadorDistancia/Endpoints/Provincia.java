@@ -1,4 +1,4 @@
-package Domain.API.Endpoints;
+package Domain.CalculadorDistancia.Endpoints;
 
 public class Provincia {
   private String id;
