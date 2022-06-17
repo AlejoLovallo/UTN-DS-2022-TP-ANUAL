@@ -1,13 +1,10 @@
 package Usuarios;
 
 
-import Domain.Espacios.Espacio;
 import Domain.Usuarios.Admin;
-import Domain.Usuarios.Excepciones.ArchivoInaccesibleException;
 import Domain.Usuarios.Excepciones.ContraseniaEsInvalidaException;
 import Domain.Usuarios.RepositorioUsuarios;
 import Domain.Usuarios.Usuario;
-import Utils.Common;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -105,12 +102,12 @@ public class UsuariosTest {
 
     @Test
     public void iniciarSesion_ContraseniaInvalida(){
-        Assertions.assertNull(this.repositorioUsuariosTest.iniciarSesion(username,"1234"));
+        Assertions.assertNull(this.repositorioUsuariosTest.ingresarUsuario(username,"1234"));
     }
 
     @Test
     public void iniciarSesion_UsuarioInvalido(){
-        Assertions.assertNull(this.repositorioUsuariosTest.iniciarSesion("username","1234"));
+        Assertions.assertNull(this.repositorioUsuariosTest.ingresarUsuario("username","1234"));
     }
 
     @Test
