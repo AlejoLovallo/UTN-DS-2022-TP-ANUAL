@@ -10,15 +10,13 @@ import java.util.HashMap;
 
 public class Miembro {
   private String id;
-  private Organizacion organizacion;
   private Sector sector;
   private ArrayList<Trayecto> trayectos;
 
 
   //////////////////////////////////  CONSTRUCTOR
-  public Miembro(String _id, Organizacion _organizacion, Sector _sector){
+  public Miembro(String _id, Sector _sector){
     this.id = _id;
-    this.organizacion = _organizacion;
     this.sector = _sector;
   }
 
@@ -28,12 +26,8 @@ public class Miembro {
     return trayectos;
   }
 
-  public Organizacion getOrganizacion(){
-    return  this.organizacion;
-  }
-
+  public Sector getSector() { return sector; }
   //////////////////////////////////  SETTERS
-
   public void setTrayectos(ArrayList<Trayecto> trayectos) {
     this.trayectos = trayectos;
   }
@@ -43,14 +37,14 @@ public class Miembro {
   public void vincularSector(Sector _sector){
     if (this.sector != null)
       throw new UnicoSectorPorOrganizacionException();
-    organizacion.aceptarVinculacion(this);
+    _sector.getOrganizacion().aceptarVinculacion(this);
     this.sector = _sector;
   }
 
-  public void registrarTrayecto(Organizacion organizacion, Trayecto trayecto){
-    if (!organizacion.equals(this.organizacion))
-        throw new MiembroNoPerteneceAOrganizacionException(organizacion.getRazonSocial());
-    trayectos.add(trayecto);
+  public void registrarTrayectos(Organizacion organizacion, ArrayList<Trayecto> trayectos){
+    if (!this.sector.getOrganizacion().equals(organizacion))
+       throw new MiembroNoPerteneceAOrganizacionException(organizacion.getRazonSocial());
+    this.setTrayectos(trayectos);
   }
 
 }

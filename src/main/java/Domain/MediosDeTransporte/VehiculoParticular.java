@@ -1,6 +1,8 @@
 package Domain.MediosDeTransporte;
 
 import java.util.List;
+
+import Domain.Espacios.Espacio;
 import Domain.MediosDeTransporte.TipoVehiculo;
 import Domain.MediosDeTransporte.TipoCombustible;
 
@@ -18,6 +20,12 @@ public class VehiculoParticular extends MedioDeTransporte{
     this.cantPasajeros = cantPasajeros;
   }
 
+
+  //////////////////////////////////  CONSTRUCTOR
+  public VehiculoParticular(TipoVehiculo _tipoVehiculo, TipoCombustible _tipoCombustible){
+    this.tipoVehiculo = _tipoVehiculo;
+    this.tipoCombustible = _tipoCombustible;
+  }
 
   //////////////////////////////////  GETTERS
 

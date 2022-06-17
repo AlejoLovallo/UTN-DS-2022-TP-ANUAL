@@ -1,31 +1,26 @@
-package Domain.Organizacion;
+package Domain.ServicioMedicion;
+
 import Domain.Organizacion.Excepciones.ImposibilidadDeCrearWorkbookException;
 import Domain.Organizacion.Excepciones.ImposiblidadDeCerrarWorkbookException;
-import org.apache.poi.ss.usermodel.Workbook;
-import org.apache.poi.ss.usermodel.WorkbookFactory;
-import org.apache.poi.ss.usermodel.Sheet;
-import org.apache.poi.ss.usermodel.Cell;
-import org.apache.poi.ss.usermodel.Row;
-import org.apache.poi.ss.usermodel.DataFormatter;
+import org.apache.poi.ss.usermodel.*;
 
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOError;
 import java.io.IOException;
-import java.security.PublicKey;
 import java.util.Iterator;
 
-public class LectorDeActividades {
-  private static LectorDeActividades instance = null;
+public class ServicioExcel extends ServicioMediciones{
+  private static ServicioExcel instance = null;
 
-  public static LectorDeActividades getInstance(){
+  public static ServicioExcel getInstance(){
     if (instance == null){
-      instance = new LectorDeActividades();
+      instance = new ServicioExcel();
     }
     return instance;
   }
 
-  public void leerActividades(String fileName) throws  IOException, IOError{
+  @Override
+  public void cargarMediciones(String fileName) throws IOException, IOError {
     Workbook workbook = null;
     try{
       File file = new File("src/main/java/Domain/Utils/"+ fileName);

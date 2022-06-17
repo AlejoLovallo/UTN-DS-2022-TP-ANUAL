@@ -1,6 +1,6 @@
-package Domain.InterfazUsuario.API;
+package Domain.CalculadorDistancia;
 
-import Domain.InterfazUsuario.API.Endpoints.*;
+import Domain.CalculadorDistancia.Endpoints.*;
 import retrofit2.Call;
 import retrofit2.Response;
 import retrofit2.Retrofit;
@@ -9,14 +9,14 @@ import retrofit2.converter.gson.GsonConverterFactory;
 import java.io.IOException;
 import java.util.List;
 
-public class ServicioDistancias {
+public class ServicioAPI extends ServicioDistancia{
 
-  private static ServicioDistancias instancia = null;
+  private static ServicioAPI instancia = null;
   private static String APP_URL = "https://ddstpa.com.ar/api/";
   private static String authToken;
   private Retrofit retrofit;
 
-  private ServicioDistancias() {
+  private ServicioAPI() {
     this.retrofit = new Retrofit.Builder()
         .baseUrl(APP_URL)
         .addConverterFactory(GsonConverterFactory.create())
@@ -27,9 +27,9 @@ public class ServicioDistancias {
     authToken = "Bearer " + _authToken;
   }
 
-  public static ServicioDistancias getInstance() {
+  public static ServicioAPI getInstance() {
     if (instancia == null) {
-      instancia = new ServicioDistancias();
+      instancia = new ServicioAPI();
     }
     return instancia;
   }
@@ -56,7 +56,11 @@ public class ServicioDistancias {
     return listaDeProvincias;
   }
 
+<<<<<<< HEAD:src/main/java/Domain/InterfazUsuario/API/ServicioDistancias.java
   public List<Municipio> listadoDeMunicipios(Provincia unaProvincia, String offset) throws IOException{
+=======
+  public ListadoMunicipios listadoDeMunicipios(Provincia unaProvincia, String offset) throws IOException{
+>>>>>>> develop:src/main/java/Domain/CalculadorDistancia/ServicioAPI.java
     Api apiService = this.retrofit.create(Api.class);
     Call<List<Municipio>> request = apiService.municipios(authToken,offset,unaProvincia.id());
     Response<List<Municipio>> response = request.execute();
@@ -96,11 +100,16 @@ public class ServicioDistancias {
   }
 
   public static void main(String [] args) throws IOException {
-    ServicioDistancias.setAuthToken("8MaZ8WdbaW+IhLyWfzV/T7oK54b6ILRxUDpW8+9Ba0c=");
-    ServicioDistancias servicioDistancias = ServicioDistancias.getInstance();
+    ServicioAPI.setAuthToken("8MaZ8WdbaW+IhLyWfzV/T7oK54b6ILRxUDpW8+9Ba0c=");
+    ServicioAPI servicioDistancias = ServicioAPI.getInstance();
     List<Pais> paises = servicioDistancias.listadoDePaises("1");
     String paisNombre = paises.get(0).getNombre();
     System.out.println("NOMBRE OBTENIDO "+ paisNombre);
   }
 
+
+  @Override
+  public Double calcularDistancia(){
+    return 0.0;
+  }
 }

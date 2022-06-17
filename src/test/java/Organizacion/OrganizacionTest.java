@@ -77,9 +77,14 @@ public class OrganizacionTest {
   }
 @Test
   public void setRegistrarSector(){
+<<<<<<< HEAD
   Espacio espacio=new Direccion("Cordoba",3000, TipoDireccion.Trabajo);
   Sector sector1=new Sector("Administracion",espacio);
   Sector sector2=new Sector("direccion",espacio);
+=======
+  Sector sector1=Common.getSectorTrabajo();
+  Sector sector2=Common.getSectorTrabajo();
+>>>>>>> develop
 
   this.organizacionEmpresa.registrarSector(sector1);
   this.organizacionEmpresa.registrarSector(sector2);
@@ -88,12 +93,12 @@ public class OrganizacionTest {
 }
 
 @Test
-public void getMiembro(){
-    ArrayList<Miembro> miembros = Common.getMiembros(this.organizacionEmpresa,2);
+public void aceptarvinculacion(){
+    ArrayList<Miembro> miembros = Common.getMiembros(2);
 
     miembros.forEach(miembro -> this.organizacionEmpresa.aceptarVinculacion(miembro));
 
-    //Assertions.assertEquals(Arrays.asList(unmiembro,otromiembro),this.organizacionEmpresa.getMiembros());
+    Assertions.assertEquals(Arrays.asList(miembros.get(0),miembros.get(1)),this.organizacionEmpresa.getMiembros());
     Assertions.assertTrue(this.organizacionEmpresa.aceptarVinculacion(miembros.get(0)));
     Assertions.assertTrue(this.organizacionEmpresa.aceptarVinculacion(miembros.get(1)));
   }

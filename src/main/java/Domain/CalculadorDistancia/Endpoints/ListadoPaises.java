@@ -1,4 +1,4 @@
-package Domain.InterfazUsuario.API.Endpoints;
+package Domain.CalculadorDistancia.Endpoints;
 
 import java.util.List;
 import java.util.Optional;

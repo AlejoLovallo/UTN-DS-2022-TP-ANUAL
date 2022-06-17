@@ -1,4 +1,4 @@
-package Domain.InterfazUsuario.API.Endpoints;
+package Domain.CalculadorDistancia.Endpoints;
 
 public class Municipio {
     private String id;

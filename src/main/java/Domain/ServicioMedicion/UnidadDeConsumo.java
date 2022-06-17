@@ -1,4 +1,4 @@
-package Domain.Organizacion;
+package Domain.ServicioMedicion;
 
 public enum UnidadDeConsumo {
   m3,

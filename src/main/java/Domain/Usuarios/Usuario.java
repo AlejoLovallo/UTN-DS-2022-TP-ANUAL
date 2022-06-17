@@ -21,7 +21,7 @@ public class Usuario {
 
   //////////////////////////////////  CONSTRUCTORES
   public Usuario(String username,String email,String contra,boolean validado) {
-    if(isContraseniaValida(contra)){
+    if(!isContraseniaValida(contra)){
       throw new ContraseniaEsInvalidaException("no pasa por alguna de las validaciones de seguridad");
     }
     this.validado = validado;
@@ -40,6 +40,11 @@ public class Usuario {
     return this.username;
   }
 
+  public String getEmail() {
+    return this.email;
+  }
+
+
 
   //////////////////////////////////  SETTERS
   public void setValidado(Boolean validado) {
@@ -50,7 +55,7 @@ public class Usuario {
   //////////////////////////////////  INTERFACE
   public boolean isColision(String contraAProbar){
     if(this.contraHasheada == null){
-      //todo buscar contrasenia si el usuario no tiene la contra
+      //todo buscar contrasenia em DB si el usuario no tiene la contra
 
     }
     String contraHasheada = generateHash(contraAProbar);

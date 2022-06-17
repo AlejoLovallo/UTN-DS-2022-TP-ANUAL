@@ -1,11 +1,10 @@
 package Domain.Trayecto;
 
-import Domain.Espacios.Direccion;
-import Domain.InterfazUsuario.API.Endpoints.*;
-import Domain.InterfazUsuario.API.ServicioDistancias;
-import Domain.Espacios.Estacion;
-import Domain.MediosDeTransporte.MedioDeTransporte;
 import Domain.Espacios.Espacio;
+import Domain.Espacios.Direccion;
+import Domain.Espacios.Estacion;
+import Domain.CalculadorDistancia.ServicioDistancia;
+import Domain.MediosDeTransporte.MedioDeTransporte;
 import Domain.MediosDeTransporte.TransportePublico;
 import Domain.MediosDeTransporte.VehiculoParticular;
 
@@ -13,6 +12,7 @@ import java.io.IOException;
 import java.util.List;
 
 public class Tramo {
+  private ServicioDistancia estrategia;
   private Espacio puntoPartida;
   private Espacio puntoLLegada;
   private MedioDeTransporte medio;

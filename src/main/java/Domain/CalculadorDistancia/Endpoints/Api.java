@@ -1,4 +1,4 @@
-package Domain.InterfazUsuario.API.Endpoints;
+package Domain.CalculadorDistancia.Endpoints;
 
 import retrofit2.Call;
 import retrofit2.http.*;
