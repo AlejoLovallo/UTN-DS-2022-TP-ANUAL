@@ -3,7 +3,6 @@ package Domain.CalculadorDistancia;
 import Domain.CalculadorDistancia.Endpoints.*;
 import Domain.Espacios.Direccion;
 import Domain.Espacios.Espacio;
-import Domain.Espacios.Estacion;
 import Domain.Espacios.TipoDireccion;
 import Domain.MediosDeTransporte.*;
 import retrofit2.Call;
@@ -134,6 +133,8 @@ public class ServicioAPI extends ServicioDistancia{
     }
     return null;
   }
+
+
   @Override
   public Double calcularDistancia(MedioDeTransporte _medioDeTransporte, Espacio _puntoPartida, Espacio _puntoLlegada) throws IOException {
     Double distanciaTotal = 0.0;

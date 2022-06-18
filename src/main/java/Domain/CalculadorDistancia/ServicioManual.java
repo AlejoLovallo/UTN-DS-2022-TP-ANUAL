@@ -5,7 +5,9 @@ import Domain.Espacios.Estacion;
 import Domain.MediosDeTransporte.TransportePublico;
 
 public class ServicioManual extends ServicioDistancia{
-  public Double calcularDistancia(TransportePublico transportePublico, Espacio puntoPartida, Espacio puntoLLegada){
+
+    @Override
+    public Double calcularDistancia(TransportePublico transportePublico, Espacio puntoPartida, Espacio puntoLLegada){
 
     Double distanciaTotal = 0.0;
 
