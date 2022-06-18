@@ -12,6 +12,7 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import java.io.IOException;
 
 public class TramoTest {
 
@@ -19,7 +20,7 @@ public class TramoTest {
     protected Direccion espacioTest1 = new Direccion("Argentina","Buenos Aires","CABA","CABA","CalleEjemplo1", 100, TipoDireccion.Vivienda);
     protected Direccion espacioTest2 = new Direccion("Argentina","Buenos Aires","CABA","CABA","CalleEjemplo2", 200, TipoDireccion.Trabajo);
     protected VehiculoParticular vehiculoTest = new VehiculoParticular(TipoVehiculo.Auto, TipoCombustible.Nafta);
-    protected Integer cantPasajeros = 4;
+    //protected Integer cantPasajeros = 4;
 
     private void initializeTramo(){
         this.tramoTest = new Tramo(espacioTest1, espacioTest2, vehiculoTest);
@@ -39,10 +40,11 @@ public class TramoTest {
 
     @Test
     public void tramoCreadoCorrectamente() {
-        Assertions.assertEquals(espacioTest1.toString(),this.tramoTest.getPuntoPartida());
-        Assertions.assertEquals(espacioTest2.toString(), this.tramoTest.getPuntoLlegada());
+        Assertions.assertEquals(espacioTest1,this.tramoTest.getPuntoPartida());
+        Assertions.assertEquals(espacioTest2, this.tramoTest.getPuntoLlegada());
         Assertions.assertEquals(vehiculoTest, this.tramoTest.getMedioTransporte());
     }
+
 
     @Test
     public void setPuntoPartida(){
@@ -52,8 +54,8 @@ public class TramoTest {
         //WHEN CUANDO
         this.tramoTest.setPuntoPartida(nuevoPuntoDePartida);
         //THEN ENTONCES
-        Assertions.assertEquals(puntoPartidaActual,espacioTest1.toString());
-        Assertions.assertEquals(nuevoPuntoDePartida.toString(),this.tramoTest.getPuntoPartida());
+        Assertions.assertEquals(puntoPartidaActual,espacioTest1);
+        Assertions.assertEquals(nuevoPuntoDePartida,this.tramoTest.getPuntoPartida());
     }
 
     @Test
@@ -64,8 +66,8 @@ public class TramoTest {
         //WHEN CUANDO
         this.tramoTest.setPuntoLLegada(nuevoPuntoDeLlegada);
         //THEN ENTONCES
-        Assertions.assertEquals(puntoLlegadaActual,espacioTest2.toString());
-        Assertions.assertEquals(nuevoPuntoDeLlegada.toString(),this.tramoTest.getPuntoLlegada());
+        Assertions.assertEquals(puntoLlegadaActual,espacioTest2);
+        Assertions.assertEquals(nuevoPuntoDeLlegada,this.tramoTest.getPuntoLlegada());
     }
 
     @Test
@@ -85,20 +87,10 @@ public class TramoTest {
 
     /*
     @Test
-
-    public void setCantPasajeros(){
-
-        Integer cantPasajeros2 = 2;
-
-        //GIVEN DADO
-        Integer cantPasajeroActual = this.tramoTest.getCantPasajeros();
-        Integer nuevaCantPasajero = cantPasajeros2;
-        //WHEN CUANDO
-        this.tramoTest.setCantPasajeros(nuevaCantPasajero);
-        //THEN ENTONCES
-        Assertions.assertEquals(cantPasajeroActual, cantPasajeros);
-        Assertions.assertEquals(cantPasajeros2,this.tramoTest.getCantPasajeros());
+    public void determinarDistancia() throws IOException {
+        double distancia = 0;
+        Assertions.assertEquals(distancia,this.tramoTest.determinarDistancia());
     }
-    */
+*/
 
 }
