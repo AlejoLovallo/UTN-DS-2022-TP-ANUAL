@@ -4,11 +4,15 @@ import Domain.Espacios.Direccion;
 import Domain.Espacios.Espacio;
 import Domain.Espacios.TipoDireccion;
 import Domain.Espacios.TipoDireccion;
+import Domain.MediosDeTransporte.TipoCombustible;
+import Domain.MediosDeTransporte.TipoVehiculo;
+import Domain.MediosDeTransporte.VehiculoParticular;
 import Domain.Miembro.Miembro;
 import Domain.Organizacion.ClasificacionOrganizacion;
 import Domain.Organizacion.Organizacion;
 import Domain.Organizacion.Sector;
 import Domain.Organizacion.TipoOrganizacion;
+import Domain.Trayecto.Tramo;
 import Domain.Trayecto.Trayecto;
 import Domain.Usuarios.Usuario;
 
@@ -68,12 +72,33 @@ public class Common {
     return new Usuario("juan98", "juan98@gmail.com", "juan1998", true);
   }
 
+  public static Miembro getMiembro() {
+    Organizacion orgTest = Common.getOrganizacionEmpresaPrimaria();
+    Sector sectorTest = Common.getSectorTrabajo();
+    orgTest = Common.initializeOrganizacion(orgTest,sectorTest);
+    Miembro unMiembro = new Miembro("miembro1",sectorTest);
+
+    return unMiembro;
+  }
+
+
   public static ArrayList<Trayecto> getTrayectos(Integer cantTrayectos) {
     ArrayList<Trayecto> listaDeTrayectos = new ArrayList<Trayecto>();
     for (int i = 0; i < cantTrayectos; i++) {
       listaDeTrayectos.add(new Trayecto());
     }
     return listaDeTrayectos;
+  }
+
+  public static Tramo getTramoTest(String calle1, String calle2) {
+
+    Direccion direccionTest1 = new Direccion("Argentina", "BsAs", "Lomas", "Banfield", calle1 , 2, TipoDireccion.Vivienda);
+    Direccion direccionTest2 = new Direccion("Argentina", "BsAs", "Capital", "Almagro", calle2 , 2, TipoDireccion.Trabajo);
+    VehiculoParticular vehiculoTest = new VehiculoParticular(TipoVehiculo.Auto, TipoCombustible.Nafta);
+    //Integer cantPasajeros = 4;
+    Tramo tramoEjemplo = new Tramo(direccionTest1, direccionTest2, vehiculoTest);
+
+    return tramoEjemplo;
   }
 
 }
