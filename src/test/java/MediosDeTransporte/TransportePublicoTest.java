@@ -1,6 +1,6 @@
 package MediosDeTransporte;
 
-import Domain.MediosDeTransporte.Estacion;
+import Domain.Espacios.Estacion;
 import Domain.MediosDeTransporte.TipoTransportePublico;
 import Domain.MediosDeTransporte.TransportePublico;
 import org.junit.jupiter.api.AfterEach;
@@ -18,8 +18,8 @@ public class TransportePublicoTest {
     protected String linea = "LineaDeEjemplo";
     protected List<Estacion> paradas = new ArrayList<>();
 
-    protected Estacion estacion1Test = new Estacion("Estacion1",1);
-    protected Estacion estacion2Test = new Estacion("Estacion2",2);
+    protected Estacion estacion1Test = new Estacion("Estacion1",1,1.5f,2.5f);
+    protected Estacion estacion2Test = new Estacion("Estacion2",2,3.5f,4.5f);
 
 
     private void initializeTransportePublico(){
@@ -76,8 +76,8 @@ public class TransportePublicoTest {
         List<Estacion> paradasActual = this.transportePublicoTest.getParadas();
         List<Estacion> nuevasParadas = new ArrayList<>();
 
-        Estacion estacion1 = new Estacion("Estacion1",1);
-        Estacion estacion2 = new Estacion("Estacion2",2);
+        Estacion estacion1 = new Estacion("Estacion1",1,2.5f,3.5f);
+        Estacion estacion2 = new Estacion("Estacion2",2,1.5f,0.5f);
 
         nuevasParadas.add(estacion1);
         nuevasParadas.add(estacion2);
