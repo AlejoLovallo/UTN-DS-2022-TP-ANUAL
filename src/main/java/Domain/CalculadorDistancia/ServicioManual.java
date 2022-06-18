@@ -2,15 +2,17 @@ package Domain.CalculadorDistancia;
 
 import Domain.Espacios.Espacio;
 import Domain.Espacios.Estacion;
+import Domain.MediosDeTransporte.MedioDeTransporte;
 import Domain.MediosDeTransporte.TransportePublico;
 
 public class ServicioManual extends ServicioDistancia{
 
     @Override
-    public Double calcularDistancia(TransportePublico transportePublico, Espacio puntoPartida, Espacio puntoLLegada){
+    public Double calcularDistancia(MedioDeTransporte medioDeTransporte, Espacio puntoPartida, Espacio puntoLLegada){
 
     Double distanciaTotal = 0.0;
 
+    TransportePublico transportePublico = (TransportePublico) medioDeTransporte;
     Estacion estacionInicial = (Estacion) puntoPartida;
     Estacion estacionFinal = (Estacion) puntoLLegada;
     Integer numeroEstacionInicial = estacionInicial.getNumeroDeEstacion();
