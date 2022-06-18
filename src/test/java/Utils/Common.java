@@ -94,7 +94,7 @@ public class Common {
 
     Direccion direccionTest1 = new Direccion("Argentina", "BsAs", "Lomas", "Banfield", calle1 , 2, TipoDireccion.Vivienda);
     Direccion direccionTest2 = new Direccion("Argentina", "BsAs", "Capital", "Almagro", calle2 , 2, TipoDireccion.Trabajo);
-    VehiculoParticular vehiculoTest = new VehiculoParticular(TipoVehiculo.Auto, TipoCombustible.Nafta);
+    VehiculoParticular vehiculoTest = new VehiculoParticular(TipoVehiculo.Auto, TipoCombustible.Nafta,2);
     //Integer cantPasajeros = 4;
     Tramo tramoEjemplo = new Tramo(direccionTest1, direccionTest2, vehiculoTest);
 

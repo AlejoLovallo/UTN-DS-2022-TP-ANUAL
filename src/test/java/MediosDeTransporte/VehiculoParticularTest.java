@@ -12,11 +12,12 @@ public class VehiculoParticularTest {
 
     protected TipoVehiculo tipoVehiculo = TipoVehiculo.Camioneta ;
     protected TipoCombustible tipoCombustible = TipoCombustible.Nafta;
+    protected Integer cantidadDePasajeros = 2;
 
     protected VehiculoParticular vehiculoParticularTest;
 
     private void initializeVehiculoParticular(){
-        this.vehiculoParticularTest = new VehiculoParticular(tipoVehiculo, tipoCombustible);
+        this.vehiculoParticularTest = new VehiculoParticular(tipoVehiculo, tipoCombustible,cantidadDePasajeros);
     }
 
 

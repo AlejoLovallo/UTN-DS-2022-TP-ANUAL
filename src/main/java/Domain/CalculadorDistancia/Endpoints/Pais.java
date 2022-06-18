@@ -4,16 +4,26 @@ public class Pais {
   private String id;
   private String nombre;
 
+  // CONSTRUCTOR
+
+  public Pais(String id, String nombre) {
+    this.id = id;
+    this.nombre = nombre;
+  }
+
+  // GETTERS
+
   public String getId(){
     return this.id;
   }
 
-  public void setId(String id) {
-    this.id = id;
-  }
-
   public String getNombre() {
     return nombre;
+  }
+
+  // SETTERS
+  public void setId(String id) {
+    this.id = id;
   }
 
   public void setNombre(String nombre) {

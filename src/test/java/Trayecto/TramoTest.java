@@ -19,7 +19,7 @@ public class TramoTest {
     protected Tramo tramoTest;
     protected Direccion espacioTest1 = new Direccion("Argentina","Buenos Aires","CABA","CABA","CalleEjemplo1", 100, TipoDireccion.Vivienda);
     protected Direccion espacioTest2 = new Direccion("Argentina","Buenos Aires","CABA","CABA","CalleEjemplo2", 200, TipoDireccion.Trabajo);
-    protected VehiculoParticular vehiculoTest = new VehiculoParticular(TipoVehiculo.Auto, TipoCombustible.Nafta);
+    protected VehiculoParticular vehiculoTest = new VehiculoParticular(TipoVehiculo.Auto, TipoCombustible.Nafta,2);
     //protected Integer cantPasajeros = 4;
 
     private void initializeTramo(){
@@ -73,7 +73,7 @@ public class TramoTest {
     @Test
     public void setMedio(){
 
-        VehiculoParticular vehiculoTest2 = new VehiculoParticular(TipoVehiculo.Camioneta, TipoCombustible.Electrico);
+        VehiculoParticular vehiculoTest2 = new VehiculoParticular(TipoVehiculo.Camioneta, TipoCombustible.Electrico,2);
 
         //GIVEN DADO
         MedioDeTransporte medioDeTransporteActual = this.tramoTest.getMedioTransporte();

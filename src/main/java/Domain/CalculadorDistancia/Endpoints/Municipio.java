@@ -2,21 +2,21 @@ package Domain.CalculadorDistancia.Endpoints;
 
 public class Municipio {
     private String id;
-    private String Nombre;
+    private String nombre;
 
     // GETTERS
     public String getId() {
       return id;
     }
     public String getNombre() {
-      return Nombre;
+      return nombre;
     }
 
     // SETTERS
-    public void setId(String id) {
-    this.id = id;
+    public void setId(String _id) {
+    this.id = _id;
     }
-    public void setNombre(String nombre) {
-    Nombre = nombre;
+    public void setNombre(String _nombre) {
+    nombre = _nombre;
     }
 }
