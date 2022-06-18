@@ -1,6 +1,6 @@
 package MediosDeTransporte;
 
-import Domain.MediosDeTransporte.Estacion;
+import Domain.Espacios.Estacion;
 import Domain.MediosDeTransporte.TipoTransportePublico;
 import Domain.MediosDeTransporte.TransportePublico;
 import org.junit.jupiter.api.AfterEach;

@@ -21,12 +21,6 @@ public class VehiculoParticular extends MedioDeTransporte{
   }
 
 
-  //////////////////////////////////  CONSTRUCTOR
-  public VehiculoParticular(TipoVehiculo _tipoVehiculo, TipoCombustible _tipoCombustible){
-    this.tipoVehiculo = _tipoVehiculo;
-    this.tipoCombustible = _tipoCombustible;
-  }
-
   //////////////////////////////////  GETTERS
 
   public TipoVehiculo getTipoVehiculo() {

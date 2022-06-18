@@ -4,7 +4,8 @@ import Domain.CalculadorDistancia.Endpoints.*;
 import Domain.Espacios.Direccion;
 import Domain.Espacios.Espacio;
 import Domain.Espacios.Estacion;
-import Domain.MediosDeTransporte.MedioDeTransporte;
+import Domain.Espacios.TipoDireccion;
+import Domain.MediosDeTransporte.*;
 import retrofit2.Call;
 import retrofit2.Response;
 import retrofit2.Retrofit;
@@ -56,6 +57,8 @@ public class ServicioAPI extends ServicioDistancia{
     Call<List<Provincia>> request = apiService.provincias(authToken, offset, unPais.getId());
     Response<List<Provincia>> response = request.execute();
     List<Provincia> listaDeProvincias = response.body();
+    ListadoProvincias listado = ListadoProvincias.getInstance();
+    listado.setProvincias(listaDeProvincias);
 
     return listaDeProvincias;
   }
@@ -101,7 +104,7 @@ public class ServicioAPI extends ServicioDistancia{
 
   public Pais buscarPais(String _nombre, List<Pais> _listaPaises){
     for(int i = 0; i < _listaPaises.size(); i++){
-      if(_nombre == _listaPaises.get(i).getNombre()){
+      if(_nombre.equals(_listaPaises.get(i).getNombre())){
         return _listaPaises.get(i);
       }
     }
@@ -109,7 +112,7 @@ public class ServicioAPI extends ServicioDistancia{
   }
   public Provincia buscarProvincia(String _nombre, List<Provincia> _listaProvincias){
     for(int i = 0; i < _listaProvincias.size(); i++){
-      if(_nombre == _listaProvincias.get(i).getNombre()){
+      if(_nombre.equals(_listaProvincias.get(i).getNombre())){
         return _listaProvincias.get(i);
       }
     }
@@ -117,7 +120,7 @@ public class ServicioAPI extends ServicioDistancia{
   }
   public Municipio buscarMunicipio(String _nombre, List<Municipio> _listaMunicipios){
     for(int i = 0; i < _listaMunicipios.size(); i++){
-      if(_nombre == _listaMunicipios.get(i).getNombre()){
+      if(_nombre.equals(_listaMunicipios.get(i).getNombre())){
         return _listaMunicipios.get(i);
       }
     }
@@ -125,7 +128,7 @@ public class ServicioAPI extends ServicioDistancia{
   }
   public Localidad buscarLocalidad(String _nombre, List<Localidad> _listaLocalidades){
     for(int i = 0; i < _listaLocalidades.size(); i++){
-      if(_nombre == _listaLocalidades.get(i).getNombre()){
+      if(_nombre.equals(_listaLocalidades.get(i).getNombre())){
         return _listaLocalidades.get(i);
       }
     }
@@ -163,10 +166,10 @@ public class ServicioAPI extends ServicioDistancia{
 
     //CONSIGUE LOCALIDADES
     List<Localidad> listaLocalidades1 = servicio.listadoDeLocalidades(municipioPartida,"1");
-    List<Localidad> listaLocalidades2 = servicio.listadoDeLocalidades(municipioPartida,"1");
+    List<Localidad> listaLocalidades2 = servicio.listadoDeLocalidades(municipioLlegada,"1");
 
     Localidad localidadPartida = buscarLocalidad(puntoPartida.getLocalidad(), listaLocalidades1);
-    Localidad localidadLlegada = buscarLocalidad(puntoLLegada.getLocalidad(), listaLocalidades1);
+    Localidad localidadLlegada = buscarLocalidad(puntoLLegada.getLocalidad(), listaLocalidades2);
 
 
     //CALCULA DISTANCIA
@@ -181,10 +184,28 @@ public class ServicioAPI extends ServicioDistancia{
   public static void main(String [] args) throws IOException {
     ServicioAPI.setAuthToken("8MaZ8WdbaW+IhLyWfzV/T7oK54b6ILRxUDpW8+9Ba0c=");
     ServicioAPI servicioDistancias = ServicioAPI.getInstance();
-    List<Pais> paises = servicioDistancias.listadoDePaises("1");
-    String paisNombre = paises.get(0).getNombre();
-    System.out.println("NOMBRE OBTENIDO "+ paisNombre);
-  }
+    VehiculoParticular vehiculoParticular = new VehiculoParticular(TipoVehiculo.Camioneta, TipoCombustible.Nafta, 2);
+    Direccion direccion1 = new Direccion("ARGENTINA", "BUENOS AIRES", "GENERAL LAVALLE", "GENERAL LAVALLE", "CORDOBA", 1234, TipoDireccion.Trabajo);
+    Direccion direccion2 = new Direccion("ARGENTINA", "BUENOS AIRES", "GENERAL LAVALLE", "PAVON", "CORDOBA", 1234, TipoDireccion.Trabajo);
+    Double distancia = servicioDistancias.calcularDistancia(vehiculoParticular, direccion1, direccion2);
+    System.out.println(distancia);
 
+    /*
+    List<Pais> paises = servicioDistancias.listadoDePaises("1");
+    for(int i=0; i< paises.size(); i++){
+      System.out.println(paises.get(i).getNombre());
+    }
+    Pais pais = servicioDistancias.buscarPais("ARGENTINA", paises);
+    System.out.println(pais.getNombre());
+
+    List<Provincia> provincias = servicioDistancias.listadoDeProvincias(new Pais("9","ARGENTINA"),"1");
+    for(int i=0; i< provincias.size(); i++){
+      System.out.println(provincias.get(i).getNombre());
+    }
+    Provincia provincia = servicioDistancias.buscarProvincia("BUENOS AIRES", provincias);
+    System.out.println(provincia.getNombre());
+
+     */
+  }
 }
 
