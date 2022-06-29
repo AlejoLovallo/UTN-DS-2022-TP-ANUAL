@@ -2,6 +2,8 @@
 
 * Trabajo práctico anual 2022.
 
+[TOC]
+
 ### Descripción de la solución
 
 ### Consigna
@@ -10,16 +12,16 @@
 
 ### Diagrama Entidad Relacion
 
-### Integrantes
+### Diagramas de secuencia para login y validación
 
 ****
 
 ## Funcionalidades alto nivel
 
-• Calculadora de HC a nivel Organizacional
-• Mi impacto de HC personal en las Organizaciones
-• HC departamental y provincial
-• Reportes de seguimiento
+* Calculadora de HC a nivel Organizacional
+* Mi impacto de HC personal en las Organizaciones
+* HC departamental y provincial
+* Reportes de seguimiento
 
 ### Organizaciones
 
@@ -42,6 +44,19 @@ Debe poder
 Debe poder
 * Visualizar reportes
 * Visualizar recomendaciones
+
+*****
+
+## Integrantes
+
+* Casadoumecq, Tomás
+* Garcia, Sabrina Veronica
+* Lapa Ramos, Alejandro
+* Lovallo, Alejo Ezequiel
+* Otero, Erik Leonel
+* Rossi, Sebastián
+* Trucco Salowski, Joaquín
+
 
 
 

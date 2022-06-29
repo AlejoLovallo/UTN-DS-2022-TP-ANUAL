@@ -1,7 +1,24 @@
 package Domain.Organizacion;
+import java.util.ArrayList;
 
-import java.util.List;
+/**
+ * Singleton pattern
+ */
 
 public class RepositorioOrganizaciones {
-  private List<Organizacion> organizaciones;
+  private static RepositorioOrganizaciones instance = null;
+
+  private ArrayList<Organizacion> organizaciones;
+
+  private RepositorioOrganizaciones(){}
+
+  public static RepositorioOrganizaciones GetInstance(){
+      if(instance == null){
+        instance = new RepositorioOrganizaciones();
+      }
+      return instance;
+  }
+
+
+
 }
