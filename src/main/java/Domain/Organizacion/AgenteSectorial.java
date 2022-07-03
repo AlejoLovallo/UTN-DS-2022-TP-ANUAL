@@ -1,4 +1,6 @@
 package Domain.Organizacion;
+import Domain.Usuarios.Excepciones.UsuarioException;
+
 import java.util.Set;
 
 public class AgenteSectorial {
@@ -39,6 +41,7 @@ public class AgenteSectorial {
     }
     return total;
   }
+
 
 
 }

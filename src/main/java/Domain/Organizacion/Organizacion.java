@@ -9,6 +9,7 @@ public class Organizacion {
   private ClasificacionOrganizacion clasificacion;
   private ArrayList<Sector> sectores=new ArrayList<>();
   private ArrayList<Miembro> miembros=new ArrayList<>();
+  private AgenteSectorial agenteSectorial;
 
   //////////////////////////////////  CONSTRUCTORES
   public Organizacion(String _razonSocial, TipoOrganizacion _tipo, ClasificacionOrganizacion _clasificacion){
@@ -38,6 +39,10 @@ public class Organizacion {
     return  this.miembros;
   }
 
+  public AgenteSectorial getAgenteSectorial() {
+    return agenteSectorial;
+  }
+
   //////////////////////////////////  SETTERS
   public void setTipo(TipoOrganizacion tipo) {
     this.tipo = tipo;
@@ -49,6 +54,10 @@ public class Organizacion {
 
   public void setRazonSocial(String razonSocial) {
     this.razonSocial = razonSocial;
+  }
+
+  public void setAgenteSectorial(AgenteSectorial agenteSectorial) {
+    this.agenteSectorial = agenteSectorial;
   }
 
   //////////////////////////////////  INTERFACE
