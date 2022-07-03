@@ -62,6 +62,15 @@ public class Organizacion {
     return true;
   }
 
+  // TODO Revisar resultado por unidades y ver el calculo completo
+  public int calculoHCTotalOrganizacion(){
+    int total = 0 ;
+    //sumatoria de todos las HC de cada Organizacion
+    for(Miembro miembro : this.miembros){
+      total += miembro.calculoHCTotalMiembro();
+    }
+    return total;
+  }
 
 
 }
