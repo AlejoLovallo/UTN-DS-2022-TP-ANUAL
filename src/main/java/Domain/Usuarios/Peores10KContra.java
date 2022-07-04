@@ -43,7 +43,6 @@ public class Peores10KContra implements CriterioValidacion {
       throw new ArchivoInaccesibleException();
     }
 
-    //todo testear 
     return peoresContras.stream().noneMatch(contrasenia::equals);
   }
 }
