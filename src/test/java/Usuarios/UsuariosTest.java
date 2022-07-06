@@ -1,4 +1,4 @@
-package MediosDeTransporte.Usuarios;
+package Usuarios;
 
 
 import Domain.Usuarios.Admin;
@@ -112,7 +112,7 @@ public class UsuariosTest {
 
     @Test
     public void crearAdmin() {
-       Admin adminTest = repositorioUsuariosTest.crearAdmin("admin", "contrartghy6", null);
+       Admin adminTest = repositorioUsuariosTest.crearAdmin("admin", "admin@gmail.com","contrartghy6");
         Assertions.assertEquals("admin",adminTest.getUsername());
         Assertions.assertEquals("admin@gmail.com", adminTest.getEmail());
     }

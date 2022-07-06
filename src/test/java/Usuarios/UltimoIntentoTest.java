@@ -1,4 +1,4 @@
-package MediosDeTransporte.Usuarios;
+package Usuarios;
 
 import Domain.Usuarios.UltimoIntento;
 import org.junit.jupiter.api.AfterEach;
