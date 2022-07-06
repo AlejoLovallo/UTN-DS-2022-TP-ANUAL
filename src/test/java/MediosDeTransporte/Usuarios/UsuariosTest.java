@@ -1,4 +1,4 @@
-package Usuarios;
+package MediosDeTransporte.Usuarios;
 
 
 import Domain.Usuarios.Admin;
@@ -60,7 +60,7 @@ public class UsuariosTest {
     public void usuarioCreadoIncorrectamente_ContraseniaCorta() {
         Assertions.assertThrows(ContraseniaEsInvalidaException.class,
             () -> {
-                new Usuario("usuario", "email", "mate", true);
+                new Usuario("usuario", null,"mate", true);
             } );
     }
 
@@ -68,7 +68,7 @@ public class UsuariosTest {
     public void usuarioCreadoIncorrectamente_ContraseniaLarga() {
         Assertions.assertThrows(ContraseniaEsInvalidaException.class,
                 () -> {
-                    new Usuario("usuario", "email", "qwertyuiopasdfghjklñzxcvbnmqwertyuiopasdfghjklñzxcvbnmqwertyuiopasdfghjklñzxcvbnmqwertyuiopasdfghjklñzxcvbnm", true);
+                    new Usuario("usuario", null,"qwertyuiopasdfghjklñzxcvbnmqwertyuiopasdfghjklñzxcvbnmqwertyuiopasdfghjklñzxcvbnmqwertyuiopasdfghjklñzxcvbnm", true);
                 } );
     }
 
@@ -76,7 +76,7 @@ public class UsuariosTest {
     public void usuarioCreadoIncorrectamente_Contrasenia10k() {
         Assertions.assertThrows(ContraseniaEsInvalidaException.class,
                 () -> {
-                    new Usuario("usuario", "email", "1234567890", true);
+                    new Usuario("usuario", null, "1234567890", true);
                 } );
     }
 
@@ -96,7 +96,7 @@ public class UsuariosTest {
 
     @Test
     public void crearUsuario(){
-        this.repositorioUsuariosTest.crearUsuario(username,email,contra,validado);
+        this.repositorioUsuariosTest.crearUsuario(username,email, contra, validado);
     }
 
 
@@ -112,7 +112,7 @@ public class UsuariosTest {
 
     @Test
     public void crearAdmin() {
-       Admin adminTest = repositorioUsuariosTest.crearAdmin("admin", "admin@gmail.com", "contrartghy6");
+       Admin adminTest = repositorioUsuariosTest.crearAdmin("admin", "contrartghy6", null);
         Assertions.assertEquals("admin",adminTest.getUsername());
         Assertions.assertEquals("admin@gmail.com", adminTest.getEmail());
     }

@@ -1,4 +1,4 @@
-package Usuarios;
+package MediosDeTransporte.Usuarios;
 
 import Domain.Usuarios.CriterioLongitud;
 import org.junit.jupiter.api.AfterEach;

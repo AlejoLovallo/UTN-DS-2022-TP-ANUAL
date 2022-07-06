@@ -1,4 +1,4 @@
-package Usuarios;
+package MediosDeTransporte.Usuarios;
 
 import Domain.Usuarios.Excepciones.ArchivoInaccesibleException;
 import Domain.Usuarios.Peores10KContra;
