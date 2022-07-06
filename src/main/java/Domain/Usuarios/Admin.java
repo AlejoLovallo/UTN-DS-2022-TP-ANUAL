@@ -1,4 +1,5 @@
 package Domain.Usuarios;
+import Domain.CalculoHC.FactorEmision;
 
 /*
 +cambiarValoresdeFE()
@@ -9,9 +10,6 @@ package Domain.Usuarios;
 +darDeAltaMedioTransporte(MedioTransporte,boolean)
 +validarUsuario(Usuario,boolean)
  */
-
-
-import Domain.CalculoHC.FactorEmision;
 
 public class Admin extends Usuario {
   //////////////////////////////////  VARIABLES
@@ -52,6 +50,9 @@ public class Admin extends Usuario {
     FactorEmision.getInstance().setEmisionCombustionMovil(emisionCombustionMovil);
     FactorEmision.getInstance().setEmisionElectricidad(emisionElectricidad);
     FactorEmision.getInstance().setEmisionLogistica(emisionLogistica);
+  }
+  public boolean validarUsuario(String username, boolean validacion){
+    return RepositorioUsuarios.getInstance().validarUsuario(username,validacion);
   }
 
   //TODO faltan las validaciones de Organizacion y MedioTransporte
