@@ -64,7 +64,7 @@ public class RepositorioUsuarios {
     return true;
   }
 
-  public Usuario validarLogueUsuario(String username, String contra){
+  public Usuario validarLogueoUsuario(String username, String contra){
     Usuario usuarioConUsername = this.usuarios.stream().filter(u-> u.getUsername().equals(username)).findFirst().orElse(null);
     //Si no encuentra el usuario por username
     if(usuarioConUsername == null){

@@ -102,12 +102,12 @@ public class UsuariosTest {
 
     @Test
     public void iniciarSesion_ContraseniaInvalida(){
-        Assertions.assertNull(this.repositorioUsuariosTest.validarLogueUsuario(username,"1234"));
+        Assertions.assertNull(this.repositorioUsuariosTest.validarLogueoUsuario(username,"1234"));
     }
 
     @Test
     public void iniciarSesion_UsuarioInvalido(){
-        Assertions.assertNull(this.repositorioUsuariosTest.validarLogueUsuario("username","1234"));
+        Assertions.assertNull(this.repositorioUsuariosTest.validarLogueoUsuario("username","1234"));
     }
 
     @Test
