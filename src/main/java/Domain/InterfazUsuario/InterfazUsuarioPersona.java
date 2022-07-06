@@ -14,7 +14,7 @@ public class InterfazUsuarioPersona {
 
     public void ingresarUsuario(String username, String contra){
         try{
-            this.usuario = RepositorioUsuarios.getInstance().ingresarUsuario(username,contra);
+            this.usuario = RepositorioUsuarios.getInstance().validarLogueoUsuario(username,contra);
             this.persona = RepositorioPersonas.getInstance().buscarPersonaPorUsuario(this.usuario);
             devolverUsuarioCorrecto();
         }
