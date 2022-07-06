@@ -1,4 +1,5 @@
 package Domain.Usuarios;
+import Domain.CalculoHC.FactorEmision;
 
 /*
 +cambiarValoresdeFE()
@@ -9,7 +10,6 @@ package Domain.Usuarios;
 +darDeAltaMedioTransporte(MedioTransporte,boolean)
 +validarUsuario(Usuario,boolean)
  */
-
 
 public class Admin extends Usuario {
   //////////////////////////////////  VARIABLES
@@ -31,6 +31,26 @@ public class Admin extends Usuario {
     return RepositorioUsuarios.getInstance().validarUsuario(userDeAlta,validacion);
   }
 
+  public void cambiarFactorCombustionFija(int emisionCombustionFija){
+    FactorEmision.getInstance().setEmisionCombustionFija(emisionCombustionFija);
+  }
+
+  public void cambiarFactorCombustionMovil(int emisionCombustionMovil){
+    FactorEmision.getInstance().setEmisionCombustionMovil(emisionCombustionMovil);
+  }
+  public void cambiarFactorElectricidad(int emisionElectricidad){
+    FactorEmision.getInstance().setEmisionElectricidad(emisionElectricidad);
+  }
+  public void cambiarFactorLogistica(int emisionLogistica){
+    FactorEmision.getInstance().setEmisionLogistica(emisionLogistica);
+  }
+
+  public void cambiarFactoresEmision(int emisionCombustionFija, int emisionCombustionMovil, int emisionElectricidad, int emisionLogistica){
+    FactorEmision.getInstance().setEmisionCombustionFija(emisionCombustionFija);
+    FactorEmision.getInstance().setEmisionCombustionMovil(emisionCombustionMovil);
+    FactorEmision.getInstance().setEmisionElectricidad(emisionElectricidad);
+    FactorEmision.getInstance().setEmisionLogistica(emisionLogistica);
+  }
   public boolean validarUsuario(String username, boolean validacion){
     return RepositorioUsuarios.getInstance().validarUsuario(username,validacion);
   }

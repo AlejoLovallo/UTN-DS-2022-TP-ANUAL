@@ -9,6 +9,7 @@ public class Organizacion {
   private ClasificacionOrganizacion clasificacion;
   private ArrayList<Sector> sectores=new ArrayList<>();
   private ArrayList<Miembro> miembros=new ArrayList<>();
+  private AgenteSectorial agenteSectorial;
 
   //////////////////////////////////  CONSTRUCTORES
   public Organizacion(String _razonSocial, TipoOrganizacion _tipo, ClasificacionOrganizacion _clasificacion){
@@ -38,6 +39,10 @@ public class Organizacion {
     return  this.miembros;
   }
 
+  public AgenteSectorial getAgenteSectorial() {
+    return agenteSectorial;
+  }
+
   //////////////////////////////////  SETTERS
   public void setTipo(TipoOrganizacion tipo) {
     this.tipo = tipo;
@@ -51,6 +56,10 @@ public class Organizacion {
     this.razonSocial = razonSocial;
   }
 
+  public void setAgenteSectorial(AgenteSectorial agenteSectorial) {
+    this.agenteSectorial = agenteSectorial;
+  }
+
   //////////////////////////////////  INTERFACE
 
   public void registrarSector(Sector sector){
@@ -62,6 +71,15 @@ public class Organizacion {
     return true;
   }
 
+  // TODO Revisar resultado por unidades y ver el calculo completo
+  public int calculoHCTotalOrganizacion(){
+    int total = 0 ;
+    //sumatoria de todos las HC de cada Organizacion
+    for(Miembro miembro : this.miembros){
+      total += miembro.calculoHCTotalMiembro();
+    }
+    return total;
+  }
 
 
 }
