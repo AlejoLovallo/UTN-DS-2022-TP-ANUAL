@@ -2,7 +2,7 @@ package Domain.CalculadorHC;
 
 public class FactorEmision {
 
-    private TipoDeFactor tipoDeFactor;
+    private TipoDeActividad tipoDeActividad;
 
     private Double numero;
 
@@ -10,8 +10,8 @@ public class FactorEmision {
 
     // CONSTRUCTOR
 
-    public FactorEmision(TipoDeFactor tipoDeFactor, Double numero, Unidad unidad) {
-        this.tipoDeFactor = tipoDeFactor;
+    public FactorEmision(TipoDeActividad tipoDeActividad, Double numero, Unidad unidad) {
+        this.tipoDeActividad = tipoDeActividad;
         this.numero = numero;
         this.unidad = unidad;
     }
@@ -19,8 +19,8 @@ public class FactorEmision {
 
     // GETTERS
 
-    public TipoDeFactor getTipoDeFactor() {
-        return tipoDeFactor;
+    public  TipoDeActividad getTipoDeActividad() {
+        return tipoDeActividad;
     }
 
     public Double getNumero() {
@@ -34,8 +34,9 @@ public class FactorEmision {
 
     // SETTERS
 
-    public void setTipoDeFactor(TipoDeFactor tipoDeFactor) {
-        this.tipoDeFactor = tipoDeFactor;
+
+    public void setTipoDeActividad(TipoDeActividad tipoDeActividad) {
+        this.tipoDeActividad = tipoDeActividad;
     }
 
     public void setNumero(Double numero) {

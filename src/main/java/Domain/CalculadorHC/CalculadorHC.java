@@ -6,6 +6,7 @@ import Domain.Organizacion.Organizacion;
 import Domain.Organizacion.Sector;
 import Domain.Trayecto.Tramo;
 import Domain.Trayecto.Trayecto;
+import Domain.ServicioMedicion.TipoDeActividad;
 import org.graalvm.compiler.nodes.virtual.CommitAllocationNode;
 
 import java.io.IOException;
@@ -13,26 +14,39 @@ import java.util.ArrayList;
 
 public class CalculadorHC {
 
-    private ArrayList<FactorEmision> factoresDeEmision =new ArrayList<>();
+    private RepositorioFactores factoresDeEmision = RepositorioFactores.getInstance();
+
+    private static CalculadorHC instance = null;
 
     // CONSTRUCTOR
-
+    public static CalculadorHC getInstance(){
+        if(instance == null){
+            instance = new CalculadorHC();
+        }
+        return instance;
+    }
     // GETTERS
+    public RepositorioFactores getFactoresDeEmision() {
+        return factoresDeEmision;
+    }
 
     // SETTERS
+
 
     //METHODS
 
     public Double calcularHC(Miembro miembro) throws IOException {
+
         Double cantidadHC = 0.0;
+
+        Double factorDeEmision = this.factoresDeEmision.getFactorDeEmision(TipoDeActividad.COMBUSTION_MOVIL).getNumero();
 
         for(Trayecto trayecto : miembro.getTrayectos()){
             for(Tramo tramo : trayecto.getTramos()){
-                Double unidadesConsumidas = tramo.determinarDistancia()/tramo.getMedioTransporte().getConsumoPorKm();
-                // Multiplicarlo por el factor de emision y sumarselo a la cantidad HC
+                Double unidadesConsumidas = tramo.determinarDistancia() * tramo.getMedioTransporte().getConsumoPorKm();
+                cantidadHC += unidadesConsumidas * factorDeEmision;
             }
         }
-
         return cantidadHC;
     }
 
@@ -54,7 +68,7 @@ public class CalculadorHC {
         for(Organizacion organizacion : agenteSectorial.getOrganizaciones()){
             cantidadHC += calcularHC(organizacion);
         }
-
+        return cantidadHC;
     }
 
     public Double calcularHC(Sector sector) throws IOException {
@@ -63,7 +77,6 @@ public class CalculadorHC {
         for(Miembro miembro : sector.getMiembros()){
             cantidadHC += calcularHC(miembro);
         }
-
-
+        return cantidadHC;
     }
 }
