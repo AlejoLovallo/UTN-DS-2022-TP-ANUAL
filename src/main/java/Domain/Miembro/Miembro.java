@@ -47,4 +47,8 @@ public class Miembro {
     this.setTrayectos(trayectos);
   }
 
+  //TODO hacer el calculo de un miembro
+  public int calculoHCTotalMiembro() {
+    return 1;
+  }
 }

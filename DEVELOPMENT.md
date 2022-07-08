@@ -42,6 +42,16 @@ _Traerse cambios de develop:_
 ```
 
 
+### ENTREGA 3 
+
+AGENTES SECTORIALES: 
+* AGREGARLO AL DER
+
+CARGA DE CONTACTOS ORGANIZACIONES ---> RAMA ERIK 
+
+
+
+
 
 
 
