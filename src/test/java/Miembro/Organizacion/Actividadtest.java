@@ -1,4 +1,4 @@
-package Organizacion;
+package Miembro.Organizacion;
 
 import Domain.ServicioMedicion.Actividad;
 import Domain.ServicioMedicion.TipoDeActividad;

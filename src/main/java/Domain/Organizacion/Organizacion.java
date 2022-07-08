@@ -1,17 +1,25 @@
 package Domain.Organizacion;
 import Domain.Miembro.Miembro;
-
-import java.util.ArrayList;
+import Domain.Usuarios.Contacto;
+import java.util.*;
 
 public class Organizacion {
   private String razonSocial;
   private TipoOrganizacion tipo;
   private ClasificacionOrganizacion clasificacion;
-  private ArrayList<Sector> sectores=new ArrayList<>();
-  private ArrayList<Miembro> miembros=new ArrayList<>();
+  private ArrayList<Sector> sectores= new ArrayList<>();
+  private ArrayList<Miembro> miembros= new ArrayList<>();
+  private Contacto contacto;
   private AgenteSectorial agenteSectorial;
 
   //////////////////////////////////  CONSTRUCTORES
+  public Organizacion(String _razonSocial, TipoOrganizacion _tipo, ClasificacionOrganizacion _clasificacion, Contacto contacto){
+    this.razonSocial = _razonSocial;
+    this.tipo = _tipo;
+    this.clasificacion = _clasificacion;
+    this.contacto = contacto;
+  }
+
   public Organizacion(String _razonSocial, TipoOrganizacion _tipo, ClasificacionOrganizacion _clasificacion){
     this.razonSocial = _razonSocial;
     this.tipo = _tipo;
@@ -38,6 +46,9 @@ public class Organizacion {
   public ArrayList<Miembro> getMiembros(){
     return  this.miembros;
   }
+  public Contacto getContacto() {
+    return this.contacto;
+  }
 
   public AgenteSectorial getAgenteSectorial() {
     return agenteSectorial;
@@ -56,6 +67,9 @@ public class Organizacion {
     this.razonSocial = razonSocial;
   }
 
+  public void setContacto(Contacto contacto) {
+    this.contacto = contacto;
+  }
   public void setAgenteSectorial(AgenteSectorial agenteSectorial) {
     this.agenteSectorial = agenteSectorial;
   }
@@ -80,6 +94,4 @@ public class Organizacion {
     }
     return total;
   }
-
-
 }
