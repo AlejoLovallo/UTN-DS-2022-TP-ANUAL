@@ -11,7 +11,7 @@ public class Estacion extends Espacio {
 
   //////////////////////////////////  CONSTRUCTOR
 
-  public Estacion(String nombre, Integer numeroDeEstacion, Float distEstAnt, Float distEstPos) {
+  public Estacion(String nombre, Integer numeroDeEstacion, double distEstAnt, double distEstPos) {
     this.nombre = nombre;
     this.numeroDeEstacion = numeroDeEstacion;
     this.distEstAnt = distEstAnt;
