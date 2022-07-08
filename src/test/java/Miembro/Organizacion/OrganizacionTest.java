@@ -1,4 +1,4 @@
-package Organizacion;
+package Miembro.Organizacion;
 import Domain.Espacios.Direccion;
 import Domain.Espacios.Espacio;
 import Domain.Espacios.TipoDireccion;
@@ -19,7 +19,7 @@ public class OrganizacionTest {
   protected Organizacion organizacionEmpresa;
 
   private void initializeOrganizacion(){
-    this.organizacionEmpresa = new Organizacion("OrganizacionTest", TipoOrganizacion.Empresa, ClasificacionOrganizacion.EmpresaSectorPrimario);
+    this.organizacionEmpresa = new Organizacion("OrganizacionTest", TipoOrganizacion.Empresa, ClasificacionOrganizacion.EmpresaSectorPrimario, null);
   }
 
   @BeforeEach
