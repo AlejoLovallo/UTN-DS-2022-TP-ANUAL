@@ -1,4 +1,5 @@
 package Domain.Organizacion;
+import Domain.CalculadorHC.CalculadorHC;
 import Domain.Miembro.Miembro;
 import Domain.Usuarios.Contacto;
 import java.util.*;
@@ -11,6 +12,8 @@ public class Organizacion {
   private ArrayList<Miembro> miembros= new ArrayList<>();
   private Contacto contacto;
   private AgenteSectorial agenteSectorial;
+
+  private CalculadorHC calculadorHC;
 
   //////////////////////////////////  CONSTRUCTORES
   public Organizacion(String _razonSocial, TipoOrganizacion _tipo, ClasificacionOrganizacion _clasificacion, Contacto contacto){
@@ -86,12 +89,7 @@ public class Organizacion {
   }
 
   // TODO Revisar resultado por unidades y ver el calculo completo
-  public int calculoHCTotalOrganizacion(){
-    int total = 0 ;
-    //sumatoria de todos las HC de cada Organizacion
-    for(Miembro miembro : this.miembros){
-      total += miembro.calculoHCTotalMiembro();
-    }
-    return total;
+  public Double calcularHC(){
+    return calculadorHC.calcularHC(this);
   }
 }
