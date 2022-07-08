@@ -1,5 +1,6 @@
 package Domain.Cron;
 
+import Domain.Organizacion.RepositorioOrganizaciones;
 import org.quartz.Job;
 import org.quartz.JobDetail;
 import org.quartz.JobExecutionContext;
@@ -26,7 +27,7 @@ public class Tarea implements Job {
     System.out.println("--------------------------------------------------------------------");
 
     //TODO agregar el envio de mail
-
+    RepositorioOrganizaciones.GetInstance().enviarMailDeRecomendaciones();
 
     //aca uso el jobdatamap con mis objetos de negocio
     CountDownLatch contadorSincronico = (CountDownLatch) jobDetail.getJobDataMap().get("contadorSincronico");
