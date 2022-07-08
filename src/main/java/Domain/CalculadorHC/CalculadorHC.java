@@ -4,6 +4,8 @@ import Domain.Miembro.Miembro;
 import Domain.Organizacion.AgenteSectorial;
 import Domain.Organizacion.Organizacion;
 import Domain.Organizacion.Sector;
+import Domain.Trayecto.Tramo;
+import Domain.Trayecto.Trayecto;
 import org.graalvm.compiler.nodes.virtual.CommitAllocationNode;
 
 import java.util.ArrayList;
@@ -22,6 +24,13 @@ public class CalculadorHC {
 
     public Double calcularHC(Miembro miembro){
         Double cantidadHC = 0.0;
+
+        for(Trayecto trayecto : miembro.getTrayectos()){
+            for(Tramo tramo : trayecto.getTramos()){
+                Double unidadesConsumidas = tramo.determinarDistancia()/tramo.getMedioTransporte().getConsumoPorKm();
+                // Multiplicarlo por el factor de emision y sumarselo a la cantidad HC
+            }
+        }
 
         return cantidadHC;
     }
