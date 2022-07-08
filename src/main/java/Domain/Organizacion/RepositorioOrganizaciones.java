@@ -25,10 +25,11 @@ public class RepositorioOrganizaciones {
       return instance;
   }
 
+
     //////////////////////////////////  GETTERS
   public ArrayList<Organizacion> getOrganizaciones() {
     return organizaciones;
-}
+  }
 
     //////////////////////////////////  SETTERS
 
