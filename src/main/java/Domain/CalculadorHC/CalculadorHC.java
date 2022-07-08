@@ -8,6 +8,7 @@ import Domain.Trayecto.Tramo;
 import Domain.Trayecto.Trayecto;
 import org.graalvm.compiler.nodes.virtual.CommitAllocationNode;
 
+import java.io.IOException;
 import java.util.ArrayList;
 
 public class CalculadorHC {
@@ -22,7 +23,7 @@ public class CalculadorHC {
 
     //METHODS
 
-    public Double calcularHC(Miembro miembro){
+    public Double calcularHC(Miembro miembro) throws IOException {
         Double cantidadHC = 0.0;
 
         for(Trayecto trayecto : miembro.getTrayectos()){
@@ -35,21 +36,34 @@ public class CalculadorHC {
         return cantidadHC;
     }
 
-    public Double calcularHC(Organizacion organizacion){
+    public Double calcularHC(Organizacion organizacion) throws IOException {
         Double cantidadHC = 0.0;
 
-        for(Miembro miembro : organizacion.getMiembros()){
-            cantidadHC += calcularHC(miembro);
+        for (Sector sector : organizacion.getSectores()){
+            for(Miembro miembro : sector.getMiembros()){
+                cantidadHC += calcularHC(miembro);
+            }
         }
+
         return cantidadHC;
     }
 
-    public Double calcularHC(AgenteSectorial agenteSectorial){
+    public Double calcularHC(AgenteSectorial agenteSectorial) throws IOException {
         Double cantidadHC = 0.0;
 
         for(Organizacion organizacion : agenteSectorial.getOrganizaciones()){
             cantidadHC += calcularHC(organizacion);
         }
+
+    }
+
+    public Double calcularHC(Sector sector) throws IOException {
+        Double cantidadHC = 0.0;
+
+        for(Miembro miembro : sector.getMiembros()){
+            cantidadHC += calcularHC(miembro);
+        }
+
 
     }
 }

@@ -6,6 +6,7 @@ import Domain.Organizacion.Organizacion;
 import Domain.Organizacion.Sector;
 import Domain.Trayecto.Trayecto;
 
+import java.io.IOException;
 import java.nio.DoubleBuffer;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -41,7 +42,7 @@ public class Miembro {
   public void vincularSector(Sector _sector){
     if (this.sector != null)
       throw new UnicoSectorPorOrganizacionException();
-    _sector.getOrganizacion().aceptarVinculacion(this);
+    _sector.getOrganizacion().aceptarVinculacion(this, _sector);
     this.sector = _sector;
   }
 
@@ -52,7 +53,7 @@ public class Miembro {
   }
 
   //TODO hacer el calculo de un miembro
-  public Double calcularHC() {
+  public Double calcularHC() throws IOException {
     return calculadorHC.calcularHC(this);
   }
 }

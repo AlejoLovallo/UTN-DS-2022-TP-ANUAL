@@ -2,6 +2,7 @@ package Domain.Organizacion;
 import Domain.CalculadorHC.CalculadorHC;
 import Domain.Usuarios.Excepciones.UsuarioException;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Set;
 
@@ -40,7 +41,7 @@ public class AgenteSectorial {
   }
 
   //TODO revisar resultado, por el tema de Unidades
-  public Double calcularHC(){
+  public Double calcularHC() throws IOException {
     return calculadorHC.calcularHC(this);
   }
 

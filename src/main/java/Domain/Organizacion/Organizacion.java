@@ -2,6 +2,8 @@ package Domain.Organizacion;
 import Domain.CalculadorHC.CalculadorHC;
 import Domain.Miembro.Miembro;
 import Domain.Usuarios.Contacto;
+
+import java.io.IOException;
 import java.util.*;
 
 public class Organizacion {
@@ -9,7 +11,6 @@ public class Organizacion {
   private TipoOrganizacion tipo;
   private ClasificacionOrganizacion clasificacion;
   private ArrayList<Sector> sectores= new ArrayList<>();
-  private ArrayList<Miembro> miembros= new ArrayList<>();
   private Contacto contacto;
   private AgenteSectorial agenteSectorial;
 
@@ -46,9 +47,6 @@ public class Organizacion {
     return this.sectores;
   }
 
-  public ArrayList<Miembro> getMiembros(){
-    return  this.miembros;
-  }
   public Contacto getContacto() {
     return this.contacto;
   }
@@ -83,13 +81,15 @@ public class Organizacion {
     this.sectores.add(sector);
   }
 
-  public Boolean aceptarVinculacion(Miembro miembro){
-    this.miembros.add(miembro);
+  public Boolean aceptarVinculacion(Miembro miembro, Sector sector){
+    if(this.sectores.contains(sector)){
+      sector.getMiembros().add(miembro);
+    }
     return true;
   }
 
   // TODO Revisar resultado por unidades y ver el calculo completo
-  public Double calcularHC(){
+  public Double calcularHC() throws IOException {
     return calculadorHC.calcularHC(this);
   }
 }
