@@ -1,5 +1,8 @@
 package Domain.CalculadorHC;
 
+
+import Domain.ServicioMedicion.TipoDeActividad;
+
 public class FactorEmision {
 
     private TipoDeActividad tipoDeActividad;
