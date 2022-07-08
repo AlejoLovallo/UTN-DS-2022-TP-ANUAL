@@ -19,10 +19,10 @@ public class CalculadorHC {
     //METHODS
 
     public Double calcularHC(Miembro miembro){
-
+        return 0.0;
     }
 
     public Double calcularHC(Organizacion organizacion){
-
+        return 0.0;
     }
 }
