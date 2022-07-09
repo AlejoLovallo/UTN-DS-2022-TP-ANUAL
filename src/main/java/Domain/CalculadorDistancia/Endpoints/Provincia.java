@@ -4,6 +4,13 @@ public class Provincia {
   private String id;
   private String nombre;
 
+  //constructor
+
+  public Provincia(String _id, String _name) {
+    this.id = _id;
+    this.nombre=_name;
+  }
+
   // GETTERS
   public String getId() {
     return id;

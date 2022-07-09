@@ -1,7 +1,7 @@
 package CalculadorDistanciaTest.endPointsTest;
 
-import Domain.CalculadorDistancia.Endpoints.ListadoPaises;
-import Domain.CalculadorDistancia.Endpoints.Pais;
+import Domain.CalculadorDistancia.Endpoints.ListadoProvincias;
+import Domain.CalculadorDistancia.Endpoints.Provincia;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -12,71 +12,68 @@ import java.util.List;
 import java.util.Optional;
 
 public class ListadoProvinciasTest {
-    protected ListadoPaises listProv;
+    protected ListadoProvincias listProv;
 
-    private void initializePaises(){
-        this.listpais=new ListadoPaises();    }
+    private void initializeProvincias(){
+        this.listProv=new ListadoProvincias();    }
 
     @BeforeEach
-    public void initialize(){this.initializePaises();}
+    public void initialize(){this.initializeProvincias();}
 
     @AfterEach
     public void clean(){}
 
     @Test
     public void getInstance(){
-        ListadoPaises lista = null;
+        ListadoProvincias lista = null;
 
         Assertions.assertNull(lista);
         Assertions.assertNotNull(lista.getInstance());
     }
 
     @Test
-    public void getsetPaises(){
-        Pais pais1= new Pais("1","Argentina");
-        Pais pais2= new Pais("2","Brasil");
-        List<Pais> lista=new ArrayList<>();
-        lista.add(pais1);
-        lista.add(pais2);
+    public void getsetProvincias(){
+        Provincia prov1= new Provincia("1","BsAs");
+        Provincia prov2= new Provincia("2","Salta");
+        List<Provincia> lista=new ArrayList<>();
+        lista.add(prov1);
+        lista.add(prov2);
 
-        this.listpais.setPaises(lista);
+        this.listProv.setProvincias(lista);
 
-        Assertions.assertEquals(lista,this.listpais.getPaises());
+        Assertions.assertEquals(lista,this.listProv.getProvincias());
     }
 
     @Test
-    public void getsetPaisesById(){
-        Pais pais1= new Pais("1","Argentina");
-        Pais pais2= new Pais("2","Brasil");
-        List<Pais> lista=new ArrayList<>();
+    public void getsetProvinciasById(){
+        Provincia prov1= new Provincia("1","BsAs");
+        Provincia prov2= new Provincia("2","Salta");
+        List<Provincia> lista=new ArrayList<>();
+        lista.add(prov1);
+        lista.add(prov2);
         String id1="1";
         String id2="2";
 
-        lista.add(pais1);
-        lista.add(pais2);
+        this.listProv.setProvincias(lista);
 
-        this.listpais.setPaises(lista);
-
-        Assertions.assertEquals(Optional.of(pais1), this.listpais.getPaisById(id1));
-        Assertions.assertEquals(Optional.of(pais2), this.listpais.getPaisById(id2));
+        Assertions.assertEquals(Optional.of(prov1), this.listProv.getProvinciaById(id1));
+        Assertions.assertEquals(Optional.of(prov2), this.listProv.getProvinciaById(id2));
 
     }
     @Test
-    public void getsetPaisesByName(){
-        Pais pais1= new Pais("1","Argentina");
-        Pais pais2= new Pais("2","Brasil");
-        List<Pais> lista=new ArrayList<>();
+    public void getsetProvinciasByName(){
+        Provincia prov1= new Provincia("1","BsAs");
+        Provincia prov2= new Provincia("2","Salta");
+        List<Provincia> lista=new ArrayList<>();
+        lista.add(prov1);
+        lista.add(prov2);
+        String name1="BsAs";
+        String name2="Salta";
 
-        String name1="Argentina";
-        String name2="Brasil";
+        this.listProv.setProvincias(lista);
 
-        lista.add(pais1);
-        lista.add(pais2);
-
-        this.listpais.setPaises(lista);
-
-        Assertions.assertEquals(Optional.of(pais1), this.listpais.getPaisByName(name1));
-        Assertions.assertEquals(Optional.of(pais2), this.listpais.getPaisByName(name2));
+        Assertions.assertEquals(Optional.of(prov1), this.listProv.getProvinciaByName(name1));
+        Assertions.assertEquals(Optional.of(prov2), this.listProv.getProvinciaByName(name2));
 
     }
 
