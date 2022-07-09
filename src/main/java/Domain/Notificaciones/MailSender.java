@@ -31,7 +31,7 @@ public class MailSender extends MedioDeNotificacion{
     //////////////////////////////////  SETTERS
 
     //////////////////////////////////  INTERFACE
-    public void enviarNotificacion(Contacto contacto, Notificacion notificacion) {
+    public void enviarNotificacion(Contacto contacto, Notificar notificar) {
         Session conexion = configurarConexionGmail();
         try {
 
@@ -39,15 +39,15 @@ public class MailSender extends MedioDeNotificacion{
             message.setFrom(new InternetAddress(this.email));
             agregarDestinatario(message, contacto.getEmail());
 
-            message.setSubject(notificacion.toMail().getAsunto());
+            message.setSubject(notificar.toMail().getAsunto());
             message.setSentDate(new Date());
 
-            if(notificacion.toMail().getImagen() != null){
+            if(notificar.toMail().getImagen() != null){
                 BodyPart texto = new MimeBodyPart();
-                texto.setContent(notificacion.toMail().getCuerpo(), "text/html");
+                texto.setContent(notificar.toMail().getCuerpo(), "text/html");
 
                 BodyPart imagen = new MimeBodyPart();
-                imagen.setDataHandler(new DataHandler(new FileDataSource(notificacion.toMail().getImagen())));
+                imagen.setDataHandler(new DataHandler(new FileDataSource(notificar.toMail().getImagen())));
                 imagen.setFileName("Imagen.jpg");
 
                 MimeMultipart partes = new MimeMultipart();
@@ -55,7 +55,7 @@ public class MailSender extends MedioDeNotificacion{
                 partes.addBodyPart(imagen);
 
                 message.setContent(partes);
-            }else {message.setText(notificacion.toMail().getCuerpo());}
+            }else {message.setText(notificar.toMail().getCuerpo());}
 
 
             Transport t = conexion.getTransport("smtp");
