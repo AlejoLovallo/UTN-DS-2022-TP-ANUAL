@@ -67,9 +67,9 @@ public class UsuariosTest {
     @Test
     public void usuarioCreadoIncorrectamente_ContraseniaLarga() {
         Assertions.assertThrows(ContraseniaEsInvalidaException.class,
-                () -> {
-                    new Usuario("usuario", null,"qwertyuiopasdfghjklñzxcvbnmqwertyuiopasdfghjklñzxcvbnmqwertyuiopasdfghjklñzxcvbnmqwertyuiopasdfghjklñzxcvbnm", true);
-                } );
+            () -> {
+                new Usuario("usuario", null,"qwertyuiopasdfghjklñzxcvbnmqwertyuiopasdfghjklñzxcvbnmqwertyuiopasdfghjklñzxcvbnmqwertyuiopasdfghjklñzxcvbnm", true);
+            } );
     }
 
     @Test
@@ -96,7 +96,13 @@ public class UsuariosTest {
 
     @Test
     public void crearUsuario(){
-        this.repositorioUsuariosTest.crearUsuario(username,email, contra, validado);
+
+        this.repositorioUsuariosTest.crearUsuario(username, email, contra, validado);
+
+        Assertions.assertEquals(username,this.usuariosTest.getUsername());
+        Assertions.assertEquals(email, this.usuariosTest.getEmail());
+        //Assertions.assertEquals(contra, this.usuariosTest.getMedioTransporte());
+        //Assertions.assertEquals(validado, this.usuariosTest.get());
     }
 
 
@@ -107,12 +113,12 @@ public class UsuariosTest {
 
     @Test
     public void iniciarSesion_UsuarioInvalido(){
-        Assertions.assertNull(this.repositorioUsuariosTest.validarLogueoUsuario("username","1234"));
+        Assertions.assertNull(this.repositorioUsuariosTest.validarLogueoUsuario("usuarioInvalido","1234"));
     }
 
     @Test
     public void crearAdmin() {
-       Admin adminTest = repositorioUsuariosTest.crearAdmin("admin", "admin@gmail.com","contrartghy6");
+        Admin adminTest = repositorioUsuariosTest.crearAdmin("admin", "admin@gmail.com","contrartghy6");
         Assertions.assertEquals("admin",adminTest.getUsername());
         Assertions.assertEquals("admin@gmail.com", adminTest.getEmail());
     }

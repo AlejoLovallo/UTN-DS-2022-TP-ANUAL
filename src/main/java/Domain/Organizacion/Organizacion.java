@@ -12,6 +12,7 @@ public class Organizacion {
   private Contacto contacto;
   private AgenteSectorial agenteSectorial;
 
+
   //////////////////////////////////  CONSTRUCTORES
   public Organizacion(String _razonSocial, TipoOrganizacion _tipo, ClasificacionOrganizacion _clasificacion, Contacto contacto){
     this.razonSocial = _razonSocial;
@@ -49,7 +50,6 @@ public class Organizacion {
   public Contacto getContacto() {
     return this.contacto;
   }
-
   public AgenteSectorial getAgenteSectorial() {
     return agenteSectorial;
   }

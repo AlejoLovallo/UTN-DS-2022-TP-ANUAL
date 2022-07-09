@@ -21,7 +21,7 @@ public class NotificacionesTest {
     private static Organizacion organizacion2;
     List<Organizacion> organizaciones = new ArrayList<>();
     private static MailSender mockNotificadorMail;
-    private static Notificacion notificacion;
+    private static Notificar notificar;
 
 
     @BeforeEach
@@ -32,7 +32,7 @@ public class NotificacionesTest {
 
         organizaciones.add(organizacion1);
         organizaciones.add(organizacion2);
-        notificacion = new NotificacionEstandar();
+        notificar = new NotificarEstandar();
     }
 
     @AfterEach
@@ -47,11 +47,11 @@ public class NotificacionesTest {
         String cuerpo = "Un Cuerpo Estandar";
         MailSender mailSender = new MailSender();
 
-        notificacion.setAsunto(asunto);
-        notificacion.setCuerpo(cuerpo);
-        notificacion.setImagen(null);
+        notificar.setAsunto(asunto);
+        notificar.setCuerpo(cuerpo);
+        notificar.setImagen(null);
 
-        mailSender.enviarNotificacion(organizacion1.getContacto(), notificacion);
+        mailSender.enviarNotificacion(organizacion1.getContacto(), notificar);
     }
 
     @Test
@@ -62,11 +62,11 @@ public class NotificacionesTest {
 
         MailSender mailSender = new MailSender();
 
-        notificacion.setAsunto(asunto);
-        notificacion.setCuerpo(cuerpo);
-        notificacion.setImagen(imagen);
+        notificar.setAsunto(asunto);
+        notificar.setCuerpo(cuerpo);
+        notificar.setImagen(imagen);
 
-        mailSender.enviarNotificacion(organizacion1.getContacto(), notificacion);
+        mailSender.enviarNotificacion(organizacion1.getContacto(), notificar);
     }
 
     @Test
@@ -77,11 +77,11 @@ public class NotificacionesTest {
 
         MailSender mailSender = new MailSender();
 
-        notificacion.setAsunto(asunto);
-        notificacion.setCuerpo(cuerpo);
-        notificacion.setImagen(imagen);
+        notificar.setAsunto(asunto);
+        notificar.setCuerpo(cuerpo);
+        notificar.setImagen(imagen);
 
-        organizaciones.forEach(organizacion ->  mailSender.enviarNotificacion(organizacion.getContacto(), notificacion));
+        organizaciones.forEach(organizacion ->  mailSender.enviarNotificacion(organizacion.getContacto(), notificar));
     }
 
     @Test
@@ -112,11 +112,11 @@ public class NotificacionesTest {
 
         MailSender mailSender = new MailSender(mail, password);
 
-        notificacion.setAsunto(asunto);
-        notificacion.setCuerpo(cuerpo);
-        notificacion.setImagen(null);
+        notificar.setAsunto(asunto);
+        notificar.setCuerpo(cuerpo);
+        notificar.setImagen(null);
 
-        mailSender.enviarNotificacion(organizacion1.getContacto(), notificacion);
+        mailSender.enviarNotificacion(organizacion1.getContacto(), notificar);
     }
 
 

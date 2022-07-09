@@ -9,7 +9,7 @@ import java.util.ArrayList;
 public class RepositorioAgentes {
   private static RepositorioAgentes instance = null;
 
-  private ArrayList<AgenteSectorial> agenteSectoriales;
+  private ArrayList<AgenteSectorial> agenteSectoriales = new ArrayList<>();
 
   private RepositorioAgentes(){}
 
@@ -34,7 +34,7 @@ public class RepositorioAgentes {
   public AgenteSectorial agregarOrganizacionAAgente(String nombre , Organizacion organizacion){
     AgenteSectorial aAsociar = buscarAgente(nombre);
     if(aAsociar!=null){
-      aAsociar.agregarOrganizaccion(organizacion);
+      aAsociar.agregarOrganizacion(organizacion);
       return aAsociar;
     }
     return null;
