@@ -1,4 +1,4 @@
-package Miembro.Organizacion;
+package Organizacion;
 import Domain.Espacios.Direccion;
 import Domain.Espacios.Espacio;
 import Domain.Espacios.TipoDireccion;
@@ -6,6 +6,7 @@ import Domain.Espacios.TipoDireccion;
 import Domain.Miembro.Miembro;
 import Domain.Miembro.TipoDocumento;
 import Domain.Organizacion.*;
+import Domain.Usuarios.Contacto;
 import Utils.Common;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
@@ -17,9 +18,10 @@ import java.util.Arrays;
 
 public class OrganizacionTest {
   protected Organizacion organizacionEmpresa;
+  protected Contacto contacto = new Contacto("Organizacion", "ApellidoEmpresa", 987654321, "org@gmail.com");
 
   private void initializeOrganizacion(){
-    this.organizacionEmpresa = new Organizacion("OrganizacionTest", TipoOrganizacion.Empresa, ClasificacionOrganizacion.EmpresaSectorPrimario, null);
+    this.organizacionEmpresa = new Organizacion("OrganizacionTest", TipoOrganizacion.Empresa, ClasificacionOrganizacion.EmpresaSectorPrimario, contacto);
   }
 
   @BeforeEach
@@ -39,6 +41,7 @@ public class OrganizacionTest {
     Assertions.assertEquals(ClasificacionOrganizacion.EmpresaSectorPrimario, this.organizacionEmpresa.getClasificacion());
     Assertions.assertEquals(Arrays.asList(),this.organizacionEmpresa.getMiembros());
     Assertions.assertEquals(Arrays.asList(),this.organizacionEmpresa.getSectores());
+    Assertions.assertEquals(this.contacto,this.organizacionEmpresa.getContacto());
   }
 
   @Test
@@ -75,6 +78,29 @@ public class OrganizacionTest {
     Assertions.assertEquals(clasificNueva,this.organizacionEmpresa.getClasificacion());
 
   }
+
+  @Test
+  public void setContacto(){
+    //GIVEN DADO
+    Contacto contactoActual = this.organizacionEmpresa.getContacto();
+    Contacto nuevoContacto = new Contacto("NuevoNombre", "NuevoApellido", 123456, "Nuevo@gmail.com");
+    //WHEN CUANDO
+    this.organizacionEmpresa.setContacto(nuevoContacto);
+    //THEN ENTONCES
+    Assertions.assertEquals(contactoActual,this.contacto);
+    Assertions.assertEquals(nuevoContacto,this.organizacionEmpresa.getContacto());
+  }
+
+  @Test
+  public void setAgenteSectorial(){
+    //GIVEN DADO
+    AgenteSectorial nuevoAgenteSectorial = new AgenteSectorial("NuevoNombre", "NuevoApellido", TipoSectorTerritorial.Ministerio);
+    //WHEN CUANDO
+    this.organizacionEmpresa.setAgenteSectorial(nuevoAgenteSectorial);
+    //THEN ENTONCES
+    Assertions.assertEquals(nuevoAgenteSectorial,this.organizacionEmpresa.getAgenteSectorial());
+  }
+
 @Test
   public void setRegistrarSector(){
 
