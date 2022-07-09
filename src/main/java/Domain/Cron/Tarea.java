@@ -17,14 +17,14 @@ public class Tarea implements Job {
     JobDetail jobDetail = jobContext.getJobDetail();
     count++;
 
-    System.out.println("--------------------------------------------------------------------");
-    System.out.println("EJECUTANDO JOB " + jobDetail.getKey());
-    System.out.println("Ejecucion Num. " + count);
-    System.out.println("Inicio: " + jobContext.getFireTime());
-    System.out.println("Info: " + jobDetail.getJobDataMap().getString("ejemplo"));
-    System.out.println("Fin: " + jobContext.getJobRunTime());
-    System.out.println("Proxima ejecucion: " + jobContext.getNextFireTime());
-    System.out.println("--------------------------------------------------------------------");
+    Logger.getInstance().loggearCron("--------------------------------------------------------------------");
+    Logger.getInstance().loggearCron("EJECUTANDO JOB " + jobDetail.getKey());
+    Logger.getInstance().loggearCron("Ejecucion Num. " + count);
+    Logger.getInstance().loggearCron("Inicio: " + jobContext.getFireTime());
+    Logger.getInstance().loggearCron("Info: " + jobDetail.getJobDataMap().getString("ejemplo"));
+    Logger.getInstance().loggearCron("Fin: " + jobContext.getJobRunTime());
+    Logger.getInstance().loggearCron("Proxima ejecucion: " + jobContext.getNextFireTime());
+    Logger.getInstance().loggearCron("--------------------------------------------------------------------");
 
     //TODO agregar el envio de mail
     RepositorioOrganizaciones.GetInstance().enviarMailDeRecomendaciones();
