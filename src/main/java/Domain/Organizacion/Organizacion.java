@@ -2,6 +2,7 @@ package Domain.Organizacion;
 import Domain.CalculadorHC.CalculadorHC;
 import Domain.Miembro.Miembro;
 import Domain.Usuarios.Contacto;
+import Domain.ServicioMedicion.*;
 
 import java.io.IOException;
 import java.util.*;
@@ -13,6 +14,8 @@ public class Organizacion {
   private ArrayList<Sector> sectores= new ArrayList<>();
   private Contacto contacto;
   private AgenteSectorial agenteSectorial;
+  private ServicioMediciones servicioMediciones;
+  private String archivoMediciones;
 
   private CalculadorHC calculadorHC;
 
@@ -55,6 +58,10 @@ public class Organizacion {
     return agenteSectorial;
   }
 
+  public ServicioMediciones getServicioMediciones() { return servicioMediciones;  }
+
+  public String getArchivoMediciones() { return archivoMediciones; }
+
   //////////////////////////////////  SETTERS
   public void setTipo(TipoOrganizacion tipo) {
     this.tipo = tipo;
@@ -75,6 +82,10 @@ public class Organizacion {
     this.agenteSectorial = agenteSectorial;
   }
 
+  public void setServicioMediciones(ServicioMediciones servicioMediciones) {this.servicioMediciones = servicioMediciones;}
+
+  public void setArchivoMediciones(String archivoMediciones) { this.archivoMediciones = archivoMediciones; }
+
   //////////////////////////////////  INTERFACE
 
   public void registrarSector(Sector sector){
@@ -86,6 +97,10 @@ public class Organizacion {
       sector.getMiembros().add(miembro);
     }
     return true;
+  }
+
+  public ArrayList<Actividad> cargarMedicionesInternas(String fileName) throws IOException {
+    return servicioMediciones.cargarMediciones(fileName);
   }
 
   // TODO Revisar resultado por unidades y ver el calculo completo
