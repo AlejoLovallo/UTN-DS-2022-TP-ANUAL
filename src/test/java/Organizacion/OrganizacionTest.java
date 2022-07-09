@@ -101,7 +101,7 @@ public class OrganizacionTest {
     Assertions.assertEquals(nuevoAgenteSectorial,this.organizacionEmpresa.getAgenteSectorial());
   }
 
-@Test
+  @Test
   public void setRegistrarSector(){
 
   Espacio espacio=new Direccion("Argentina", "Buenos Aires", "CABA", "CABA","Cordoba",3000, TipoDireccion.Trabajo);
@@ -115,8 +115,8 @@ public class OrganizacionTest {
   Assertions.assertEquals(Arrays.asList(sector1,sector2),this.organizacionEmpresa.getSectores());
 }
 
-@Test
-public void aceptarvinculacion(){
+  @Test
+  public void aceptarvinculacion(){
     ArrayList<Miembro> miembros = Common.getMiembros(2);
 
     miembros.forEach(miembro -> this.organizacionEmpresa.aceptarVinculacion(miembro));
@@ -126,7 +126,7 @@ public void aceptarvinculacion(){
     Assertions.assertTrue(this.organizacionEmpresa.aceptarVinculacion(miembros.get(1)));
   }
 
-@Test
+  @Test
   public void RepoOrganizaciones(){
   RepositorioOrganizaciones repoOrg = null;
 
@@ -134,8 +134,8 @@ public void aceptarvinculacion(){
   Assertions.assertNotNull(repoOrg.GetInstance());
   }
 
-@Test
-public void RepoSectores(){
+  @Test
+  public void RepoSectores(){
   RepositorioSectores repoSector = null;
 
   Assertions.assertNull(repoSector);

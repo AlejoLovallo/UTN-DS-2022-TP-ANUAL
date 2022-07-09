@@ -37,8 +37,6 @@ public class AgenteSectorial {
   }
 
   //////////////////////////////////  SETTERS
-
-
   public void setNombre(String nombre) {
     this.nombre = nombre;
   }

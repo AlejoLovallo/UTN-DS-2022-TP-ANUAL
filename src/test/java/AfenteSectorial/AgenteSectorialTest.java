@@ -7,10 +7,7 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Set;
 
 public class AgenteSectorialTest {
     private AgenteSectorial agenteSectorialTest;
@@ -96,21 +93,6 @@ public class AgenteSectorialTest {
         Assertions.assertEquals(agenteSectorial.getTerritorio(), "Territorio");
         Assertions.assertEquals(agenteSectorial.getTipoSectorTerritorial(), TipoSectorTerritorial.Ministerio);
     }
-
-   /* @Test
-    public void agregarOrganizacionAAgente(){
-        AgenteSectorial agenteSectorial = RepositorioAgentes.GetInstance().crearAgente("Nombre", "Territorio",TipoSectorTerritorial.Ministerio);
-
-        //GIVEN DADO
-        ArrayList<Organizacion> organizacionesActuales = agenteSectorial.getOrganizaciones();
-        ArrayList<Organizacion> organizacionesActualizadas = organizacionesActuales;
-        organizacionesActualizadas.add(Common.getOrganizacionMinisterio());
-        //WHEN CUANDO
-        agenteSectorial.agregarOrganizacion(Common.getOrganizacionMinisterio());
-
-        //THEN ENTONCES
-        Assertions.assertEquals(organizacionesActualizadas,agenteSectorial.getOrganizaciones());
-    }*/
 
     @Test
     public void agregarOrganizacionAAgente(){
