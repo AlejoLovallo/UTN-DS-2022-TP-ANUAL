@@ -8,7 +8,7 @@ import org.quartz.JobExecutionException;
 
 import java.util.concurrent.CountDownLatch;
 
-public class Tarea implements Job {
+public class CronEnvioMail implements Job {
   private static int count = 0;
 
   @Override

@@ -23,8 +23,9 @@ public class Logger {
   public void loggearCron(String log){
     try {
       String rutaLogger = "src/main/java/cron.log";
+
       BufferedWriter out = new BufferedWriter(new FileWriter(rutaLogger, true));
-      out.write(log);
+      out.write(log + "\n");
       out.close();
     }
     catch (IOException e) {

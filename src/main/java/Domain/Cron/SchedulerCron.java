@@ -2,63 +2,68 @@ package Domain.Cron;
 
 import org.quartz.*;
 
-import java.util.Calendar;
 import java.util.Date;
 import java.util.concurrent.CountDownLatch;
 
 public class SchedulerCron {
-  private CountDownLatch contadorSincronico = new CountDownLatch(4);
+  private final CountDownLatch contadorSincronico = new CountDownLatch(4);
 
-  public static void main(String[] args) throws Exception {
+  public static void main(String[] args) {
     SchedulerCron schedulerCron = new SchedulerCron();
     schedulerCron.comenzar();
   }
 
-  public void comenzar() throws SchedulerException, InterruptedException {
+  public void comenzar()  {
 
     // Creacion del scheduler
     SchedulerFactory schedFactory = new org.quartz.impl.StdSchedulerFactory();
-    Scheduler schedulerCron = schedFactory.getScheduler();
-    // registro de un listener propio
-    schedulerCron.getListenerManager().addSchedulerListener(new LogSchedulerListenerImpl(schedulerCron));
+    Scheduler schedulerCron;
+    try {
+      schedulerCron = schedFactory.getScheduler();
 
-    // Construccion de JobDetail
-    JobBuilder jobBuilder = JobBuilder.newJob(Tarea.class);
-    JobDataMap data = new JobDataMap();
-    data.put("contadorSincronico", contadorSincronico);
-    JobDetail jobDetail = jobBuilder
-        .withIdentity("unJob")
-        .usingJobData(data)
-        .usingJobData("ejemplo", "enviando mail")
-        .build();
+      // registro de un listener propio
+      schedulerCron.getListenerManager().addSchedulerListener(new LogSchedulerListenerImpl(schedulerCron));
 
-    Calendar rightNow = Calendar.getInstance();
-    int hour = rightNow.get(Calendar.HOUR_OF_DAY);
-    int min = rightNow.get(Calendar.MINUTE);
+      // Construccion de JobDetail
+      JobBuilder jobBuilder = JobBuilder.newJob(CronEnvioMail.class);
+      JobDataMap data = new JobDataMap();
+      data.put("contadorSincronico", contadorSincronico);
+      JobDetail jobDetail = jobBuilder
+          .withIdentity("unJob")
+          .usingJobData(data)
+          .usingJobData("ejemplo", "enviando mail")
+          .build();
 
-    System.out.println("Hora actual: " + new Date());
 
-    // Construccion de Trigger
+      System.out.println("Hora actual: " + new Date());
 
-    String cronLunes7AM = "0 7 * * 1";
+      // Construccion de Trigger
 
-    String cron5Seg = "0/5 * * ? * * *";
+      String cronLunes7AM = "0 7 * * 1";
 
-    String cron1Seg = "* * * ? * * *";
+      String cron5Seg = "0/5 * * ? * * *";
 
-    Trigger trigger = TriggerBuilder.newTrigger()
-        .withIdentity("unTrigger")
-        .startAt(new Date())
-        .withSchedule(CronScheduleBuilder.cronSchedule(cron5Seg))
-        .build();
+      String cron1Seg = "* * * ? * * *";
 
-    // Asignacion del job y el trigger a la inst de scheduler
-    schedulerCron.scheduleJob(jobDetail, trigger);
-    schedulerCron.start();
+      Trigger trigger = TriggerBuilder.newTrigger()
+          .withIdentity("unTrigger")
+          .startAt(new Date())
+          .withSchedule(CronScheduleBuilder.cronSchedule(cron5Seg))
+          .build();
 
-    // Para que el proceso principal espere a los calendarizados.
-    // Porque en Java cuando el hilo principal muere, todos los sub-hilos también.
-    contadorSincronico.await(); // esperando fin de las ejecuciones
-    schedulerCron.shutdown();
+      // Asignacion del job y el trigger a la inst de scheduler
+      schedulerCron.scheduleJob(jobDetail, trigger);
+      schedulerCron.start();
+
+      // Para que el proceso principal espere a los calendarizados.
+      // Porque en Java cuando el hilo principal muere, todos los sub-hilos también.
+      contadorSincronico.await(); // esperando fin de las ejecuciones
+      schedulerCron.shutdown();
+
+      Logger.getInstance().loggearCron("----------------------FIN DE CRON----------------------");
+
+    } catch (SchedulerException | InterruptedException e) {
+      e.printStackTrace();
+    }
   }
 }
