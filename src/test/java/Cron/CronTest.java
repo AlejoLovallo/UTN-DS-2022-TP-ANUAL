@@ -3,8 +3,8 @@ package Cron;
 
 import Domain.Cron.SchedulerCron;
 import Domain.Notificaciones.MailSender;
-//import Domain.Notificaciones.Notificacion;
-//import Domain.Notificaciones.NotificacionEstandar;
+import Domain.Notificaciones.Notificar;
+import Domain.Notificaciones.NotificarEstandar;
 import Domain.Organizacion.Organizacion;
 import Domain.Organizacion.RepositorioOrganizaciones;
 import Domain.Usuarios.Contacto;
@@ -20,12 +20,12 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.doThrow;
 
-/*
+
 public class CronTest {
   private static Organizacion organizacion1;
   private static Organizacion organizacion2;
   private static MailSender mockNotificadorMail;
-  private static Notificacion notificacion;
+  private static Notificar notificacion;
 
 
   @BeforeEach
@@ -35,7 +35,7 @@ public class CronTest {
 
     RepositorioOrganizaciones.GetInstance().agregarOrganizacion(organizacion1);
     RepositorioOrganizaciones.GetInstance().agregarOrganizacion(organizacion2);
-    notificacion = new NotificacionEstandar();
+    notificacion = new NotificarEstandar();
   }
 
   @AfterEach
@@ -49,10 +49,10 @@ public class CronTest {
     schedulerCron.comenzar();
   }
 
-*/
+
 
   /*--------------------Metodos usados para crear objetos del test------------------------*/
-/*
+
   public static Organizacion getOrganizacion1() {
     Contacto contacto = new Contacto("Tomas", "Casadoumecq", 123456789, "tomas.casa123@gmail.com");
     return new Organizacion(null, null, null, contacto);
@@ -64,4 +64,4 @@ public class CronTest {
   }
 
 }
-*/
+
