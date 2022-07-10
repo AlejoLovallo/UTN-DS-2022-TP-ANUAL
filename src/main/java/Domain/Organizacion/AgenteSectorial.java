@@ -12,7 +12,7 @@ public class AgenteSectorial {
   private String territorio;
   private TipoSectorTerritorial tipoSectorTerritorial;
   private ArrayList<Organizacion> organizaciones = new ArrayList<>();
-  private CalculadorHC calculadorHC;
+  private CalculadorHC calculadorHC = CalculadorHC.getInstance();
 
   //////////////////////////////////  CONSTRUCTORES
   public AgenteSectorial(String nombre, String territorio, TipoSectorTerritorial tipoSectorTerritorial) {

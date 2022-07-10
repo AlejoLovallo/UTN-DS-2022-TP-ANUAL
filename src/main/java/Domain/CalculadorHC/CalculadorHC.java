@@ -41,7 +41,7 @@ public class CalculadorHC {
 
         Double cantidadHC = 0.0;
 
-        Double factorDeEmision = this.factoresDeEmision.getFactorDeEmision(TipoDeActividad.COMBUSTION_MOVIL).getNumero();
+        Double factorDeEmision = this.factoresDeEmision.getFactorDeEmisionSegunActividad(TipoDeActividad.COMBUSTION_MOVIL).getNumero();
 
         for(Trayecto trayecto : miembro.getTrayectos()){
             for(Tramo tramo : trayecto.getTramos()){
@@ -60,7 +60,7 @@ public class CalculadorHC {
         for(int i = 0; i < actividades.size(); i++)
         {
             Actividad actividad = actividades.get(i);
-            Double factorDeEmision = this.factoresDeEmision.getFactorDeEmision(actividad.getNombre()).getNumero();
+            Double factorDeEmision = this.factoresDeEmision.getFactorDeEmisionSegunActividad(actividad.getNombre()).getNumero();
             cantidadHC += actividades.get(i).getConsumo() * factorDeEmision;
         }
 

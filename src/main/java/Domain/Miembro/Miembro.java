@@ -16,7 +16,7 @@ public class Miembro {
   private Sector sector;
   private ArrayList<Trayecto> trayectos;
 
-  private CalculadorHC calculadorHC;
+  private CalculadorHC calculadorHC = CalculadorHC.getInstance();
 
 
   //////////////////////////////////  CONSTRUCTOR

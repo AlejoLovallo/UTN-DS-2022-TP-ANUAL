@@ -17,7 +17,7 @@ public class Organizacion {
   private ServicioMediciones servicioMediciones;
   private String archivoMediciones;
 
-  private CalculadorHC calculadorHC;
+  private CalculadorHC calculadorHC = CalculadorHC.getInstance();
 
 
   //////////////////////////////////  CONSTRUCTORES
