@@ -1,5 +1,6 @@
 package Domain.CalculadorHC;
 
+import Domain.CalculadorHC.Excepciones.FactorDeEmisionNoEncontradoException;
 import Domain.ServicioMedicion.TipoDeActividad;
 
 import java.util.ArrayList;
@@ -36,10 +37,34 @@ public class RepositorioFactores {
         return factor.get();
     }
 
+    public FactorEmision getFactorDeEmision(FactorEmision factor){
+        Integer index =  this.factoresDeEmision.indexOf(factor);
+        if (index != -1){
+            return this.factoresDeEmision.get(index);
+        }else {
+            throw(new FactorDeEmisionNoEncontradoException(factor));
+        }
+    }
+
+
     //////////////////////////////////  SETTERS
 
     public void setFactoresDeEmision(ArrayList<FactorEmision> factoresDeEmision) {
         this.factoresDeEmision = factoresDeEmision;
+    }
+
+    public boolean agregarFactorDeEmision(FactorEmision factor){
+        this.factoresDeEmision.add(factor);
+        return true;
+    }
+
+    public boolean updateFactorDeEmision(FactorEmision factor){
+        Integer index = this.factoresDeEmision.indexOf(factor);
+        if(index != -1 ) {
+            this.factoresDeEmision.set(index,factor);
+            return true;
+        }
+        return false;
     }
 
     //////////////////////////////////  INTERFACE
