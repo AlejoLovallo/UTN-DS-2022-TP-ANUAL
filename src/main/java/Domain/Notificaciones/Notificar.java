@@ -1,6 +1,6 @@
 package Domain.Notificaciones;
 
-public interface Notificacion {
+public interface Notificar {
     //////////////////////////////////  VARIABLES
     //////////////////////////////////  CONSTRUCTORES
     //////////////////////////////////  GETTERS
