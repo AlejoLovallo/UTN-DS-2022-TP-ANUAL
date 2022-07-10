@@ -40,12 +40,12 @@ public class Common {
 
   public static Sector getSectorTrabajo(){
     Espacio espacio = new Direccion("Argentina", "Buenos Aires", "CABA", "CABA","calle test",123, TipoDireccion.Trabajo);
-    return new Sector("Sector test",espacio);
+    return new Sector("Sector test",espacio, null, new ArrayList<Miembro>());
   }
 
   public static Sector getSector(String nombreSector, TipoDireccion tipoEspacio){
     Espacio espacio = new Direccion("Argentina", "Buenos Aires", "CABA", "CABA","esp test",123,tipoEspacio);
-    return new Sector(nombreSector,espacio);
+    return new Sector(nombreSector,espacio, null, new ArrayList<Miembro>());
   }
 
   public static Organizacion initializeOrganizacion(Organizacion org, Sector sector) {

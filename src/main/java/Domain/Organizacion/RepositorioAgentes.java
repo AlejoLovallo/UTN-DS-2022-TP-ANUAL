@@ -1,5 +1,4 @@
 package Domain.Organizacion;
-
 import java.util.ArrayList;
 
 /**
