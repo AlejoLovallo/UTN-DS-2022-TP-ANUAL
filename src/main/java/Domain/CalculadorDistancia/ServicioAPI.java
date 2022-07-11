@@ -42,8 +42,7 @@ public class ServicioAPI extends ServicioDistancia{
     Api apiService = this.retrofit.create(Api.class);
     Call<List<Pais>> request = apiService.paises(authToken, offset);
     Response<List<Pais>> response = request.execute();
-    System.out.println("ACA LLEGO BIEN");
-    System.out.println(response.toString());
+    //System.out.println(response.toString());
     List<Pais> listaPaises = response.body();
     ListadoPaises listado = ListadoPaises.getInstance();
     listado.setPaises(listaPaises);
