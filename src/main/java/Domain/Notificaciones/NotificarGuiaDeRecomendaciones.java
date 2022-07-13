@@ -1,41 +1,46 @@
 package Domain.Notificaciones;
 
 
-public class NotificacionEstandar implements Notificacion {
+public class NotificarGuiaDeRecomendaciones implements Notificar {
     //////////////////////////////////  VARIABLES
-    String asunto = null;
-    String cuerpo = null;
+    String asunto = "Recomendaciones";
+    String cuerpo = "https://www.google.com/";
     String imagen = null;
 
-    //////////////////////////////////  CONSTRUCTORES
-    public NotificacionEstandar(){}
+    //////////////////////////////////////  CONSTRUCTORES
+    public NotificarGuiaDeRecomendaciones(){}
 
     //////////////////////////////////  GETTERS
 
     //////////////////////////////////  SETTERS
+    @Override
     public void setAsunto(String asunto) {
         this.asunto = asunto;
     }
 
+    @Override
     public void setCuerpo(String cuerpo) {
         this.cuerpo = cuerpo;
     }
 
+    @Override
     public void setImagen(String imagen) {
         this.imagen = imagen;
     }
 
     //////////////////////////////////  INTERFACE
-    public Mail toMail(){
-        return new Mail(asunto, cuerpo, imagen);
+
+    public Mail toMail() {
+        return new Mail(asunto, cuerpo, null);
     }
 
     public String toSMS(){
-        return cuerpo;
+        return "Guia De Recomendaciones";
     }
 
     public String toWhatsApp(){
-        return cuerpo;
+        return "Guia De Recomendaciones";
     }
+
 
 }

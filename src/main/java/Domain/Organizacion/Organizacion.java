@@ -17,7 +17,8 @@ public class Organizacion {
   private ServicioMediciones servicioMediciones;
   private String archivoMediciones;
 
-  private CalculadorHC calculadorHC;
+  private CalculadorHC calculadorHC = CalculadorHC.getInstance();
+
 
   //////////////////////////////////  CONSTRUCTORES
   public Organizacion(String _razonSocial, TipoOrganizacion _tipo, ClasificacionOrganizacion _clasificacion, Contacto contacto){
@@ -53,7 +54,6 @@ public class Organizacion {
   public Contacto getContacto() {
     return this.contacto;
   }
-
   public AgenteSectorial getAgenteSectorial() {
     return agenteSectorial;
   }

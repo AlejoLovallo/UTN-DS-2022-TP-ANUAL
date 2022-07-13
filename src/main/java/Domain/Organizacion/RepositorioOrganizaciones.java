@@ -1,7 +1,7 @@
 package Domain.Organizacion;
 import Domain.Notificaciones.MailSender;
-import Domain.Notificaciones.Notificacion;
-import Domain.Notificaciones.NotificacionGuiaDeRecomendaciones;
+import Domain.Notificaciones.Notificar;
+import Domain.Notificaciones.NotificarGuiaDeRecomendaciones;
 import java.util.ArrayList;
 
 /**
@@ -24,12 +24,10 @@ public class RepositorioOrganizaciones {
       }
       return instance;
   }
-
-
     //////////////////////////////////  GETTERS
   public ArrayList<Organizacion> getOrganizaciones() {
     return organizaciones;
-  }
+}
 
     //////////////////////////////////  SETTERS
 
@@ -38,11 +36,11 @@ public class RepositorioOrganizaciones {
   //TODO REVISAR QUE NO SE PUEDE MODIFIAR LA NOTIFICACION
   public void enviarMailDeRecomendaciones() {
       if(this.organizaciones != null){
-          Notificacion notificacion = new NotificacionGuiaDeRecomendaciones();
+          Notificar notificar = new NotificarGuiaDeRecomendaciones();
           String mail = "grupo7dds2022@gmail.com";
           String password = "jczcefspehwrnvqz";
           MailSender mailSender = new MailSender(mail,password);
-          this.organizaciones.forEach(organizacion -> mailSender.enviarNotificacion(organizacion.getContacto(), notificacion));
+          this.organizaciones.forEach(organizacion -> mailSender.enviarNotificacion(organizacion.getContacto(), notificar));
       }
    }
 
