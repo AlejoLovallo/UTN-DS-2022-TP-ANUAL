@@ -1,5 +1,6 @@
 package Domain.Usuarios;
-import Domain.CalculoHC.FactorEmision;
+import Domain.CalculadorHC.FactorEmision;
+import Domain.CalculadorHC.RepositorioFactores;
 
 /*
 +cambiarValoresdeFE()
@@ -13,6 +14,7 @@ import Domain.CalculoHC.FactorEmision;
 
 public class Admin extends Usuario {
   //////////////////////////////////  VARIABLES
+  private RepositorioFactores repoFactoresDeEmision;
 
   //////////////////////////////////  CONSTRUCTORES
   public Admin(String username, String email, String contra, boolean validado) {
@@ -31,28 +33,20 @@ public class Admin extends Usuario {
     return RepositorioUsuarios.getInstance().validarUsuario(userDeAlta,validacion);
   }
 
-  public void cambiarFactorCombustionFija(int emisionCombustionFija){
-    FactorEmision.getInstance().setEmisionCombustionFija(emisionCombustionFija);
-  }
-
-  public void cambiarFactorCombustionMovil(int emisionCombustionMovil){
-    FactorEmision.getInstance().setEmisionCombustionMovil(emisionCombustionMovil);
-  }
-  public void cambiarFactorElectricidad(int emisionElectricidad){
-    FactorEmision.getInstance().setEmisionElectricidad(emisionElectricidad);
-  }
-  public void cambiarFactorLogistica(int emisionLogistica){
-    FactorEmision.getInstance().setEmisionLogistica(emisionLogistica);
-  }
-
-  public void cambiarFactoresEmision(int emisionCombustionFija, int emisionCombustionMovil, int emisionElectricidad, int emisionLogistica){
-    FactorEmision.getInstance().setEmisionCombustionFija(emisionCombustionFija);
-    FactorEmision.getInstance().setEmisionCombustionMovil(emisionCombustionMovil);
-    FactorEmision.getInstance().setEmisionElectricidad(emisionElectricidad);
-    FactorEmision.getInstance().setEmisionLogistica(emisionLogistica);
-  }
   public boolean validarUsuario(String username, boolean validacion){
     return RepositorioUsuarios.getInstance().validarUsuario(username,validacion);
+  }
+
+  public boolean registrarFactorDeEmision(FactorEmision factor){
+    repoFactoresDeEmision.agregarFactorDeEmision(factor);
+    return true;
+  }
+
+  public boolean cambiarFactorDeEmision(FactorEmision factor, Double nuevoValor){
+    FactorEmision _factor = this.repoFactoresDeEmision.getFactorDeEmision(factor);
+    _factor.setNumero(nuevoValor);
+    this.repoFactoresDeEmision.updateFactorDeEmision(_factor);
+    return true;
   }
 
   //TODO faltan las validaciones de Organizacion y MedioTransporte

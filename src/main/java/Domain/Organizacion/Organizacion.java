@@ -1,6 +1,10 @@
 package Domain.Organizacion;
+import Domain.CalculadorHC.CalculadorHC;
 import Domain.Miembro.Miembro;
 import Domain.Usuarios.Contacto;
+import Domain.ServicioMedicion.*;
+
+import java.io.IOException;
 import java.util.*;
 
 public class Organizacion {
@@ -8,9 +12,12 @@ public class Organizacion {
   private TipoOrganizacion tipo;
   private ClasificacionOrganizacion clasificacion;
   private ArrayList<Sector> sectores= new ArrayList<>();
-  private ArrayList<Miembro> miembros= new ArrayList<>();
   private Contacto contacto;
   private AgenteSectorial agenteSectorial;
+  private ServicioMediciones servicioMediciones;
+  private String archivoMediciones;
+
+  private CalculadorHC calculadorHC = CalculadorHC.getInstance();
 
 
   //////////////////////////////////  CONSTRUCTORES
@@ -44,15 +51,16 @@ public class Organizacion {
     return this.sectores;
   }
 
-  public ArrayList<Miembro> getMiembros(){
-    return  this.miembros;
-  }
   public Contacto getContacto() {
     return this.contacto;
   }
   public AgenteSectorial getAgenteSectorial() {
     return agenteSectorial;
   }
+
+  public ServicioMediciones getServicioMediciones() { return servicioMediciones;  }
+
+  public String getArchivoMediciones() { return archivoMediciones; }
 
   //////////////////////////////////  SETTERS
   public void setTipo(TipoOrganizacion tipo) {
@@ -74,24 +82,29 @@ public class Organizacion {
     this.agenteSectorial = agenteSectorial;
   }
 
+  public void setServicioMediciones(ServicioMediciones servicioMediciones) {this.servicioMediciones = servicioMediciones;}
+
+  public void setArchivoMediciones(String archivoMediciones) { this.archivoMediciones = archivoMediciones; }
+
   //////////////////////////////////  INTERFACE
 
   public void registrarSector(Sector sector){
     this.sectores.add(sector);
   }
 
-  public Boolean aceptarVinculacion(Miembro miembro){
-    this.miembros.add(miembro);
+  public Boolean aceptarVinculacion(Miembro miembro, Sector sector){
+    if(this.sectores.contains(sector)){
+      sector.getMiembros().add(miembro);
+    }
     return true;
   }
 
+  public ArrayList<Actividad> cargarMedicionesInternas(String fileName) throws IOException {
+    return servicioMediciones.cargarMediciones(fileName);
+  }
+
   // TODO Revisar resultado por unidades y ver el calculo completo
-  public int calculoHCTotalOrganizacion(){
-    int total = 0 ;
-    //sumatoria de todos las HC de cada Organizacion
-    for(Miembro miembro : this.miembros){
-      total += miembro.calculoHCTotalMiembro();
-    }
-    return total;
+  public Double calcularHC() throws IOException {
+    return calculadorHC.calcularHC(this);
   }
 }

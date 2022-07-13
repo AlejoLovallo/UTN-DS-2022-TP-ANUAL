@@ -22,9 +22,9 @@ public class ServicioAPI extends ServicioDistancia{
 
   private ServicioAPI() {
     this.retrofit = new Retrofit.Builder()
-        .baseUrl(APP_URL)
-        .addConverterFactory(GsonConverterFactory.create())
-        .build();
+            .baseUrl(APP_URL)
+            .addConverterFactory(GsonConverterFactory.create())
+            .build();
   }
 
   public static void setAuthToken(String _authToken) {
@@ -42,8 +42,7 @@ public class ServicioAPI extends ServicioDistancia{
     Api apiService = this.retrofit.create(Api.class);
     Call<List<Pais>> request = apiService.paises(authToken, offset);
     Response<List<Pais>> response = request.execute();
-    System.out.println("ACA LLEGO BIEN");
-    System.out.println(response.toString());
+    //System.out.println(response.toString());
     List<Pais> listaPaises = response.body();
     ListadoPaises listado = ListadoPaises.getInstance();
     listado.setPaises(listaPaises);
@@ -86,15 +85,15 @@ public class ServicioAPI extends ServicioDistancia{
                              String alturaOrigen,
                              String calleDestino,
                              String alturaDestino)
-      throws IOException{
+          throws IOException{
     Api apiService = this.retrofit.create(Api.class);
     Call<Distancia> request = apiService.distancia(authToken,
-        localidadOrigen.getId(),
-        localidadDestino.getId(),
-        calleOrigen,
-        alturaOrigen,
-        calleDestino,
-        alturaDestino
+            localidadOrigen.getId(),
+            localidadDestino.getId(),
+            calleOrigen,
+            alturaOrigen,
+            calleDestino,
+            alturaDestino
     );
     Response<Distancia> response = request.execute();
     Distancia distancia = response.body();
@@ -198,15 +197,12 @@ public class ServicioAPI extends ServicioDistancia{
     }
     Pais pais = servicioDistancias.buscarPais("ARGENTINA", paises);
     System.out.println(pais.getNombre());
-
     List<Provincia> provincias = servicioDistancias.listadoDeProvincias(new Pais("9","ARGENTINA"),"1");
     for(int i=0; i< provincias.size(); i++){
       System.out.println(provincias.get(i).getNombre());
     }
     Provincia provincia = servicioDistancias.buscarProvincia("BUENOS AIRES", provincias);
     System.out.println(provincia.getNombre());
-
      */
   }
 }
-

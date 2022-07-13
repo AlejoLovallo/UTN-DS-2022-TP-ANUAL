@@ -1,9 +1,10 @@
+
 package Cron;
 
 import Domain.Cron.SchedulerCron;
 import Domain.Notificaciones.MailSender;
-import Domain.Notificaciones.Notificacion;
-import Domain.Notificaciones.NotificacionEstandar;
+import Domain.Notificaciones.Notificar;
+import Domain.Notificaciones.NotificarEstandar;
 import Domain.Organizacion.Organizacion;
 import Domain.Organizacion.RepositorioOrganizaciones;
 import Domain.Usuarios.Contacto;
@@ -24,7 +25,7 @@ public class CronTest {
   private static Organizacion organizacion1;
   private static Organizacion organizacion2;
   private static MailSender mockNotificadorMail;
-  private static Notificacion notificacion;
+  private static Notificar notificacion;
 
 
   @BeforeEach
@@ -34,7 +35,7 @@ public class CronTest {
 
     RepositorioOrganizaciones.GetInstance().agregarOrganizacion(organizacion1);
     RepositorioOrganizaciones.GetInstance().agregarOrganizacion(organizacion2);
-    notificacion = new NotificacionEstandar();
+    notificacion = new NotificarEstandar();
   }
 
   @AfterEach

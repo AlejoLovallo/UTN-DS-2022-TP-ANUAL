@@ -1,8 +1,9 @@
 package Domain.Organizacion;
+import Domain.CalculadorHC.CalculadorHC;
 import Domain.Usuarios.Excepciones.UsuarioException;
 
+import java.io.IOException;
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.Set;
 
 public class AgenteSectorial {
@@ -11,6 +12,7 @@ public class AgenteSectorial {
   private String territorio;
   private TipoSectorTerritorial tipoSectorTerritorial;
   private ArrayList<Organizacion> organizaciones = new ArrayList<>();
+  private CalculadorHC calculadorHC = CalculadorHC.getInstance();
 
   //////////////////////////////////  CONSTRUCTORES
   public AgenteSectorial(String nombre, String territorio, TipoSectorTerritorial tipoSectorTerritorial) {
@@ -56,13 +58,8 @@ public class AgenteSectorial {
 
 
   //TODO revisar resultado, por el tema de Unidades
-  public int calculoHCTotalOrganizaciones(){
-    int total = 0 ;
-    //sumatoria de todos las HC de cada Organizacion
-    for(Organizacion organizacion : this.organizaciones){
-      total += organizacion.calculoHCTotalOrganizacion();
-    }
-    return total;
+  public Double calcularHC() throws IOException {
+    return calculadorHC.calcularHC(this);
   }
 
 

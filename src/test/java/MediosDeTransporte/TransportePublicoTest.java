@@ -80,8 +80,8 @@ public class TransportePublicoTest {
         Estacion estacion1 = new Estacion("Estacion1",1,2.5f,3.5f);
         Estacion estacion2 = new Estacion("Estacion2",2,1.5f,0.5f);
 
-        nuevasParadas.add(estacion1);
-        nuevasParadas.add(estacion2);
+        this.transportePublicoTest.darDeAltaParada(estacion1);
+        this.transportePublicoTest.darDeAltaParada(estacion2);
 
         //WHEN CUANDO
         this.transportePublicoTest.setParadas(nuevasParadas);
