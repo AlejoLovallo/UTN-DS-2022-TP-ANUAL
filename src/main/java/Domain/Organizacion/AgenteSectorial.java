@@ -45,6 +45,4 @@ public class AgenteSectorial {
     return calculadorHC.calcularHC(this);
   }
 
-
-
 }
