@@ -42,8 +42,6 @@ public class ServicioAPI extends ServicioDistancia{
     Api apiService = this.retrofit.create(Api.class);
     Call<List<Pais>> request = apiService.paises(authToken, offset);
     Response<List<Pais>> response = request.execute();
-    System.out.println("ACA LLEGO BIEN");
-    System.out.println(response.toString());
     List<Pais> listaPaises = response.body();
     ListadoPaises listado = ListadoPaises.getInstance();
     listado.setPaises(listaPaises);
@@ -198,7 +196,6 @@ public class ServicioAPI extends ServicioDistancia{
     }
     Pais pais = servicioDistancias.buscarPais("ARGENTINA", paises);
     System.out.println(pais.getNombre());
-
     List<Provincia> provincias = servicioDistancias.listadoDeProvincias(new Pais("9","ARGENTINA"),"1");
     for(int i=0; i< provincias.size(); i++){
       System.out.println(provincias.get(i).getNombre());

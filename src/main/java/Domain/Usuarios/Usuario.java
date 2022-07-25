@@ -1,7 +1,5 @@
 package Domain.Usuarios;
-
 import Domain.Usuarios.Excepciones.ContraseniaEsInvalidaException;
-
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
@@ -17,6 +15,7 @@ public class Usuario {
   private UltimoIntento ultimoAcceso;
   private Boolean validado;
   private ArrayList<CriterioValidacion> validadoresContrasenia;
+  //private Contacto contacto;
 
 
   //////////////////////////////////  CONSTRUCTORES
@@ -29,6 +28,7 @@ public class Usuario {
     this.username = username;
     this.email = email;
     this.ultimoAcceso = new UltimoIntento();
+    //this.contacto = contacto;
   }
 
   //////////////////////////////////  GETTERS
@@ -43,8 +43,6 @@ public class Usuario {
   public String getEmail() {
     return this.email;
   }
-
-
 
   //////////////////////////////////  SETTERS
   public void setValidado(Boolean validado) {

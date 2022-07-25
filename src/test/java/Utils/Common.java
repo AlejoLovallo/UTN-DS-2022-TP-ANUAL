@@ -3,7 +3,6 @@ package Utils;
 import Domain.Espacios.Direccion;
 import Domain.Espacios.Espacio;
 import Domain.Espacios.TipoDireccion;
-import Domain.Espacios.TipoDireccion;
 import Domain.MediosDeTransporte.TipoCombustible;
 import Domain.MediosDeTransporte.TipoVehiculo;
 import Domain.MediosDeTransporte.VehiculoParticular;
@@ -20,33 +19,33 @@ import java.util.ArrayList;
 
 public class Common {
   public static Organizacion getOrganizacionMinisterio() {
-    return new Organizacion("Ministerio test", TipoOrganizacion.Gubernamental, ClasificacionOrganizacion.Ministerio);
+    return new Organizacion("Ministerio test", TipoOrganizacion.Gubernamental, ClasificacionOrganizacion.Ministerio, null);
   }
 
   public static Organizacion getOrganizacionUniversidad() {
-    return new Organizacion("Universidad test", TipoOrganizacion.Institucion, ClasificacionOrganizacion.Universidad);
+    return new Organizacion("Universidad test", TipoOrganizacion.Institucion, ClasificacionOrganizacion.Universidad, null);
   }
 
   public static Organizacion getOrganizacionEscuela() {
-    return new Organizacion("Escuela test", TipoOrganizacion.Institucion, ClasificacionOrganizacion.Escuela);
+    return new Organizacion("Escuela test", TipoOrganizacion.Institucion, ClasificacionOrganizacion.Escuela, null);
   }
 
   public static Organizacion getOrganizacionEmpresaPrimaria() {
-    return new Organizacion("Empresa primaria test", TipoOrganizacion.Empresa, ClasificacionOrganizacion.EmpresaSectorPrimario);
+    return new Organizacion("Empresa primaria test", TipoOrganizacion.Empresa, ClasificacionOrganizacion.EmpresaSectorPrimario, null);
   }
 
   public static Organizacion getOrganizacionEmpresaSecundaria() {
-    return new Organizacion("Empresa secundaria test", TipoOrganizacion.Empresa, ClasificacionOrganizacion.EmpresaSectorSecundario);
+    return new Organizacion("Empresa secundaria test", TipoOrganizacion.Empresa, ClasificacionOrganizacion.EmpresaSectorSecundario, null);
   }
 
   public static Sector getSectorTrabajo(){
     Espacio espacio = new Direccion("Argentina", "Buenos Aires", "CABA", "CABA","calle test",123, TipoDireccion.Trabajo);
-    return new Sector("Sector test",espacio);
+    return new Sector("Sector test",espacio, null, new ArrayList<Miembro>());
   }
 
   public static Sector getSector(String nombreSector, TipoDireccion tipoEspacio){
     Espacio espacio = new Direccion("Argentina", "Buenos Aires", "CABA", "CABA","esp test",123,tipoEspacio);
-    return new Sector(nombreSector,espacio);
+    return new Sector(nombreSector,espacio, null, new ArrayList<Miembro>());
   }
 
   public static Organizacion initializeOrganizacion(Organizacion org, Sector sector) {
@@ -69,8 +68,11 @@ public class Common {
 
 
   public static Usuario getUsuario() {
-    return new Usuario("juan98", "juan98@gmail.com", "juan1998", true);
+    return new Usuario("juan98", "email", "juan1998", true);
   }
+
+
+
 
   public static Miembro getMiembro() {
     Organizacion orgTest = Common.getOrganizacionEmpresaPrimaria();
@@ -100,7 +102,6 @@ public class Common {
 
     return tramoEjemplo;
   }
-
 }
 
 

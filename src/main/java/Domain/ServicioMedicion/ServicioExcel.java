@@ -7,6 +7,7 @@ import org.apache.poi.ss.usermodel.*;
 import java.io.File;
 import java.io.IOError;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Iterator;
 
 public class ServicioExcel extends ServicioMediciones{
@@ -20,7 +21,7 @@ public class ServicioExcel extends ServicioMediciones{
   }
 
   @Override
-  public void cargarMediciones(String fileName) throws IOException, IOError {
+  public ArrayList<Actividad> cargarMediciones(String fileName) throws IOException, IOError {
     Workbook workbook = null;
     try{
       File file = new File("src/main/java/Domain/Utils/"+ fileName);
@@ -39,6 +40,12 @@ public class ServicioExcel extends ServicioMediciones{
     // 1. You can obtain a rowIterator and columnIterator and iterate over them
     System.out.println("\n\nIterating over Rows and Columns using Iterator\n");
     Iterator<Row> rowIterator = sheet.rowIterator();
+
+    //NOTA: Primeras dos filas son titulos, no valores
+    rowIterator.next();
+    rowIterator.next();
+
+    ArrayList<Actividad> actividades = new ArrayList<Actividad>();
     while (rowIterator.hasNext()) {
       Row row = rowIterator.next();
 
@@ -47,9 +54,26 @@ public class ServicioExcel extends ServicioMediciones{
 
       while (cellIterator.hasNext()) {
         Cell cell = cellIterator.next();
-        String cellValue = dataFormatter.formatCellValue(cell);
+        String tipoActividad = dataFormatter.formatCellValue(cell);
+        System.out.print(tipoActividad + "\t");
 
-        System.out.print(cellValue + "\t");
+        cell = cellIterator.next();
+        String tipoConsumo = dataFormatter.formatCellValue(cell);
+        System.out.print(tipoConsumo + "\t");
+
+        cell = cellIterator.next();
+        String valor = dataFormatter.formatCellValue(cell);
+        System.out.print(valor + "\t");
+
+        cell = cellIterator.next();
+        String periodicidad = dataFormatter.formatCellValue(cell);
+        System.out.print(periodicidad + "\t");
+
+        cell = cellIterator.next();
+        String periodo_imputacion = dataFormatter.formatCellValue(cell);
+        System.out.print(periodo_imputacion + "\t");
+
+        actividades.add(leerActividad(tipoActividad, tipoConsumo, valor, periodicidad, periodo_imputacion));
       }
       System.out.println();
     }
@@ -61,12 +85,32 @@ public class ServicioExcel extends ServicioMediciones{
       throw new ImposiblidadDeCerrarWorkbookException(e.toString());
       // e.printStackTrace();
     }
-
+    return actividades;
   }
 
-  /*public static void main(String[] args) throws IOException, IOError {
-    LectorDeActividades lector = LectorDeActividades.getInstance();
-    lector.leerActividades("example.xls");
+  public Actividad leerActividad(String tipoActividad,
+                                 String tipoConsumo,
+                                 String valor,
+                                 String periodicidad,
+                                 String periodo_inputacion)
+  {
+    TipoDeActividad tipoDeActividad = TipoDeActividad.valueOf(tipoActividad);
+    TipoDeConsumo tipoDeConsumo = TipoDeConsumo.valueOf(tipoConsumo);
+    Double valorConsumo = Double.parseDouble(valor);
+
+    Actividad actividad = new Actividad(
+            tipoDeActividad,
+            tipoDeConsumo,
+            null
+    );
+
+    actividad.setConsumo(valorConsumo);
+
+    return actividad;
   }
-   */
+/*
+  public static void main(String[] args) throws IOException, IOError {
+    ServicioExcel lector = ServicioExcel.getInstance();
+    lector.cargarMediciones("example.xls");
+  }*/
 }
