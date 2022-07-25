@@ -78,8 +78,6 @@ public class OrganizacionTest {
     Assertions.assertEquals(clasificNueva,this.organizacionEmpresa.getClasificacion());
 
   }
-@Test
-  public void setRegistrarSector(){
 
   @Test
   public void setContacto(){
