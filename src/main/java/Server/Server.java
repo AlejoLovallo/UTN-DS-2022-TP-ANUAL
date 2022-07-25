@@ -1,12 +1,12 @@
 package Server;
 
-import org.apache.spark.SparkConf;
-import org.apache.spark.api.java.JavaRDD;
-import org.apache.spark.api.java.JavaSparkContext;
+import spark.Spark;
+import spark.debug.DebugScreen;
 
 public class Server {
-  public static void main(String[]args){
-    SparkConf conf = new SparkConf().setAppName("wordCounts").setMaster("local[3]");
-    JavaSparkContext sparkContext = new JavaSparkContext(conf);
+  public static void main(String[] args) {
+    Spark.port(9000);
+    DebugScreen.enableDebugScreen();
   }
+
 }
