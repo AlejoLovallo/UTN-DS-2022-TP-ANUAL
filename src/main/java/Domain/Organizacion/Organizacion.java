@@ -16,6 +16,7 @@ public class Organizacion {
   private AgenteSectorial agenteSectorial;
   private ServicioMediciones servicioMediciones;
   private String archivoMediciones;
+  private ArrayList<ServicioHCExcel> reportes = new ArrayList<>();
 
   private CalculadorHC calculadorHC = CalculadorHC.getInstance();
 
@@ -107,4 +108,8 @@ public class Organizacion {
   public Double calcularHC() throws IOException {
     return calculadorHC.calcularHC(this);
   }
+
+
+
+
 }
