@@ -7,7 +7,7 @@ import java.util.Date;
 
 @Entity
 @Table(name="usuario")
-public class Usuario extends EntidadPersistente {
+public class UsuarioDB extends EntidadPersistente {
 
   @Column
   private String usuario;
