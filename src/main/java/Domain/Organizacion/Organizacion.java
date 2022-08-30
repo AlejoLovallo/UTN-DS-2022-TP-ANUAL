@@ -1,8 +1,10 @@
 package Domain.Organizacion;
 import Domain.CalculadorHC.CalculadorHC;
 import Domain.Miembro.Miembro;
+import Domain.ServicioMedicion.Actividad;
+import Domain.ServicioMedicion.ServicioHCExcel;
+import Domain.ServicioMedicion.ServicioMediciones;
 import Domain.Usuarios.Contacto;
-import Domain.ServicioMedicion.*;
 
 import java.io.IOException;
 import java.util.*;
@@ -62,6 +64,8 @@ public class Organizacion {
 
   public String getArchivoMediciones() { return archivoMediciones; }
 
+  public ArrayList<ServicioHCExcel> getReportes() { return reportes; }
+
   //////////////////////////////////  SETTERS
   public void setTipo(TipoOrganizacion tipo) {
     this.tipo = tipo;
@@ -85,6 +89,8 @@ public class Organizacion {
   public void setServicioMediciones(ServicioMediciones servicioMediciones) {this.servicioMediciones = servicioMediciones;}
 
   public void setArchivoMediciones(String archivoMediciones) { this.archivoMediciones = archivoMediciones; }
+
+  public void setReportes(ArrayList<ServicioHCExcel> reportes) { this.reportes = reportes; }
 
   //////////////////////////////////  INTERFACE
 

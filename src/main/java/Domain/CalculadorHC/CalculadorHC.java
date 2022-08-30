@@ -4,15 +4,16 @@ import Domain.Miembro.Miembro;
 import Domain.Organizacion.AgenteSectorial;
 import Domain.Organizacion.Organizacion;
 import Domain.Organizacion.Sector;
-import Domain.ServicioMedicion.Actividad;
+import Domain.ServicioMedicion.*;
 import Domain.Trayecto.Tramo;
 import Domain.Trayecto.Trayecto;
-import Domain.ServicioMedicion.TipoDeActividad;
 //import org.graalvm.compiler.nodes.virtual.CommitAllocationNode;
 
 import java.io.IOException;
-import java.lang.reflect.Array;
+import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 
 public class CalculadorHC {
 
@@ -36,6 +37,57 @@ public class CalculadorHC {
 
 
     //METHODS
+
+    public double calcularHCOrganizacion(Organizacion organizacion){
+        double valorHC = 0;
+        for(ServicioHCExcel servicio : organizacion.getReportes()){
+            valorHC += servicio.getCalculoHC();
+        }
+
+        //TODO calculo HC miembro
+        return valorHC;
+    }
+
+    public void procesarActividadAnual(Organizacion organizacion){
+        ArrayList<ServicioHCExcel> serviciosHCExcel = new ArrayList<>();
+        ArrayList<Actividad> actividades = new ArrayList<>();
+
+        for(Actividad actividad : actividades){
+            for(int mes = 1; mes <= 12; mes++)
+                serviciosHCExcel.add(this.procesarActividadMes(actividad,mes));
+        }
+
+        organizacion.setReportes(serviciosHCExcel);
+    }
+
+    public ServicioHCExcel procesarActividadMes(Actividad actividad, int mes){
+        Double factorDeEmision = this.factoresDeEmision.getFactorDeEmisionSegunActividad(actividad.getNombre()).getNumero();
+        double cantidadHC = actividad.getConsumo() * factorDeEmision * this.conseguirValorFrecuenciaActividad(actividad, mes);
+
+        ServicioHCExcel servicioHCExcel = new ServicioHCExcel(
+                cantidadHC,
+                actividad.getFrecuenciaServicio(),
+                actividad.getFechaCarga()
+        );
+        return servicioHCExcel;
+    }
+
+    public double conseguirValorFrecuenciaActividad(Actividad actividad, int mes){
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(actividad.getFechaCarga());
+        int mesDeCierre = calendar.get(Calendar.MONTH);
+        if(mesDeCierre < mes){
+            if(actividad.getFrecuenciaServicio() == FrecuenciaServicio.MENSUAL){
+                return 1;
+            }
+            else{
+                return 1f / mesDeCierre;
+            }
+        }
+        else{
+            return 0;
+        }
+    }
 
     public Double calcularHC(Miembro miembro) throws IOException {
 
