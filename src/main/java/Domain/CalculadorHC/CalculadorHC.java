@@ -97,15 +97,40 @@ public class CalculadorHC {
         Double factorDeEmision = this.factoresDeEmision.getFactorDeEmisionSegunActividad(TipoDeActividad.COMBUSTION_MOVIL).getNumero();
 
         for(Trayecto trayecto : miembro.getTrayectos()){
-            for(Tramo tramo : trayecto.getTramos()){
-                if(tramo.getMedioTransporte() instanceof VehiculoParticular){
-                    Double unidadesConsumidas = tramo.determinarDistancia() * tramo.getMedioTransporte().getConsumoPorKm();
-                    cantidadHC += unidadesConsumidas * factorDeEmision / ((VehiculoParticular) tramo.getMedioTransporte()).getCantPasajeros();
-                }else{
-                    Double unidadesConsumidas = tramo.determinarDistancia() * tramo.getMedioTransporte().getConsumoPorKm();
-                    cantidadHC += unidadesConsumidas * factorDeEmision;
+            if (trayecto.isActive()){
+                for(Tramo tramo : trayecto.getTramos()){
+                    if(tramo.getMedioTransporte() instanceof VehiculoParticular){
+                        Double unidadesConsumidas = tramo.determinarDistancia() * tramo.getMedioTransporte().getConsumoPorKm();
+                        cantidadHC += unidadesConsumidas * factorDeEmision / ((VehiculoParticular) tramo.getMedioTransporte()).getCantPasajeros();
+                    }else{
+                        Double unidadesConsumidas = tramo.determinarDistancia() * tramo.getMedioTransporte().getConsumoPorKm();
+                        cantidadHC += unidadesConsumidas * factorDeEmision;
+                    }
                 }
             }
+        }
+        return cantidadHC;
+    }
+
+    public Double calcularHCMensualMiembro(Miembro miembro) throws IOException {
+
+        Double cantidadHC = 0.0;
+
+        Double factorDeEmision = this.factoresDeEmision.getFactorDeEmisionSegunActividad(TipoDeActividad.COMBUSTION_MOVIL).getNumero();
+
+        for(Trayecto trayecto : miembro.getTrayectos()){
+            if(trayecto.isActive()){
+                for(Tramo tramo : trayecto.getTramos()){
+                    if(tramo.getMedioTransporte() instanceof VehiculoParticular){
+                        Double unidadesConsumidas = tramo.determinarDistancia() * tramo.getMedioTransporte().getConsumoPorKm();
+                        cantidadHC += unidadesConsumidas * factorDeEmision / ((VehiculoParticular) tramo.getMedioTransporte()).getCantPasajeros();
+                    }else{
+                        Double unidadesConsumidas = tramo.determinarDistancia() * tramo.getMedioTransporte().getConsumoPorKm();
+                        cantidadHC += unidadesConsumidas * factorDeEmision;
+                    }
+                }
+                cantidadHC *= (trayecto.getFrecuenciaSemanal()*4.5);
+            } 
         }
         return cantidadHC;
     }
