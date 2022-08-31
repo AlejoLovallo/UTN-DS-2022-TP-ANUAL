@@ -4,17 +4,17 @@ import Domain.Espacios.Espacio;
 import Domain.Miembro.Miembro;
 
 import java.io.IOException;
+import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Date;
 
 
 public class Trayecto {
   private ArrayList<Tramo> tramos;
   private Integer frecuenciaSemanal;
-  private Date fechaInicio;
-  private Date fechaFin;
+  private LocalDate fechaInicio;
+  private LocalDate fechaFin;
   private Miembro miembro;
-  private Boolean active;
+
 
   //////////////////////////////////  CONSTRUCTOR
   public Trayecto(){}
@@ -22,15 +22,14 @@ public class Trayecto {
   public Trayecto(ArrayList<Tramo> _tramos,
                   Miembro _miembro,
                   Integer _frecuencia,
-                  Date _fechaInicio,
-                  Date _fechaFin,
+                  LocalDate _fechaInicio,
+                  LocalDate _fechaFin,
                   Boolean _active){
     this.tramos = _tramos;
     this.miembro = _miembro;
     this.setFrecuenciaSemanal(_frecuencia);
     this.setFechaInicio(_fechaInicio);
     this.setFechaFin(_fechaFin);
-    this.setActive(_active);
   }
 
   //////////////////////////////////  GETTERS
@@ -90,27 +89,25 @@ public class Trayecto {
     this.frecuenciaSemanal = frecuenciaSemanal;
   }
 
-  public Date getFechaInicio() {
+  public LocalDate getFechaInicio() {
     return fechaInicio;
   }
 
-  public void setFechaInicio(Date fechaInicio) {
+  public void setFechaInicio(LocalDate fechaInicio) {
     this.fechaInicio = fechaInicio;
   }
 
-  public Date getFechaFin() {
+  public LocalDate getFechaFin() {
     return fechaFin;
   }
 
-  public void setFechaFin(Date fechaFin) {
+  public void setFechaFin(LocalDate fechaFin) {
     this.fechaFin = fechaFin;
   }
 
   public Boolean isActive() {
-    return active;
+    return this.fechaFin.isAfter(LocalDate.now());
   }
 
-  public void setActive(Boolean active) {
-    this.active = active;
-  }
+
 }
