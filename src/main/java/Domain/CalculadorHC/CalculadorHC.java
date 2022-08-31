@@ -97,41 +97,41 @@ public class CalculadorHC {
         Double factorDeEmision = this.factoresDeEmision.getFactorDeEmisionSegunActividad(TipoDeActividad.COMBUSTION_MOVIL).getNumero();
 
         for(Trayecto trayecto : miembro.getTrayectos()){
-            if (trayecto.isActive()){
-                for(Tramo tramo : trayecto.getTramos()){
-                    if(tramo.getMedioTransporte() instanceof VehiculoParticular){
-                        Double unidadesConsumidas = tramo.determinarDistancia() * tramo.getMedioTransporte().getConsumoPorKm();
-                        cantidadHC += unidadesConsumidas * factorDeEmision / ((VehiculoParticular) tramo.getMedioTransporte()).getCantPasajeros();
-                    }else{
-                        Double unidadesConsumidas = tramo.determinarDistancia() * tramo.getMedioTransporte().getConsumoPorKm();
-                        cantidadHC += unidadesConsumidas * factorDeEmision;
-                    }
+            for(Tramo tramo : trayecto.getTramos()){
+                if(tramo.getMedioTransporte() instanceof VehiculoParticular){
+                    Double unidadesConsumidas = tramo.determinarDistancia() * tramo.getMedioTransporte().getConsumoPorKm();
+                    cantidadHC += unidadesConsumidas * factorDeEmision / ((VehiculoParticular) tramo.getMedioTransporte()).getCantPasajeros();
+                }else{
+                    Double unidadesConsumidas = tramo.determinarDistancia() * tramo.getMedioTransporte().getConsumoPorKm();
+                    cantidadHC += unidadesConsumidas * factorDeEmision;
                 }
             }
         }
         return cantidadHC;
     }
 
-    public Double calcularHCMensualMiembro(Miembro miembro) throws IOException {
+    public Double calcularHCMensualMiembro(Miembro miembro, Integer mes, Integer año) throws IOException {
+
+        if (mes < 1 || mes > 12){
+            return 0.0;
+        }
 
         Double cantidadHC = 0.0;
 
         Double factorDeEmision = this.factoresDeEmision.getFactorDeEmisionSegunActividad(TipoDeActividad.COMBUSTION_MOVIL).getNumero();
 
         for(Trayecto trayecto : miembro.getTrayectos()){
-            if(trayecto.isActive()){
-                for(Tramo tramo : trayecto.getTramos()){
-                    if(tramo.getMedioTransporte() instanceof VehiculoParticular){
-                        Double unidadesConsumidas = tramo.determinarDistancia() * tramo.getMedioTransporte().getConsumoPorKm();
-                        cantidadHC += unidadesConsumidas * factorDeEmision / ((VehiculoParticular) tramo.getMedioTransporte()).getCantPasajeros();
-                    }else{
-                        Double unidadesConsumidas = tramo.determinarDistancia() * tramo.getMedioTransporte().getConsumoPorKm();
-                        cantidadHC += unidadesConsumidas * factorDeEmision;
-                    }
+            for(Tramo tramo : trayecto.getTramos()){
+                if(tramo.getMedioTransporte() instanceof VehiculoParticular){
+                    Double unidadesConsumidas = tramo.determinarDistancia() * tramo.getMedioTransporte().getConsumoPorKm();
+                    cantidadHC += unidadesConsumidas * factorDeEmision / ((VehiculoParticular) tramo.getMedioTransporte()).getCantPasajeros();
+                }else{
+                    Double unidadesConsumidas = tramo.determinarDistancia() * tramo.getMedioTransporte().getConsumoPorKm();
+                    cantidadHC += unidadesConsumidas * factorDeEmision;
                 }
-                cantidadHC *= (trayecto.getFrecuenciaSemanal()*4.5);
-            } 
-        }
+            }
+            cantidadHC *= ((trayecto.diasDelMesActivo(mes, año)/7) * (trayecto.getFrecuenciaSemanal()) * (miembro.getSector().getOrganizacion().getNumDiasPorSemana()));
+        } 
         return cantidadHC;
     }
 

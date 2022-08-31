@@ -21,6 +21,7 @@ public class Organizacion {
   private ArrayList<ServicioHCExcel> reportes = new ArrayList<>();
 
   private CalculadorHC calculadorHC = CalculadorHC.getInstance();
+  private Integer numDiasPorSemana;
 
 
   //////////////////////////////////  CONSTRUCTORES
@@ -67,6 +68,10 @@ public class Organizacion {
 
   public ArrayList<ServicioHCExcel> getReportes() { return reportes; }
 
+  public Integer getNumDiasPorSemana() {
+    return numDiasPorSemana;
+  }
+
   //////////////////////////////////  SETTERS
   public void setTipo(TipoOrganizacion tipo) {
     this.tipo = tipo;
@@ -78,6 +83,10 @@ public class Organizacion {
 
   public void setRazonSocial(String razonSocial) {
     this.razonSocial = razonSocial;
+  }
+
+  public void setSectores(ArrayList<Sector> sectores) {
+    this.sectores = sectores;
   }
 
   public void setContacto(Contacto contacto) {
@@ -93,7 +102,12 @@ public class Organizacion {
 
   public void setReportes(ArrayList<ServicioHCExcel> reportes) { this.reportes = reportes; }
 
+  public void setNumDiasPorSemana(Integer numDiasPorSemana) {
+    this.numDiasPorSemana = numDiasPorSemana;
+  }
+
   //////////////////////////////////  INTERFACE
+
 
   public void registrarSector(Sector sector){
     this.sectores.add(sector);
