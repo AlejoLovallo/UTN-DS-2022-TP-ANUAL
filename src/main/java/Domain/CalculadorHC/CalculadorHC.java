@@ -39,23 +39,36 @@ public class CalculadorHC {
 
     //METHODS
 
-    public double calcularHCOrganizacion(Organizacion organizacion){
+    public double calcularHC(Organizacion organizacion) throws IOException {
+        Date fechaActual = new Date();
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(fechaActual);
+        int mesActual = calendar.get(Calendar.MONTH);
+        int anioActual = calendar.get(Calendar.YEAR);
+
         double valorHC = 0;
         for(ServicioHCExcel servicio : organizacion.getReportes()){
-            valorHC += servicio.getCalculoHC();
+            if(servicio.estaActivo())
+                valorHC += servicio.getCalculoHC();
         }
 
-        //TODO calculo HC miembro
+        for (Sector sector : organizacion.getSectores()){
+            for(Miembro miembro : sector.getMiembros()){
+                valorHC += calcularHCMensualMiembro(miembro, mesActual, anioActual);
+            }
+        }
+
         return valorHC;
     }
 
-    public void procesarActividadAnual(Organizacion organizacion){
+    public void procesarActividadAnual(Organizacion organizacion) throws IOException {
         ArrayList<ServicioHCExcel> serviciosHCExcel = new ArrayList<>();
-        ArrayList<Actividad> actividades = new ArrayList<>();
+        ArrayList<Actividad> actividades = organizacion.cargarMedicionesInternas(organizacion.getArchivoMediciones());
 
-        for(Actividad actividad : actividades){
-            for(int mes = 1; mes <= 12; mes++)
+        for(int mes = 1; mes <= 12; mes++){
+            for(Actividad actividad : actividades){
                 serviciosHCExcel.add(this.procesarActividadMes(actividad,mes));
+            }
         }
 
         organizacion.setReportes(serviciosHCExcel);
@@ -110,7 +123,7 @@ public class CalculadorHC {
         return cantidadHC;
     }
 
-    public Double calcularHCMensualMiembro(Miembro miembro, Integer mes, Integer año) throws IOException {
+    public Double calcularHCMensualMiembro(Miembro miembro, Integer mes, Integer anio) throws IOException {
 
         if (mes < 1 || mes > 12){
             return 0.0;
@@ -130,12 +143,12 @@ public class CalculadorHC {
                     cantidadHC += unidadesConsumidas * factorDeEmision;
                 }
             }
-            cantidadHC *= ((trayecto.diasDelMesActivo(mes, año)/7) * (trayecto.getFrecuenciaSemanal()) * (miembro.getSector().getOrganizacion().getNumDiasPorSemana()));
+            cantidadHC *= ((trayecto.diasDelMesActivo(mes, anio)/7) * (trayecto.getFrecuenciaSemanal()) * (miembro.getSector().getOrganizacion().getNumDiasPorSemana()));
         } 
         return cantidadHC;
     }
 
-    public Double calcularHC(Organizacion organizacion) throws IOException {
+    /*public Double calcularHC(Organizacion organizacion) throws IOException {
         Double cantidadHC = 0.0;
 
         ArrayList<Actividad> actividades = organizacion.cargarMedicionesInternas(organizacion.getArchivoMediciones());
@@ -154,7 +167,7 @@ public class CalculadorHC {
         }
 
         return cantidadHC;
-    }
+    }*/
 
     public Double calcularHC(AgenteSectorial agenteSectorial) throws IOException {
         Double cantidadHC = 0.0;
