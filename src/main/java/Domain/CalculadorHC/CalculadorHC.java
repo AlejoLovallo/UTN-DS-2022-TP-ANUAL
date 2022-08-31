@@ -54,7 +54,7 @@ public class CalculadorHC {
 
         for (Sector sector : organizacion.getSectores()){
             for(Miembro miembro : sector.getMiembros()){
-                valorHC += calcularHCMensualMiembro(miembro, mesActual, anioActual);
+                valorHC += calcularHC(miembro, mesActual, anioActual);
             }
         }
 
@@ -103,7 +103,7 @@ public class CalculadorHC {
         }
     }
 
-    public Double calcularHC(Miembro miembro) throws IOException {
+    /*public Double calcularHC(Miembro miembro) throws IOException {
 
         Double cantidadHC = 0.0;
 
@@ -121,9 +121,9 @@ public class CalculadorHC {
             }
         }
         return cantidadHC;
-    }
+    }*/
 
-    public Double calcularHCMensualMiembro(Miembro miembro, Integer mes, Integer anio) throws IOException {
+    public Double calcularHC(Miembro miembro, Integer mes, Integer anio) throws IOException {
 
         if (mes < 1 || mes > 12){
             return 0.0;
@@ -180,9 +180,14 @@ public class CalculadorHC {
 
     public Double calcularHC(Sector sector) throws IOException {
         Double cantidadHC = 0.0;
+        Date fechaActual = new Date();
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(fechaActual);
+        int mesActual = calendar.get(Calendar.MONTH);
+        int anioActual = calendar.get(Calendar.YEAR);
 
         for(Miembro miembro : sector.getMiembros()){
-            cantidadHC += calcularHC(miembro);
+            cantidadHC += calcularHC(miembro, mesActual, anioActual);
         }
         return cantidadHC;
     }
