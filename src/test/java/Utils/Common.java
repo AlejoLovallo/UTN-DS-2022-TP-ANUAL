@@ -1,5 +1,7 @@
 package Utils;
 
+import Domain.CalculadorHC.FactorEmision;
+import Domain.CalculadorHC.Unidad;
 import Domain.Espacios.Direccion;
 import Domain.Espacios.Espacio;
 import Domain.Espacios.TipoDireccion;
@@ -11,6 +13,7 @@ import Domain.Organizacion.ClasificacionOrganizacion;
 import Domain.Organizacion.Organizacion;
 import Domain.Organizacion.Sector;
 import Domain.Organizacion.TipoOrganizacion;
+import Domain.ServicioMedicion.TipoDeActividad;
 import Domain.Trayecto.Tramo;
 import Domain.Trayecto.Trayecto;
 import Domain.Usuarios.Usuario;
@@ -113,6 +116,10 @@ public class Common {
     Tramo tramoEjemplo = new Tramo(direccionTest1, direccionTest2, vehiculoTest);
 
     return tramoEjemplo;
+  }
+
+  public static FactorEmision getFactorDeEmision() {
+    return new FactorEmision(TipoDeActividad.COMBUSTION_FIJA, 2.0, Unidad.m3);
   }
 }
 

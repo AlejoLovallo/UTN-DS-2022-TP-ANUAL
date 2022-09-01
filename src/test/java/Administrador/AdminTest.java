@@ -1,12 +1,18 @@
 package Administrador;
 
+import Domain.CalculadorHC.FactorEmision;
+import Domain.CalculadorHC.RepositorioFactores;
+import Domain.Espacios.Espacio;
 import Domain.Usuarios.Admin;
 import Domain.Usuarios.RepositorioUsuarios;
 import Domain.Usuarios.Usuario;
+import Utils.Common;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+
+import java.util.ArrayList;
 
 public class AdminTest {
 
@@ -43,5 +49,17 @@ public class AdminTest {
     public void validarUsuario(){
         Usuario usuario = RepositorioUsuarios.getInstance().crearUsuario("username", "email",  "juan1998", true);
         Assertions.assertTrue(admin.validarUsuario(usuario, true));
+    }
+
+    @Test
+    public void registrarNuevoFE(){
+        //GIVEN DADO
+        ArrayList<FactorEmision> factoresDeEmision = RepositorioFactores.getInstance().getFactoresDeEmision();
+        ArrayList<FactorEmision> nuevosFactoresDeEmision = factoresDeEmision;
+        nuevosFactoresDeEmision.add(Common.getFactorDeEmision());
+        //WHEN CUANDO
+        admin.registrarFactorDeEmision(Common.getFactorDeEmision());
+        //THEN ENTONCES
+        Assertions.assertEquals(nuevosFactoresDeEmision,RepositorioFactores.getInstance().getFactoresDeEmision());
     }
 }
