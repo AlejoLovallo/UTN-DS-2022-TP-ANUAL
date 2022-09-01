@@ -2,9 +2,7 @@ package Organizacion;
 import Domain.Espacios.Direccion;
 import Domain.Espacios.Espacio;
 import Domain.Espacios.TipoDireccion;
-import Domain.Espacios.TipoDireccion;
 import Domain.Miembro.Miembro;
-import Domain.Miembro.TipoDocumento;
 import Domain.Organizacion.*;
 import Domain.Usuarios.Contacto;
 import Utils.Common;
@@ -21,7 +19,7 @@ public class OrganizacionTest {
   protected Contacto contacto = new Contacto("Organizacion", "ApellidoEmpresa", 987654321, "org@gmail.com");
 
   private void initializeOrganizacion(){
-    this.organizacionEmpresa = new Organizacion("OrganizacionTest", TipoOrganizacion.Empresa, ClasificacionOrganizacion.EmpresaSectorPrimario, contacto);
+    this.organizacionEmpresa = new Organizacion("OrganizacionTest", TipoOrganizacion.Empresa, ClasificacionOrganizacion.EmpresaSectorPrimario, contacto, 5);
   }
 
   @BeforeEach
@@ -115,20 +113,22 @@ public class OrganizacionTest {
   Assertions.assertEquals(Arrays.asList(sector1,sector2),this.organizacionEmpresa.getSectores());
 }
 
-/** 
-
-TODO: REHACER ESTE TEST. QUEDO CON LA LOGICA VIEJA DE LA ENTREGA 1 | 2.
   @Test
   public void aceptarvinculacion(){
     ArrayList<Miembro> miembros = Common.getMiembros(2);
 
-    miembros.forEach(miembro -> this.organizacionEmpresa.aceptarVinculacion(miembro));
+    ArrayList<Sector> sectores = new ArrayList<>();
+    Sector sector = Common.getSector( "nombreSector", TipoDireccion.Trabajo);
+    sectores.add(sector);
 
-    Assertions.assertEquals(Arrays.asList(miembros.get(0),miembros.get(1)),this.organizacionEmpresa.getMiembros());
-    Assertions.assertTrue(this.organizacionEmpresa.aceptarVinculacion(miembros.get(0)));
-    Assertions.assertTrue(this.organizacionEmpresa.aceptarVinculacion(miembros.get(1)));
+    organizacionEmpresa.setSectores(sectores);
+
+    miembros.forEach(miembro -> this.organizacionEmpresa.aceptarVinculacion(miembro, organizacionEmpresa.getSectores().get(0)));
+
+    Assertions.assertEquals(Arrays.asList(miembros.get(0),miembros.get(1)),this.organizacionEmpresa.getSectores().get(0).getMiembros());
+    Assertions.assertTrue(this.organizacionEmpresa.aceptarVinculacion(miembros.get(0), organizacionEmpresa.getSectores().get(0)));
+    Assertions.assertTrue(this.organizacionEmpresa.aceptarVinculacion(miembros.get(1), organizacionEmpresa.getSectores().get(0)));
   }
-**/
 
 @Test
   public void RepoOrganizaciones(){

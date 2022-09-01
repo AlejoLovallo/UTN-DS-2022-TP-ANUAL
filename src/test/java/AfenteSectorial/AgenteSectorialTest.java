@@ -7,6 +7,8 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+
+import java.io.IOException;
 import java.util.ArrayList;
 
 public class AgenteSectorialTest {
@@ -14,6 +16,7 @@ public class AgenteSectorialTest {
 
     private void initializeAgenteSectorial(){
         this.agenteSectorialTest = new AgenteSectorial("AgenteSectorialTest", "territorio", TipoSectorTerritorial.Ministerio);
+        agenteSectorialTest.agregarOrganizacion(Common.getOrganizacionConUnMiembro());
     }
 
     @BeforeEach
@@ -75,7 +78,7 @@ public class AgenteSectorialTest {
         //GIVEN DADO
         Contacto contactoOrganizacion = new Contacto("Nombre", "Apellido", 1234, "email@gmail.com");
         ArrayList<Organizacion> organizacioneslActual = this.agenteSectorialTest.getOrganizaciones();
-        Organizacion nuevaOrganizacion = new Organizacion("razonSocaial", TipoOrganizacion.Empresa,ClasificacionOrganizacion.EmpresaSectorPrimario,contactoOrganizacion);
+        Organizacion nuevaOrganizacion = new Organizacion("razonSocaial", TipoOrganizacion.Empresa,ClasificacionOrganizacion.EmpresaSectorPrimario,contactoOrganizacion, 5);
         ArrayList<Organizacion> organizacionesActualizadas = organizacioneslActual;
         organizacionesActualizadas.add(nuevaOrganizacion);
         //WHEN CUANDO
@@ -83,6 +86,8 @@ public class AgenteSectorialTest {
         //THEN ENTONCES
         Assertions.assertEquals(organizacioneslActual, organizacioneslActual);
         Assertions.assertEquals(organizacioneslActual,this.agenteSectorialTest.getOrganizaciones());
+        //TODO TESTEAR ESTO CUANDO BAJEMOS LO QUE SUBIO TOMI
+        //Assertions.assertEquals(organizacioneslActual.get(0).getAgenteSectorial(),this.agenteSectorialTest);
     }
 
     @Test

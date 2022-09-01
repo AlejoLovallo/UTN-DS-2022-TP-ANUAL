@@ -15,7 +15,7 @@ import java.util.Properties;
 public class MailSender extends MedioDeNotificacion{
     //////////////////////////////////  VARIABLES
     String email = "grupo7dds2022@gmail.com";
-    String password = "jczcefspehwrnvqz";
+    String password = "kyzklgpfwapvpvez";
 
     //////////////////////////////////  CONSTRUCTORES
 

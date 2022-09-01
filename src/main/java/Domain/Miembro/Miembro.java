@@ -56,4 +56,8 @@ public class Miembro {
   public Double calcularHC(Integer mes, Integer anio) throws IOException {
     return calculadorHC.calcularHC(this, mes, anio);
   }
+
+  public void agregarTrayecto(Trayecto trayecto){
+        trayectos.add(trayecto);
+  }
 }
