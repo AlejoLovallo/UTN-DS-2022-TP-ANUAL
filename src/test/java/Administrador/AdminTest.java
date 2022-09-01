@@ -60,6 +60,22 @@ public class AdminTest {
         //WHEN CUANDO
         admin.registrarFactorDeEmision(Common.getFactorDeEmision());
         //THEN ENTONCES
-        Assertions.assertEquals(nuevosFactoresDeEmision,RepositorioFactores.getInstance().getFactoresDeEmision());
+        Assertions.assertEquals(nuevosFactoresDeEmision, RepositorioFactores.getInstance().getFactoresDeEmision());
+    }
+
+    @Test
+    public void cambiarValoresDeFE(){
+        //GIVEN DADO
+        FactorEmision factorEmision = Common.getFactorDeEmision();
+        ArrayList<FactorEmision> factoresDeEmision = RepositorioFactores.getInstance().getFactoresDeEmision();
+        ArrayList<FactorEmision> nuevosFactoresDeEmision = factoresDeEmision;
+        nuevosFactoresDeEmision.add(factorEmision);
+        Double numeroAnterior = factorEmision.getNumero();
+        //WHEN CUANDO
+        admin.registrarFactorDeEmision(factorEmision);
+        admin.cambiarFactorDeEmision(factorEmision, 3.0);
+        //THEN ENTONCES
+        Assertions.assertEquals(numeroAnterior, 2.0);
+        Assertions.assertEquals(RepositorioFactores.getInstance().getFactorDeEmision(factorEmision).getNumero(), 3.0);
     }
 }
