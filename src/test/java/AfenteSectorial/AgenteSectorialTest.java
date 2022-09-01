@@ -91,6 +91,22 @@ public class AgenteSectorialTest {
     }
 
     @Test
+    public void asignarseOrganizaciones(){
+        //GIVEN DADO
+        Contacto contactoOrganizacion = new Contacto("Nombre", "Apellido", 1234, "email@gmail.com");
+        ArrayList<Organizacion> organizacioneslActual = this.agenteSectorialTest.getOrganizaciones();
+        Organizacion nuevaOrganizacion = new Organizacion("razonSocaial", TipoOrganizacion.Empresa,ClasificacionOrganizacion.EmpresaSectorPrimario,contactoOrganizacion, 5);
+        ArrayList<Organizacion> organizacionesActualizadas = organizacioneslActual;
+        organizacionesActualizadas.add(nuevaOrganizacion);
+        //WHEN CUANDO
+        RepositorioAgentes.GetInstance().agregarOrganizacionAAgente(agenteSectorialTest, nuevaOrganizacion);
+        //THEN ENTONCES
+        Assertions.assertEquals(organizacionesActualizadas, agenteSectorialTest.getOrganizaciones());
+        //TODO TESTEAR ESTO CUANDO BAJEMOS LO QUE SUBIO TOMI
+        Assertions.assertEquals(nuevaOrganizacion.getAgenteSectorial(), agenteSectorialTest);
+    }
+
+    @Test
     public void crearAgente(){
         AgenteSectorial agenteSectorial = RepositorioAgentes.GetInstance().crearAgente("Nombre", "Territorio",TipoSectorTerritorial.Ministerio);
 
@@ -104,7 +120,7 @@ public class AgenteSectorialTest {
         Organizacion unaOrganizacion =  Common.getOrganizacionMinisterio();
         RepositorioAgentes.GetInstance().crearAgente("nombre", "territorio", TipoSectorTerritorial.Provincia);
         AgenteSectorial unAgente =  RepositorioAgentes.GetInstance().buscarAgente("nombre");
-        RepositorioAgentes.GetInstance().agregarOrganizacionAAgente(unAgente.getNombre(), unaOrganizacion);
+        RepositorioAgentes.GetInstance().agregarOrganizacionAAgente(unAgente, unaOrganizacion);
         Assertions.assertTrue(unAgente.getOrganizaciones().contains(unaOrganizacion));
     }
 }
