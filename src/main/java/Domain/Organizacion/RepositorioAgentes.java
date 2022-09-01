@@ -34,6 +34,7 @@ public class RepositorioAgentes {
     AgenteSectorial aAsociar = buscarAgente(nombre);
     if(aAsociar!=null){
       aAsociar.agregarOrganizacion(organizacion);
+      organizacion.setAgenteSectorial(aAsociar);
       return aAsociar;
     }
     return null;
