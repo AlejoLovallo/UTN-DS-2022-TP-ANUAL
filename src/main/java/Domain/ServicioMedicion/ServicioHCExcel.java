@@ -1,24 +1,25 @@
 package Domain.ServicioMedicion;
 
+import java.util.Calendar;
 import java.util.Date;
 
 public class ServicioHCExcel {
-  private Integer calculoHC;
+  private Double calculoHC;
   private FrecuenciaServicio periodicidad;
   private Date fechaCarga;
 
-  public ServicioHCExcel(Integer _hc, FrecuenciaServicio _periodicidad, Date _fecha){
+  public ServicioHCExcel(Double _hc, FrecuenciaServicio _periodicidad, Date _fecha){
     this.setCalculoHC(_hc);
     this.setPeriodicidad(_periodicidad);
     this.setFechaCarga(_fecha);
   }
 
 
-  public Integer getCalculoHC() {
+  public Double getCalculoHC() {
     return calculoHC;
   }
 
-  public void setCalculoHC(Integer calculoHC) {
+  public void setCalculoHC(Double calculoHC) {
     this.calculoHC = calculoHC;
   }
 
@@ -36,5 +37,23 @@ public class ServicioHCExcel {
 
   public void setFechaCarga(Date fechaCarga) {
     this.fechaCarga = fechaCarga;
+  }
+
+  public boolean estaActivo(){
+    Date fechaActual = new Date();
+    Calendar calendar = Calendar.getInstance();
+    calendar.setTime(fechaActual);
+    int mesActual = calendar.get(Calendar.MONTH);
+    int anioActual = calendar.get(Calendar.YEAR);
+
+    calendar.setTime(this.getFechaCarga());
+    int mesCarga = calendar.get(Calendar.MONTH);
+    int anioCarga = calendar.get(Calendar.YEAR);
+
+    if(anioCarga < anioActual && mesCarga < mesActual){
+        return true;
+    }
+    else
+      return false;
   }
 }

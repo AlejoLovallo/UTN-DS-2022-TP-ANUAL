@@ -7,6 +7,7 @@ import org.apache.poi.ss.usermodel.*;
 import java.io.File;
 import java.io.IOError;
 import java.io.IOException;
+import java.sql.Date;
 import java.util.ArrayList;
 import java.util.Iterator;
 
@@ -101,6 +102,8 @@ public class ServicioExcel extends ServicioMediciones{
     Actividad actividad = new Actividad(
             tipoDeActividad,
             tipoDeConsumo,
+            FrecuenciaServicio.valueOf(periodicidad),
+            Date.valueOf(periodo_inputacion),
             null
     );
 

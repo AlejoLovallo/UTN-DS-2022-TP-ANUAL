@@ -4,17 +4,18 @@ import Domain.Espacios.Espacio;
 import Domain.Miembro.Miembro;
 
 import java.io.IOException;
+import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Date;
+import java.util.GregorianCalendar;
 
 
 public class Trayecto {
   private ArrayList<Tramo> tramos;
   private Integer frecuenciaSemanal;
-  private Date fechaInicio;
-  private Date fechaFin;
+  private LocalDate fechaInicio;
+  private LocalDate fechaFin;
   private Miembro miembro;
-  private Boolean active;
+
 
   //////////////////////////////////  CONSTRUCTOR
   public Trayecto(){}
@@ -22,15 +23,14 @@ public class Trayecto {
   public Trayecto(ArrayList<Tramo> _tramos,
                   Miembro _miembro,
                   Integer _frecuencia,
-                  Date _fechaInicio,
-                  Date _fechaFin,
+                  LocalDate _fechaInicio,
+                  LocalDate _fechaFin,
                   Boolean _active){
     this.tramos = _tramos;
     this.miembro = _miembro;
     this.setFrecuenciaSemanal(_frecuencia);
     this.setFechaInicio(_fechaInicio);
     this.setFechaFin(_fechaFin);
-    this.setActive(_active);
   }
 
   //////////////////////////////////  GETTERS
@@ -90,27 +90,109 @@ public class Trayecto {
     this.frecuenciaSemanal = frecuenciaSemanal;
   }
 
-  public Date getFechaInicio() {
+  public LocalDate getFechaInicio() {
     return fechaInicio;
   }
 
-  public void setFechaInicio(Date fechaInicio) {
+  public void setFechaInicio(LocalDate fechaInicio) {
     this.fechaInicio = fechaInicio;
   }
 
-  public Date getFechaFin() {
+  public LocalDate getFechaFin() {
     return fechaFin;
   }
 
-  public void setFechaFin(Date fechaFin) {
+  public void setFechaFin(LocalDate fechaFin) {
     this.fechaFin = fechaFin;
   }
 
-  public Boolean isActive() {
-    return active;
+  public Integer diasDelMesActivo(Integer mes, Integer año) {
+
+    if (año >= this.fechaInicio.getYear() &&  año <= this.fechaFin.getYear()){
+
+      if(año == this.fechaInicio.getYear()){
+
+        if(año == this.fechaFin.getYear()){
+  
+          if(mes > this.fechaInicio.getMonthValue() &&  mes < this.fechaFin.getMonthValue())
+            return numeroDeDiasMes(mes, año);
+          
+          if(mes == this.fechaInicio.getMonthValue()){
+  
+            if(mes == this.fechaFin.getMonthValue())
+              return numeroDeDiasMes(mes, año) - this.fechaInicio.getDayOfMonth() - this.fechaFin.getDayOfMonth();
+          
+            return numeroDeDiasMes(mes, año) - this.fechaInicio.getDayOfMonth();
+          }else {
+            return numeroDeDiasMes(mes, año) - this.fechaFin.getDayOfMonth();
+          }
+        }
+      }else if(año == this.fechaFin.getYear()){
+        
+        if(mes < this.fechaFin.getMonthValue())
+          return numeroDeDiasMes(mes, año);
+        else if(mes == this.fechaFin.getMonthValue())
+          return numeroDeDiasMes(mes, año) - this.fechaFin.getDayOfMonth();
+        else
+          return 0;  
+      } else{
+        return numeroDeDiasMes(mes, año);
+      }
+    } else {
+      return 0;
+    }
+    return 0;
   }
 
-  public void setActive(Boolean active) {
-    this.active = active;
+  /**
+   * Devuelve el número de dias del mes (número) pasado por parámetro
+   * Si es Febrero tiene en cuenta si este año es bisiesto o no
+   * Empieza por 1
+   */
+  public static Integer numeroDeDiasMes(Integer mes, Integer año){
+  
+    Integer numeroDias=-1;
+
+        switch(mes){
+            case 1:
+            case 3:
+            case 5:
+            case 7:
+            case 8:
+            case 10:
+            case 12:
+                numeroDias=31;
+                break;
+            case 4:
+            case 6:
+            case 9:
+            case 11:
+                numeroDias=30;
+                break;
+            case 2:
+                if(esBisiesto(año)){
+                    numeroDias=29;
+                }else{
+                    numeroDias=28;
+                }
+                break;
+
+        }
+
+    return numeroDias;
   }
+
+  /**
+  * Indica si un año es bisiesto o no
+  */
+  public static boolean esBisiesto(int año) {
+
+    GregorianCalendar calendar = new GregorianCalendar();
+    boolean esBisiesto = false;
+    if (calendar.isLeapYear(año)) {
+        esBisiesto = true;
+    }
+    return esBisiesto;
+  }
+
 }

@@ -1,8 +1,10 @@
 package Domain.Organizacion;
 import Domain.CalculadorHC.CalculadorHC;
 import Domain.Miembro.Miembro;
+import Domain.ServicioMedicion.Actividad;
+import Domain.ServicioMedicion.ServicioHCExcel;
+import Domain.ServicioMedicion.ServicioMediciones;
 import Domain.Usuarios.Contacto;
-import Domain.ServicioMedicion.*;
 
 import java.util.ArrayList;
 import java.io.IOException;
@@ -20,6 +22,7 @@ public class Organizacion {
   private ArrayList<ServicioHCExcel> reportes = new ArrayList<>();
 
   private CalculadorHC calculadorHC = CalculadorHC.getInstance();
+  private Integer numDiasPorSemana;
 
 
   //////////////////////////////////  CONSTRUCTORES
@@ -64,6 +67,12 @@ public class Organizacion {
 
   public String getArchivoMediciones() { return archivoMediciones; }
 
+  public ArrayList<ServicioHCExcel> getReportes() { return reportes; }
+
+  public Integer getNumDiasPorSemana() {
+    return numDiasPorSemana;
+  }
+
   //////////////////////////////////  SETTERS
   public void setTipo(TipoOrganizacion tipo) {
     this.tipo = tipo;
@@ -77,6 +86,10 @@ public class Organizacion {
     this.razonSocial = razonSocial;
   }
 
+  public void setSectores(ArrayList<Sector> sectores) {
+    this.sectores = sectores;
+  }
+
   public void setContacto(Contacto contacto) {
     this.contacto = contacto;
   }
@@ -88,7 +101,14 @@ public class Organizacion {
 
   public void setArchivoMediciones(String archivoMediciones) { this.archivoMediciones = archivoMediciones; }
 
+  public void setReportes(ArrayList<ServicioHCExcel> reportes) { this.reportes = reportes; }
+
+  public void setNumDiasPorSemana(Integer numDiasPorSemana) {
+    this.numDiasPorSemana = numDiasPorSemana;
+  }
+
   //////////////////////////////////  INTERFACE
+
 
   public void registrarSector(Sector sector){
     this.sectores.add(sector);
