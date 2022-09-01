@@ -114,10 +114,6 @@ public class Common {
 
     return tramoEjemplo;
   }
-
-
-
-
 }
 
 
