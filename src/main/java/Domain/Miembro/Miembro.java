@@ -53,7 +53,7 @@ public class Miembro {
   }
 
   //TODO hacer el calculo de un miembro
-  public Double calcularHC() throws IOException {
-    return calculadorHC.calcularHC(this);
+  public Double calcularHC(Integer mes, Integer anio) throws IOException {
+    return calculadorHC.calcularHC(this, mes, anio);
   }
 }

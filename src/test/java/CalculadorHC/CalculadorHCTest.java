@@ -52,7 +52,9 @@ public class CalculadorHCTest {
 
     @Test
     public void calculoHCMiembroCorrectoVehiculoParticualr() throws IOException {
-        Double resultadoHC = miembro.calcularHC();
+        Integer mes = 04;
+        Integer anio = 2000;
+        Double resultadoHC = miembro.calcularHC(mes, anio);
         Assertions.assertNotNull(resultadoHC);
         Assertions.assertNotEquals(0, resultadoHC);
     }
@@ -60,11 +62,14 @@ public class CalculadorHCTest {
     @Test
     public void calculoHCOrganizacion() throws IOException
     {
+        Integer mes = 04;
+        Integer anio = 2000;
+
         Double resultadoHC = organizacion.calcularHC();
         Assertions.assertNotNull(resultadoHC);
         Assertions.assertNotEquals(0, resultadoHC);
         Assertions.assertNotEquals(
-                organizacion.getSectores().get(0).getMiembros().get(0).calcularHC(),
+                organizacion.getSectores().get(0).getMiembros().get(0).calcularHC(mes, anio),
                 resultadoHC
                 );
     }
