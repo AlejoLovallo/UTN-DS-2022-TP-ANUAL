@@ -1,6 +1,4 @@
 package Domain.Usuarios;
-
-
 import Domain.Usuarios.Excepciones.ContraseniaEsInvalidaException;
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;

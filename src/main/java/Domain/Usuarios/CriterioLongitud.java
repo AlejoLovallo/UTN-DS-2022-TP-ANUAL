@@ -17,7 +17,6 @@ public class CriterioLongitud implements CriterioValidacion{
   //////////////////////////////////  SETTERS
 
   //////////////////////////////////  INTERFACE
-
   //todo testearlo
   public boolean validarContrasenia(String contrasenia) {
       return contrasenia.length()>=this.minimo && contrasenia.length()<=this.maximo;
