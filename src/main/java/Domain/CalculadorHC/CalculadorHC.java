@@ -11,6 +11,7 @@ import Domain.Trayecto.Trayecto;
 //import org.graalvm.compiler.nodes.virtual.CommitAllocationNode;
 
 import java.io.IOException;
+import java.text.ParseException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -61,7 +62,7 @@ public class CalculadorHC {
         return valorHC;
     }
 
-    public void procesarActividadAnual(Organizacion organizacion) throws IOException {
+    public void procesarActividadAnual(Organizacion organizacion) throws IOException, ParseException {
         ArrayList<ServicioHCExcel> serviciosHCExcel = new ArrayList<>();
         ArrayList<Actividad> actividades = organizacion.cargarMedicionesInternas(organizacion.getArchivoMediciones());
 

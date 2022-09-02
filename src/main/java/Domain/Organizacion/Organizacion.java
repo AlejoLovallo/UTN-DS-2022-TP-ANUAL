@@ -6,6 +6,7 @@ import Domain.ServicioMedicion.ServicioHCExcel;
 import Domain.ServicioMedicion.ServicioMediciones;
 import Domain.Usuarios.Contacto;
 
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.io.IOException;
 import java.util.*;
@@ -122,7 +123,7 @@ public class Organizacion {
     return true;
   }
 
-  public ArrayList<Actividad> cargarMedicionesInternas(String fileName) throws IOException {
+  public ArrayList<Actividad> cargarMedicionesInternas(String fileName) throws IOException, ParseException {
     return servicioMediciones.cargarMediciones(fileName);
   }
 

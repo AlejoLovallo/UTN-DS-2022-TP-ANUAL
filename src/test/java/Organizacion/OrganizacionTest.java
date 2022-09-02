@@ -17,6 +17,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Assertions;
 
 import java.io.IOException;
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
@@ -154,7 +155,7 @@ public class OrganizacionTest {
   }
 
   @Test
-  public void subirReportesDeMediciones() throws IOException {
+  public void subirReportesDeMediciones() throws IOException, ParseException {
     ArrayList< FactorEmision > factoresDeEmision = new ArrayList<>();
     factoresDeEmision.add(Common.getFactorDeEmision());
     RepositorioFactores.getInstance().setFactoresDeEmision(factoresDeEmision);
@@ -162,11 +163,21 @@ public class OrganizacionTest {
     organizacionEmpresa.setArchivoMediciones("example.xls");
     CalculadorHC.getInstance().procesarActividadAnual(organizacionEmpresa);
 
-    //LO HICIMOS CON SQL PORQUE ES LA FORMA QUE ENCONTRAMOS PARA QUE NOS DE IGUAL A LA FECHA QUE VIENE DEL EXCEL
-    Date date;
-    String date1 = "2022-05-01";
-    date = java.sql.Date.valueOf(date1);
-    Assertions.assertEquals(organizacionEmpresa.getReportes().get(0).getFechaCarga(), date);
+    Assertions.assertEquals(organizacionEmpresa.getReportes().get(0).getFechaCarga().getDate(), 1);
+    Assertions.assertEquals(organizacionEmpresa.getReportes().get(0).getFechaCarga().getMonth(), 4);
+    Assertions.assertEquals(organizacionEmpresa.getReportes().get(0).getFechaCarga().getYear(), 122);
+
+    Assertions.assertEquals(organizacionEmpresa.getReportes().get(1).getFechaCarga().getDate(), 2);
+    Assertions.assertEquals(organizacionEmpresa.getReportes().get(1).getFechaCarga().getMonth(), 5);
+    Assertions.assertEquals(organizacionEmpresa.getReportes().get(1).getFechaCarga().getYear(), 121);
+
+    Assertions.assertEquals(organizacionEmpresa.getReportes().get(2).getFechaCarga().getDate(), 3);
+    Assertions.assertEquals(organizacionEmpresa.getReportes().get(2).getFechaCarga().getMonth(), 6);
+    Assertions.assertEquals(organizacionEmpresa.getReportes().get(2).getFechaCarga().getYear(), 120);
+
+    Assertions.assertEquals(organizacionEmpresa.getReportes().get(3).getFechaCarga().getDate(), 4);
+    Assertions.assertEquals(organizacionEmpresa.getReportes().get(3).getFechaCarga().getMonth(), 7);
+    Assertions.assertEquals(organizacionEmpresa.getReportes().get(3).getFechaCarga().getYear(), 119);
   }
 
 }
