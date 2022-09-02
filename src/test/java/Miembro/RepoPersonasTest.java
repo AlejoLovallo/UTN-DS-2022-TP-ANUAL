@@ -4,6 +4,7 @@ import Domain.InterfazUsuario.InterfazUsuarioPersona;
 import Domain.Miembro.Persona;
 import Domain.Miembro.RepositorioPersonas;
 import Domain.Miembro.TipoDocumento;
+import Domain.Usuarios.RepositorioUsuarios;
 import Domain.Usuarios.Usuario;
 import Utils.Common;
 import org.junit.jupiter.api.AfterEach;
@@ -50,6 +51,25 @@ public class RepoPersonasTest {
         //THEN ENTONCES
         Assertions.assertEquals(user, interfazUsuarioPersona.getUsuario());
         Assertions.assertEquals(unaPersona, interfazUsuarioPersona.getPersona());
+
+    }
+
+    @Test
+    public void registrarse(){
+        //GIVEN DADO
+
+        //WHEN CUANDO
+        InterfazUsuarioPersona interfazUsuarioPersona = new InterfazUsuarioPersona();
+        interfazUsuarioPersona.crearUsuarioPersona("username",  "mail",  "contraseniadificil1234", "nombre" , "apellido", TipoDocumento.DNI,  "1112324");
+
+        //THEN ENTONCES
+        Assertions.assertEquals("username", interfazUsuarioPersona.getUsuario().getUsername());
+        Assertions.assertEquals("mail", interfazUsuarioPersona.getUsuario().getEmail());
+        Assertions.assertEquals("nombre", interfazUsuarioPersona.getPersona().getNombre());
+        Assertions.assertEquals("apellido", interfazUsuarioPersona.getPersona().getApellido());
+
+        Assertions.assertEquals(RepositorioPersonas.getInstance().buscarPersonaPorUsuario(interfazUsuarioPersona.getUsuario()), interfazUsuarioPersona.getPersona());
+        Assertions.assertTrue(RepositorioUsuarios.getInstance().validarUsuario(interfazUsuarioPersona.getUsuario(), true));
 
     }
 }
