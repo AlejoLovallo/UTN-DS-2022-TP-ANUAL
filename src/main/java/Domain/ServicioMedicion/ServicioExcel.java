@@ -10,8 +10,12 @@ import java.io.IOException;
 import java.sql.Date;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.ZonedDateTime;
+import java.time.format.DateTimeFormatter;
+import java.time.format.FormatStyle;
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.Locale;
 
 public class ServicioExcel extends ServicioMediciones{
   private static ServicioExcel instance = null;
@@ -100,16 +104,24 @@ public class ServicioExcel extends ServicioMediciones{
     TipoDeConsumo tipoDeConsumo = TipoDeConsumo.valueOf(tipoConsumo);
     Double valorConsumo = Double.parseDouble(valor);
 
+    //ACA TRANSFORMA EL DATO QUE VIENE DEL EXCEL EN UN DATE
     SimpleDateFormat formatoDelTexto = new SimpleDateFormat("M/d/y");
     java.util.Date fecha = formatoDelTexto.parse(periodo_inputacion);
 
-    //System.out.print("La fecha transformada es: " + fecha);
+    //ACA TRANSFORMA EL DATE DE "EEE MMM dd HH:mm:ss zzz uuuu" A "yyyy-MM-dd"
+    Date date = Date.valueOf(
+            ZonedDateTime.parse(
+                    fecha.toString(), DateTimeFormatter.ofPattern("EEE MMM dd HH:mm:ss zzz uuuu").withLocale(Locale.US)
+            ).toLocalDate()
+    );
+
+    System.out.print("La fecha transformada es: " + date);
 
     Actividad actividad = new Actividad(
             tipoDeActividad,
             tipoDeConsumo,
             FrecuenciaServicio.valueOf(periodicidad),
-            fecha,
+            date,
             null
     );
 
