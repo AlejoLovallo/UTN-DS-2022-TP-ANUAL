@@ -12,9 +12,9 @@ public class Actividad {
 
   //CONSTRUCTOR
   public Actividad(TipoDeActividad _tipoActividad,TipoDeConsumo _tipoDeConsumo,FrecuenciaServicio _frecuenciaServicio, Date _fechaCarga,UnidadDeConsumo _unidadConsumo){
-    this.nombre=_tipoActividad;
-    this.tipoDeConsumo=_tipoDeConsumo;
-    this.unidadDeConsumo=_unidadConsumo;
+    this.nombre = _tipoActividad;
+    this.tipoDeConsumo = _tipoDeConsumo;
+    this.unidadDeConsumo = _unidadConsumo;
     this.frecuenciaServicio = _frecuenciaServicio;
     this.fechaCarga = _fechaCarga;
   }

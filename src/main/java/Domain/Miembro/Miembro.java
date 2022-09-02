@@ -67,12 +67,17 @@ public class Miembro {
       this.trayectos.add(trayecto);
   }
 
-  public void desvincularTrayecto(Trayecto trayecto){
-    this.trayectos.remove(trayecto);
+  //TODO hacer el calculo de un miembro
+  public Double calcularHC(Integer mes, Integer anio) throws IOException {
+    return calculadorHC.calcularHC(this, mes, anio);
   }
 
-  public Double calcularHC(Integer mes, Integer año) throws IOException {
-    return calculadorHC.calcularHC(this, mes, año);
+  public void agregarTrayecto(Trayecto trayecto){
+        trayectos.add(trayecto);
+  }
+
+  public void desvincularTrayecto(Trayecto trayecto){
+    this.trayectos.remove(trayecto);
   }
 
 }

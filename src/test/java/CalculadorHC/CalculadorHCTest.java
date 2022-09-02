@@ -17,11 +17,14 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
+import java.time.LocalDate;
+import java.time.Year;
 import java.util.ArrayList;
 
 public class CalculadorHCTest {
     protected Contacto contacto = new Contacto("Organizacion", "ApellidoEmpresa", 987654321, "org@gmail.com");
-    protected Organizacion organizacion = new Organizacion("A",TipoOrganizacion.Empresa,ClasificacionOrganizacion.EmpresaSectorPrimario, contacto);
+
+    protected Organizacion organizacion = new Organizacion("A",TipoOrganizacion.Empresa,ClasificacionOrganizacion.EmpresaSectorPrimario, contacto, 5);
     protected Espacio espacio1 = new Direccion("Argentina", "Buenos Aires", "GENERAL LAVALLE", "GENERAL LAVALLE","Cordoba",3000, TipoDireccion.Trabajo);
     protected Espacio espacio2 = new Direccion("Argentina", "Buenos Aires", "GENERAL LAVALLE", "PAVON","O'Higgins",3000, TipoDireccion.Trabajo);
     protected Sector sector = new Sector("RRHH", espacio1, organizacion,new ArrayList<Miembro>());
@@ -34,10 +37,16 @@ public class CalculadorHCTest {
     {
         Tramo tramo = new Tramo(espacio1, espacio2, new VehiculoParticular(TipoVehiculo.Auto, TipoCombustible.Nafta, 1));
         tramo.getMedioTransporte().setConsumoPorKm(1d);
-        Trayecto trayecto = new Trayecto(new ArrayList<Tramo>(),miembro);
+
+        LocalDate fechaInicio =   LocalDate.of(2010, 1, 1);
+        LocalDate fechaFin = LocalDate.of(2022, 12, 31);
+
+        //Trayecto trayecto = new Trayecto(new ArrayList<Tramo>(), miembro);
+        Trayecto trayecto = new Trayecto(new ArrayList<Tramo>(), miembro, 3, fechaInicio, fechaFin, true);
         trayecto.getTramos().add(tramo);
         miembro.setTrayectos(new ArrayList<Trayecto>());
-        miembro.getTrayectos().add(trayecto);
+        //miembro.getTrayectos().add(trayecto);
+        miembro.agregarTrayecto(trayecto);
 
         organizacion.setServicioMediciones(ServicioExcel.getInstance());
         organizacion.setArchivoMediciones("example.xls");
@@ -52,7 +61,9 @@ public class CalculadorHCTest {
 
     @Test
     public void calculoHCMiembroCorrectoVehiculoParticualr() throws IOException {
-        Double resultadoHC = miembro.calcularHC();
+        Integer mes = 4;
+        Integer anio = 2015;
+        Double resultadoHC = miembro.calcularHC(mes, anio);
         Assertions.assertNotNull(resultadoHC);
         Assertions.assertNotEquals(0, resultadoHC);
     }
@@ -60,13 +71,18 @@ public class CalculadorHCTest {
     @Test
     public void calculoHCOrganizacion() throws IOException
     {
+        Integer mes = 4;
+        Integer anio = 2015;
+
         Double resultadoHC = organizacion.calcularHC();
         Assertions.assertNotNull(resultadoHC);
         Assertions.assertNotEquals(0, resultadoHC);
-        Assertions.assertNotEquals(
-                organizacion.getSectores().get(0).getMiembros().get(0).calcularHC(),
-                resultadoHC
-                );
+
+        //TODO NO SE PUEDE TESTEAR QUE DEN IGUAL PORQUE COMO TIRA UN NUMERO AL AZAR CADA VEZ QUE SE HACE EL CALCULO DA DIFERENTE
+//        Assertions.assertEquals(
+//                organizacion.getSectores().get(0).getMiembros().get(0).calcularHC(mes, anio),
+//                resultadoHC
+//                );
     }
 
     @Test

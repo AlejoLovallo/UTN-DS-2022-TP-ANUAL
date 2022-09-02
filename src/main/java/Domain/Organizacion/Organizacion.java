@@ -14,7 +14,7 @@ public class Organizacion {
   private String razonSocial;
   private TipoOrganizacion tipo;
   private ClasificacionOrganizacion clasificacion;
-  private ArrayList<Sector> sectores= new ArrayList<>();
+  private ArrayList<Sector> sectores = new ArrayList<>();
   private Contacto contacto;
   private AgenteSectorial agenteSectorial;
   private ServicioMediciones servicioMediciones;
@@ -26,11 +26,12 @@ public class Organizacion {
 
 
   //////////////////////////////////  CONSTRUCTORES
-  public Organizacion(String _razonSocial, TipoOrganizacion _tipo, ClasificacionOrganizacion _clasificacion, Contacto contacto){
+  public Organizacion(String _razonSocial, TipoOrganizacion _tipo, ClasificacionOrganizacion _clasificacion, Contacto contacto, Integer numDiasPorSemana){
     this.razonSocial = _razonSocial;
     this.tipo = _tipo;
     this.clasificacion = _clasificacion;
     this.contacto = contacto;
+    this.numDiasPorSemana = numDiasPorSemana;
   }
 
   public Organizacion(String _razonSocial, TipoOrganizacion _tipo, ClasificacionOrganizacion _clasificacion){

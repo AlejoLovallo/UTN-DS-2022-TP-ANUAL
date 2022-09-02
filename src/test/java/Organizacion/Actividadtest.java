@@ -1,20 +1,20 @@
 package Organizacion;
 
-import Domain.ServicioMedicion.Actividad;
-import Domain.ServicioMedicion.TipoDeActividad;
-import Domain.ServicioMedicion.TipoDeConsumo;
-import Domain.ServicioMedicion.UnidadDeConsumo;
+import Domain.ServicioMedicion.*;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+
+import java.util.Date;
 
 public class Actividadtest {
 
     protected Actividad act;
 
     private void initializeActividad(){
-        this.act=new Actividad(TipoDeActividad.COMBUSTION_FIJA,TipoDeConsumo.CARBON_DE_LENIA,UnidadDeConsumo.kg);
+        Date fechaCarga = new Date(2020, 07, 22);
+        this.act = new Actividad(TipoDeActividad.COMBUSTION_FIJA,TipoDeConsumo.CARBON_DE_LENIA, FrecuenciaServicio.MENSUAL,  fechaCarga, UnidadDeConsumo.lts);
     }
 
     @BeforeEach

@@ -1,5 +1,5 @@
 
-package Cron;
+package CalculadorHC.Cron;
 
 import Domain.Cron.SchedulerCron;
 import Domain.Notificaciones.MailSender;
@@ -55,12 +55,12 @@ public class CronTest {
 
   public static Organizacion getOrganizacion1() {
     Contacto contacto = new Contacto("Tomas", "Casadoumecq", 123456789, "tomas.casa123@gmail.com");
-    return new Organizacion(null, null, null, contacto);
+    return new Organizacion(null, null, null, contacto, 5);
   }
 
   public static Organizacion getOrganizacion2() {
     Contacto contacto = new Contacto("Tomas", "Casadoumecq", 123456789, "tomas.casadoumecq@gmail.com");
-    return new Organizacion(null, null, null, contacto);
+    return new Organizacion(null, null, null, contacto, 5);
   }
 
 }

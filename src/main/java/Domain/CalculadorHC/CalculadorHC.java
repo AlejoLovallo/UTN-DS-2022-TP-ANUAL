@@ -46,7 +46,7 @@ public class CalculadorHC {
         int mesActual = calendar.get(Calendar.MONTH);
         int anioActual = calendar.get(Calendar.YEAR);
 
-        double valorHC = 0;
+        double valorHC = 0.0;
         for(ServicioHCExcel servicio : organizacion.getReportes()){
             if(servicio.estaActivo())
                 valorHC += servicio.getCalculoHC();
@@ -143,7 +143,7 @@ public class CalculadorHC {
                     cantidadHC += unidadesConsumidas * factorDeEmision;
                 }
             }
-            cantidadHC *= ((trayecto.diasDelMesActivo(mes, anio)/7) * (trayecto.getFrecuenciaSemanal()) * (miembro.getSector().getOrganizacion().getNumDiasPorSemana()));
+            cantidadHC *= ((trayecto.diasDelMesActivo(mes, anio)/7.0) * (trayecto.getFrecuenciaSemanal()) * (miembro.getSector().getOrganizacion().getNumDiasPorSemana()));
         } 
         return cantidadHC;
     }

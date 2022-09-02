@@ -19,6 +19,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
+import java.time.LocalDate;
 import java.util.ArrayList;
 
 public class TrayectoTest {
@@ -35,7 +36,11 @@ public class TrayectoTest {
     private void initializeTrayecto(){
         tramosTest.add(tramo1);
         tramosTest.add(tramo2);
-        this.trayectoTest = new Trayecto(tramosTest, unMiembro);
+
+        LocalDate fechaInicio =   LocalDate.of(2010, 1, 1);
+        LocalDate fechaFin = LocalDate.of(2021, 12, 31);
+
+        this.trayectoTest = new Trayecto(tramosTest, unMiembro, 3, fechaInicio, fechaFin, true);
     }
 
 
