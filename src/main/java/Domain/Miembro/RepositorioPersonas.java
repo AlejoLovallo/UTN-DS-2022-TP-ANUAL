@@ -26,7 +26,7 @@ public class RepositorioPersonas {
 
   public Persona buscarPersonaPorUsuario(Usuario usuarioABuscar){
     //TODO buscar en la DB de Persona
-    return this.personas.stream().filter(u -> u.getUsuario().equals(usuarioABuscar)).findFirst().orElse(null);
+    return this.personas.stream().filter(persona -> persona.getUsuario().equals(usuarioABuscar)).findFirst().orElse(null);
   }
 
   public Persona crearPersona(String _nombre, String _apellido, TipoDocumento _tipoDocumento, String _documento, Usuario user){
