@@ -16,6 +16,7 @@ import Domain.Organizacion.TipoOrganizacion;
 import Domain.ServicioMedicion.TipoDeActividad;
 import Domain.Trayecto.Tramo;
 import Domain.Trayecto.Trayecto;
+import Domain.Usuarios.RepositorioUsuarios;
 import Domain.Usuarios.Usuario;
 
 import java.util.ArrayList;
@@ -84,6 +85,9 @@ public class Common {
 
   public static Usuario getUsuario() {
     return new Usuario("juan98", "email", "juan1998", true);
+  }
+  public static Usuario getUsuarioQueEsteEnElRepo() {
+    return RepositorioUsuarios.getInstance().crearUsuario("juan98", "email", "juan1998", true);
   }
 
 

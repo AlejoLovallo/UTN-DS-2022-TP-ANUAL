@@ -1,5 +1,6 @@
 package Miembro;
 
+import Domain.InterfazUsuario.InterfazUsuarioPersona;
 import Domain.Miembro.Persona;
 import Domain.Miembro.RepositorioPersonas;
 import Domain.Miembro.TipoDocumento;
@@ -35,6 +36,20 @@ public class RepoPersonasTest {
 
     @Test
     public void crearPersona(){
-        Assertions.assertNotNull(this.repoPersonas.crearPersona("Alberto","Gonzalez",TipoDocumento.DNI,"123456",Common.getUsuario()));
+        Assertions.assertNotNull(this.repoPersonas.crearPersona("Alberto","Gonzalez",TipoDocumento.DNI,"123456", Common.getUsuario()));
+    }
+
+    @Test
+    public void loguearse(){
+        //GIVEN DADO
+        Usuario user = Common.getUsuarioQueEsteEnElRepo();
+        Persona unaPersona = this.repoPersonas.crearPersona("Alberto","Gonzalez",TipoDocumento.DNI,"4215789", user);
+        //WHEN CUANDO
+        InterfazUsuarioPersona interfazUsuarioPersona = new InterfazUsuarioPersona();
+        interfazUsuarioPersona.ingresarUsuario(user.getUsername(),"juan1998");
+        //THEN ENTONCES
+        Assertions.assertEquals(user, interfazUsuarioPersona.getUsuario());
+        Assertions.assertEquals(unaPersona, interfazUsuarioPersona.getPersona());
+
     }
 }

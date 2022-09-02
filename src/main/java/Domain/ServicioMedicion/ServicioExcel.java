@@ -25,7 +25,7 @@ public class ServicioExcel extends ServicioMediciones{
   public ArrayList<Actividad> cargarMediciones(String fileName) throws IOException, IOError {
     Workbook workbook = null;
     try{
-      File file = new File("src/main/java/Domain/Utils/"+ fileName);
+      File file = new File("src/main/java/Domain/Utils/" + fileName);
       workbook = WorkbookFactory.create(file);
     } catch (IOException e){
       throw new ImposibilidadDeCrearWorkbookException(e.toString());
@@ -98,6 +98,7 @@ public class ServicioExcel extends ServicioMediciones{
     TipoDeActividad tipoDeActividad = TipoDeActividad.valueOf(tipoActividad);
     TipoDeConsumo tipoDeConsumo = TipoDeConsumo.valueOf(tipoConsumo);
     Double valorConsumo = Double.parseDouble(valor);
+
 
     Actividad actividad = new Actividad(
             tipoDeActividad,

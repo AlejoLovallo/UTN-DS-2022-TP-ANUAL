@@ -1,9 +1,14 @@
 package Organizacion;
+import Administrador.AdminTest;
+import Domain.CalculadorHC.CalculadorHC;
+import Domain.CalculadorHC.FactorEmision;
+import Domain.CalculadorHC.RepositorioFactores;
 import Domain.Espacios.Direccion;
 import Domain.Espacios.Espacio;
 import Domain.Espacios.TipoDireccion;
 import Domain.Miembro.Miembro;
 import Domain.Organizacion.*;
+import Domain.ServicioMedicion.ServicioExcel;
 import Domain.Usuarios.Contacto;
 import Utils.Common;
 import org.junit.jupiter.api.AfterEach;
@@ -11,8 +16,10 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Assertions;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Date;
 
 public class OrganizacionTest {
   protected Organizacion organizacionEmpresa;
@@ -145,4 +152,21 @@ public class OrganizacionTest {
   Assertions.assertNull(repoSector);
   Assertions.assertNotNull(repoSector.getInstance());
   }
+
+  @Test
+  public void subirReportesDeMediciones() throws IOException {
+    ArrayList< FactorEmision > factoresDeEmision = new ArrayList<>();
+    factoresDeEmision.add(Common.getFactorDeEmision());
+    RepositorioFactores.getInstance().setFactoresDeEmision(factoresDeEmision);
+    organizacionEmpresa.setServicioMediciones(ServicioExcel.getInstance());
+    organizacionEmpresa.setArchivoMediciones("example.xls");
+    CalculadorHC.getInstance().procesarActividadAnual(organizacionEmpresa);
+
+    //LO HICIMOS CON SQL PORQUE ES LA FORMA QUE ENCONTRAMOS PARA QUE NOS DE IGUAL A LA FECHA QUE VIENE DEL EXCEL
+    Date date;
+    String date1 = "2022-05-01";
+    date = java.sql.Date.valueOf(date1);
+    Assertions.assertEquals(organizacionEmpresa.getReportes().get(0).getFechaCarga(), date);
+  }
+
 }
