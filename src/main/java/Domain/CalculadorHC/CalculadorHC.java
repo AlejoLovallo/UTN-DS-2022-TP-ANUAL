@@ -62,17 +62,60 @@ public class CalculadorHC {
         return valorHC;
     }
 
-    public void procesarActividadAnual(Organizacion organizacion) throws IOException, ParseException {
-        ArrayList<ServicioHCExcel> serviciosHCExcel = new ArrayList<>();
-        ArrayList<Actividad> actividades = organizacion.cargarMedicionesInternas(organizacion.getArchivoMediciones());
+    public double calcularHCAA(Organizacion organizacion) throws IOException {
+        Date fechaActual = new Date();
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(fechaActual);
+        int mesActual = calendar.get(Calendar.MONTH);
+        int anioActual = calendar.get(Calendar.YEAR);
 
-        for(int mes = 1; mes <= 12; mes++){
-            for(Actividad actividad : actividades){
-                serviciosHCExcel.add(this.procesarActividadMes(actividad, mes));
+        double valorHC = 0.0;
+        for(Actividad actividad : organizacion.getActividades()){
+                valorHC += actividad.obtenercantidadHCTotal();
+        }
+
+        for (Sector sector : organizacion.getSectores()){
+            for(Miembro miembro : sector.getMiembros()){
+                valorHC += calcularHC(miembro, mesActual, anioActual);
             }
         }
 
-        organizacion.setReportes(serviciosHCExcel);
+        return valorHC;
+    }
+
+    public double calcularHCMesAnio(Organizacion organizacion, int mes, int anio) throws IOException {
+        Date fechaActual = new Date();
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(fechaActual);
+        int mesActual = calendar.get(Calendar.MONTH);
+        int anioActual = calendar.get(Calendar.YEAR);
+
+        double valorHC = 0.0;
+        for(Actividad actividad : organizacion.getActividades()){
+            valorHC += actividad.obtenercantidadHC(mes, anio);
+            System.out.println("actividad.obtenercantidadHC(mes, anio) es:" + actividad.obtenercantidadHC(mes, anio));
+        }
+
+        for (Sector sector : organizacion.getSectores()){
+            for(Miembro miembro : sector.getMiembros()){
+                valorHC += calcularHC(miembro, mesActual, anioActual);
+            }
+        }
+
+        return valorHC;
+    }
+
+    public void procesarActividadAnual(Organizacion organizacion) throws IOException, ParseException {
+        //ArrayList<ServicioHCExcel> serviciosHCExcel = new ArrayList<>();
+        ArrayList<Actividad> actividades = organizacion.cargarMedicionesInternas(organizacion.getArchivoMediciones());
+
+//        for(int mes = 1; mes <= 12; mes++){
+//            for(Actividad actividad : actividades){
+//                serviciosHCExcel.add(this.procesarActividadMes(actividad, mes));
+//            }
+//        }
+
+        organizacion.setActividades(actividades);
     }
 
     public ServicioHCExcel procesarActividadMes(Actividad actividad, int mes){

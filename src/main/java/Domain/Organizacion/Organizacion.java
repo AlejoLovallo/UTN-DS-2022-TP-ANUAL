@@ -22,6 +22,8 @@ public class Organizacion {
   private String archivoMediciones;
   private ArrayList<ServicioHCExcel> reportes = new ArrayList<>();
 
+  private ArrayList<Actividad> actividades = new ArrayList<>();
+
   private CalculadorHC calculadorHC = CalculadorHC.getInstance();
   private Integer numDiasPorSemana;
 
@@ -75,7 +77,16 @@ public class Organizacion {
     return numDiasPorSemana;
   }
 
+  public ArrayList<Actividad> getActividades() {
+    return actividades;
+  }
+
   //////////////////////////////////  SETTERS
+
+  public void setActividades(ArrayList<Actividad> actividades) {
+    this.actividades = actividades;
+  }
+
   public void setTipo(TipoOrganizacion tipo) {
     this.tipo = tipo;
   }
@@ -103,8 +114,6 @@ public class Organizacion {
 
   public void setArchivoMediciones(String archivoMediciones) { this.archivoMediciones = archivoMediciones; }
 
-  public void setReportes(ArrayList<ServicioHCExcel> reportes) { this.reportes = reportes; }
-
   public void setNumDiasPorSemana(Integer numDiasPorSemana) {
     this.numDiasPorSemana = numDiasPorSemana;
   }
@@ -130,6 +139,18 @@ public class Organizacion {
   // TODO Revisar resultado por unidades y ver el calculo completo
   public Double calcularHC() throws IOException {
     return calculadorHC.calcularHC(this);
+  }
+
+  public Double calcularHCAA() throws IOException {
+    return calculadorHC.calcularHCAA(this);
+  }
+
+  public Double calcularHCMesAnio(int mes, int anio) throws IOException {
+    return calculadorHC.calcularHCMesAnio(this, mes, anio);
+  }
+
+  public void darDeBajaActividad(Actividad actividad) {
+    actividad.darDeBaja();
   }
 
 }

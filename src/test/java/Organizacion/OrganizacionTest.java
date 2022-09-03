@@ -20,6 +20,7 @@ import java.io.IOException;
 import java.sql.SQLOutput;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Arrays;
 
@@ -164,43 +165,46 @@ public class OrganizacionTest {
     organizacionEmpresa.setArchivoMediciones("example.xls");
     CalculadorHC.getInstance().procesarActividadAnual(organizacionEmpresa);
 
-
-    System.out.println("Hay esta cantidad de Reportes: " + organizacionEmpresa.getReportes().size());
-
-    for(int i = 0; i<organizacionEmpresa.getReportes().size(); i++){
-      Double calculoHC = organizacionEmpresa.getReportes().get(i).getCalculoHC();
-      int dia = organizacionEmpresa.getReportes().get(i).getFechaCarga().getDate();
-      int mes = organizacionEmpresa.getReportes().get(i).getFechaCarga().getMonth();
-      int anio = organizacionEmpresa.getReportes().get(i).getFechaCarga().getYear();
-      System.out.println("EL CALCULO HC ES: " + calculoHC);
-      System.out.println("EL DIA  ES: " + dia);
-      System.out.println("EL MES ES: " + mes);
-      System.out.println("EL ANIO ES: " + anio);
-      System.out.println();
-      System.out.println();
-    }
-
-
     SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy");
-    Assertions.assertEquals("01/05/2022", formato.format(organizacionEmpresa.getReportes().get(0).getFechaCarga()));
-    Assertions.assertEquals("02/06/2021", formato.format(organizacionEmpresa.getReportes().get(1).getFechaCarga()));
-    Assertions.assertEquals("03/07/2020", formato.format(organizacionEmpresa.getReportes().get(2).getFechaCarga()));
-    Assertions.assertEquals("04/08/2019", formato.format(organizacionEmpresa.getReportes().get(3).getFechaCarga()));
+    Assertions.assertEquals("01/05/2022", formato.format(organizacionEmpresa.getActividades().get(0).getFechaCarga()));
+    Assertions.assertEquals("02/06/2021", formato.format(organizacionEmpresa.getActividades().get(1).getFechaCarga()));
+    Assertions.assertEquals("03/07/2020", formato.format(organizacionEmpresa.getActividades().get(2).getFechaCarga()));
+    Assertions.assertEquals("04/08/2019", formato.format(organizacionEmpresa.getActividades().get(3).getFechaCarga()));
 
-    Assertions.assertEquals(organizacionEmpresa.getReportes().get(0).getPeriodicidad(), FrecuenciaServicio.MENSUAL);
-    Assertions.assertEquals(organizacionEmpresa.getReportes().get(1).getPeriodicidad(), FrecuenciaServicio.ANUAL);
-    Assertions.assertEquals(organizacionEmpresa.getReportes().get(2).getPeriodicidad(), FrecuenciaServicio.MENSUAL);
-    Assertions.assertEquals(organizacionEmpresa.getReportes().get(3).getPeriodicidad(), FrecuenciaServicio.ANUAL);
+    Assertions.assertEquals(organizacionEmpresa.getActividades().get(0).getFrecuenciaServicio(), FrecuenciaServicio.MENSUAL);
+    Assertions.assertEquals(organizacionEmpresa.getActividades().get(1).getFrecuenciaServicio(), FrecuenciaServicio.ANUAL);
+    Assertions.assertEquals(organizacionEmpresa.getActividades().get(2).getFrecuenciaServicio(), FrecuenciaServicio.MENSUAL);
+    Assertions.assertEquals(organizacionEmpresa.getActividades().get(3).getFrecuenciaServicio(), FrecuenciaServicio.ANUAL);
 
+    Assertions.assertEquals(organizacionEmpresa.getActividades().get(0).obtenercantidadHCTotal(), 240.0);
+    Assertions.assertEquals(organizacionEmpresa.getActividades().get(1).obtenercantidadHCTotal(), 250.00000000000003);
+    Assertions.assertEquals(organizacionEmpresa.getActividades().get(2).obtenercantidadHCTotal(), 2080.0);
+    Assertions.assertEquals(organizacionEmpresa.getActividades().get(3).obtenercantidadHCTotal(), 27000.0);
 
-    //Assertions.assertEquals(organizacionEmpresa.getReportes().get(0).getCalculoHC(), 30 * 2.0 * 1);
+    Assertions.assertEquals(organizacionEmpresa.getActividades().get(0).obtenercantidadHC(4, 2022), 0.0);
+    Assertions.assertEquals(organizacionEmpresa.getActividades().get(0).obtenercantidadHC(5, 2022), 60.0);
+    Assertions.assertEquals(organizacionEmpresa.getActividades().get(0).obtenercantidadHC(6, 2022), 60.0);
 
+    Assertions.assertEquals(organizacionEmpresa.getActividades().get(1).obtenercantidadHC(5, 2021), 0.0);
+    Assertions.assertEquals(organizacionEmpresa.getActividades().get(1).obtenercantidadHC(6, 2021), 16.666666666666668);
+    Assertions.assertEquals(organizacionEmpresa.getActividades().get(1).obtenercantidadHC(7, 2021), 16.666666666666668);
 
-    //Assertions.assertEquals(organizacionEmpresa.getReportes().stream().filter(reporte -> reporte.getMes() == 5).findFirst().get().getCalculoHC(), 30 * 2.0 * 1);
+    Assertions.assertEquals(organizacionEmpresa.getActividades().get(2).obtenercantidadHC(6, 2020), 0.0);
+    Assertions.assertEquals(organizacionEmpresa.getActividades().get(2).obtenercantidadHC(7, 2020), 80.0);
+    Assertions.assertEquals(organizacionEmpresa.getActividades().get(2).obtenercantidadHC(8, 2020), 80.0);
 
-    Assertions.assertEquals(organizacionEmpresa.calcularHC(), 7188.571720123291);
+    Assertions.assertEquals(organizacionEmpresa.getActividades().get(3).obtenercantidadHC(7, 2019), 0.0);
+    Assertions.assertEquals(organizacionEmpresa.getActividades().get(3).obtenercantidadHC(8, 2019), 750.0);
+    Assertions.assertEquals(organizacionEmpresa.getActividades().get(3).obtenercantidadHC(9, 2019), 750.0);
+    Assertions.assertEquals(organizacionEmpresa.getActividades().get(3).obtenercantidadHC(4, 2022), 750.0);
 
-    //System.out.println("HC DE LA ORGANIZACION ES : " + organizacionEmpresa.calcularHC());
+    Assertions.assertEquals(organizacionEmpresa.calcularHCAA(), 29570.0);
+    Assertions.assertEquals(organizacionEmpresa.calcularHCMesAnio(4, 2019), 0.0);
+    Assertions.assertEquals(organizacionEmpresa.calcularHCMesAnio(8, 2019), 750.0);
+    Assertions.assertEquals(organizacionEmpresa.calcularHCMesAnio(7, 2020), 830.0);
+    Assertions.assertEquals(organizacionEmpresa.calcularHCMesAnio(6, 2021), 846.6666666666666);
+    Assertions.assertEquals(organizacionEmpresa.calcularHCMesAnio(5, 2022), 906.6666666666667);
+
   }
 
 }
