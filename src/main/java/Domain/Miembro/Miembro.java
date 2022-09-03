@@ -52,6 +52,21 @@ public class Miembro {
     this.setTrayectos(trayectos);
   }
 
+  public void registrarTrayecto(Organizacion organizacion, Trayecto trayecto){
+
+    if (!this.sector.getOrganizacion().equals(organizacion))
+       throw new MiembroNoPerteneceAOrganizacionException(organizacion.getRazonSocial());
+
+    double frecuenciaTotal= 0.0;
+
+    for (Trayecto tray : this.getTrayectos()){
+      frecuenciaTotal += tray.getFrecuenciaSemanal();
+    }
+    frecuenciaTotal += trayecto.getFrecuenciaSemanal();
+    if (frecuenciaTotal < 1)
+      this.trayectos.add(trayecto);
+  }
+
   //TODO hacer el calculo de un miembro
   public Double calcularHC(Integer mes, Integer anio) throws IOException {
     return calculadorHC.calcularHC(this, mes, anio);
@@ -60,4 +75,9 @@ public class Miembro {
   public void agregarTrayecto(Trayecto trayecto){
         trayectos.add(trayecto);
   }
+
+  public void desvincularTrayecto(Trayecto trayecto){
+    this.trayectos.remove(trayecto);
+  }
+
 }

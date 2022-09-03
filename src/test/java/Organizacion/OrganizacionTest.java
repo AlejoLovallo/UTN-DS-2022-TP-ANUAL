@@ -1,6 +1,4 @@
 package Organizacion;
-import Administrador.AdminTest;
-import Domain.CalculadorHC.CalculadorHC;
 import Domain.CalculadorHC.FactorEmision;
 import Domain.CalculadorHC.RepositorioFactores;
 import Domain.Espacios.Direccion;
@@ -16,6 +14,7 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Assertions;
+import Domain.CalculadorHC.CalculadorHC;
 
 import java.io.IOException;
 import java.sql.SQLOutput;
@@ -23,7 +22,6 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Date;
 
 public class OrganizacionTest {
   protected Organizacion organizacionEmpresa;
@@ -159,13 +157,12 @@ public class OrganizacionTest {
 
   @Test
   public void subirReportesDeMediciones() throws IOException, ParseException {
-    ArrayList< FactorEmision > factoresDeEmision = new ArrayList<>();
+    ArrayList<FactorEmision> factoresDeEmision = new ArrayList<>();
     factoresDeEmision.add(Common.getFactorDeEmision());
     RepositorioFactores.getInstance().setFactoresDeEmision(factoresDeEmision);
     organizacionEmpresa.setServicioMediciones(ServicioExcel.getInstance());
     organizacionEmpresa.setArchivoMediciones("example.xls");
     CalculadorHC.getInstance().procesarActividadAnual(organizacionEmpresa);
-
 
 
     System.out.println("Hay esta cantidad de Reportes: " + organizacionEmpresa.getReportes().size());
@@ -196,8 +193,6 @@ public class OrganizacionTest {
     Assertions.assertEquals(organizacionEmpresa.getReportes().get(3).getPeriodicidad(), FrecuenciaServicio.ANUAL);
 
 
-
-
     //Assertions.assertEquals(organizacionEmpresa.getReportes().get(0).getCalculoHC(), 30 * 2.0 * 1);
 
 
@@ -206,7 +201,6 @@ public class OrganizacionTest {
     Assertions.assertEquals(organizacionEmpresa.calcularHC(), 7188.571720123291);
 
     //System.out.println("HC DE LA ORGANIZACION ES : " + organizacionEmpresa.calcularHC());
-
   }
 
 }

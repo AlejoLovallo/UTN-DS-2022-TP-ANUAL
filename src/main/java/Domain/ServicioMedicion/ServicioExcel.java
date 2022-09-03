@@ -11,6 +11,10 @@ import java.sql.Date;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
+<<<<<<< HEAD
+=======
+import java.time.ZoneId;
+>>>>>>> 1b6e1f4bf62502e247b7a821d2b48989ee0d85af
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.FormatStyle;
@@ -101,28 +105,37 @@ public class ServicioExcel extends ServicioMediciones{
                                  String valor,
                                  String periodicidad,
                                  String periodo_inputacion){
+
     TipoDeActividad tipoDeActividad = TipoDeActividad.valueOf(tipoActividad);
     TipoDeConsumo tipoDeConsumo = TipoDeConsumo.valueOf(tipoConsumo);
     Double valorConsumo = Double.parseDouble(valor);
 
+
+    // Del String periodoImputacion se pasa a LocalDate dado que sólo maneja fechas (sin horas)
     LocalDate fechaPeriodoImputacion = LocalDate.parse(periodo_inputacion, DateTimeFormatter.ofPattern("M/d/yy"));
-    Date date = Date.valueOf(fechaPeriodoImputacion);
+    // Se pasa a Date el LocalDate
+    Date datePeriodoImputacion = Date.valueOf(fechaPeriodoImputacion);
+    /*
+    System.out.println("La fecha con LocalDate: " + fechaPeriodoImputacion);
+    System.out.println("La fecha con Date: " + Date.from(fechaPeriodoImputacion.atStartOfDay(ZoneId.systemDefault()).toInstant()));
+    System.out.println("La fecha con Date Formateada: " + (new SimpleDateFormat("dd/MM/yyyy")).format(Date.from(fechaPeriodoImputacion.atStartOfDay(ZoneId.systemDefault()).toInstant())));
+     */
 
     Actividad actividad = new Actividad(
             tipoDeActividad,
             tipoDeConsumo,
             FrecuenciaServicio.valueOf(periodicidad),
-            date,
+            datePeriodoImputacion,
             null
     );
-
     actividad.setConsumo(valorConsumo);
-
     return actividad;
   }
-/*
-  public static void main(String[] args) throws IOException, IOError {
+
+  /*
+  public static void main(String[] args) throws IOException, IOError, ParseException {
     ServicioExcel lector = ServicioExcel.getInstance();
     lector.cargarMediciones("example.xls");
-  }*/
+  }
+   */
 }
