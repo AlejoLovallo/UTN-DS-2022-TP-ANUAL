@@ -68,7 +68,7 @@ public class CalculadorHC {
 
         for(int mes = 1; mes <= 12; mes++){
             for(Actividad actividad : actividades){
-                serviciosHCExcel.add(this.procesarActividadMes(actividad,mes));
+                serviciosHCExcel.add(this.procesarActividadMes(actividad, mes));
             }
         }
 
@@ -79,11 +79,17 @@ public class CalculadorHC {
         Double factorDeEmision = this.factoresDeEmision.getFactorDeEmisionSegunActividad(actividad.getNombre()).getNumero();
         double cantidadHC = actividad.getConsumo() * factorDeEmision * this.conseguirValorFrecuenciaActividad(actividad, mes);
 
+        System.out.println("EL CONSUMO ES: " + actividad.getConsumo() );
+        System.out.println("EL factorDeEmision ES: " + factorDeEmision );
+        System.out.println("this.conseguirValorFrecuenciaActividad(actividad, mes): " + this.conseguirValorFrecuenciaActividad(actividad, mes) );
+
+
         ServicioHCExcel servicioHCExcel = new ServicioHCExcel(
                 cantidadHC,
                 actividad.getFrecuenciaServicio(),
                 actividad.getFechaCarga()
         );
+        servicioHCExcel.setMes(mes);
         return servicioHCExcel;
     }
 

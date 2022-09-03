@@ -10,6 +10,7 @@ import java.io.IOException;
 import java.sql.Date;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.FormatStyle;
@@ -28,7 +29,7 @@ public class ServicioExcel extends ServicioMediciones{
   }
 
   @Override
-  public ArrayList<Actividad> cargarMediciones(String fileName) throws IOException, IOError, ParseException {
+  public ArrayList<Actividad> cargarMediciones(String fileName) throws IOException, IOError{
     Workbook workbook = null;
     try{
       File file = new File("src/main/java/Domain/Utils/" + fileName);
@@ -99,23 +100,13 @@ public class ServicioExcel extends ServicioMediciones{
                                  String tipoConsumo,
                                  String valor,
                                  String periodicidad,
-                                 String periodo_inputacion) throws ParseException {
+                                 String periodo_inputacion){
     TipoDeActividad tipoDeActividad = TipoDeActividad.valueOf(tipoActividad);
     TipoDeConsumo tipoDeConsumo = TipoDeConsumo.valueOf(tipoConsumo);
     Double valorConsumo = Double.parseDouble(valor);
 
-    //ACA TRANSFORMA EL DATO QUE VIENE DEL EXCEL EN UN DATE
-    SimpleDateFormat formatoDelTexto = new SimpleDateFormat("M/d/y");
-    java.util.Date fecha = formatoDelTexto.parse(periodo_inputacion);
-
-    //ACA TRANSFORMA EL DATE DE "EEE MMM dd HH:mm:ss zzz uuuu" A "yyyy-MM-dd"
-    Date date = Date.valueOf(
-            ZonedDateTime.parse(
-                    fecha.toString(), DateTimeFormatter.ofPattern("EEE MMM dd HH:mm:ss zzz uuuu").withLocale(Locale.US)
-            ).toLocalDate()
-    );
-
-    System.out.print("La fecha transformada es: " + date);
+    LocalDate fechaPeriodoImputacion = LocalDate.parse(periodo_inputacion, DateTimeFormatter.ofPattern("M/d/yy"));
+    Date date = Date.valueOf(fechaPeriodoImputacion);
 
     Actividad actividad = new Actividad(
             tipoDeActividad,
