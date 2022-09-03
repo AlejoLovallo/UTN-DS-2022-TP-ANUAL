@@ -10,6 +10,8 @@ import java.io.IOException;
 import java.sql.Date;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.FormatStyle;
@@ -104,34 +106,30 @@ public class ServicioExcel extends ServicioMediciones{
     TipoDeConsumo tipoDeConsumo = TipoDeConsumo.valueOf(tipoConsumo);
     Double valorConsumo = Double.parseDouble(valor);
 
-    //ACA TRANSFORMA EL DATO QUE VIENE DEL EXCEL EN UN DATE
-    SimpleDateFormat formatoDelTexto = new SimpleDateFormat("M/d/y");
-    java.util.Date fecha = formatoDelTexto.parse(periodo_inputacion);
-
-    //ACA TRANSFORMA EL DATE DE "EEE MMM dd HH:mm:ss zzz uuuu" A "yyyy-MM-dd"
-    Date date = Date.valueOf(
-            ZonedDateTime.parse(
-                    fecha.toString(), DateTimeFormatter.ofPattern("EEE MMM dd HH:mm:ss zzz uuuu").withLocale(Locale.US)
-            ).toLocalDate()
-    );
-
-    System.out.print("La fecha transformada es: " + date);
-
+    // Del String periodoImputacion se pasa a LocalDate dado que sólo maneja fechas (sin horas)
+    LocalDate fechaPeriodoImputacion = LocalDate.parse(periodo_inputacion, DateTimeFormatter.ofPattern("M/d/yy"));
+    // Se pasa a Date el LocalDate
+    Date datePeriodoImputacion = (Date) Date.from(fechaPeriodoImputacion.atStartOfDay(ZoneId.systemDefault()).toInstant());
+    /*
+    System.out.println("La fecha con LocalDate: " + fechaPeriodoImputacion);
+    System.out.println("La fecha con Date: " + Date.from(fechaPeriodoImputacion.atStartOfDay(ZoneId.systemDefault()).toInstant()));
+    System.out.println("La fecha con Date Formateada: " + (new SimpleDateFormat("dd/MM/yyyy")).format(Date.from(fechaPeriodoImputacion.atStartOfDay(ZoneId.systemDefault()).toInstant())));
+     */
     Actividad actividad = new Actividad(
             tipoDeActividad,
             tipoDeConsumo,
             FrecuenciaServicio.valueOf(periodicidad),
-            date,
+            datePeriodoImputacion,
             null
     );
-
     actividad.setConsumo(valorConsumo);
-
     return actividad;
   }
-/*
-  public static void main(String[] args) throws IOException, IOError {
+
+  /*
+  public static void main(String[] args) throws IOException, IOError, ParseException {
     ServicioExcel lector = ServicioExcel.getInstance();
     lector.cargarMediciones("example.xls");
-  }*/
+  }
+   */
 }

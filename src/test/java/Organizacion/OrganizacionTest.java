@@ -1,6 +1,4 @@
 package Organizacion;
-import Administrador.AdminTest;
-import Domain.CalculadorHC.CalculadorHC;
 import Domain.CalculadorHC.FactorEmision;
 import Domain.CalculadorHC.RepositorioFactores;
 import Domain.Espacios.Direccion;
@@ -15,12 +13,13 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Assertions;
+import Domain.CalculadorHC.CalculadorHC;
 
 import java.io.IOException;
 import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Date;
 
 public class OrganizacionTest {
   protected Organizacion organizacionEmpresa;
@@ -156,28 +155,17 @@ public class OrganizacionTest {
 
   @Test
   public void subirReportesDeMediciones() throws IOException, ParseException {
-    ArrayList< FactorEmision > factoresDeEmision = new ArrayList<>();
+    ArrayList<FactorEmision> factoresDeEmision = new ArrayList<>();
     factoresDeEmision.add(Common.getFactorDeEmision());
     RepositorioFactores.getInstance().setFactoresDeEmision(factoresDeEmision);
     organizacionEmpresa.setServicioMediciones(ServicioExcel.getInstance());
     organizacionEmpresa.setArchivoMediciones("example.xls");
     CalculadorHC.getInstance().procesarActividadAnual(organizacionEmpresa);
 
-    Assertions.assertEquals(organizacionEmpresa.getReportes().get(0).getFechaCarga().getDate(), 1);
-    Assertions.assertEquals(organizacionEmpresa.getReportes().get(0).getFechaCarga().getMonth(), 4);
-    Assertions.assertEquals(organizacionEmpresa.getReportes().get(0).getFechaCarga().getYear(), 122);
-
-    Assertions.assertEquals(organizacionEmpresa.getReportes().get(1).getFechaCarga().getDate(), 2);
-    Assertions.assertEquals(organizacionEmpresa.getReportes().get(1).getFechaCarga().getMonth(), 5);
-    Assertions.assertEquals(organizacionEmpresa.getReportes().get(1).getFechaCarga().getYear(), 121);
-
-    Assertions.assertEquals(organizacionEmpresa.getReportes().get(2).getFechaCarga().getDate(), 3);
-    Assertions.assertEquals(organizacionEmpresa.getReportes().get(2).getFechaCarga().getMonth(), 6);
-    Assertions.assertEquals(organizacionEmpresa.getReportes().get(2).getFechaCarga().getYear(), 120);
-
-    Assertions.assertEquals(organizacionEmpresa.getReportes().get(3).getFechaCarga().getDate(), 4);
-    Assertions.assertEquals(organizacionEmpresa.getReportes().get(3).getFechaCarga().getMonth(), 7);
-    Assertions.assertEquals(organizacionEmpresa.getReportes().get(3).getFechaCarga().getYear(), 119);
+    Assertions.assertEquals("01/05/2022", (new SimpleDateFormat("dd/MM/yyyy")).format(organizacionEmpresa.getReportes().get(0).getFechaCarga()));
+    Assertions.assertEquals("02/06/2021", (new SimpleDateFormat("dd/MM/yyyy")).format(organizacionEmpresa.getReportes().get(1).getFechaCarga()));
+    Assertions.assertEquals("03/07/2020", (new SimpleDateFormat("dd/MM/yyyy")).format(organizacionEmpresa.getReportes().get(2).getFechaCarga()));
+    Assertions.assertEquals("04/08/2019", (new SimpleDateFormat("dd/MM/yyyy")).format(organizacionEmpresa.getReportes().get(3).getFechaCarga()));
   }
 
 }
