@@ -8,19 +8,10 @@ import java.io.File;
 import java.io.IOError;
 import java.io.IOException;
 import java.sql.Date;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.time.LocalDate;
-<<<<<<< HEAD
-=======
-import java.time.ZoneId;
->>>>>>> 1b6e1f4bf62502e247b7a821d2b48989ee0d85af
-import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
-import java.time.format.FormatStyle;
 import java.util.ArrayList;
 import java.util.Iterator;
-import java.util.Locale;
 
 public class ServicioExcel extends ServicioMediciones{
   private static ServicioExcel instance = null;
