@@ -125,6 +125,10 @@ public class Common {
   public static FactorEmision getFactorDeEmision() {
     return new FactorEmision(TipoDeActividad.COMBUSTION_FIJA, 2.0, Unidad.m3);
   }
+
+    public static FactorEmision getFactorDeEmisionCOMBUSTION_MOVIL() {
+      return new FactorEmision(TipoDeActividad.COMBUSTION_MOVIL, 2.0, Unidad.m3);
+    }
 }
 
 

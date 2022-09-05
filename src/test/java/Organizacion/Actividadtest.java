@@ -26,20 +26,20 @@ public class Actividadtest {
     @Test
     public void ActividadCreadaCorrectamente(){
 
-        Assertions.assertEquals(TipoDeActividad.COMBUSTION_FIJA,act.getNombre());
+        Assertions.assertEquals(TipoDeActividad.COMBUSTION_FIJA,act.getTipoDeActividad());
         Assertions.assertEquals(TipoDeConsumo.CARBON_DE_LENIA,act.getTipoDeConsumo());
         Assertions.assertEquals(UnidadDeConsumo.kg,act.getUnidadDeConsumo());
     }
 
     @Test
     public void setTipoActividad(){
-        TipoDeActividad actual=this.act.getNombre();
+        TipoDeActividad actual=this.act.getTipoDeActividad();
         TipoDeActividad nueva=TipoDeActividad.ELECTRICIDAD_ADQUIRIDA_Y_CONSUMIDA;
 
-        this.act.setNombre(nueva);
+        this.act.setTipoDeActividad(nueva);
 
         Assertions.assertEquals(TipoDeActividad.COMBUSTION_FIJA,actual);
-        Assertions.assertEquals(nueva,this.act.getNombre());
+        Assertions.assertEquals(nueva,this.act.getTipoDeActividad());
     }
 }
 //faltan mas test con lector de actividades
