@@ -7,8 +7,15 @@ import org.apache.poi.ss.usermodel.*;
 import java.io.File;
 import java.io.IOError;
 import java.io.IOException;
+import java.sql.Date;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.ZonedDateTime;
+import java.time.format.DateTimeFormatter;
+import java.time.format.FormatStyle;
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.Locale;
 
 public class ServicioExcel extends ServicioMediciones{
   private static ServicioExcel instance = null;
@@ -21,10 +28,10 @@ public class ServicioExcel extends ServicioMediciones{
   }
 
   @Override
-  public ArrayList<Actividad> cargarMediciones(String fileName) throws IOException, IOError {
+  public ArrayList<Actividad> cargarMediciones(String fileName) throws IOException, IOError, ParseException {
     Workbook workbook = null;
     try{
-      File file = new File("src/main/java/Domain/Utils/"+ fileName);
+      File file = new File("src/main/java/Domain/Utils/" + fileName);
       workbook = WorkbookFactory.create(file);
     } catch (IOException e){
       throw new ImposibilidadDeCrearWorkbookException(e.toString());
@@ -55,23 +62,23 @@ public class ServicioExcel extends ServicioMediciones{
       while (cellIterator.hasNext()) {
         Cell cell = cellIterator.next();
         String tipoActividad = dataFormatter.formatCellValue(cell);
-        System.out.print(tipoActividad + "\t");
+        //System.out.print(tipoActividad + "\t");
 
         cell = cellIterator.next();
         String tipoConsumo = dataFormatter.formatCellValue(cell);
-        System.out.print(tipoConsumo + "\t");
+        //System.out.print(tipoConsumo + "\t");
 
         cell = cellIterator.next();
         String valor = dataFormatter.formatCellValue(cell);
-        System.out.print(valor + "\t");
+        //System.out.print(valor + "\t");
 
         cell = cellIterator.next();
         String periodicidad = dataFormatter.formatCellValue(cell);
-        System.out.print(periodicidad + "\t");
+        //System.out.print(periodicidad + "\t");
 
         cell = cellIterator.next();
         String periodo_imputacion = dataFormatter.formatCellValue(cell);
-        System.out.print(periodo_imputacion + "\t");
+        //System.out.print(periodo_imputacion + "\t");
 
         actividades.add(leerActividad(tipoActividad, tipoConsumo, valor, periodicidad, periodo_imputacion));
       }
@@ -92,15 +99,29 @@ public class ServicioExcel extends ServicioMediciones{
                                  String tipoConsumo,
                                  String valor,
                                  String periodicidad,
-                                 String periodo_inputacion)
-  {
+                                 String periodo_inputacion) throws ParseException {
     TipoDeActividad tipoDeActividad = TipoDeActividad.valueOf(tipoActividad);
     TipoDeConsumo tipoDeConsumo = TipoDeConsumo.valueOf(tipoConsumo);
     Double valorConsumo = Double.parseDouble(valor);
 
+    //ACA TRANSFORMA EL DATO QUE VIENE DEL EXCEL EN UN DATE
+    SimpleDateFormat formatoDelTexto = new SimpleDateFormat("M/d/y");
+    java.util.Date fecha = formatoDelTexto.parse(periodo_inputacion);
+
+    //ACA TRANSFORMA EL DATE DE "EEE MMM dd HH:mm:ss zzz uuuu" A "yyyy-MM-dd"
+    Date date = Date.valueOf(
+            ZonedDateTime.parse(
+                    fecha.toString(), DateTimeFormatter.ofPattern("EEE MMM dd HH:mm:ss zzz uuuu").withLocale(Locale.US)
+            ).toLocalDate()
+    );
+
+    System.out.print("La fecha transformada es: " + date);
+
     Actividad actividad = new Actividad(
             tipoDeActividad,
             tipoDeConsumo,
+            FrecuenciaServicio.valueOf(periodicidad),
+            date,
             null
     );
 

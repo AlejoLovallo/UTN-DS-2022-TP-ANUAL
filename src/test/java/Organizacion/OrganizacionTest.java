@@ -1,11 +1,14 @@
 package Organizacion;
+import Administrador.AdminTest;
+import Domain.CalculadorHC.CalculadorHC;
+import Domain.CalculadorHC.FactorEmision;
+import Domain.CalculadorHC.RepositorioFactores;
 import Domain.Espacios.Direccion;
 import Domain.Espacios.Espacio;
 import Domain.Espacios.TipoDireccion;
-import Domain.Espacios.TipoDireccion;
 import Domain.Miembro.Miembro;
-import Domain.Miembro.TipoDocumento;
 import Domain.Organizacion.*;
+import Domain.ServicioMedicion.ServicioExcel;
 import Domain.Usuarios.Contacto;
 import Utils.Common;
 import org.junit.jupiter.api.AfterEach;
@@ -13,15 +16,18 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Assertions;
 
+import java.io.IOException;
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Date;
 
 public class OrganizacionTest {
   protected Organizacion organizacionEmpresa;
   protected Contacto contacto = new Contacto("Organizacion", "ApellidoEmpresa", 987654321, "org@gmail.com");
 
   private void initializeOrganizacion(){
-    this.organizacionEmpresa = new Organizacion("OrganizacionTest", TipoOrganizacion.Empresa, ClasificacionOrganizacion.EmpresaSectorPrimario, contacto);
+    this.organizacionEmpresa = new Organizacion("OrganizacionTest", TipoOrganizacion.Empresa, ClasificacionOrganizacion.EmpresaSectorPrimario, contacto, 5);
   }
 
   @BeforeEach
@@ -115,20 +121,22 @@ public class OrganizacionTest {
   Assertions.assertEquals(Arrays.asList(sector1,sector2),this.organizacionEmpresa.getSectores());
 }
 
-/** 
-
-TODO: REHACER ESTE TEST. QUEDO CON LA LOGICA VIEJA DE LA ENTREGA 1 | 2.
   @Test
   public void aceptarvinculacion(){
     ArrayList<Miembro> miembros = Common.getMiembros(2);
 
-    miembros.forEach(miembro -> this.organizacionEmpresa.aceptarVinculacion(miembro));
+    ArrayList<Sector> sectores = new ArrayList<>();
+    Sector sector = Common.getSector( "nombreSector", TipoDireccion.Trabajo);
+    sectores.add(sector);
 
-    Assertions.assertEquals(Arrays.asList(miembros.get(0),miembros.get(1)),this.organizacionEmpresa.getMiembros());
-    Assertions.assertTrue(this.organizacionEmpresa.aceptarVinculacion(miembros.get(0)));
-    Assertions.assertTrue(this.organizacionEmpresa.aceptarVinculacion(miembros.get(1)));
+    organizacionEmpresa.setSectores(sectores);
+
+    miembros.forEach(miembro -> this.organizacionEmpresa.aceptarVinculacion(miembro, organizacionEmpresa.getSectores().get(0)));
+
+    Assertions.assertEquals(Arrays.asList(miembros.get(0),miembros.get(1)),this.organizacionEmpresa.getSectores().get(0).getMiembros());
+    Assertions.assertTrue(this.organizacionEmpresa.aceptarVinculacion(miembros.get(0), organizacionEmpresa.getSectores().get(0)));
+    Assertions.assertTrue(this.organizacionEmpresa.aceptarVinculacion(miembros.get(1), organizacionEmpresa.getSectores().get(0)));
   }
-**/
 
 @Test
   public void RepoOrganizaciones(){
@@ -145,4 +153,31 @@ TODO: REHACER ESTE TEST. QUEDO CON LA LOGICA VIEJA DE LA ENTREGA 1 | 2.
   Assertions.assertNull(repoSector);
   Assertions.assertNotNull(repoSector.getInstance());
   }
+
+  @Test
+  public void subirReportesDeMediciones() throws IOException, ParseException {
+    ArrayList< FactorEmision > factoresDeEmision = new ArrayList<>();
+    factoresDeEmision.add(Common.getFactorDeEmision());
+    RepositorioFactores.getInstance().setFactoresDeEmision(factoresDeEmision);
+    organizacionEmpresa.setServicioMediciones(ServicioExcel.getInstance());
+    organizacionEmpresa.setArchivoMediciones("example.xls");
+    CalculadorHC.getInstance().procesarActividadAnual(organizacionEmpresa);
+
+    Assertions.assertEquals(organizacionEmpresa.getReportes().get(0).getFechaCarga().getDate(), 1);
+    Assertions.assertEquals(organizacionEmpresa.getReportes().get(0).getFechaCarga().getMonth(), 4);
+    Assertions.assertEquals(organizacionEmpresa.getReportes().get(0).getFechaCarga().getYear(), 122);
+
+    Assertions.assertEquals(organizacionEmpresa.getReportes().get(1).getFechaCarga().getDate(), 2);
+    Assertions.assertEquals(organizacionEmpresa.getReportes().get(1).getFechaCarga().getMonth(), 5);
+    Assertions.assertEquals(organizacionEmpresa.getReportes().get(1).getFechaCarga().getYear(), 121);
+
+    Assertions.assertEquals(organizacionEmpresa.getReportes().get(2).getFechaCarga().getDate(), 3);
+    Assertions.assertEquals(organizacionEmpresa.getReportes().get(2).getFechaCarga().getMonth(), 6);
+    Assertions.assertEquals(organizacionEmpresa.getReportes().get(2).getFechaCarga().getYear(), 120);
+
+    Assertions.assertEquals(organizacionEmpresa.getReportes().get(3).getFechaCarga().getDate(), 4);
+    Assertions.assertEquals(organizacionEmpresa.getReportes().get(3).getFechaCarga().getMonth(), 7);
+    Assertions.assertEquals(organizacionEmpresa.getReportes().get(3).getFechaCarga().getYear(), 119);
+  }
+
 }

@@ -30,11 +30,12 @@ public class RepositorioAgentes {
     return this.agenteSectoriales.stream().filter(a-> a.getNombre().equals(nombre)).findFirst().orElse(null);
   }
 
-  public AgenteSectorial agregarOrganizacionAAgente(String nombre , Organizacion organizacion){
-    AgenteSectorial aAsociar = buscarAgente(nombre);
-    if(aAsociar!=null){
-      aAsociar.agregarOrganizacion(organizacion);
-      return aAsociar;
+  public AgenteSectorial agregarOrganizacionAAgente(AgenteSectorial agenteSectorial , Organizacion organizacion){
+    //AgenteSectorial aAsociar = buscarAgente(nombre);
+    if(agenteSectorial!=null){
+      agenteSectorial.agregarOrganizacion(organizacion);
+      organizacion.setAgenteSectorial(agenteSectorial);
+      return agenteSectorial;
     }
     return null;
   }

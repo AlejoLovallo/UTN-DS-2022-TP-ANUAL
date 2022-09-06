@@ -14,7 +14,7 @@ import Domain.CalculadorHC.RepositorioFactores;
 
 public class Admin extends Usuario {
   //////////////////////////////////  VARIABLES
-  private RepositorioFactores repoFactoresDeEmision;
+  private RepositorioFactores repoFactoresDeEmision = RepositorioFactores.getInstance();
 
   //////////////////////////////////  CONSTRUCTORES
   public Admin(String username, String email, String contra, boolean validado) {
