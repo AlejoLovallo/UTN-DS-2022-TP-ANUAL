@@ -4,17 +4,17 @@
              xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence
              http://xmlns.jcp.org/xml/ns/persistence/persistence_2_1.xsd"
              version="2.1">
-    <persistence-unit name="db" transaction-type="RESOURCE_LOCAL">
+    <persistence-unit name="ds" transaction-type="RESOURCE_LOCAL">
         <provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
 
-        <class></class>
+        <class>ds.tp</class>
         <exclude-unlisted-classes>true</exclude-unlisted-classes>
 
         <properties>
 
             <property name="hibernate.archive.autodetection" value="class"/>
             <!-- CONNECTION SETTINGS -->
-            <property name="hibernate.connection.driver_class" value="com.mysql.jdbc.Driver" />
+            <property name="hibernate.connection.driver_class" value="com.mysql.cj.jdbc.Driver" />
             <property name="hibernate.connection.url" value="jdbc:mysql://localhost:1433/ds_pre1p" />
             <property name="hibernate.connection.username" value="sa" />
             <property name="hibernate.connection.password" value="dike2361!"/>

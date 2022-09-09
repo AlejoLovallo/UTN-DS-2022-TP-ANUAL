@@ -66,6 +66,10 @@ public class Usuario extends EntidadPersistente{
     this.validado = validado;
   }
 
+  public void setEmail(String _email){
+    this.email = _email;
+  }
+
 
   //////////////////////////////////  INTERFACE
   public boolean isColision(String contraAProbar){

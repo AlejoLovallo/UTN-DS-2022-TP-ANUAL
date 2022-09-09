@@ -7,9 +7,9 @@ import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 
-public class RepositorioUsuarios extends Repositorio<Usuario> {
+public class RepositorioUsuariosDB extends Repositorio<Usuario> {
 
-  public RepositorioUsuarios(DBService<Usuario> usuarioService) {
+  public RepositorioUsuariosDB(DBService<Usuario> usuarioService) {
     super(usuarioService);
   }
 
