@@ -1,24 +1,41 @@
 package Domain.Usuarios;
+import Domain.BaseDeDatos.EntidadPersistente;
 import Domain.Usuarios.Excepciones.ContraseniaEsInvalidaException;
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 
+import javax.persistence.*;
 
-public class Usuario {
+@Entity
+@Table(name="usuario")
+public class Usuario extends EntidadPersistente{
   //////////////////////////////////  VARIABLES
-  private final String salt = "+@351";
-  private String contraHasheada;
-  private String username;
+  @Column
   private String email;
-  private UltimoIntento ultimoAcceso;
+  @Column
+  private String username;
+  @Column
+  private String contraHasheada;
+  @Column
   private Boolean validado;
-  private ArrayList<CriterioValidacion> validadoresContrasenia;
-  //private Contacto contacto;
 
+  @Transient
+  private UltimoIntento ultimoAcceso;
+
+  @Transient
+  private ArrayList<CriterioValidacion> validadoresContrasenia;
+
+  @Transient
+  private final String salt = "+@351";
 
   //////////////////////////////////  CONSTRUCTORES
+
+  public Usuario(){
+
+  }
+
   public Usuario(String username,String email,String contra,boolean validado) {
     if(!isContraseniaValida(contra)){
       throw new ContraseniaEsInvalidaException("no pasa por alguna de las validaciones de seguridad");
