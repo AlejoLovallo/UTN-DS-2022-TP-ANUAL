@@ -2,12 +2,13 @@ package Domain.Organizacion;
 import Domain.CalculadorHC.CalculadorHC;
 import Domain.Miembro.Miembro;
 import Domain.ServicioMedicion.Actividad;
-import Domain.ServicioMedicion.ServicioHCExcel;
 import Domain.ServicioMedicion.ServicioMediciones;
 import Domain.Usuarios.Contacto;
 
 import java.io.IOException;
 import java.util.*;
+
+import org.apache.commons.collections4.multimap.ArrayListValuedHashMap;
 
 public class Organizacion {
   private String razonSocial;
@@ -18,7 +19,7 @@ public class Organizacion {
   private AgenteSectorial agenteSectorial;
   private ServicioMediciones servicioMediciones;
   private String archivoMediciones;
-  private ArrayList<ServicioHCExcel> reportes = new ArrayList<>();
+  private ArrayList<Actividad> actividades;
 
   private CalculadorHC calculadorHC = CalculadorHC.getInstance();
   private Integer numDiasPorSemana;
@@ -66,11 +67,14 @@ public class Organizacion {
 
   public String getArchivoMediciones() { return archivoMediciones; }
 
-  public ArrayList<ServicioHCExcel> getReportes() { return reportes; }
-
   public Integer getNumDiasPorSemana() {
     return numDiasPorSemana;
   }
+
+  public ArrayList <Actividad> getActividades() {
+    return actividades;
+  }
+
 
   //////////////////////////////////  SETTERS
   public void setTipo(TipoOrganizacion tipo) {
@@ -100,8 +104,6 @@ public class Organizacion {
 
   public void setArchivoMediciones(String archivoMediciones) { this.archivoMediciones = archivoMediciones; }
 
-  public void setReportes(ArrayList<ServicioHCExcel> reportes) { this.reportes = reportes; }
-
   public void setNumDiasPorSemana(Integer numDiasPorSemana) {
     this.numDiasPorSemana = numDiasPorSemana;
   }
@@ -120,16 +122,15 @@ public class Organizacion {
     return true;
   }
 
-  public ArrayList<Actividad> cargarMedicionesInternas(String fileName) throws IOException {
-    return servicioMediciones.cargarMediciones(fileName);
+  public void cargarMedicionesInternas(String fileName) throws IOException {
+    ArrayList <Actividad> act = servicioMediciones.cargarMediciones(fileName);
+    for (Actividad actividad : act){
+      this.actividades.add(actividad);
+    }
   }
 
-  // TODO Revisar resultado por unidades y ver el calculo completo
-  public Double calcularHC() throws IOException {
-    return calculadorHC.calcularHC(this);
+  public Double calcularHC(Integer mes, Integer anio) throws IOException {
+    return calculadorHC.calcularHC(this, mes, anio);
   }
-
-
-
 
 }

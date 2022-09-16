@@ -1,5 +1,6 @@
 package Domain.ServicioMedicion;
 
+import java.util.Calendar;
 import java.util.Date;
 
 public class Actividad {
@@ -40,4 +41,25 @@ public class Actividad {
   public void setTipoDeConsumo(TipoDeConsumo tipoDeConsumo) {this.tipoDeConsumo = tipoDeConsumo;}
 
   public void setNombre(TipoDeActividad nombre) {this.nombre = nombre;}
+
+  //METHODS
+
+  public Boolean perteneceAlPeriodo(Integer mes, Integer anio){
+    Calendar calendar = Calendar.getInstance();
+    calendar.setTime(this.getFechaCarga());
+    int mesActividad = calendar.get(Calendar.MONTH);
+    int anioActividad = calendar.get(Calendar.YEAR);
+
+    if(this.frecuenciaServicio == FrecuenciaServicio.ANUAL){
+      if(mes <= (mesActividad - 1) && anio == anioActividad)
+        return true;
+    }else if (this.frecuenciaServicio == FrecuenciaServicio.MENSUAL){
+      if(mes == mesActividad && anio == anioActividad)
+        return true;
+    }
+
+    return false;
+
+  }
+
 }

@@ -39,89 +39,52 @@ public class CalculadorHC {
 
     //METHODS
 
-    public double calcularHC(Organizacion organizacion) throws IOException {
-        Date fechaActual = new Date();
-        Calendar calendar = Calendar.getInstance();
-        calendar.setTime(fechaActual);
-        int mesActual = calendar.get(Calendar.MONTH);
-        int anioActual = calendar.get(Calendar.YEAR);
+    public Double calcularHC(Organizacion organizacion, Integer mes, Integer anio) throws IOException {
+    
+        Double cantidadHC = 0.0;
+        ArrayList <Actividad> act = new ArrayList<Actividad>();
 
-        double valorHC = 0;
-        for(ServicioHCExcel servicio : organizacion.getReportes()){
-            if(servicio.estaActivo())
-                valorHC += servicio.getCalculoHC();
+        for(Actividad actividad : organizacion.getActividades()){
+            if (actividad.perteneceAlPeriodo(mes, anio)){
+                act.add(actividad);
+            }
+        }
+
+        for(Actividad actividad : act){
+            cantidadHC += procesarActividad(actividad);
         }
 
         for (Sector sector : organizacion.getSectores()){
             for(Miembro miembro : sector.getMiembros()){
-                valorHC += calcularHC(miembro, mesActual, anioActual);
+                cantidadHC += calcularHC(miembro, mes, anio);
             }
         }
 
-        return valorHC;
+        return cantidadHC;
     }
 
-    public void procesarActividadAnual(Organizacion organizacion) throws IOException {
-        ArrayList<ServicioHCExcel> serviciosHCExcel = new ArrayList<>();
-        ArrayList<Actividad> actividades = organizacion.cargarMedicionesInternas(organizacion.getArchivoMediciones());
 
-        for(int mes = 1; mes <= 12; mes++){
-            for(Actividad actividad : actividades){
-                serviciosHCExcel.add(this.procesarActividadMes(actividad,mes));
-            }
-        }
-
-        organizacion.setReportes(serviciosHCExcel);
-    }
-
-    public ServicioHCExcel procesarActividadMes(Actividad actividad, int mes){
+    public Double procesarActividad(Actividad actividad){
+        
         Double factorDeEmision = this.factoresDeEmision.getFactorDeEmisionSegunActividad(actividad.getNombre()).getNumero();
-        double cantidadHC = actividad.getConsumo() * factorDeEmision * this.conseguirValorFrecuenciaActividad(actividad, mes);
-
-        ServicioHCExcel servicioHCExcel = new ServicioHCExcel(
-                cantidadHC,
-                actividad.getFrecuenciaServicio(),
-                actividad.getFechaCarga()
-        );
-        return servicioHCExcel;
+        Double cantidadHC = actividad.getConsumo() * factorDeEmision * this.conseguirValorFrecuenciaActividad(actividad);
+        return cantidadHC;
     }
 
-    public double conseguirValorFrecuenciaActividad(Actividad actividad, int mes){
+    public Double conseguirValorFrecuenciaActividad(Actividad actividad){
+
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(actividad.getFechaCarga());
-        int mesDeCierre = calendar.get(Calendar.MONTH);
-        if(mesDeCierre < mes){
-            if(actividad.getFrecuenciaServicio() == FrecuenciaServicio.MENSUAL){
-                return 1;
-            }
-            else{
-                return 1f / mesDeCierre;
-            }
+        int mesActividad = calendar.get(Calendar.MONTH);
+
+        if(actividad.getFrecuenciaServicio() == FrecuenciaServicio.MENSUAL){
+            return 1.0;
         }
         else{
-            return 0;
+          return 1.0 / (mesActividad - 1);
         }
+        
     }
-
-    /*public Double calcularHC(Miembro miembro) throws IOException {
-
-        Double cantidadHC = 0.0;
-
-        Double factorDeEmision = this.factoresDeEmision.getFactorDeEmisionSegunActividad(TipoDeActividad.COMBUSTION_MOVIL).getNumero();
-
-        for(Trayecto trayecto : miembro.getTrayectos()){
-            for(Tramo tramo : trayecto.getTramos()){
-                if(tramo.getMedioTransporte() instanceof VehiculoParticular){
-                    Double unidadesConsumidas = tramo.determinarDistancia() * tramo.getMedioTransporte().getConsumoPorKm();
-                    cantidadHC += unidadesConsumidas * factorDeEmision / ((VehiculoParticular) tramo.getMedioTransporte()).getCantPasajeros();
-                }else{
-                    Double unidadesConsumidas = tramo.determinarDistancia() * tramo.getMedioTransporte().getConsumoPorKm();
-                    cantidadHC += unidadesConsumidas * factorDeEmision;
-                }
-            }
-        }
-        return cantidadHC;
-    }*/
 
     public Double calcularHC(Miembro miembro, Integer mes, Integer anio) throws IOException {
 
@@ -148,32 +111,12 @@ public class CalculadorHC {
         return cantidadHC;
     }
 
-    /*public Double calcularHC(Organizacion organizacion) throws IOException {
-        Double cantidadHC = 0.0;
 
-        ArrayList<Actividad> actividades = organizacion.cargarMedicionesInternas(organizacion.getArchivoMediciones());
-
-        for(int i = 0; i < actividades.size(); i++)
-        {
-            Actividad actividad = actividades.get(i);
-            Double factorDeEmision = this.factoresDeEmision.getFactorDeEmisionSegunActividad(actividad.getNombre()).getNumero();
-            cantidadHC += actividades.get(i).getConsumo() * factorDeEmision;
-        }
-
-        for (Sector sector : organizacion.getSectores()){
-            for(Miembro miembro : sector.getMiembros()){
-                cantidadHC += calcularHC(miembro);
-            }
-        }
-
-        return cantidadHC;
-    }*/
-
-    public Double calcularHC(AgenteSectorial agenteSectorial) throws IOException {
+    public Double calcularHC(AgenteSectorial agenteSectorial, Integer mes, Integer anio) throws IOException {
         Double cantidadHC = 0.0;
 
         for(Organizacion organizacion : agenteSectorial.getOrganizaciones()){
-            cantidadHC += calcularHC(organizacion);
+            cantidadHC += calcularHC(organizacion, mes, anio);
         }
         return cantidadHC;
     }
@@ -191,4 +134,7 @@ public class CalculadorHC {
         }
         return cantidadHC;
     }
+
+    // HC TOTALES
+    
 }
