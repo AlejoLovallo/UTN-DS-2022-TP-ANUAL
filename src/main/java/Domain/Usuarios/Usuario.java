@@ -9,9 +9,12 @@ import java.util.ArrayList;
 import javax.persistence.*;
 
 @Entity
-@Table(name="usuario")
-public class Usuario extends EntidadPersistente{
+@Table(name="Usuario")
+public class Usuario /*extends EntidadPersistente*/{
   //////////////////////////////////  VARIABLES
+  @Id
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
+  private int id;
   @Column
   private String email;
   @Column
@@ -20,6 +23,7 @@ public class Usuario extends EntidadPersistente{
   private String contraHasheada;
   @Column
   private Boolean validado;
+
 
   @Transient
   private UltimoIntento ultimoAcceso;
@@ -48,6 +52,7 @@ public class Usuario extends EntidadPersistente{
     //this.contacto = contacto;
   }
 
+
   //////////////////////////////////  GETTERS
   public boolean isValido(){
     return this.validado;
@@ -59,6 +64,14 @@ public class Usuario extends EntidadPersistente{
 
   public String getEmail() {
     return this.email;
+  }
+
+  public void setUsername(String username) {
+    this.username = username;
+  }
+
+  public void setContraHasheada(String contraHasheada) {
+    this.contraHasheada = contraHasheada;
   }
 
   //////////////////////////////////  SETTERS
