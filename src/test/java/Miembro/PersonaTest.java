@@ -1,5 +1,6 @@
 package Miembro;
 
+import Domain.InterfazUsuario.InterfazUsuarioPersona;
 import Domain.Miembro.Miembro;
 import Domain.Miembro.Persona;
 import Domain.Miembro.TipoDocumento;
@@ -93,14 +94,14 @@ public class PersonaTest {
 
   @Test
   public void agregarMiembro(){
-    Organizacion org=Common.getOrganizacionMinisterio();
-    ArrayList<Miembro> lista=Common.getMiembros(3);
+    Organizacion org = Common.getOrganizacionMinisterio();
+    ArrayList<Miembro> lista = Common.getMiembros(3);
 
     this.unaPersona.agregarMiembro(lista.get(0));
     this.unaPersona.agregarMiembro(lista.get(1));
     this.unaPersona.agregarMiembro(lista.get(2));
 
-    Assertions.assertEquals(lista,this.unaPersona.getMiembros());
+    Assertions.assertEquals(lista, this.unaPersona.getMiembros());
   }
 
 }

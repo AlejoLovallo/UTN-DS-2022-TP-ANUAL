@@ -6,6 +6,7 @@ import Domain.ServicioMedicion.ServicioHCExcel;
 import Domain.ServicioMedicion.ServicioMediciones;
 import Domain.Usuarios.Contacto;
 
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.io.IOException;
 import java.util.*;
@@ -14,23 +15,26 @@ public class Organizacion {
   private String razonSocial;
   private TipoOrganizacion tipo;
   private ClasificacionOrganizacion clasificacion;
-  private ArrayList<Sector> sectores= new ArrayList<>();
+  private ArrayList<Sector> sectores = new ArrayList<>();
   private Contacto contacto;
   private AgenteSectorial agenteSectorial;
   private ServicioMediciones servicioMediciones;
   private String archivoMediciones;
   private ArrayList<ServicioHCExcel> reportes = new ArrayList<>();
 
+  private ArrayList<Actividad> actividades = new ArrayList<>();
+
   private CalculadorHC calculadorHC = CalculadorHC.getInstance();
   private Integer numDiasPorSemana;
 
 
   //////////////////////////////////  CONSTRUCTORES
-  public Organizacion(String _razonSocial, TipoOrganizacion _tipo, ClasificacionOrganizacion _clasificacion, Contacto contacto){
+  public Organizacion(String _razonSocial, TipoOrganizacion _tipo, ClasificacionOrganizacion _clasificacion, Contacto contacto, Integer numDiasPorSemana){
     this.razonSocial = _razonSocial;
     this.tipo = _tipo;
     this.clasificacion = _clasificacion;
     this.contacto = contacto;
+    this.numDiasPorSemana = numDiasPorSemana;
   }
 
   public Organizacion(String _razonSocial, TipoOrganizacion _tipo, ClasificacionOrganizacion _clasificacion){
@@ -73,7 +77,16 @@ public class Organizacion {
     return numDiasPorSemana;
   }
 
+  public ArrayList<Actividad> getActividades() {
+    return actividades;
+  }
+
   //////////////////////////////////  SETTERS
+
+  public void setActividades(ArrayList<Actividad> actividades) {
+    this.actividades = actividades;
+  }
+
   public void setTipo(TipoOrganizacion tipo) {
     this.tipo = tipo;
   }
@@ -101,8 +114,6 @@ public class Organizacion {
 
   public void setArchivoMediciones(String archivoMediciones) { this.archivoMediciones = archivoMediciones; }
 
-  public void setReportes(ArrayList<ServicioHCExcel> reportes) { this.reportes = reportes; }
-
   public void setNumDiasPorSemana(Integer numDiasPorSemana) {
     this.numDiasPorSemana = numDiasPorSemana;
   }
@@ -121,7 +132,7 @@ public class Organizacion {
     return true;
   }
 
-  public ArrayList<Actividad> cargarMedicionesInternas(String fileName) throws IOException {
+  public ArrayList<Actividad> cargarMedicionesInternas(String fileName) throws IOException, ParseException {
     return servicioMediciones.cargarMediciones(fileName);
   }
 
@@ -130,7 +141,16 @@ public class Organizacion {
     return calculadorHC.calcularHC(this);
   }
 
+  public Double calcularHCAA() throws IOException {
+    return calculadorHC.calcularHCAA(this);
+  }
 
+  public Double calcularHCMesAnio(int mes, int anio) throws IOException {
+    return calculadorHC.calcularHCMesAnio(this, mes, anio);
+  }
 
+  public void darDeBajaActividad(Actividad actividad) {
+    actividad.darDeBaja();
+  }
 
 }

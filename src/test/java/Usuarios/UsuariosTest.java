@@ -113,7 +113,7 @@ public class UsuariosTest {
 
     @Test
     public void iniciarSesion_UsuarioInvalido(){
-        Assertions.assertNull(this.repositorioUsuariosTest.validarLogueoUsuario("usuarioInvalido","1234"));
+        Assertions.assertNull(this.repositorioUsuariosTest.validarLogueoUsuario("usuarioInvalido","contrartghy6"));
     }
 
     @Test

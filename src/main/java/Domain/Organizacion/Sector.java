@@ -12,7 +12,7 @@ public class Sector {
   private String nombre;
   private Espacio espacioDeTrabajo;
   private Organizacion organizacion;
-  private ArrayList<Miembro> miembros= new ArrayList<>();
+  private ArrayList<Miembro> miembros = new ArrayList<>();
 
   private CalculadorHC calculadorHC;
 

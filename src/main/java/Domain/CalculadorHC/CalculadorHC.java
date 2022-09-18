@@ -11,7 +11,7 @@ import Domain.Trayecto.Trayecto;
 //import org.graalvm.compiler.nodes.virtual.CommitAllocationNode;
 
 import java.io.IOException;
-import java.time.LocalDate;
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -46,7 +46,7 @@ public class CalculadorHC {
         int mesActual = calendar.get(Calendar.MONTH);
         int anioActual = calendar.get(Calendar.YEAR);
 
-        double valorHC = 0;
+        double valorHC = 0.0;
         for(ServicioHCExcel servicio : organizacion.getReportes()){
             if(servicio.estaActivo())
                 valorHC += servicio.getCalculoHC();
@@ -61,28 +61,79 @@ public class CalculadorHC {
         return valorHC;
     }
 
-    public void procesarActividadAnual(Organizacion organizacion) throws IOException {
-        ArrayList<ServicioHCExcel> serviciosHCExcel = new ArrayList<>();
-        ArrayList<Actividad> actividades = organizacion.cargarMedicionesInternas(organizacion.getArchivoMediciones());
+    public double calcularHCAA(Organizacion organizacion) throws IOException {
+        Date fechaActual = new Date();
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(fechaActual);
+        int mesActual = calendar.get(Calendar.MONTH);
+        int anioActual = calendar.get(Calendar.YEAR);
 
-        for(int mes = 1; mes <= 12; mes++){
-            for(Actividad actividad : actividades){
-                serviciosHCExcel.add(this.procesarActividadMes(actividad,mes));
+        double valorHC = 0.0;
+        for(Actividad actividad : organizacion.getActividades()){
+                valorHC += actividad.obtenercantidadHCTotal();
+        }
+        System.out.println("Consumo de las actividades de la organizacion es: " + valorHC);
+
+        for (Sector sector : organizacion.getSectores()){
+            for(Miembro miembro : sector.getMiembros()){
+                valorHC += calcularHC(miembro, mesActual, anioActual);
+            }
+        }
+        System.out.println("Consumo de las actividades + Consumo de los miembros de la organizacion es: " + valorHC);
+
+        return valorHC;
+    }
+
+    public double calcularHCMesAnio(Organizacion organizacion, int mes, int anio) throws IOException {
+        Date fechaActual = new Date();
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(fechaActual);
+        int mesActual = calendar.get(Calendar.MONTH);
+        int anioActual = calendar.get(Calendar.YEAR);
+
+        double valorHC = 0.0;
+        for(Actividad actividad : organizacion.getActividades()){
+            valorHC += actividad.obtenercantidadHC(mes, anio);
+            System.out.println("actividad.obtenercantidadHC(mes, anio) es:" + actividad.obtenercantidadHC(mes, anio));
+        }
+
+        for (Sector sector : organizacion.getSectores()){
+            for(Miembro miembro : sector.getMiembros()){
+                valorHC += calcularHC(miembro, mesActual, anioActual);
             }
         }
 
-        organizacion.setReportes(serviciosHCExcel);
+        return valorHC;
+    }
+
+    public void procesarActividadAnual(Organizacion organizacion) throws IOException, ParseException{
+        //ArrayList<ServicioHCExcel> serviciosHCExcel = new ArrayList<>();
+        ArrayList<Actividad> actividades = organizacion.cargarMedicionesInternas(organizacion.getArchivoMediciones());
+
+//        for(int mes = 1; mes <= 12; mes++){
+//            for(Actividad actividad : actividades){
+//                serviciosHCExcel.add(this.procesarActividadMes(actividad, mes));
+//            }
+//        }
+
+        organizacion.setActividades(actividades);
     }
 
     public ServicioHCExcel procesarActividadMes(Actividad actividad, int mes){
-        Double factorDeEmision = this.factoresDeEmision.getFactorDeEmisionSegunActividad(actividad.getNombre()).getNumero();
+        Double factorDeEmision = this.factoresDeEmision.getFactorDeEmisionSegunActividad(actividad.getTipoDeActividad()).getNumero();
         double cantidadHC = actividad.getConsumo() * factorDeEmision * this.conseguirValorFrecuenciaActividad(actividad, mes);
+
+        System.out.println("EL CONSUMO ES: " + actividad.getConsumo() );
+        System.out.println("EL factorDeEmision ES: " + factorDeEmision );
+        System.out.println("this.conseguirValorFrecuenciaActividad(actividad, mes): " + this.conseguirValorFrecuenciaActividad(actividad, mes) );
+
 
         ServicioHCExcel servicioHCExcel = new ServicioHCExcel(
                 cantidadHC,
                 actividad.getFrecuenciaServicio(),
                 actividad.getFechaCarga()
         );
+        servicioHCExcel.setMes(mes);
         return servicioHCExcel;
     }
 
@@ -143,7 +194,7 @@ public class CalculadorHC {
                     cantidadHC += unidadesConsumidas * factorDeEmision;
                 }
             }
-            cantidadHC *= ((trayecto.diasDelMesActivo(mes, anio)/7) * (trayecto.getFrecuenciaSemanal()) * (miembro.getSector().getOrganizacion().getNumDiasPorSemana()));
+            cantidadHC *= ((trayecto.diasDelMesActivo(mes, anio)/7.0) * (trayecto.getFrecuenciaSemanal()) * (miembro.getSector().getOrganizacion().getNumDiasPorSemana()));
         } 
         return cantidadHC;
     }
