@@ -58,8 +58,8 @@ public class AgenteSectorial {
 
 
   //TODO revisar resultado, por el tema de Unidades
-  public Double calcularHC() throws IOException {
-    return calculadorHC.calcularHC(this);
+  public Double calcularHC(Integer mes, Integer anio) throws IOException {
+    return calculadorHC.calcularHC(this, mes, anio);
   }
 
 }

@@ -123,7 +123,7 @@ public class Organizacion {
   }
 
   public void cargarMedicionesInternas(String fileName) throws IOException {
-    ArrayList <Actividad> act = servicioMediciones.cargarMediciones(fileName);
+    ArrayList <Actividad> act = servicioMediciones.cargarMediciones(fileName, this);
     for (Actividad actividad : act){
       this.actividades.add(actividad);
     }

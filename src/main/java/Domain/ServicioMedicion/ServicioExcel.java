@@ -1,15 +1,22 @@
 package Domain.ServicioMedicion;
 
+import Domain.Organizacion.Organizacion;
 import Domain.Organizacion.Excepciones.ImposibilidadDeCrearWorkbookException;
 import Domain.Organizacion.Excepciones.ImposiblidadDeCerrarWorkbookException;
+
+import org.apache.commons.lang3.ObjectUtils.Null;
 import org.apache.poi.ss.usermodel.*;
 
 import java.io.File;
 import java.io.IOError;
 import java.io.IOException;
 import java.sql.Date;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Iterator;
+import java.util.Optional;
 
 public class ServicioExcel extends ServicioMediciones{
   private static ServicioExcel instance = null;
@@ -22,7 +29,7 @@ public class ServicioExcel extends ServicioMediciones{
   }
 
   @Override
-  public ArrayList<Actividad> cargarMediciones(String fileName) throws IOException, IOError {
+  public ArrayList<Actividad> cargarMediciones(String fileName, Organizacion org) throws IOException, IOError {
     Workbook workbook = null;
     try{
       File file = new File("src/main/java/Domain/Utils/"+ fileName);
@@ -65,6 +72,8 @@ public class ServicioExcel extends ServicioMediciones{
         cell = cellIterator.next();
         String valor = dataFormatter.formatCellValue(cell);
         System.out.print(valor + "\t");
+        Double valorConsumo = Double.parseDouble(valor);
+
 
         cell = cellIterator.next();
         String periodicidad = dataFormatter.formatCellValue(cell);
@@ -74,7 +83,28 @@ public class ServicioExcel extends ServicioMediciones{
         String periodo_imputacion = dataFormatter.formatCellValue(cell);
         System.out.print(periodo_imputacion + "\t");
 
-        actividades.add(leerActividad(tipoActividad, tipoConsumo, valor, periodicidad, periodo_imputacion));
+        LocalDate fechaPeriodoImputacion = LocalDate.parse(periodo_imputacion, DateTimeFormatter.ofPattern("M/d/yy"));
+        Integer mes = fechaPeriodoImputacion.getMonthValue();
+        Integer anio = fechaPeriodoImputacion.getYear();
+
+        Optional<Actividad> act = org.getActividades().stream().filter(unaActividad -> tipoActividad.equals(unaActividad.getNombre().toString()) && tipoConsumo.equals(unaActividad.getTipoDeConsumo().toString())).findAny();
+
+        Actividad actividad = act.get(); // CHEQUEAR ESTO PORQUE ES UN DESASTRE
+
+        if (actividad != null){
+          if(periodicidad.equals(FrecuenciaServicio.MENSUAL.toString())){
+              actividad.agregarConsumo(mes, anio, valorConsumo);
+            }else{
+              for(int i = 1; i < mes; i++){
+                actividad.agregarConsumo(i, anio, valorConsumo/(mes -1));
+              }
+            }
+        }else{
+
+          actividades.add(crearActividad(tipoActividad, tipoConsumo, periodicidad, mes, anio, valorConsumo));
+
+        }
+
       }
       System.out.println();
     }
@@ -89,26 +119,29 @@ public class ServicioExcel extends ServicioMediciones{
     return actividades;
   }
 
-  public Actividad leerActividad(String tipoActividad,
+  public Actividad crearActividad(String tipoActividad,
                                  String tipoConsumo,
-                                 String valor,
                                  String periodicidad,
-                                 String periodo_inputacion)
+                                 Integer mes,
+                                 Integer anio,
+                                 Double valorConsumo)
   {
     TipoDeActividad tipoDeActividad = TipoDeActividad.valueOf(tipoActividad);
     TipoDeConsumo tipoDeConsumo = TipoDeConsumo.valueOf(tipoConsumo);
-    Double valorConsumo = Double.parseDouble(valor);
 
     Actividad actividad = new Actividad(
             tipoDeActividad,
             tipoDeConsumo,
-            FrecuenciaServicio.valueOf(periodicidad),
-            Date.valueOf(periodo_inputacion),
-            null
+            FrecuenciaServicio.valueOf(periodicidad)
     );
 
-    actividad.setConsumo(valorConsumo);
-
+    if(periodicidad.equals(FrecuenciaServicio.MENSUAL.toString())){
+      actividad.agregarConsumo(mes, anio, valorConsumo);
+    }else{
+      for(int i = 1; i < mes; i++){
+        actividad.agregarConsumo(i, anio, valorConsumo/(mes -1));
+      }
+    }
     return actividad;
   }
 /*

@@ -42,16 +42,9 @@ public class CalculadorHC {
     public Double calcularHC(Organizacion organizacion, Integer mes, Integer anio) throws IOException {
     
         Double cantidadHC = 0.0;
-        ArrayList <Actividad> act = new ArrayList<Actividad>();
 
         for(Actividad actividad : organizacion.getActividades()){
-            if (actividad.perteneceAlPeriodo(mes, anio)){
-                act.add(actividad);
-            }
-        }
-
-        for(Actividad actividad : act){
-            cantidadHC += procesarActividad(actividad);
+            cantidadHC += cacluarHcActividad(actividad, mes, anio);
         }
 
         for (Sector sector : organizacion.getSectores()){
@@ -64,26 +57,11 @@ public class CalculadorHC {
     }
 
 
-    public Double procesarActividad(Actividad actividad){
+    public Double cacluarHcActividad(Actividad actividad, Integer mes, Integer anio){
         
         Double factorDeEmision = this.factoresDeEmision.getFactorDeEmisionSegunActividad(actividad.getNombre()).getNumero();
-        Double cantidadHC = actividad.getConsumo() * factorDeEmision * this.conseguirValorFrecuenciaActividad(actividad);
+        Double cantidadHC = actividad.encontrarConsumo(mes, anio) * factorDeEmision;
         return cantidadHC;
-    }
-
-    public Double conseguirValorFrecuenciaActividad(Actividad actividad){
-
-        Calendar calendar = Calendar.getInstance();
-        calendar.setTime(actividad.getFechaCarga());
-        int mesActividad = calendar.get(Calendar.MONTH);
-
-        if(actividad.getFrecuenciaServicio() == FrecuenciaServicio.MENSUAL){
-            return 1.0;
-        }
-        else{
-          return 1.0 / (mesActividad - 1);
-        }
-        
     }
 
     public Double calcularHC(Miembro miembro, Integer mes, Integer anio) throws IOException {

@@ -1,40 +1,35 @@
 package Domain.ServicioMedicion;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Optional;
 
 public class Actividad {
   private TipoDeActividad nombre;
   private TipoDeConsumo tipoDeConsumo;
   private UnidadDeConsumo unidadDeConsumo;
-  private FrecuenciaServicio frecuenciaServicio;
-  private Date fechaCarga;
-  private Double consumo;
+  private ArrayList <ConsumoActividad> consumos;
 
   //CONSTRUCTOR
-  public Actividad(TipoDeActividad _tipoActividad,TipoDeConsumo _tipoDeConsumo,FrecuenciaServicio _frecuenciaServicio, Date _fechaCarga,UnidadDeConsumo _unidadConsumo){
+  public Actividad(TipoDeActividad _tipoActividad,TipoDeConsumo _tipoDeConsumo,FrecuenciaServicio _frecuenciaServicio){
     this.nombre=_tipoActividad;
     this.tipoDeConsumo=_tipoDeConsumo;
-    this.unidadDeConsumo=_unidadConsumo;
-    this.frecuenciaServicio = _frecuenciaServicio;
-    this.fechaCarga = _fechaCarga;
+    //this.unidadDeConsumo=_unidadConsumo;
   }
 
   //getters
+
   public TipoDeActividad getNombre() {return nombre;}
 
   public TipoDeConsumo getTipoDeConsumo() {return tipoDeConsumo;}
 
   public UnidadDeConsumo getUnidadDeConsumo() {return unidadDeConsumo;}
 
-  public Double getConsumo() {return consumo;}
+  public ArrayList <ConsumoActividad> getConsumos() {return consumos;}
 
-  public FrecuenciaServicio getFrecuenciaServicio() { return frecuenciaServicio; }
-
-  public Date getFechaCarga() { return fechaCarga; }
 
   //setters
-  public void setConsumo(Double consumo) {this.consumo = consumo;}
 
   public void setUnidadDeConsumo(UnidadDeConsumo unidadDeConsumo) {this.unidadDeConsumo = unidadDeConsumo;}
 
@@ -42,24 +37,36 @@ public class Actividad {
 
   public void setNombre(TipoDeActividad nombre) {this.nombre = nombre;}
 
+  public void setConsumos(ArrayList <ConsumoActividad> consumos) {this.consumos = consumos;}
+
   //METHODS
 
-  public Boolean perteneceAlPeriodo(Integer mes, Integer anio){
-    Calendar calendar = Calendar.getInstance();
-    calendar.setTime(this.getFechaCarga());
-    int mesActividad = calendar.get(Calendar.MONTH);
-    int anioActividad = calendar.get(Calendar.YEAR);
+  public void agregarConsumo(Integer mes, Integer anio, Double consumo){
 
-    if(this.frecuenciaServicio == FrecuenciaServicio.ANUAL){
-      if(mes <= (mesActividad - 1) && anio == anioActividad)
-        return true;
-    }else if (this.frecuenciaServicio == FrecuenciaServicio.MENSUAL){
-      if(mes == mesActividad && anio == anioActividad)
-        return true;
+    Optional<ConsumoActividad> consumoActividad  = this.getConsumos().stream().filter(unConsumo -> mes.equals(unConsumo.getMes()) && anio.equals(unConsumo.getAnio())).findAny();
+
+    ConsumoActividad con = consumoActividad.get();
+
+    if (con != null){
+      con.setConsumo(con.getConsumo() + consumo);
+    }else{
+      ConsumoActividad consu = new ConsumoActividad(mes, anio, consumo);
+      this.consumos.add(consu);
     }
-
-    return false;
-
+    
   }
 
+  public Double encontrarConsumo(Integer mes, Integer anio){
+
+    Double consumo = 0.0;
+
+    Optional<ConsumoActividad> consumoActividad  = this.getConsumos().stream().filter(unConsumo -> mes.equals(unConsumo.getMes()) && anio.equals(unConsumo.getAnio())).findAny();
+
+    ConsumoActividad con = consumoActividad.get();
+    if (con != null){
+      consumo = con.getConsumo();
+    }
+
+    return consumo;
+  }
 }
