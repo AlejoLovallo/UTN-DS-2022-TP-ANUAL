@@ -7,8 +7,6 @@ import javax.persistence.*;
 @Entity
 @Table(name="direccion")
 public class Direccion extends Espacio {
-  @Id
-  @GeneratedValue(strategy = GenerationType.IDENTITY)
   @Column
   private String pais;
   @Column

@@ -6,20 +6,39 @@ import java.time.LocalDate;
 import java.time.ZoneId;
 import java.time.temporal.ChronoUnit;
 import java.util.Date;
+import javax.persistence.*;
 
+@Entity
+@Table(name ="actividad")
 public class Actividad {
+  @Id
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
+  private int id_actividad;
+
+  @Enumerated(EnumType.STRING)
   private TipoDeActividad tipoDeActividad;
+  @Enumerated(EnumType.STRING)
   private TipoDeConsumo tipoDeConsumo;
-  private Double consumo;
+  @Enumerated(EnumType.STRING)
   private FrecuenciaServicio frecuenciaServicio;
+  @Enumerated(EnumType.STRING)
+  private UnidadDeConsumo unidadDeConsumo;
+
+  @Column
+  private Double consumo;
+  @Column
   private Date fechaCarga;
 
-
-  private UnidadDeConsumo unidadDeConsumo;
+  @Column
   private Date fechaDeBaja;
+  @Column
   private Boolean estaActivo;
 
   //////////////////////////////////  CONSTRUCTORES
+  public Actividad(){
+
+  }
+
   public Actividad(TipoDeActividad _tipoActividad,TipoDeConsumo _tipoDeConsumo,FrecuenciaServicio _frecuenciaServicio, Date _fechaCarga,UnidadDeConsumo _unidadConsumo){
     this.tipoDeActividad = _tipoActividad;
     this.tipoDeConsumo = _tipoDeConsumo;

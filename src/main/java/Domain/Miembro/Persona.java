@@ -1,18 +1,37 @@
 package Domain.Miembro;
 
+import Domain.BaseDeDatos.EntidadPersistente;
 import Domain.Usuarios.Usuario;
 
 import java.util.ArrayList;
+import javax.persistence.*;
 
+@Entity
+@Table(name="persona")
 public class Persona {
+  @Id
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
+  private int id_persona;
+  @Column
   private String nombre;
+  @Column
   private String apellido;
+  @Enumerated(EnumType.STRING)
   private TipoDocumento tipoDocumento;
+  @Column
   private String documento;
+  @OneToMany
+  @JoinColumn(name="id_miembro",referencedColumnName = "id_miembro")
   private ArrayList<Miembro> listaMiembros;
+  @OneToOne
+  @JoinColumn(name="id_usuario",referencedColumnName = "id_usuario")
   private Usuario usuario;
 
   //////////////////////////////////  CONSTRUCTOR
+  public Persona(){
+
+  }
+
   public Persona(String _nombre, String _apellido, TipoDocumento _tipoDocumento, String _documento){
     this.setNombre(_nombre);
     this.setApellido(_apellido);

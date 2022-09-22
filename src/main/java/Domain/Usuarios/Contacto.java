@@ -2,15 +2,28 @@ package Domain.Usuarios;
 import org.apache.commons.lang3.Validate;
 import javax.mail.internet.AddressException;
 import javax.mail.internet.InternetAddress;
+import javax.persistence.*;
 
+@Entity
+@Table(name="contacto")
 public class Contacto {
     //////////////////////////////////  VARIABLES
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int id_contacto;
+    @Column
     private String nombre;
+    @Column
     private String apellido;
+    @Column
     private Integer telefono;
+    @Column
     private String email;
 
     //////////////////////////////////  CONSTRUCTORES
+    public Contacto(){
+
+    }
 
     public Contacto(String nombre, String apellido, Integer telefono, String email) {
         Validate.notNull(nombre);

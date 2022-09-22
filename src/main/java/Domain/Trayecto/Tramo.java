@@ -9,16 +9,31 @@ import Domain.MediosDeTransporte.TransportePublico;
 import Domain.MediosDeTransporte.VehiculoParticular;
 
 import java.io.IOException;
+import javax.persistence.*;
 
-
+@Entity
+@Table(name="tramo")
 public class Tramo {
+  @Id
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
+  private int id_tramo;
 
+  @Transient
   private ServicioDistancia estrategia;
+  @OneToOne
+  @JoinColumn(name = "puntoPartida",referencedColumnName = "id_espacio")
   private Espacio puntoPartida;
+  @OneToOne
+  @JoinColumn(name="puntoLlegada",referencedColumnName = "id_espacio")
   private Espacio puntoLLegada;
+  @ManyToOne
+  @JoinColumn(name="id_transporte",referencedColumnName = "id_transporte")
   private MedioDeTransporte medio;
 
   //////////////////////////////////  CONSTRUCTOR
+  public Tramo(){
+
+  }
 
   public Tramo(Espacio puntoPartida, Espacio puntoLLegada, MedioDeTransporte medio) {
     this.puntoPartida = puntoPartida;

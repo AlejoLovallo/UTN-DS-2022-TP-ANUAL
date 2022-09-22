@@ -1,5 +1,4 @@
 package Domain.Usuarios;
-import Domain.BaseDeDatos.EntidadPersistente;
 import Domain.Usuarios.Excepciones.ContraseniaEsInvalidaException;
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
@@ -10,11 +9,11 @@ import javax.persistence.*;
 
 @Entity
 @Table(name="usuario")
-public class Usuario /*extends EntidadPersistente*/{
+public class Usuario{
   //////////////////////////////////  VARIABLES
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
-  private int id;
+  private int id_usuario;
   @Column
   private String email;
   @Column

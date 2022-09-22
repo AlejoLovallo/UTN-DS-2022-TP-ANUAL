@@ -2,14 +2,25 @@ package Domain.Espacios;
 
 import Domain.Espacios.Espacio;
 import Domain.Espacios.TipoDireccion;
+import javax.persistence.*;
 
+@Entity
+@Table(name="estacion")
 public class Estacion extends Espacio {
+  @Column
   private String nombre;
+  @Column
   public Integer numeroDeEstacion;
+  @Column
   public double distEstAnt;
+  @Column
   public double distEstPos;
 
   //////////////////////////////////  CONSTRUCTOR
+  public Estacion(){
+
+  }
+
 
   public Estacion(String nombre, Integer numeroDeEstacion, double distEstAnt, double distEstPos) {
     this.nombre = nombre;

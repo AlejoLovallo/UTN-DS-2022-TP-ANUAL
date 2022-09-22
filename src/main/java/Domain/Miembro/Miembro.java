@@ -15,6 +15,7 @@ import javax.persistence.*;
 public class Miembro {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
+  private int id_miembro;
 
   @Transient
   private String id;

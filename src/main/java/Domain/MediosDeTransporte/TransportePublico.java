@@ -3,14 +3,25 @@ package Domain.MediosDeTransporte;
 import java.util.List;
 
 import Domain.Espacios.Estacion;
+import javax.persistence.*;
 
+@Entity
+@Table(name="transportepublico")
 public class TransportePublico extends MedioDeTransporte {
 
+  @Enumerated(EnumType.STRING)
   private TipoTransportePublico tipoTransportePublico;
+  @Column
   private String linea;
+
+  @Transient
   public List<Estacion> paradas;
 
   //////////////////////////////////  CONSTRUCTOR
+
+  public TransportePublico(){
+
+  }
 
   public TransportePublico(TipoTransportePublico tipoTransportePublico, String linea, List<Estacion> paradas) {
     this.tipoTransportePublico = tipoTransportePublico;

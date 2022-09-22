@@ -5,14 +5,23 @@ import java.util.List;
 import Domain.Espacios.Espacio;
 import Domain.MediosDeTransporte.TipoVehiculo;
 import Domain.MediosDeTransporte.TipoCombustible;
+import javax.persistence.*;
 
+@Entity
+@Table(name="vehiculoparticular")
 public class VehiculoParticular extends MedioDeTransporte{
 
+  @Enumerated(EnumType.STRING)
   private TipoVehiculo tipoVehiculo;
+  @Enumerated(EnumType.STRING)
   private TipoCombustible tipoCombustible;
+  @Column
   private Integer cantPasajeros;
 
   //////////////////////////////////  CONSTRUCTOR
+  public VehiculoParticular(){
+
+  }
 
   public VehiculoParticular(TipoVehiculo tipoVehiculo, TipoCombustible tipoCombustible, Integer cantPasajeros) {
     this.tipoVehiculo = tipoVehiculo;

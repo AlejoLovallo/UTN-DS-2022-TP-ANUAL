@@ -6,18 +6,34 @@ import Domain.Miembro.Miembro;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import javax.persistence.*;
 
+@Entity
+@Table(name="sector")
 public class Sector {
-
+  @Id
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
+  private int id_persona;
+  @Column
   private String nombre;
+  @ManyToOne
+  @JoinColumn(name = "id_espacio",referencedColumnName = "id_espacio")
   private Espacio espacioDeTrabajo;
+  @ManyToOne
+  @JoinColumn(name = "id_organizacion", referencedColumnName = "id_organizacion")
   private Organizacion organizacion;
+
+  @OneToMany
+  @JoinColumn( name =  "id_miembro", referencedColumnName = "id_miembro")
   private ArrayList<Miembro> miembros = new ArrayList<>();
 
+  @Transient
   private CalculadorHC calculadorHC;
 
  // CONSTRUCTOR
+  public Sector(){
 
+  }
 
   public Sector(String nombre, Espacio espacioDeTrabajo, Organizacion organizacion, ArrayList<Miembro> miembros) {
     this.nombre = nombre;

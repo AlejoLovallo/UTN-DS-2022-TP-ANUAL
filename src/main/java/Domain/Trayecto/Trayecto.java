@@ -7,13 +7,26 @@ import java.io.IOException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.GregorianCalendar;
+import javax.persistence.*;
 
-
+@Entity
+@Table(name="trayecto")
 public class Trayecto {
+  @Id
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
+  private int id_trayecto;
+
   private ArrayList<Tramo> tramos;
+
+  @Column
   private Integer frecuenciaSemanal;
+  @Column
   private LocalDate fechaInicio;
+  @Column
   private LocalDate fechaFin;
+
+  @ManyToOne
+  @JoinColumn(name="id_miembro",referencedColumnName = "id_miembro")
   private Miembro miembro;
 
 

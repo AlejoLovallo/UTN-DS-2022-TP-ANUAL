@@ -16,6 +16,7 @@ import javax.persistence.*;
 public class Organizacion {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
+  private int id_organizacion;
   @Column
   private String razonSocial;
   @Enumerated(EnumType.STRING)
