@@ -4,26 +4,41 @@ import Domain.Usuarios.Excepciones.UsuarioException;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Set;
+import javax.persistence.*;
 
+@Entity
+@Table(name="agentesectorial")
 public class AgenteSectorial {
   //////////////////////////////////  VARIABLES
-  private String nombre;
+  @Id
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
+  @Column
+  private String razonSocial;
+  @Column
   private String territorio;
+  @Enumerated(EnumType.STRING)
   private TipoSectorTerritorial tipoSectorTerritorial;
+
+  @Transient
   private ArrayList<Organizacion> organizaciones = new ArrayList<>();
+  @Transient
   private CalculadorHC calculadorHC = CalculadorHC.getInstance();
 
   //////////////////////////////////  CONSTRUCTORES
+  public AgenteSectorial(){
+
+  }
+
+
   public AgenteSectorial(String nombre, String territorio, TipoSectorTerritorial tipoSectorTerritorial) {
-    this.nombre = nombre;
+    this.razonSocial = nombre;
     this.territorio = territorio;
     this.tipoSectorTerritorial = tipoSectorTerritorial;
   }
 
   //////////////////////////////////  GETTERS
   public String getNombre() {
-    return nombre;
+    return razonSocial;
   }
 
   public String getTerritorio() {
@@ -40,7 +55,7 @@ public class AgenteSectorial {
 
   //////////////////////////////////  SETTERS
   public void setNombre(String nombre) {
-    this.nombre = nombre;
+    this.razonSocial = nombre;
   }
 
   public void setTerritorio(String territorio) {

@@ -1,24 +1,31 @@
 package Domain.CalculadorHC;
 
-
 import Domain.ServicioMedicion.TipoDeActividad;
+import javax.persistence.*;
 
+@Entity
+@Table(name="factoremision")
 public class FactorEmision {
-
-    private TipoDeActividad tipoDeActividad;
-
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column
     private Double numero;
 
+    @Transient
+    private TipoDeActividad tipoDeActividad;
+    @Transient
     private Unidad unidad;
 
     // CONSTRUCTOR
+    public FactorEmision(){
+
+    }
 
     public FactorEmision(TipoDeActividad tipoDeActividad, Double numero, Unidad unidad) {
         this.tipoDeActividad = tipoDeActividad;
         this.numero = numero;
         this.unidad = unidad;
     }
-
 
     // GETTERS
 

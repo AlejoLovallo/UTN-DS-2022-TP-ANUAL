@@ -9,26 +9,51 @@ import Domain.Usuarios.Contacto;
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.io.IOException;
-import java.util.*;
+import javax.persistence.*;
 
+@Entity
+@Table(name="organizacion")
 public class Organizacion {
+  @Id
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
+  @Column
   private String razonSocial;
+  @Enumerated(EnumType.STRING)
   private TipoOrganizacion tipo;
+  @Enumerated(EnumType.STRING)
   private ClasificacionOrganizacion clasificacion;
-  private ArrayList<Sector> sectores = new ArrayList<>();
-  private Contacto contacto;
-  private AgenteSectorial agenteSectorial;
-  private ServicioMediciones servicioMediciones;
-  private String archivoMediciones;
-  private ArrayList<ServicioHCExcel> reportes = new ArrayList<>();
 
+  @ManyToOne
+  @JoinColumn(name="id_Agente",referencedColumnName = "id")
+  private AgenteSectorial agenteSectorial;
+
+  @OneToMany(mappedBy = "organizacion")
+  private ArrayList<Sector> sectores = new ArrayList<>();
+
+  /// DEFINIR ESTO!!!
+  private Contacto contacto;
+
+  @Transient
+  private String archivoMediciones;
+
+  @Transient /// PERO A CHEQUEAR
+  private ArrayList<ServicioHCExcel> reportes = new ArrayList<>();
+  @Transient /// PERO A CHEQUEAR
   private ArrayList<Actividad> actividades = new ArrayList<>();
 
+  @Transient
+  private ServicioMediciones servicioMediciones;
+  @Transient
   private CalculadorHC calculadorHC = CalculadorHC.getInstance();
+  @Transient
   private Integer numDiasPorSemana;
 
 
   //////////////////////////////////  CONSTRUCTORES
+  public Organizacion(){
+
+  }
+
   public Organizacion(String _razonSocial, TipoOrganizacion _tipo, ClasificacionOrganizacion _clasificacion, Contacto contacto, Integer numDiasPorSemana){
     this.razonSocial = _razonSocial;
     this.tipo = _tipo;

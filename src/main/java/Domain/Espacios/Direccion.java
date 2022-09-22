@@ -1,17 +1,38 @@
 package Domain.Espacios;
 
 import org.apache.poi.ss.formula.functions.T;
+import javax.persistence.*;
 
+
+@Entity
+@Table(name="direccion")
 public class Direccion extends Espacio {
+  @Id
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
+  @Column
   private String pais;
-  private String provincia;
-  private String municipio;
-  private String localidad;
+  @Column
   private String calle;
+  @Column
   private Integer altura;
+  @Enumerated(EnumType.STRING)
   private TipoDireccion tipoDireccion;
 
+  /**
+   * TODO: Las marco como trasient pero fijarse cuales quedan y cuales no.
+   */
+  @Transient
+  private String provincia;
+  @Transient
+  private String municipio;
+  @Transient
+  private String localidad;
+
   //////////////////////////////////  CONSTRUCTOR
+
+  public Direccion(){
+
+  }
 
   public Direccion(String pais, String provincia, String municipio, String localidad, String calle, Integer altura, TipoDireccion tipoDireccion) {
     this.pais = pais.toUpperCase();

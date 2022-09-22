@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import javax.persistence.*;
 
 @Entity
-@Table(name="Usuario")
+@Table(name="usuario")
 public class Usuario /*extends EntidadPersistente*/{
   //////////////////////////////////  VARIABLES
   @Id
