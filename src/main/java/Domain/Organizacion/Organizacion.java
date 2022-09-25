@@ -33,7 +33,8 @@ public class Organizacion {
   private List<Sector> sectores = new ArrayList<>();
 
   /// DEFINIR ESTO!!!
-  @OneToOne(mappedBy = "organizacion", cascade = CascadeType.ALL)
+  @OneToOne
+  @JoinColumn(name="id_contacto",referencedColumnName = "id_contacto")
   private Contacto contacto;
 
   @Transient

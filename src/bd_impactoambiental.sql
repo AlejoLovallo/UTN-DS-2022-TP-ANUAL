@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 09-09-2022 a las 22:00:38
+-- Tiempo de generación: 24-09-2022 a las 09:48:41
 -- Versión del servidor: 10.4.24-MariaDB
 -- Versión de PHP: 7.4.29
 
@@ -26,6 +26,36 @@ USE `impactoambiental`;
 -- --------------------------------------------------------
 
 --
+-- Estructura de tabla para la tabla `actividad`
+--
+
+CREATE TABLE `actividad` (
+  `id_actividad` int(100) NOT NULL,
+  `tipoActividad` enum('COMBUSTION_FIJA','COMBUSTION_MOVIL','ELECTRICIDAD_ADQUIRIDA_Y_CONSUMIDA','LOGISTICA_DE_PRODUCTOS_Y_RESIDUOS') NOT NULL,
+  `tipoConsumo` enum('GAS_NATURAL','DIESEL_GASOIL','KEROSENE','FUEL_OIL','NAFTA','CARBON','CARBON_DE_LENIA','LENIA') NOT NULL,
+  `unidad_Consumo` enum('m3','kg','lts','Kwh','km') NOT NULL,
+  `frecuenciaServicio` enum('ANUAL','MENSUAL') NOT NULL,
+  `consumo` double NOT NULL,
+  `fechaCarga` date NOT NULL,
+  `fechaBaja` date NOT NULL,
+  `estaActivo` tinyint(1) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `actividadxorganizacion`
+--
+
+CREATE TABLE `actividadxorganizacion` (
+  `id_actxorg` int(100) NOT NULL,
+  `id_organizacion` int(100) NOT NULL,
+  `id_actividad` int(100) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- --------------------------------------------------------
+
+--
 -- Estructura de tabla para la tabla `agentesectorial`
 --
 
@@ -39,6 +69,20 @@ CREATE TABLE `agentesectorial` (
 -- --------------------------------------------------------
 
 --
+-- Estructura de tabla para la tabla `contacto`
+--
+
+CREATE TABLE `contacto` (
+  `id_contacto` int(100) NOT NULL,
+  `nombre` varchar(255) NOT NULL,
+  `apellido` varchar(255) NOT NULL,
+  `telefono` int(11) NOT NULL,
+  `mail` varchar(255) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- --------------------------------------------------------
+
+--
 -- Estructura de tabla para la tabla `direccion`
 --
 
@@ -47,7 +91,11 @@ CREATE TABLE `direccion` (
   `id_espacio` int(100) NOT NULL,
   `altura` int(100) NOT NULL,
   `calle` varchar(255) NOT NULL,
-  `tipo_espacio` enum('Trabajo','Vivienda','Otro') NOT NULL
+  `tipo_espacio` enum('Trabajo','Vivienda','Otro') NOT NULL,
+  `pais` varchar(255) NOT NULL,
+  `localidad` varchar(255) NOT NULL,
+  `municipio` varchar(255) NOT NULL,
+  `provincia` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
@@ -83,8 +131,9 @@ CREATE TABLE `estacion` (
 
 CREATE TABLE `factoremision` (
   `id_factor` int(100) NOT NULL,
-  `valor` int(100) NOT NULL,
-  `id_usuario_update` int(100) NOT NULL
+  `numero` double NOT NULL,
+  `id_actividad` int(100) NOT NULL,
+  `unidad` enum('m3','lt','kg','km','kwh') NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
@@ -94,7 +143,8 @@ CREATE TABLE `factoremision` (
 --
 
 CREATE TABLE `mediotransporte` (
-  `id_transporte` int(100) NOT NULL
+  `id_transporte` int(100) NOT NULL,
+  `consumoxKm` double NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
@@ -132,7 +182,10 @@ CREATE TABLE `organizacion` (
   `razonSocial` varchar(255) NOT NULL,
   `tipo` enum('Gubernamental','ONG','Empresa','Institucion') NOT NULL,
   `id_Agente` int(100) NOT NULL,
-  `clasificacion` enum('Ministerio','Universidad','Escuela','EmpresaDelSectorPrimario','EmpresaDelSectorSecundario') NOT NULL
+  `clasificacion` enum('Ministerio','Universidad','Escuela','EmpresaDelSectorPrimario','EmpresaDelSectorSecundario') NOT NULL,
+  `id_usuario` int(100) NOT NULL,
+  `id_contacto` int(100) NOT NULL,
+  `numdiasxsemana` int(100) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
@@ -159,48 +212,6 @@ CREATE TABLE `persona` (
   `apellido` varchar(255) NOT NULL,
   `tipoDocumento` varchar(255) NOT NULL,
   `nroDocumento` varchar(255) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
--- --------------------------------------------------------
-
---
--- Estructura de tabla para la tabla `reporteagentesectorial`
---
-
-CREATE TABLE `reporteagentesectorial` (
-  `id_reporteagente` int(100) NOT NULL,
-  `id_agente` int(100) NOT NULL,
-  `mes` int(100) NOT NULL,
-  `anio` int(100) NOT NULL,
-  `calculohc` int(100) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
--- --------------------------------------------------------
-
---
--- Estructura de tabla para la tabla `reportehcexcel`
---
-
-CREATE TABLE `reportehcexcel` (
-  `id_reportehcexcel` int(100) NOT NULL,
-  `id_organizacion` int(100) NOT NULL,
-  `calculohc` int(100) NOT NULL,
-  `periodicidad` enum('Mensual','Anual') NOT NULL,
-  `fechaCarga` date NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
--- --------------------------------------------------------
-
---
--- Estructura de tabla para la tabla `reportehcorganizacion`
---
-
-CREATE TABLE `reportehcorganizacion` (
-  `id_ReporteOrganizacion` int(100) NOT NULL,
-  `id_organizacion` int(100) NOT NULL,
-  `calculoHC` int(100) NOT NULL,
-  `mes` int(100) NOT NULL,
-  `anio` int(100) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
@@ -248,7 +259,10 @@ CREATE TABLE `transportepublico` (
 --
 
 CREATE TABLE `trayecto` (
-  `id_trayecto` int(100) NOT NULL
+  `id_trayecto` int(100) NOT NULL,
+  `frecuenciaSemanal` int(100) NOT NULL,
+  `fechaInicio` date NOT NULL,
+  `fechaFin` date NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
@@ -271,11 +285,10 @@ CREATE TABLE `trayectoxtramo` (
 
 CREATE TABLE `usuario` (
   `id_usuario` int(100) NOT NULL,
-  `nombre` varchar(255) NOT NULL,
-  `contrasenia` varchar(100) NOT NULL,
-  `rol` enum('Admin','Usuario','Miembro') NOT NULL,
-  `id_persona` int(100) NOT NULL,
-  `id_config` int(100) NOT NULL
+  `username` varchar(255) NOT NULL,
+  `contraHasheada` varchar(100) NOT NULL,
+  `mail` varchar(255) NOT NULL,
+  `validado` tinyint(1) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
@@ -296,10 +309,30 @@ CREATE TABLE `vehiculoparticular` (
 --
 
 --
+-- Indices de la tabla `actividad`
+--
+ALTER TABLE `actividad`
+  ADD PRIMARY KEY (`id_actividad`);
+
+--
+-- Indices de la tabla `actividadxorganizacion`
+--
+ALTER TABLE `actividadxorganizacion`
+  ADD PRIMARY KEY (`id_actxorg`),
+  ADD KEY `actxorg_id_org_org` (`id_organizacion`),
+  ADD KEY `actxorg_id_act_actividad` (`id_actividad`);
+
+--
 -- Indices de la tabla `agentesectorial`
 --
 ALTER TABLE `agentesectorial`
   ADD PRIMARY KEY (`id_agente`);
+
+--
+-- Indices de la tabla `contacto`
+--
+ALTER TABLE `contacto`
+  ADD PRIMARY KEY (`id_contacto`);
 
 --
 -- Indices de la tabla `direccion`
@@ -326,7 +359,7 @@ ALTER TABLE `estacion`
 --
 ALTER TABLE `factoremision`
   ADD PRIMARY KEY (`id_factor`),
-  ADD KEY `factor_id_usuario_usuario` (`id_usuario_update`);
+  ADD KEY `FE_id_actividad_actividad` (`id_actividad`);
 
 --
 -- Indices de la tabla `mediotransporte`
@@ -355,7 +388,9 @@ ALTER TABLE `miembroxtrayecto`
 --
 ALTER TABLE `organizacion`
   ADD PRIMARY KEY (`id_organizacion`),
-  ADD KEY `org_id_Agente_agente` (`id_Agente`);
+  ADD KEY `org_id_Agente_agente` (`id_Agente`),
+  ADD KEY `org_id_usuario_user` (`id_usuario`),
+  ADD KEY `org_id_contacto_contacto` (`id_contacto`);
 
 --
 -- Indices de la tabla `paradatransportepublico`
@@ -370,27 +405,6 @@ ALTER TABLE `paradatransportepublico`
 --
 ALTER TABLE `persona`
   ADD PRIMARY KEY (`id_persona`);
-
---
--- Indices de la tabla `reporteagentesectorial`
---
-ALTER TABLE `reporteagentesectorial`
-  ADD PRIMARY KEY (`id_reporteagente`),
-  ADD KEY `reporte_id_agente_agente` (`id_agente`);
-
---
--- Indices de la tabla `reportehcexcel`
---
-ALTER TABLE `reportehcexcel`
-  ADD PRIMARY KEY (`id_reportehcexcel`),
-  ADD KEY `reporte_id_organizacion_org` (`id_organizacion`);
-
---
--- Indices de la tabla `reportehcorganizacion`
---
-ALTER TABLE `reportehcorganizacion`
-  ADD PRIMARY KEY (`id_ReporteOrganizacion`),
-  ADD KEY `reporteorg_id_organizacion_org` (`id_organizacion`);
 
 --
 -- Indices de la tabla `sector`
@@ -431,8 +445,7 @@ ALTER TABLE `trayectoxtramo`
 -- Indices de la tabla `usuario`
 --
 ALTER TABLE `usuario`
-  ADD PRIMARY KEY (`id_usuario`),
-  ADD KEY `usuario_id_persona_persona` (`id_persona`);
+  ADD PRIMARY KEY (`id_usuario`);
 
 --
 -- Indices de la tabla `vehiculoparticular`
@@ -443,6 +456,13 @@ ALTER TABLE `vehiculoparticular`
 --
 -- Restricciones para tablas volcadas
 --
+
+--
+-- Filtros para la tabla `actividadxorganizacion`
+--
+ALTER TABLE `actividadxorganizacion`
+  ADD CONSTRAINT `actxorg_id_act_actividad` FOREIGN KEY (`id_actividad`) REFERENCES `actividad` (`id_actividad`),
+  ADD CONSTRAINT `actxorg_id_org_org` FOREIGN KEY (`id_organizacion`) REFERENCES `organizacion` (`id_organizacion`);
 
 --
 -- Filtros para la tabla `direccion`
@@ -460,7 +480,7 @@ ALTER TABLE `estacion`
 -- Filtros para la tabla `factoremision`
 --
 ALTER TABLE `factoremision`
-  ADD CONSTRAINT `factor_id_usuario_usuario` FOREIGN KEY (`id_usuario_update`) REFERENCES `usuario` (`id_usuario`);
+  ADD CONSTRAINT `FE_id_actividad_actividad` FOREIGN KEY (`id_actividad`) REFERENCES `actividad` (`id_actividad`);
 
 --
 -- Filtros para la tabla `miembro`
@@ -480,7 +500,9 @@ ALTER TABLE `miembroxtrayecto`
 -- Filtros para la tabla `organizacion`
 --
 ALTER TABLE `organizacion`
-  ADD CONSTRAINT `org_id_Agente_agente` FOREIGN KEY (`id_Agente`) REFERENCES `agentesectorial` (`id_agente`);
+  ADD CONSTRAINT `org_id_Agente_agente` FOREIGN KEY (`id_Agente`) REFERENCES `agentesectorial` (`id_agente`),
+  ADD CONSTRAINT `org_id_contacto_contacto` FOREIGN KEY (`id_contacto`) REFERENCES `contacto` (`id_contacto`),
+  ADD CONSTRAINT `org_id_usuario_user` FOREIGN KEY (`id_usuario`) REFERENCES `usuario` (`id_usuario`);
 
 --
 -- Filtros para la tabla `paradatransportepublico`
@@ -488,24 +510,6 @@ ALTER TABLE `organizacion`
 ALTER TABLE `paradatransportepublico`
   ADD CONSTRAINT `parada_id_transporte_estacion` FOREIGN KEY (`id_estacion`) REFERENCES `estacion` (`id_estacion`),
   ADD CONSTRAINT `parada_id_transporte_mediotransporte` FOREIGN KEY (`id_transporte`) REFERENCES `mediotransporte` (`id_transporte`);
-
---
--- Filtros para la tabla `reporteagentesectorial`
---
-ALTER TABLE `reporteagentesectorial`
-  ADD CONSTRAINT `reporte_id_agente_agente` FOREIGN KEY (`id_agente`) REFERENCES `agentesectorial` (`id_agente`);
-
---
--- Filtros para la tabla `reportehcexcel`
---
-ALTER TABLE `reportehcexcel`
-  ADD CONSTRAINT `reporte_id_organizacion_org` FOREIGN KEY (`id_organizacion`) REFERENCES `organizacion` (`id_organizacion`);
-
---
--- Filtros para la tabla `reportehcorganizacion`
---
-ALTER TABLE `reportehcorganizacion`
-  ADD CONSTRAINT `reporteorg_id_organizacion_org` FOREIGN KEY (`id_organizacion`) REFERENCES `organizacion` (`id_organizacion`);
 
 --
 -- Filtros para la tabla `sector`
@@ -532,12 +536,6 @@ ALTER TABLE `transportepublico`
 ALTER TABLE `trayectoxtramo`
   ADD CONSTRAINT `tramoxtrayecto_id_tramo_tramo` FOREIGN KEY (`id_tramo`) REFERENCES `tramo` (`id_tramo`),
   ADD CONSTRAINT `tramoxtrayecto_id_tramo_trayecto` FOREIGN KEY (`id_trayecto`) REFERENCES `trayecto` (`id_trayecto`);
-
---
--- Filtros para la tabla `usuario`
---
-ALTER TABLE `usuario`
-  ADD CONSTRAINT `usuario_id_persona_persona` FOREIGN KEY (`id_persona`) REFERENCES `persona` (`id_persona`);
 
 --
 -- Filtros para la tabla `vehiculoparticular`

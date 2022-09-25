@@ -1,4 +1,5 @@
 package Domain.Usuarios;
+import Domain.Organizacion.Organizacion;
 import org.apache.commons.lang3.Validate;
 import javax.mail.internet.AddressException;
 import javax.mail.internet.InternetAddress;
@@ -20,8 +21,14 @@ public class Contacto {
     @Column
     private String email;
 
+    @OneToOne
+    @JoinColumn(name="id_organizacion",referencedColumnName = "id_organizacion")
+    private Organizacion organizacion;
+
+
+
     //////////////////////////////////  CONSTRUCTORES
-    public Contacto(){
+    private Contacto(){
 
     }
 
