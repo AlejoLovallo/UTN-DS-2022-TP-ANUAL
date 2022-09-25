@@ -12,6 +12,7 @@ public class AgenteSectorial {
   //////////////////////////////////  VARIABLES
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
+  private int id_agente;
   @Column
   private String razonSocial;
   @Column

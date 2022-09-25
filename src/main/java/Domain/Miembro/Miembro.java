@@ -20,9 +20,13 @@ public class Miembro {
   @Transient
   private String id;
 
-  @ManyToOne
-  @JoinColumn(name = "id_sector", referencedColumnName = "id")
+  @ManyToOne(cascade=CascadeType.MERGE)
+  @JoinColumn(name = "id_sector", referencedColumnName = "id_sector")
   private Sector sector;
+
+  @ManyToOne(cascade=CascadeType.MERGE)
+  @JoinColumn(name = "id_persona", referencedColumnName = "id_persona")
+  private Persona persona;
 
   // FALTA DEFINIR LA PARTICION DE CLASE
   private ArrayList<Trayecto> trayectos;

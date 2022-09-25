@@ -9,6 +9,7 @@ import Domain.Usuarios.Contacto;
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.io.IOException;
+import java.util.List;
 import javax.persistence.*;
 
 @Entity
@@ -25,13 +26,14 @@ public class Organizacion {
   private ClasificacionOrganizacion clasificacion;
 
   @ManyToOne
-  @JoinColumn(name="id_Agente",referencedColumnName = "id")
+  @JoinColumn(name="id_agente",referencedColumnName = "id_agente")
   private AgenteSectorial agenteSectorial;
 
   @OneToMany(mappedBy = "organizacion")
-  private ArrayList<Sector> sectores = new ArrayList<>();
+  private List<Sector> sectores = new ArrayList<>();
 
   /// DEFINIR ESTO!!!
+  @OneToOne(mappedBy = "organizacion", cascade = CascadeType.ALL)
   private Contacto contacto;
 
   @Transient
@@ -82,7 +84,7 @@ public class Organizacion {
     return razonSocial;
   }
 
-  public ArrayList<Sector> getSectores(){
+  public List<Sector> getSectores(){
     return this.sectores;
   }
 

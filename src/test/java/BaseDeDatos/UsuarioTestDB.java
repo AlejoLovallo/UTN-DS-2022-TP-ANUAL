@@ -1,14 +1,12 @@
-package Domain.Usuarios;
+package BaseDeDatos;
+import Domain.Usuarios.Usuario;
+
 import javax.persistence.*;
 
 public class UsuarioTestDB {
   public static void main(String[] args) {
 
-    Usuario user = new Usuario();
-    user.setEmail("asdas@gmail.com");
-    user.setValidado(false);
-    user.setUsername("hoa");
-    user.setContraHasheada("hola");
+    Usuario user = new Usuario("pepito","pepito@gmail.com","contraPrueba",false);
     EntityManagerFactory emf =
         Persistence.createEntityManagerFactory("ds");
         System.out.println("----------------LUEGO DE PERSISTANCE-------------------");

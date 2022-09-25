@@ -1,10 +1,7 @@
 package Domain.MediosDeTransporte;
 
-import java.util.List;
 
-import Domain.Espacios.Espacio;
-import Domain.MediosDeTransporte.TipoVehiculo;
-import Domain.MediosDeTransporte.TipoCombustible;
+import Domain.BaseDeDatos.EntityManagerHelper;
 import javax.persistence.*;
 
 @Entity
@@ -19,7 +16,7 @@ public class VehiculoParticular extends MedioDeTransporte{
   private Integer cantPasajeros;
 
   //////////////////////////////////  CONSTRUCTOR
-  public VehiculoParticular(){
+  private VehiculoParticular(){
 
   }
 
@@ -47,15 +44,47 @@ public class VehiculoParticular extends MedioDeTransporte{
 
   public void setTipoVehiculo(TipoVehiculo tipoVehiculo) {
     this.tipoVehiculo = tipoVehiculo;
+    updateVehiculoParticular();
   }
 
   public void setTipoCombustible(TipoCombustible tipoCombustible) {
     this.tipoCombustible = tipoCombustible;
+    updateVehiculoParticular();
   }
 
   public void setCantPasajeros(Integer cantPasajeros) {
     this.cantPasajeros = cantPasajeros;
+    updateVehiculoParticular();
   }
 
   //////////////////////////////////  INTERFACE
+  //INTERFACE
+
+  public void updateVehiculoParticular(){
+    EntityManagerFactory emf =
+        Persistence.createEntityManagerFactory("ds");
+    System.out.println("----------------LUEGO DE Crear Entity Manager-------------------");
+    EntityManager em = emf.createEntityManager();
+    try {
+      em.getTransaction().begin();
+      System.out.println("----------------LUEGO DE BEGIN TRAN-------------------");
+      em.merge(this);
+      System.out.println("----------------LUEGO DE UPDATE TRAN-------------------");
+      em.getTransaction().commit();
+      System.out.println("----------------LUEGO DE COMMIT-------------------");
+    } catch (Exception e) {
+      e.getCause();
+      e.printStackTrace();
+    } finally {
+      em.close();
+      System.out.println("----------------LUEGO DE CLOSE CON-------------------");
+    }
+  }
+
+  public VehiculoParticular getVehiculoParticular(int vehiculoParticularid) {
+    EntityManager em = EntityManagerHelper.getEntityManager();
+    VehiculoParticular vehiculoParticular = em.find(VehiculoParticular.class, new Long(vehiculoParticularid));
+    em.detach(vehiculoParticular);
+    return vehiculoParticular;
+  }
 }

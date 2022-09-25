@@ -1,7 +1,6 @@
 package Domain.Espacios;
 
-import Domain.Espacios.Espacio;
-import Domain.Espacios.TipoDireccion;
+import Domain.BaseDeDatos.EntityManagerHelper;
 import javax.persistence.*;
 
 @Entity
@@ -52,20 +51,52 @@ public class Estacion extends Espacio {
 
   public void setNombre(String nombre) {
     this.nombre = nombre;
+    updateEstacion();
   }
 
   public void setNumeroDeEstacion(Integer numeroDeEstacion) {
     this.numeroDeEstacion = numeroDeEstacion;
+    updateEstacion();
   }
 
   public void setDistEstAnt(Float distEstAnt) {
     this.distEstAnt = distEstAnt;
+    updateEstacion();
   }
 
   public void setDistEstPos(Float distEstPos) {
     this.distEstPos = distEstPos;
+    updateEstacion();
   }
 
   //////////////////////////////////  INTERFACE
+
+  public void updateEstacion(){
+    EntityManagerFactory emf =
+        Persistence.createEntityManagerFactory("ds");
+    System.out.println("----------------LUEGO DE Crear Entity Manager-------------------");
+    EntityManager em = emf.createEntityManager();
+    try {
+      em.getTransaction().begin();
+      System.out.println("----------------LUEGO DE BEGIN TRAN-------------------");
+      em.merge(this);
+      System.out.println("----------------LUEGO DE UPDATE TRAN-------------------");
+      em.getTransaction().commit();
+      System.out.println("----------------LUEGO DE COMMIT-------------------");
+    } catch (Exception e) {
+      e.getCause();
+      e.printStackTrace();
+    } finally {
+      em.close();
+      System.out.println("----------------LUEGO DE CLOSE CON-------------------");
+    }
+  }
+
+  public Estacion getEstacion(int direccionid) {
+    EntityManager em = EntityManagerHelper.getEntityManager();
+    Estacion estacion = em.find(Estacion.class, new Long(direccionid));
+    em.detach(estacion);
+    return estacion;
+  }
 
 }

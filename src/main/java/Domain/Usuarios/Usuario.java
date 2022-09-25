@@ -1,4 +1,5 @@
 package Domain.Usuarios;
+import Domain.BaseDeDatos.EntityManagerHelper;
 import Domain.Usuarios.Excepciones.ContraseniaEsInvalidaException;
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
@@ -35,7 +36,7 @@ public class Usuario{
 
   //////////////////////////////////  CONSTRUCTORES
 
-  public Usuario(){
+  private Usuario(){
 
   }
 
@@ -67,20 +68,26 @@ public class Usuario{
 
   public void setUsername(String username) {
     this.username = username;
+    updateUsuario();
   }
 
   public void setContraHasheada(String contraHasheada) {
     this.contraHasheada = contraHasheada;
+    updateUsuario();
   }
 
   //////////////////////////////////  SETTERS
   public void setValidado(Boolean validado) {
     this.validado = validado;
+    updateUsuario();
   }
 
   public void setEmail(String _email){
     this.email = _email;
+    updateUsuario();
   }
+
+
 
 
   //////////////////////////////////  INTERFACE
@@ -129,5 +136,34 @@ public class Usuario{
     }
 
     return sb.toString();
+  }
+
+
+  public void updateUsuario(){
+    EntityManagerFactory emf =
+        Persistence.createEntityManagerFactory("ds");
+    System.out.println("----------------LUEGO DE Crear Entity Manager-------------------");
+    EntityManager em = emf.createEntityManager();
+    try {
+      em.getTransaction().begin();
+      System.out.println("----------------LUEGO DE BEGIN TRAN-------------------");
+      em.merge(this);
+      System.out.println("----------------LUEGO DE UPDATE TRAN-------------------");
+      em.getTransaction().commit();
+      System.out.println("----------------LUEGO DE COMMIT-------------------");
+    } catch (Exception e) {
+      e.getCause();
+      e.printStackTrace();
+    } finally {
+      em.close();
+      System.out.println("----------------LUEGO DE CLOSE CON-------------------");
+    }
+  }
+
+  public Usuario getUsuario(int usuarioID) {
+    EntityManager em = EntityManagerHelper.getEntityManager();
+    Usuario usuario = em.find(Usuario.class, new Long(usuarioID));
+    em.detach(usuario);
+    return usuario;
   }
 }

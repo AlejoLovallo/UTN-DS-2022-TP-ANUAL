@@ -70,6 +70,10 @@ public class EntityManagerHelper {
     entityManager().persist(o);
   }
 
+  public static void update(Object o){
+    entityManager().merge(o);
+  }
+
   public static void withTransaction(Runnable action) {
     withTransaction(() -> {
       action.run();

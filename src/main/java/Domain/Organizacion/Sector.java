@@ -6,6 +6,7 @@ import Domain.Miembro.Miembro;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 import javax.persistence.*;
 
 @Entity
@@ -13,7 +14,7 @@ import javax.persistence.*;
 public class Sector {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
-  private int id_persona;
+  private int id_sector;
   @Column
   private String nombre;
   @ManyToOne
@@ -23,9 +24,8 @@ public class Sector {
   @JoinColumn(name = "id_organizacion", referencedColumnName = "id_organizacion")
   private Organizacion organizacion;
 
-  @OneToMany
-  @JoinColumn( name =  "id_miembro", referencedColumnName = "id_miembro")
-  private ArrayList<Miembro> miembros = new ArrayList<>();
+  @OneToMany(mappedBy = "sector")
+  private List<Miembro> miembros = new ArrayList<>();
 
   @Transient
   private CalculadorHC calculadorHC;
@@ -56,7 +56,7 @@ public class Sector {
     return organizacion;
   }
 
-  public ArrayList<Miembro> getMiembros() {
+  public List<Miembro> getMiembros() {
     return miembros;
   }
 

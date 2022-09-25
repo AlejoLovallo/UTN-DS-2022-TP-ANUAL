@@ -1,9 +1,9 @@
 package Domain.Miembro;
 
-import Domain.BaseDeDatos.EntidadPersistente;
 import Domain.Usuarios.Usuario;
 
 import java.util.ArrayList;
+import java.util.List;
 import javax.persistence.*;
 
 @Entity
@@ -20,9 +20,9 @@ public class Persona {
   private TipoDocumento tipoDocumento;
   @Column
   private String documento;
-  @OneToMany
-  @JoinColumn(name="id_miembro",referencedColumnName = "id_miembro")
-  private ArrayList<Miembro> listaMiembros;
+  @OneToMany(mappedBy = "persona")
+ // @JoinColumn(name="id_miembro",referencedColumnName = "id_miembro")
+  private List<Miembro> listaMiembros;
   @OneToOne
   @JoinColumn(name="id_usuario",referencedColumnName = "id_usuario")
   private Usuario usuario;
@@ -62,7 +62,7 @@ public class Persona {
     return usuario;
   }
 
-  public ArrayList<Miembro> getMiembros(){
+  public List<Miembro> getMiembros(){
     return listaMiembros;
   }
 
