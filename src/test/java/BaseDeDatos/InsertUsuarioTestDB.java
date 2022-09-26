@@ -2,12 +2,10 @@ package BaseDeDatos;
 import Domain.BaseDeDatos.EntityManagerHelper;
 import Domain.Usuarios.Usuario;
 
-import javax.persistence.*;
-
-public class UsuarioTestDB {
+public class InsertUsuarioTestDB {
   public static void main(String[] args) {
 
-    Usuario user = new Usuario("pepito","pepito@gmail.com","contraPrueba",false);
+    Usuario user = new Usuario("pepito","pepito@gmail.com","contraSegura54+",true);
 
     try {
       EntityManagerHelper.beginTransaction();

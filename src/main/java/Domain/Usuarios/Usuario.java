@@ -156,10 +156,10 @@ public class Usuario{
     }
   }
 
-  public Usuario getUsuario(int usuarioID) {
+  public static Usuario getUsuario(int usuarioID) {
     EntityManager em = EntityManagerHelper.getEntityManager();
     EntityManagerHelper.beginTransaction();
-    Usuario usuario = em.find(Usuario.class, new Long(usuarioID));
+    Usuario usuario = em.find(Usuario.class, usuarioID);
     em.detach(usuario);
     EntityManagerHelper.commit();
     return usuario;

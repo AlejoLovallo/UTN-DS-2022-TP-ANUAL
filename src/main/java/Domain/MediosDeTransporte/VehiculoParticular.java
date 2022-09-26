@@ -61,29 +61,25 @@ public class VehiculoParticular extends MedioDeTransporte{
   //INTERFACE
 
   public void updateVehiculoParticular(){
-    EntityManagerFactory emf =
-        Persistence.createEntityManagerFactory("ds");
-    System.out.println("----------------LUEGO DE Crear Entity Manager-------------------");
-    EntityManager em = emf.createEntityManager();
     try {
-      em.getTransaction().begin();
+      EntityManagerHelper.beginTransaction();
       System.out.println("----------------LUEGO DE BEGIN TRAN-------------------");
-      em.merge(this);
-      System.out.println("----------------LUEGO DE UPDATE TRAN-------------------");
-      em.getTransaction().commit();
+      EntityManagerHelper.getEntityManager().persist(this);
+      System.out.println("----------------LUEGO DE INSERT TRAN-------------------");
+      EntityManagerHelper.commit();
       System.out.println("----------------LUEGO DE COMMIT-------------------");
     } catch (Exception e) {
       e.getCause();
       e.printStackTrace();
     } finally {
-      em.close();
+      EntityManagerHelper.closeEntityManager();
       System.out.println("----------------LUEGO DE CLOSE CON-------------------");
     }
   }
 
   public VehiculoParticular getVehiculoParticular(int vehiculoParticularid) {
     EntityManager em = EntityManagerHelper.getEntityManager();
-    VehiculoParticular vehiculoParticular = em.find(VehiculoParticular.class, new Long(vehiculoParticularid));
+    VehiculoParticular vehiculoParticular = em.find(VehiculoParticular.class, vehiculoParticularid);
     em.detach(vehiculoParticular);
     return vehiculoParticular;
   }
