@@ -10,7 +10,7 @@ public class EntityManagerHelper {
 
   static {
     try {
-      emf = Persistence.createEntityManagerFactory("dstp");
+      emf = Persistence.createEntityManagerFactory("ds");
       threadLocal = new ThreadLocal<>();
     } catch (Exception e) {
       e.printStackTrace();

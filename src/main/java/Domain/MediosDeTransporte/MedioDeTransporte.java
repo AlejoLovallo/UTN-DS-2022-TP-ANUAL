@@ -8,7 +8,8 @@ import javax.persistence.*;
 @Inheritance(strategy =  InheritanceType.TABLE_PER_CLASS)
 public abstract class MedioDeTransporte {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    //@GeneratedValue(strategy = GenerationType.IDENTITY) //Anterior
+    @GeneratedValue(strategy = GenerationType.TABLE) // ESTO ES POR LA HERENCIA
     private Integer id_transporte;
 
     @Column

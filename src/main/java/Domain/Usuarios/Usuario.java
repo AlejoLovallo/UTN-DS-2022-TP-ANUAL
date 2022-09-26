@@ -16,7 +16,7 @@ public class Usuario{
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private int id_usuario;
   @Column
-  private String email;
+  private String mail;
   @Column
   private String username;
   @Column
@@ -40,14 +40,14 @@ public class Usuario{
 
   }
 
-  public Usuario(String username,String email,String contra,boolean validado) {
+  public Usuario(String username, String mail, String contra, boolean validado) {
     if(!isContraseniaValida(contra)){
       throw new ContraseniaEsInvalidaException("no pasa por alguna de las validaciones de seguridad");
     }
     this.validado = validado;
     this.contraHasheada = generateHash(contra);
     this.username = username;
-    this.email = email;
+    this.mail = mail;
     this.ultimoAcceso = new UltimoIntento();
     //this.contacto = contacto;
   }
@@ -62,8 +62,8 @@ public class Usuario{
     return this.username;
   }
 
-  public String getEmail() {
-    return this.email;
+  public String getMail() {
+    return this.mail;
   }
 
   public void setUsername(String username) {
@@ -82,8 +82,8 @@ public class Usuario{
     updateUsuario();
   }
 
-  public void setEmail(String _email){
-    this.email = _email;
+  public void setMail(String mail){
+    this.mail = mail;
     updateUsuario();
   }
 
@@ -140,30 +140,28 @@ public class Usuario{
 
 
   public void updateUsuario(){
-    EntityManagerFactory emf =
-        Persistence.createEntityManagerFactory("ds");
-    System.out.println("----------------LUEGO DE Crear Entity Manager-------------------");
-    EntityManager em = emf.createEntityManager();
     try {
-      em.getTransaction().begin();
+      EntityManagerHelper.beginTransaction();
       System.out.println("----------------LUEGO DE BEGIN TRAN-------------------");
-      em.merge(this);
-      System.out.println("----------------LUEGO DE UPDATE TRAN-------------------");
-      em.getTransaction().commit();
+      EntityManagerHelper.getEntityManager().persist(this);
+      System.out.println("----------------LUEGO DE INSERT TRAN-------------------");
+      EntityManagerHelper.commit();
       System.out.println("----------------LUEGO DE COMMIT-------------------");
     } catch (Exception e) {
       e.getCause();
       e.printStackTrace();
     } finally {
-      em.close();
+      EntityManagerHelper.closeEntityManager();
       System.out.println("----------------LUEGO DE CLOSE CON-------------------");
     }
   }
 
   public Usuario getUsuario(int usuarioID) {
     EntityManager em = EntityManagerHelper.getEntityManager();
+    EntityManagerHelper.beginTransaction();
     Usuario usuario = em.find(Usuario.class, new Long(usuarioID));
     em.detach(usuario);
+    EntityManagerHelper.commit();
     return usuario;
   }
 }

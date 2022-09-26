@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 24-09-2022 a las 09:48:41
+-- Tiempo de generación: 26-09-2022 a las 02:07:29
 -- Versión del servidor: 10.4.24-MariaDB
 -- Versión de PHP: 7.4.29
 
@@ -35,22 +35,8 @@ CREATE TABLE `actividad` (
   `tipoConsumo` enum('GAS_NATURAL','DIESEL_GASOIL','KEROSENE','FUEL_OIL','NAFTA','CARBON','CARBON_DE_LENIA','LENIA') NOT NULL,
   `unidad_Consumo` enum('m3','kg','lts','Kwh','km') NOT NULL,
   `frecuenciaServicio` enum('ANUAL','MENSUAL') NOT NULL,
-  `consumo` double NOT NULL,
-  `fechaCarga` date NOT NULL,
-  `fechaBaja` date NOT NULL,
-  `estaActivo` tinyint(1) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
--- --------------------------------------------------------
-
---
--- Estructura de tabla para la tabla `actividadxorganizacion`
---
-
-CREATE TABLE `actividadxorganizacion` (
-  `id_actxorg` int(100) NOT NULL,
   `id_organizacion` int(100) NOT NULL,
-  `id_actividad` int(100) NOT NULL
+  `id_factor` int(100) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
@@ -69,6 +55,20 @@ CREATE TABLE `agentesectorial` (
 -- --------------------------------------------------------
 
 --
+-- Estructura de tabla para la tabla `consumo`
+--
+
+CREATE TABLE `consumo` (
+  `id_consumo` int(100) NOT NULL,
+  `consumo` double NOT NULL,
+  `mes` int(100) NOT NULL,
+  `anio` int(100) NOT NULL,
+  `id_actividad` int(100) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- --------------------------------------------------------
+
+--
 -- Estructura de tabla para la tabla `contacto`
 --
 
@@ -77,7 +77,8 @@ CREATE TABLE `contacto` (
   `nombre` varchar(255) NOT NULL,
   `apellido` varchar(255) NOT NULL,
   `telefono` int(11) NOT NULL,
-  `mail` varchar(255) NOT NULL
+  `mail` varchar(255) NOT NULL,
+  `id_organizacion` int(100) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
@@ -118,9 +119,7 @@ CREATE TABLE `estacion` (
   `id_estacion` int(100) NOT NULL,
   `id_espacio` int(100) NOT NULL,
   `numero_Estacion` int(100) NOT NULL,
-  `nombre` varchar(255) NOT NULL,
-  `distancia_siguiente` float NOT NULL,
-  `distancia_anterior` float NOT NULL
+  `nombre` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
@@ -197,7 +196,8 @@ CREATE TABLE `organizacion` (
 CREATE TABLE `paradatransportepublico` (
   `id_parada` int(100) NOT NULL,
   `id_transporte` int(100) NOT NULL,
-  `id_estacion` int(100) NOT NULL
+  `id_estacion` int(100) NOT NULL,
+  `distancia_proxima` double NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
@@ -211,7 +211,8 @@ CREATE TABLE `persona` (
   `nombre` varchar(255) NOT NULL,
   `apellido` varchar(255) NOT NULL,
   `tipoDocumento` varchar(255) NOT NULL,
-  `nroDocumento` varchar(255) NOT NULL
+  `nroDocumento` varchar(255) NOT NULL,
+  `id_usuario` int(100) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
@@ -312,15 +313,9 @@ CREATE TABLE `vehiculoparticular` (
 -- Indices de la tabla `actividad`
 --
 ALTER TABLE `actividad`
-  ADD PRIMARY KEY (`id_actividad`);
-
---
--- Indices de la tabla `actividadxorganizacion`
---
-ALTER TABLE `actividadxorganizacion`
-  ADD PRIMARY KEY (`id_actxorg`),
-  ADD KEY `actxorg_id_org_org` (`id_organizacion`),
-  ADD KEY `actxorg_id_act_actividad` (`id_actividad`);
+  ADD PRIMARY KEY (`id_actividad`),
+  ADD KEY `actividad_id_org_org` (`id_organizacion`),
+  ADD KEY `actividad_id_factor_Factor` (`id_factor`);
 
 --
 -- Indices de la tabla `agentesectorial`
@@ -329,10 +324,18 @@ ALTER TABLE `agentesectorial`
   ADD PRIMARY KEY (`id_agente`);
 
 --
+-- Indices de la tabla `consumo`
+--
+ALTER TABLE `consumo`
+  ADD PRIMARY KEY (`id_consumo`),
+  ADD KEY `consumo_id_actividad_actividad` (`id_actividad`);
+
+--
 -- Indices de la tabla `contacto`
 --
 ALTER TABLE `contacto`
-  ADD PRIMARY KEY (`id_contacto`);
+  ADD PRIMARY KEY (`id_contacto`),
+  ADD KEY `contacto_id_org_org` (`id_organizacion`);
 
 --
 -- Indices de la tabla `direccion`
@@ -380,8 +383,8 @@ ALTER TABLE `miembro`
 --
 ALTER TABLE `miembroxtrayecto`
   ADD PRIMARY KEY (`id_miembroxtrayecto`),
-  ADD KEY `miembroxtrayecto_id_trayecto_trayecto` (`id_trayecto`),
-  ADD KEY `miembroxtrayecto_id_miembro_miembro` (`id_miembro`);
+  ADD KEY `miembroxtrayecto_id_miembro_miembro` (`id_miembro`),
+  ADD KEY `miembroxtrayecto_id_trayecto_trayecto` (`id_trayecto`);
 
 --
 -- Indices de la tabla `organizacion`
@@ -389,22 +392,23 @@ ALTER TABLE `miembroxtrayecto`
 ALTER TABLE `organizacion`
   ADD PRIMARY KEY (`id_organizacion`),
   ADD KEY `org_id_Agente_agente` (`id_Agente`),
-  ADD KEY `org_id_usuario_user` (`id_usuario`),
-  ADD KEY `org_id_contacto_contacto` (`id_contacto`);
+  ADD KEY `org_id_contacto_contacto` (`id_contacto`),
+  ADD KEY `org_id_usuario_usuario` (`id_usuario`);
 
 --
 -- Indices de la tabla `paradatransportepublico`
 --
 ALTER TABLE `paradatransportepublico`
   ADD PRIMARY KEY (`id_parada`),
-  ADD KEY `parada_id_transporte_mediotransporte` (`id_transporte`),
+  ADD KEY `parada_id_transporte_transportepublico` (`id_transporte`),
   ADD KEY `parada_id_transporte_estacion` (`id_estacion`);
 
 --
 -- Indices de la tabla `persona`
 --
 ALTER TABLE `persona`
-  ADD PRIMARY KEY (`id_persona`);
+  ADD PRIMARY KEY (`id_persona`),
+  ADD KEY `persona_id_user_user` (`id_usuario`);
 
 --
 -- Indices de la tabla `sector`
@@ -419,7 +423,9 @@ ALTER TABLE `sector`
 --
 ALTER TABLE `tramo`
   ADD PRIMARY KEY (`id_tramo`),
-  ADD KEY `trampo_id_Transporte_mediotransporte` (`id_transporte`);
+  ADD KEY `tramo_id_Transporte_mediotransporte` (`id_transporte`),
+  ADD KEY `tramo_puntollegada_espacio` (`puntoLlegada`),
+  ADD KEY `tramo_puntosalida_espacio` (`puntoSalida`);
 
 --
 -- Indices de la tabla `transportepublico`
@@ -439,7 +445,7 @@ ALTER TABLE `trayecto`
 ALTER TABLE `trayectoxtramo`
   ADD PRIMARY KEY (`id_trayectoxtramo`),
   ADD KEY `tramoxtrayecto_id_tramo_tramo` (`id_tramo`),
-  ADD KEY `tramoxtrayecto_id_tramo_trayecto` (`id_trayecto`);
+  ADD KEY `tramoxtrayecto_id_trayecto_trayecto` (`id_trayecto`);
 
 --
 -- Indices de la tabla `usuario`
@@ -454,15 +460,145 @@ ALTER TABLE `vehiculoparticular`
   ADD PRIMARY KEY (`id_transporte`);
 
 --
+-- AUTO_INCREMENT de las tablas volcadas
+--
+
+--
+-- AUTO_INCREMENT de la tabla `actividad`
+--
+ALTER TABLE `actividad`
+  MODIFY `id_actividad` int(100) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT de la tabla `agentesectorial`
+--
+ALTER TABLE `agentesectorial`
+  MODIFY `id_agente` int(100) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT de la tabla `consumo`
+--
+ALTER TABLE `consumo`
+  MODIFY `id_consumo` int(100) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT de la tabla `contacto`
+--
+ALTER TABLE `contacto`
+  MODIFY `id_contacto` int(100) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT de la tabla `direccion`
+--
+ALTER TABLE `direccion`
+  MODIFY `id_direccion` int(100) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT de la tabla `espacio`
+--
+ALTER TABLE `espacio`
+  MODIFY `id_espacio` int(100) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT de la tabla `estacion`
+--
+ALTER TABLE `estacion`
+  MODIFY `id_estacion` int(100) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT de la tabla `factoremision`
+--
+ALTER TABLE `factoremision`
+  MODIFY `id_factor` int(100) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT de la tabla `mediotransporte`
+--
+ALTER TABLE `mediotransporte`
+  MODIFY `id_transporte` int(100) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT de la tabla `miembro`
+--
+ALTER TABLE `miembro`
+  MODIFY `id_miembro` int(100) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT de la tabla `miembroxtrayecto`
+--
+ALTER TABLE `miembroxtrayecto`
+  MODIFY `id_miembroxtrayecto` int(100) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT de la tabla `organizacion`
+--
+ALTER TABLE `organizacion`
+  MODIFY `id_organizacion` int(100) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT de la tabla `paradatransportepublico`
+--
+ALTER TABLE `paradatransportepublico`
+  MODIFY `id_parada` int(100) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT de la tabla `persona`
+--
+ALTER TABLE `persona`
+  MODIFY `id_persona` int(100) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT de la tabla `sector`
+--
+ALTER TABLE `sector`
+  MODIFY `id_sector` int(100) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT de la tabla `tramo`
+--
+ALTER TABLE `tramo`
+  MODIFY `id_tramo` int(100) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT de la tabla `trayecto`
+--
+ALTER TABLE `trayecto`
+  MODIFY `id_trayecto` int(100) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT de la tabla `trayectoxtramo`
+--
+ALTER TABLE `trayectoxtramo`
+  MODIFY `id_trayectoxtramo` int(100) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT de la tabla `usuario`
+--
+ALTER TABLE `usuario`
+  MODIFY `id_usuario` int(100) NOT NULL AUTO_INCREMENT;
+
+--
 -- Restricciones para tablas volcadas
 --
 
 --
--- Filtros para la tabla `actividadxorganizacion`
+-- Filtros para la tabla `actividad`
 --
-ALTER TABLE `actividadxorganizacion`
-  ADD CONSTRAINT `actxorg_id_act_actividad` FOREIGN KEY (`id_actividad`) REFERENCES `actividad` (`id_actividad`),
-  ADD CONSTRAINT `actxorg_id_org_org` FOREIGN KEY (`id_organizacion`) REFERENCES `organizacion` (`id_organizacion`);
+ALTER TABLE `actividad`
+  ADD CONSTRAINT `actividad_id_factor_Factor` FOREIGN KEY (`id_factor`) REFERENCES `factoremision` (`id_factor`),
+  ADD CONSTRAINT `actividad_id_org_org` FOREIGN KEY (`id_organizacion`) REFERENCES `organizacion` (`id_organizacion`);
+
+--
+-- Filtros para la tabla `consumo`
+--
+ALTER TABLE `consumo`
+  ADD CONSTRAINT `consumo_id_actividad_actividad` FOREIGN KEY (`id_actividad`) REFERENCES `actividad` (`id_actividad`);
+
+--
+-- Filtros para la tabla `contacto`
+--
+ALTER TABLE `contacto`
+  ADD CONSTRAINT `contacto_id_org_org` FOREIGN KEY (`id_organizacion`) REFERENCES `organizacion` (`id_organizacion`);
 
 --
 -- Filtros para la tabla `direccion`
@@ -502,14 +638,20 @@ ALTER TABLE `miembroxtrayecto`
 ALTER TABLE `organizacion`
   ADD CONSTRAINT `org_id_Agente_agente` FOREIGN KEY (`id_Agente`) REFERENCES `agentesectorial` (`id_agente`),
   ADD CONSTRAINT `org_id_contacto_contacto` FOREIGN KEY (`id_contacto`) REFERENCES `contacto` (`id_contacto`),
-  ADD CONSTRAINT `org_id_usuario_user` FOREIGN KEY (`id_usuario`) REFERENCES `usuario` (`id_usuario`);
+  ADD CONSTRAINT `org_id_usuario_usuario` FOREIGN KEY (`id_usuario`) REFERENCES `usuario` (`id_usuario`);
 
 --
 -- Filtros para la tabla `paradatransportepublico`
 --
 ALTER TABLE `paradatransportepublico`
   ADD CONSTRAINT `parada_id_transporte_estacion` FOREIGN KEY (`id_estacion`) REFERENCES `estacion` (`id_estacion`),
-  ADD CONSTRAINT `parada_id_transporte_mediotransporte` FOREIGN KEY (`id_transporte`) REFERENCES `mediotransporte` (`id_transporte`);
+  ADD CONSTRAINT `parada_id_transporte_transportepublico` FOREIGN KEY (`id_transporte`) REFERENCES `transportepublico` (`id_transporte`);
+
+--
+-- Filtros para la tabla `persona`
+--
+ALTER TABLE `persona`
+  ADD CONSTRAINT `persona_id_user_user` FOREIGN KEY (`id_usuario`) REFERENCES `usuario` (`id_usuario`);
 
 --
 -- Filtros para la tabla `sector`
@@ -522,7 +664,9 @@ ALTER TABLE `sector`
 -- Filtros para la tabla `tramo`
 --
 ALTER TABLE `tramo`
-  ADD CONSTRAINT `trampo_id_Transporte_mediotransporte` FOREIGN KEY (`id_transporte`) REFERENCES `mediotransporte` (`id_transporte`);
+  ADD CONSTRAINT `tramo_id_Transporte_mediotransporte` FOREIGN KEY (`id_transporte`) REFERENCES `mediotransporte` (`id_transporte`),
+  ADD CONSTRAINT `tramo_puntollegada_espacio` FOREIGN KEY (`puntoLlegada`) REFERENCES `espacio` (`id_espacio`),
+  ADD CONSTRAINT `tramo_puntosalida_espacio` FOREIGN KEY (`puntoSalida`) REFERENCES `espacio` (`id_espacio`);
 
 --
 -- Filtros para la tabla `transportepublico`
@@ -535,7 +679,7 @@ ALTER TABLE `transportepublico`
 --
 ALTER TABLE `trayectoxtramo`
   ADD CONSTRAINT `tramoxtrayecto_id_tramo_tramo` FOREIGN KEY (`id_tramo`) REFERENCES `tramo` (`id_tramo`),
-  ADD CONSTRAINT `tramoxtrayecto_id_tramo_trayecto` FOREIGN KEY (`id_trayecto`) REFERENCES `trayecto` (`id_trayecto`);
+  ADD CONSTRAINT `tramoxtrayecto_id_trayecto_trayecto` FOREIGN KEY (`id_trayecto`) REFERENCES `trayecto` (`id_trayecto`);
 
 --
 -- Filtros para la tabla `vehiculoparticular`
