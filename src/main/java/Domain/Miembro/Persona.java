@@ -16,10 +16,13 @@ public class Persona {
   private String nombre;
   @Column
   private String apellido;
+
   @Enumerated(EnumType.STRING)
   private TipoDocumento tipoDocumento;
-  @Column
+
+  @Column(name="nroDocumento")
   private String documento;
+
   @OneToMany(mappedBy = "persona")
  // @JoinColumn(name="id_miembro",referencedColumnName = "id_miembro")
   private List<Miembro> listaMiembros;
@@ -28,7 +31,7 @@ public class Persona {
   private Usuario usuario;
 
   //////////////////////////////////  CONSTRUCTOR
-  public Persona(){
+  private Persona(){
 
   }
 

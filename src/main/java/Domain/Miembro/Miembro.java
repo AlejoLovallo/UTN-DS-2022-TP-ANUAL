@@ -36,12 +36,16 @@ public class Miembro {
 
 
   //////////////////////////////////  CONSTRUCTOR
-  public Miembro(){
+  private Miembro(){
 
   }
 
   public Miembro(String _id, Sector _sector){
     this.id = _id;
+    this.sector = _sector;
+  }
+
+  public Miembro(Sector _sector){
     this.sector = _sector;
   }
 
