@@ -1,8 +1,10 @@
 package Domain.Organizacion;
 import Domain.CalculadorHC.CalculadorHC;
 import Domain.Usuarios.Excepciones.UsuarioException;
+import jdk.vm.ci.meta.Local;
 
 import java.io.IOException;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import javax.persistence.*;
 
@@ -76,6 +78,15 @@ public class AgenteSectorial {
   //TODO revisar resultado, por el tema de Unidades
   public Double calcularHC(Integer mes, Integer anio) throws IOException {
     return calculadorHC.calcularHC(this, mes, anio);
+  }
+
+  public LocalDate getFechaMasTemprana(){
+    LocalDate fechaMasTemprana = this.getOrganizaciones().get(0).getFechaIngreso();
+    for(Organizacion organizacion : this.getOrganizaciones())
+      if(LocalDate.MIN.isAfter(organizacion.getFechaIngreso()))
+        fechaMasTemprana = organizacion.getFechaIngreso();
+
+    return fechaMasTemprana;
   }
 
 }

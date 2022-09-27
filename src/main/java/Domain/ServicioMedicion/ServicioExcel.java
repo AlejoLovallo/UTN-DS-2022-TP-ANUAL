@@ -1,10 +1,9 @@
 package Domain.ServicioMedicion;
 
-import Domain.Organizacion.Organizacion;
+import Domain.Organizacion.*;
 import Domain.Organizacion.Excepciones.ImposibilidadDeCrearWorkbookException;
 import Domain.Organizacion.Excepciones.ImposiblidadDeCerrarWorkbookException;
 
-import org.apache.commons.lang3.ObjectUtils.Null;
 import org.apache.poi.ss.usermodel.*;
 
 import java.io.File;
@@ -14,7 +13,6 @@ import java.sql.Date;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Iterator;
 import java.util.Optional;
 
@@ -131,9 +129,9 @@ public class ServicioExcel extends ServicioMediciones{
 
 
     // Del String periodoImputacion se pasa a LocalDate dado que sólo maneja fechas (sin horas)
-    LocalDate fechaPeriodoImputacion = LocalDate.parse(periodo_inputacion, DateTimeFormatter.ofPattern("M/d/yy"));
+    //LocalDate fechaPeriodoImputacion = LocalDate.parse(periodo_inputacion, DateTimeFormatter.ofPattern("M/d/yy"));
     // Se pasa a Date el LocalDate
-    Date datePeriodoImputacion = Date.valueOf(fechaPeriodoImputacion);
+    //Date datePeriodoImputacion = Date.valueOf(fechaPeriodoImputacion);
     /*
     System.out.println("La fecha con LocalDate: " + fechaPeriodoImputacion);
     System.out.println("La fecha con Date: " + Date.from(fechaPeriodoImputacion.atStartOfDay(ZoneId.systemDefault()).toInstant()));
@@ -142,8 +140,7 @@ public class ServicioExcel extends ServicioMediciones{
 
     Actividad actividad = new Actividad(
             tipoDeActividad,
-            tipoDeConsumo,
-            FrecuenciaServicio.valueOf(periodicidad)
+            tipoDeConsumo
     );
 
     if(periodicidad.equals(FrecuenciaServicio.MENSUAL.toString())){

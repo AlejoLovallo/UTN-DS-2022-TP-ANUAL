@@ -1,15 +1,7 @@
-package Domain.ServicioMedicion;
+package Domain.Organizacion;
 
-import Domain.CalculadorHC.RepositorioFactores;
-import java.time.Instant;
-import java.time.LocalDate;
-import java.time.ZoneId;
-import java.time.temporal.ChronoUnit;
-import java.util.Date;
 import javax.persistence.*;
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
 import java.util.Optional;
 
 @Entity
@@ -24,26 +16,16 @@ public class Actividad {
   @Enumerated(EnumType.STRING)
   private TipoDeConsumo tipoDeConsumo;
   @Enumerated(EnumType.STRING)
-  private FrecuenciaServicio frecuenciaServicio;
-  @Enumerated(EnumType.STRING)
   private UnidadDeConsumo unidadDeConsumo;
 
-  @Column
-  private Double consumo;
-  @Column
-  private Date fechaCarga;
-
-  @Column
-  private Date fechaDeBaja;
-  @Column
-  private Boolean estaActivo;
+  private ArrayList<ConsumoActividad> consumosActividad;
 
   //////////////////////////////////  CONSTRUCTORES
   public Actividad(){
 
   }
 
-  public Actividad(TipoDeActividad _tipoActividad,TipoDeConsumo _tipoDeConsumo,FrecuenciaServicio _frecuenciaServicio){
+  public Actividad(TipoDeActividad _tipoActividad,TipoDeConsumo _tipoDeConsumo){
     this.nombre=_tipoActividad;
     this.tipoDeConsumo=_tipoDeConsumo;
     //this.unidadDeConsumo=_unidadConsumo;
@@ -66,10 +48,6 @@ public class Actividad {
   //setters
 
   public void setUnidadDeConsumo(UnidadDeConsumo unidadDeConsumo) {this.unidadDeConsumo = unidadDeConsumo;}
-
-  public void setEstaActivo(Boolean estaActivo) {
-    this.estaActivo = estaActivo;
-  }
 
   public void setTipoDeConsumo(TipoDeConsumo tipoDeConsumo) {this.tipoDeConsumo = tipoDeConsumo;}
 

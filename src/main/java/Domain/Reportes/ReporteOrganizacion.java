@@ -2,7 +2,7 @@ package Domain.Reportes;
 
 import Domain.Organizacion.Organizacion;
 
-public class ReporteOrganizacion extends Reportes {
+public class ReporteOrganizacion extends Reporte {
 
     private Organizacion organizacion;
    

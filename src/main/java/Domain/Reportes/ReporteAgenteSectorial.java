@@ -2,11 +2,11 @@ package Domain.Reportes;
 
 import Domain.Organizacion.AgenteSectorial;
 
-public class ReporteAgenteSectorial extends Reportes{
+public class ReporteAgenteSectorial extends Reporte {
 
     private AgenteSectorial agenteSectorial;
 
-    public void reporteHC_SecTer(AgenteSectorial agente){
+    /*public void reporteHC_SecTer(AgenteSectorial agente){
         
         Double cantidadHC = 0.0;
 
@@ -17,5 +17,5 @@ public class ReporteAgenteSectorial extends Reportes{
         }
         
     }
-    
+    */
 }

@@ -1,16 +1,15 @@
 package Domain.Organizacion;
 import Domain.CalculadorHC.CalculadorHC;
 import Domain.Miembro.Miembro;
-import Domain.ServicioMedicion.Actividad;
+import Domain.Reportes.Reporte;
 import Domain.ServicioMedicion.ServicioMediciones;
 import Domain.Usuarios.Contacto;
 
-import java.text.ParseException;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.io.IOException;
 import java.util.List;
 import javax.persistence.*;
-import org.apache.commons.collections4.multimap.ArrayListValuedHashMap;
 
 @Entity
 @Table(name="organizacion")
@@ -42,6 +41,9 @@ public class Organizacion {
 
   @Transient /// PERO A CHEQUEAR
   private ArrayList<Actividad> actividades;
+  private ArrayList<Reporte> reportes;
+
+  private LocalDate fechaIngreso;
 
   @Transient
   private ServicioMediciones servicioMediciones;
@@ -62,12 +64,7 @@ public class Organizacion {
     this.clasificacion = _clasificacion;
     this.contacto = contacto;
     this.numDiasPorSemana = numDiasPorSemana;
-  }
-
-  public Organizacion(String _razonSocial, TipoOrganizacion _tipo, ClasificacionOrganizacion _clasificacion){
-    this.razonSocial = _razonSocial;
-    this.tipo = _tipo;
-    this.clasificacion = _clasificacion;
+    this.fechaIngreso = LocalDate.now();
   }
 
   //////////////////////////////////  GETTERS
@@ -106,6 +103,7 @@ public class Organizacion {
     return actividades;
   }
 
+  public LocalDate getFechaIngreso() { return fechaIngreso; }
 
   //////////////////////////////////  SETTERS
 
@@ -144,8 +142,9 @@ public class Organizacion {
     this.numDiasPorSemana = numDiasPorSemana;
   }
 
-  //////////////////////////////////  INTERFACE
+  public void setFechaIngreso(LocalDate fechaIngreso) { this.fechaIngreso = fechaIngreso; }
 
+  //////////////////////////////////  INTERFACE
 
   public void registrarSector(Sector sector){
     this.sectores.add(sector);

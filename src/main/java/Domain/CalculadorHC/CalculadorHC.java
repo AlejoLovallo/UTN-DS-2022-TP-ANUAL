@@ -2,19 +2,13 @@ package Domain.CalculadorHC;
 
 import Domain.MediosDeTransporte.VehiculoParticular;
 import Domain.Miembro.Miembro;
-import Domain.Organizacion.AgenteSectorial;
-import Domain.Organizacion.Organizacion;
-import Domain.Organizacion.Sector;
-import Domain.ServicioMedicion.*;
+import Domain.Organizacion.*;
 import Domain.Trayecto.Tramo;
 import Domain.Trayecto.Trayecto;
 //import org.graalvm.compiler.nodes.virtual.CommitAllocationNode;
 
 import java.io.IOException;
-import java.text.ParseException;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
+import java.time.LocalDate;
 
 public class CalculadorHC {
 
@@ -48,9 +42,7 @@ public class CalculadorHC {
         }
 
         for (Sector sector : organizacion.getSectores()){
-            for(Miembro miembro : sector.getMiembros()){
-                cantidadHC += calcularHC(miembro, mes, anio);
-            }
+            cantidadHC += calcularHC(sector, mes, anio);
         }
 
         return cantidadHC;
@@ -99,20 +91,52 @@ public class CalculadorHC {
         return cantidadHC;
     }
 
-    public Double calcularHC(Sector sector) throws IOException {
+    public Double calcularHC(Sector sector, Integer mes, Integer anio) throws IOException {
         Double cantidadHC = 0.0;
-        Date fechaActual = new Date();
-        Calendar calendar = Calendar.getInstance();
-        calendar.setTime(fechaActual);
-        int mesActual = calendar.get(Calendar.MONTH);
-        int anioActual = calendar.get(Calendar.YEAR);
 
         for(Miembro miembro : sector.getMiembros()){
-            cantidadHC += calcularHC(miembro, mesActual, anioActual);
+            cantidadHC += calcularHC(miembro, mes, anio);
         }
         return cantidadHC;
     }
 
     // HC TOTALES
-    
+    public Double calcularHcTipoOrganizacion(TipoOrganizacion tipoOrganizacion, Integer mes, Integer anio) throws IOException{
+
+        RepositorioOrganizaciones repositorioOrganizaciones = RepositorioOrganizaciones.GetInstance();
+        Double cantidadHC = 0.0;
+
+        for (Organizacion organizacion : repositorioOrganizaciones.getOrganizaciones()){
+            if (organizacion.getTipo() == tipoOrganizacion){
+                cantidadHC += organizacion.calcularHC(mes, anio);
+            }
+        }
+        return cantidadHC;
+    }
+
+    public Double calcularHcTotal(Organizacion organizacion) throws IOException {
+        Double cantidadHC = 0.0;
+
+        Integer anioIngreso = organizacion.getFechaIngreso().getYear();
+        Integer mesIngreso = organizacion.getFechaIngreso().getMonthValue();
+
+        Integer anioActual = LocalDate.now().getYear();
+        Integer mesActual = LocalDate.now().getMonthValue();
+
+        if(anioActual == anioIngreso){
+            for (int mes = mesIngreso; mes <= mesActual; mes++)
+                cantidadHC += organizacion.calcularHC(mes, anioIngreso);
+        }
+        else{
+            for (int mes = mesIngreso; mes <= 12; mes++)
+                cantidadHC += organizacion.calcularHC(mes, anioIngreso);
+            for (int mes = 1; mes <= mesActual; mes++)
+                cantidadHC += organizacion.calcularHC(mes, anioActual);
+            for (int anio = anioIngreso + 1; anio < anioActual; anio++)
+                for (int mes = 1; mes <= 12; mes++)
+                    cantidadHC += organizacion.calcularHC(mes, anio);
+        }
+
+        return cantidadHC;
+    }
 }

@@ -1,6 +1,6 @@
 package Organizacion;
 
-import Domain.ServicioMedicion.*;
+import Domain.Organizacion.*;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -14,7 +14,7 @@ public class Actividadtest {
 
     private void initializeActividad(){
         Date fechaCarga = new Date(2020, 07, 22);
-        this.act = new Actividad(TipoDeActividad.COMBUSTION_FIJA,TipoDeConsumo.CARBON_DE_LENIA, FrecuenciaServicio.MENSUAL,  fechaCarga, UnidadDeConsumo.lts);
+        this.act = new Actividad(TipoDeActividad.COMBUSTION_FIJA, TipoDeConsumo.CARBON_DE_LENIA, FrecuenciaServicio.MENSUAL,  fechaCarga, UnidadDeConsumo.lts);
     }
 
     @BeforeEach

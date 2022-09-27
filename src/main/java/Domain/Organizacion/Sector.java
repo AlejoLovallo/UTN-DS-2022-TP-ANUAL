@@ -82,7 +82,7 @@ public class Sector {
 
   // METHODS
 
-  public Double calcularHCPromedioSector() throws IOException {
-    return calculadorHC.calcularHC(this)/this.getMiembros().size();
+  public Double calcularHCPromedioSector(Integer mes, Integer anio) throws IOException {
+    return calculadorHC.calcularHC(this, mes, anio)/this.getMiembros().size();
   }
 }
