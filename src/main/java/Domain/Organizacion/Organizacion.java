@@ -2,7 +2,6 @@ package Domain.Organizacion;
 import Domain.CalculadorHC.CalculadorHC;
 import Domain.Miembro.Miembro;
 import Domain.ServicioMedicion.Actividad;
-import Domain.ServicioMedicion.ServicioHCExcel;
 import Domain.ServicioMedicion.ServicioMediciones;
 import Domain.Usuarios.Contacto;
 
@@ -11,6 +10,7 @@ import java.util.ArrayList;
 import java.io.IOException;
 import java.util.List;
 import javax.persistence.*;
+import org.apache.commons.collections4.multimap.ArrayListValuedHashMap;
 
 @Entity
 @Table(name="organizacion")
@@ -41,9 +41,7 @@ public class Organizacion {
   private String archivoMediciones;
 
   @Transient /// PERO A CHEQUEAR
-  private ArrayList<ServicioHCExcel> reportes = new ArrayList<>();
-  @Transient /// PERO A CHEQUEAR
-  private ArrayList<Actividad> actividades = new ArrayList<>();
+  private ArrayList<Actividad> actividades;
 
   @Transient
   private ServicioMediciones servicioMediciones;
@@ -100,15 +98,14 @@ public class Organizacion {
 
   public String getArchivoMediciones() { return archivoMediciones; }
 
-  public ArrayList<ServicioHCExcel> getReportes() { return reportes; }
-
   public Integer getNumDiasPorSemana() {
     return numDiasPorSemana;
   }
 
-  public ArrayList<Actividad> getActividades() {
+  public ArrayList <Actividad> getActividades() {
     return actividades;
   }
+
 
   //////////////////////////////////  SETTERS
 
@@ -161,25 +158,15 @@ public class Organizacion {
     return true;
   }
 
-  public ArrayList<Actividad> cargarMedicionesInternas(String fileName) throws IOException, ParseException {
-    return servicioMediciones.cargarMediciones(fileName);
+  public void cargarMedicionesInternas(String fileName) throws IOException {
+    ArrayList <Actividad> act = servicioMediciones.cargarMediciones(fileName, this);
+    for (Actividad actividad : act){
+      this.actividades.add(actividad);
+    }
   }
 
-  // TODO Revisar resultado por unidades y ver el calculo completo
-  public Double calcularHC() throws IOException {
-    return calculadorHC.calcularHC(this);
-  }
-
-  public Double calcularHCAA() throws IOException {
-    return calculadorHC.calcularHCAA(this);
-  }
-
-  public Double calcularHCMesAnio(int mes, int anio) throws IOException {
-    return calculadorHC.calcularHCMesAnio(this, mes, anio);
-  }
-
-  public void darDeBajaActividad(Actividad actividad) {
-    actividad.darDeBaja();
+  public Double calcularHC(Integer mes, Integer anio) throws IOException {
+    return calculadorHC.calcularHC(this, mes, anio);
   }
 
 }

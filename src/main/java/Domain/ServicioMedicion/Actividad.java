@@ -7,6 +7,10 @@ import java.time.ZoneId;
 import java.time.temporal.ChronoUnit;
 import java.util.Date;
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.Optional;
 
 @Entity
 @Table(name ="actividad")
@@ -16,7 +20,7 @@ public class Actividad {
   private int id_actividad;
 
   @Enumerated(EnumType.STRING)
-  private TipoDeActividad tipoDeActividad;
+  private TipoDeActividad nombre;
   @Enumerated(EnumType.STRING)
   private TipoDeConsumo tipoDeConsumo;
   @Enumerated(EnumType.STRING)
@@ -39,35 +43,27 @@ public class Actividad {
 
   }
 
-  public Actividad(TipoDeActividad _tipoActividad,TipoDeConsumo _tipoDeConsumo,FrecuenciaServicio _frecuenciaServicio, Date _fechaCarga,UnidadDeConsumo _unidadConsumo){
-    this.tipoDeActividad = _tipoActividad;
-    this.tipoDeConsumo = _tipoDeConsumo;
-    this.unidadDeConsumo = _unidadConsumo;
-    this.frecuenciaServicio = _frecuenciaServicio;
-    this.fechaCarga = _fechaCarga;
-    this.estaActivo = true;
+  public Actividad(TipoDeActividad _tipoActividad,TipoDeConsumo _tipoDeConsumo,FrecuenciaServicio _frecuenciaServicio){
+    this.nombre=_tipoActividad;
+    this.tipoDeConsumo=_tipoDeConsumo;
+    //this.unidadDeConsumo=_unidadConsumo;
   }
 
   //////////////////////////////////  GETTERS
-  public TipoDeActividad getTipoDeActividad() {return tipoDeActividad;}
+  private ArrayList <ConsumoActividad> consumos;
+
+  //getters
+
+  public TipoDeActividad getNombre() {return nombre;}
 
   public TipoDeConsumo getTipoDeConsumo() {return tipoDeConsumo;}
 
   public UnidadDeConsumo getUnidadDeConsumo() {return unidadDeConsumo;}
 
-  public Double getConsumo() {return consumo;}
-
-  public FrecuenciaServicio getFrecuenciaServicio() { return frecuenciaServicio; }
-
-  public Date getFechaCarga() { return fechaCarga; }
-
-  public Boolean getEstaActivo() {
-    return estaActivo;
-  }
+  public ArrayList <ConsumoActividad> getConsumos() {return consumos;}
 
 
-  //////////////////////////////////  SETTERS
-  public void setConsumo(Double consumo) {this.consumo = consumo;}
+  //setters
 
   public void setUnidadDeConsumo(UnidadDeConsumo unidadDeConsumo) {this.unidadDeConsumo = unidadDeConsumo;}
 
@@ -77,79 +73,38 @@ public class Actividad {
 
   public void setTipoDeConsumo(TipoDeConsumo tipoDeConsumo) {this.tipoDeConsumo = tipoDeConsumo;}
 
-  public void setTipoDeActividad(TipoDeActividad tipoDeActividad) {this.tipoDeActividad = tipoDeActividad;}
+  public void setNombre(TipoDeActividad nombre) {this.nombre = nombre;}
 
+  public void setConsumos(ArrayList <ConsumoActividad> consumos) {this.consumos = consumos;}
 
-  //////////////////////////////////  INTERFACE
+  //METHODS
 
-  public double obtenercantidadHC(int mes, int anio) {
-    double cantidadHC = 0.0;
+  public void agregarConsumo(Integer mes, Integer anio, Double consumo){
 
-    if(fechaCarga.getYear() + 1900 < anio || (fechaCarga.getYear() + 1900 == anio && fechaCarga.getMonth() + 1 <= mes)){
+    Optional<ConsumoActividad> consumoActividad  = this.getConsumos().stream().filter(unConsumo -> mes.equals(unConsumo.getMes()) && anio.equals(unConsumo.getAnio())).findAny();
 
-      Double factorDeEmision = RepositorioFactores.getInstance().getFactorDeEmisionSegunActividad(this.getTipoDeActividad()).getNumero();
+    ConsumoActividad con = consumoActividad.get();
 
-      if(this.getFrecuenciaServicio() == FrecuenciaServicio.MENSUAL){
-        cantidadHC = this.getConsumo() * factorDeEmision;
-      }else{
-        cantidadHC = this.getConsumo()/12 * factorDeEmision;
-      }
-
-      return cantidadHC;
-
+    if (con != null){
+      con.setConsumo(con.getConsumo() + consumo);
     }else{
-
-      return cantidadHC;
+      ConsumoActividad consu = new ConsumoActividad(mes, anio, consumo);
+      this.consumos.add(consu);
     }
+    
   }
 
+  public Double encontrarConsumo(Integer mes, Integer anio){
 
-  public double obtenercantidadHCTotal() {
-    double cantidadHC = 0.0;
+    Double consumo = 0.0;
 
-    Double factorDeEmision = RepositorioFactores.getInstance().getFactorDeEmisionSegunActividad(this.getTipoDeActividad()).getNumero();
+    Optional<ConsumoActividad> consumoActividad  = this.getConsumos().stream().filter(unConsumo -> mes.equals(unConsumo.getMes()) && anio.equals(unConsumo.getAnio())).findAny();
 
-    LocalDate fechaDeInicio = Instant.ofEpochMilli(fechaCarga.getTime()).atZone(ZoneId.systemDefault()).toLocalDate();
-
-    LocalDate fechaFinal;
-
-    if(this.estaActivo){
-      fechaFinal = LocalDate.now();
-    }else{
-      fechaFinal = Instant.ofEpochMilli(fechaDeBaja.getTime()).atZone(ZoneId.systemDefault()).toLocalDate();
+    ConsumoActividad con = consumoActividad.get();
+    if (con != null){
+      consumo = con.getConsumo();
     }
 
-    long haceCuantoExisteLaActividad;
-    haceCuantoExisteLaActividad = fechaDeInicio.until(fechaFinal, ChronoUnit.MONTHS);
-
-    if(this.getFrecuenciaServicio() == FrecuenciaServicio.MENSUAL){
-      cantidadHC = this.getConsumo() * factorDeEmision * haceCuantoExisteLaActividad;
-    }
-    else{
-      cantidadHC = this.getConsumo()/12 * factorDeEmision * haceCuantoExisteLaActividad;
-    }
-
-
-    return cantidadHC;
+    return consumo;
   }
-
-  public void darDeBaja() {
-    this.setEstaActivo(false);
-    this.fechaDeBaja = new Date(System.currentTimeMillis());
-  }
-
-//  public static void main(String[] args){
-//    Date fecha = new Date();
-//    fecha.setYear(100);
-//    fecha.setMonth(03);
-//    fecha.setDate(15);
-//    LocalDate localDate = Instant.ofEpochMilli(fecha.getTime()).atZone(ZoneId.systemDefault()).toLocalDate();
-//    LocalDate localDate1 = LocalDate.now();
-//
-//    long haceCuantoExisteLaActividad = localDate.until(localDate1, ChronoUnit.MONTHS);
-//
-//    System.out.println(haceCuantoExisteLaActividad);
-//  }
-
-
 }
