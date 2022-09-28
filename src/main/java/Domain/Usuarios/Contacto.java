@@ -1,4 +1,5 @@
 package Domain.Usuarios;
+import Domain.BaseDeDatos.EntityManagerHelper;
 import Domain.Organizacion.Organizacion;
 import org.apache.commons.lang3.Validate;
 import javax.mail.internet.AddressException;
@@ -77,19 +78,46 @@ public class Contacto {
 
     public void setNombre(String nombre) {
         this.nombre = nombre;
+        update();
     }
 
     public void setApellido(String apellido) {
         this.apellido = apellido;
+        update();
     }
 
     public void setTelefono(Integer telefono) {
         this.telefono = telefono;
+        update();
     }
 
     public void setEmail(String email) {
         this.email = email;
+        update();
+    }
+
+    public void setOrganizacion(Organizacion organizacion) {
+        this.organizacion = organizacion;
+        update();
     }
 
     //////////////////////////////////  INTERFACE
+
+    public void update(){
+        EntityManagerHelper.tranUpdate(this);
+    }
+
+    public static Contacto get(int contactoID) {
+        EntityManager em = EntityManagerHelper.getEntityManager();
+        EntityManagerHelper.beginTransaction();
+        Contacto contacto = em.find(Contacto.class, contactoID);
+        em.detach(contacto);
+        EntityManagerHelper.commit();
+        EntityManagerHelper.closeEntityManager();
+        return contacto;
+    }
+
+    public void insert(){
+        EntityManagerHelper.tranPersist(this);
+    }
 }

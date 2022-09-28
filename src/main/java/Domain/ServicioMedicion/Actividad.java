@@ -1,6 +1,9 @@
 package Domain.ServicioMedicion;
 
+import Domain.BaseDeDatos.EntityManagerHelper;
 import Domain.CalculadorHC.RepositorioFactores;
+import Domain.Usuarios.Usuario;
+
 import java.time.Instant;
 import java.time.LocalDate;
 import java.time.ZoneId;
@@ -35,7 +38,7 @@ public class Actividad {
   private Boolean estaActivo;
 
   //////////////////////////////////  CONSTRUCTORES
-  public Actividad(){
+  private Actividad(){
 
   }
 
@@ -67,17 +70,30 @@ public class Actividad {
 
 
   //////////////////////////////////  SETTERS
-  public void setConsumo(Double consumo) {this.consumo = consumo;}
+  public void setConsumo(Double consumo) {
+    this.consumo = consumo;
+    update();
+  }
 
-  public void setUnidadDeConsumo(UnidadDeConsumo unidadDeConsumo) {this.unidadDeConsumo = unidadDeConsumo;}
+  public void setUnidadDeConsumo(UnidadDeConsumo unidadDeConsumo) {
+    this.unidadDeConsumo = unidadDeConsumo;
+    update();
+  }
 
   public void setEstaActivo(Boolean estaActivo) {
     this.estaActivo = estaActivo;
+    update();
   }
 
-  public void setTipoDeConsumo(TipoDeConsumo tipoDeConsumo) {this.tipoDeConsumo = tipoDeConsumo;}
+  public void setTipoDeConsumo(TipoDeConsumo tipoDeConsumo) {
+    this.tipoDeConsumo = tipoDeConsumo;
+    update();
+  }
 
-  public void setTipoDeActividad(TipoDeActividad tipoDeActividad) {this.tipoDeActividad = tipoDeActividad;}
+  public void setTipoDeActividad(TipoDeActividad tipoDeActividad) {
+    this.tipoDeActividad = tipoDeActividad;
+    update();
+  }
 
 
   //////////////////////////////////  INTERFACE
@@ -151,5 +167,23 @@ public class Actividad {
 //    System.out.println(haceCuantoExisteLaActividad);
 //  }
 
+
+  public void update(){
+    EntityManagerHelper.tranUpdate(this);
+  }
+
+  public static Actividad get(int actividadID) {
+    EntityManager em = EntityManagerHelper.getEntityManager();
+    EntityManagerHelper.beginTransaction();
+    Actividad actividad = em.find(Actividad.class, actividadID);
+    em.detach(actividad);
+    EntityManagerHelper.commit();
+    EntityManagerHelper.closeEntityManager();
+    return actividad;
+  }
+
+  public void insert(){
+    EntityManagerHelper.tranPersist(this);
+  }
 
 }

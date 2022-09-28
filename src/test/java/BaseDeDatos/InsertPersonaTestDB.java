@@ -16,21 +16,9 @@ public class InsertPersonaTestDB {
 
     persona.setUsuario(user);
 
-    try {
-      EntityManagerHelper.beginTransaction();
-      System.out.println("----------------LUEGO DE BEGIN TRAN-------------------");
-      EntityManagerHelper.getEntityManager().persist(user);
-      EntityManagerHelper.getEntityManager().persist(persona);
-      System.out.println("----------------LUEGO DE INSERT TRAN-------------------");
-      EntityManagerHelper.commit();
-      System.out.println("----------------LUEGO DE COMMIT-------------------");
+    user.insert();
 
-    } catch (Exception e) {
-      e.getCause();
-      e.printStackTrace();
-    } finally {
-      EntityManagerHelper.closeEntityManager();
-      System.out.println("----------------LUEGO DE CLOSE CON-------------------");
-    }
+    EntityManagerHelper.tranPersist(user);
+    EntityManagerHelper.tranPersist(persona);
   }
 }

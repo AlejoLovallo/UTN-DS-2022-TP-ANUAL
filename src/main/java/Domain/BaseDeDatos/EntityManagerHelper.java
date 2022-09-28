@@ -74,6 +74,30 @@ public class EntityManagerHelper {
     entityManager().merge(o);
   }
 
+  public static void tranPersist(Object o){
+    try {
+      EntityManagerHelper.withTransaction(()->EntityManagerHelper.entityManager().persist(o));
+    } catch (Exception e) {
+      e.getCause();
+      e.printStackTrace();
+    } finally {
+      EntityManagerHelper.closeEntityManager();
+      System.out.println("----------------LUEGO DE CLOSE CON-------------------");
+    }
+  }
+
+  public static void tranUpdate(Object o){
+    try {
+      EntityManagerHelper.withTransaction(()->entityManager().merge(o));
+    } catch (Exception e) {
+      e.getCause();
+      e.printStackTrace();
+    } finally {
+      EntityManagerHelper.closeEntityManager();
+      System.out.println("----------------LUEGO DE CLOSE CON-------------------");
+    }
+  }
+
   public static void withTransaction(Runnable action) {
     withTransaction(() -> {
       action.run();

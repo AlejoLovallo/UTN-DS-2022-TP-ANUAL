@@ -1,5 +1,6 @@
 package Domain.Miembro;
 
+import Domain.BaseDeDatos.EntityManagerHelper;
 import Domain.Usuarios.Usuario;
 
 import java.util.ArrayList;
@@ -96,5 +97,23 @@ public class Persona {
   }
 
   //////////////////////////////////  INTERFACE
+
+  public void updateUsuario(){
+    EntityManagerHelper.tranUpdate(this);
+  }
+
+  public static Usuario getUsuario(int usuarioID) {
+    EntityManager em = EntityManagerHelper.getEntityManager();
+    EntityManagerHelper.beginTransaction();
+    Usuario usuario = em.find(Usuario.class, usuarioID);
+    em.detach(usuario);
+    EntityManagerHelper.commit();
+    EntityManagerHelper.closeEntityManager();
+    return usuario;
+  }
+
+  public void insertUsuario(){
+    EntityManagerHelper.tranPersist(this);
+  }
 
 }

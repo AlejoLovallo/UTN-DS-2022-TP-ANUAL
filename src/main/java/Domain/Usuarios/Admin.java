@@ -19,6 +19,7 @@ public class Admin extends Usuario {
   //////////////////////////////////  CONSTRUCTORES
   public Admin(String username, String email, String contra, boolean validado) {
     super(username, email, contra, validado);
+    super.setIsAdmin(true);
   }
 
 

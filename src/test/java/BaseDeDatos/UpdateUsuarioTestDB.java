@@ -7,7 +7,7 @@ import javax.persistence.*;
 public class UpdateUsuarioTestDB {
   public static void main(String[] args) {
 
-    Usuario user = Usuario.getUsuario(2);
+    Usuario user = Usuario.get(2);
     user.setUsername("tomas");
 
     try {

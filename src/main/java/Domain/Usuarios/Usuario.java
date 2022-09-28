@@ -6,6 +6,8 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 
+import javax.mail.internet.AddressException;
+import javax.mail.internet.InternetAddress;
 import javax.persistence.*;
 
 @Entity
@@ -24,8 +26,13 @@ public class Usuario{
   @Column
   private Boolean validado;
 
+  @Transient
+  //@Column
+  private Boolean isAdmin;
+
 
   @Transient
+  //@OneToOne(mappedBy = "usuario")
   private UltimoIntento ultimoAcceso;
 
   @Transient
@@ -47,8 +54,16 @@ public class Usuario{
     this.validado = validado;
     this.contraHasheada = generateHash(contra);
     this.username = username;
-    this.mail = mail;
+    try {
+      InternetAddress emailAddr = new InternetAddress(mail);
+      emailAddr.validate();
+    }
+    catch (AddressException ex) {
+      throw new RuntimeException("Debe ingresar una direccion de email valida");
+    }
     this.ultimoAcceso = new UltimoIntento();
+    this.isAdmin = false;
+    this.mail = mail;
     //this.contacto = contacto;
   }
 
@@ -62,29 +77,45 @@ public class Usuario{
     return this.username;
   }
 
+  public Boolean getIsAdmin() {
+    return isAdmin;
+  }
+
+  public void setIsAdmin(Boolean admin) {
+    isAdmin = admin;
+    update();
+  }
+
   public String getMail() {
     return this.mail;
   }
 
   public void setUsername(String username) {
     this.username = username;
-    updateUsuario();
+    update();
   }
 
   public void setContraHasheada(String contraHasheada) {
     this.contraHasheada = contraHasheada;
-    updateUsuario();
+    update();
   }
 
   //////////////////////////////////  SETTERS
   public void setValidado(Boolean validado) {
     this.validado = validado;
-    updateUsuario();
+    update();
   }
 
   public void setMail(String mail){
-    this.mail = mail;
-    updateUsuario();
+    try {
+      InternetAddress emailAddr = new InternetAddress(mail);
+      emailAddr.validate();
+      this.mail = mail;
+      update();
+    }
+    catch (AddressException ex) {
+      throw new RuntimeException("Debe ingresar una direccion de email valida");
+    }
   }
 
 
@@ -139,29 +170,21 @@ public class Usuario{
   }
 
 
-  public void updateUsuario(){
-    try {
-      EntityManagerHelper.beginTransaction();
-      System.out.println("----------------LUEGO DE BEGIN TRAN-------------------");
-      EntityManagerHelper.getEntityManager().persist(this);
-      System.out.println("----------------LUEGO DE INSERT TRAN-------------------");
-      EntityManagerHelper.commit();
-      System.out.println("----------------LUEGO DE COMMIT-------------------");
-    } catch (Exception e) {
-      e.getCause();
-      e.printStackTrace();
-    } finally {
-      EntityManagerHelper.closeEntityManager();
-      System.out.println("----------------LUEGO DE CLOSE CON-------------------");
-    }
+  public void update(){
+    EntityManagerHelper.tranUpdate(this);
   }
 
-  public static Usuario getUsuario(int usuarioID) {
+  public static Usuario get(int usuarioID) {
     EntityManager em = EntityManagerHelper.getEntityManager();
     EntityManagerHelper.beginTransaction();
     Usuario usuario = em.find(Usuario.class, usuarioID);
     em.detach(usuario);
     EntityManagerHelper.commit();
+    EntityManagerHelper.closeEntityManager();
     return usuario;
+  }
+
+  public void insert(){
+    EntityManagerHelper.tranPersist(this);
   }
 }
