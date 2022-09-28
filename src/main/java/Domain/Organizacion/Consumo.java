@@ -1,6 +1,6 @@
 package Domain.Organizacion;
 
-public class ConsumoActividad {
+public class Consumo {
     
     private Integer mes;
     private Integer anio;
@@ -9,7 +9,7 @@ public class ConsumoActividad {
 
     // CONSTRUCTOR 
 
-    public ConsumoActividad(Integer mes, Integer anio, Double consumo) {
+    public Consumo(Integer mes, Integer anio, Double consumo) {
         this.mes = mes;
         this.anio = anio;
         this.consumo = consumo;

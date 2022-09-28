@@ -6,6 +6,7 @@ import Domain.Organizacion.Actividad;
 
 import java.io.IOException;
 import java.time.LocalDate;
+import java.util.ArrayList;
 
 public class GeneradorReportes {
 
@@ -21,62 +22,82 @@ public class GeneradorReportes {
         return instance;
     }
 
-    public void reporteHC_Org(TipoOrganizacion tipo) throws IOException {
+    public Reporte reporteHC_Org(TipoOrganizacion tipo, LocalDate fechaDesde, LocalDate fechaHasta) throws IOException {
 
         Double cantidadHC = 0.0;
 
         for (Organizacion organizacion : repositorioOrganizaciones.getOrganizaciones()){
             if (organizacion.getTipo() == tipo){
-                cantidadHC += calculadorHC.calcularHcTotal(organizacion);
+                calculadorHC.calcularHcPeriodo(organizacion, fechaDesde, fechaHasta);
             }
         }
-        System.out.println(cantidadHC);
+
+        ReporteTotal reporte = new ReporteTotal(fechaDesde, fechaHasta, cantidadHC);
+
+        return reporte;
+
     }
 
-    public void reporteHC_SecTer(AgenteSectorial agenteSectorial) throws IOException {
+    public Reporte reporteHC_SecTer(AgenteSectorial agenteSectorial, LocalDate fechaDesde, LocalDate fechaHasta) throws IOException {
+        
         Double cantidadHC = 0.0;
 
         for (Organizacion organizacion : agenteSectorial.getOrganizaciones()){
-            cantidadHC += calculadorHC.calcularHcTotal(organizacion);
+            cantidadHC += calculadorHC.calcularHcPeriodo(organizacion, fechaDesde, fechaHasta);
         }
-        System.out.println(cantidadHC);
+
+        ReporteTotal reporte = new ReporteTotal(fechaDesde, fechaHasta, cantidadHC);
+
+        return reporte;
     }
 
-    public void reporteCompHC_Org(Organizacion organizacion){
+    public Reporte reporteCompHC_Org(Organizacion organizacion, LocalDate fechaDesde, LocalDate fechaHasta){
 
-        Integer anioIngreso = organizacion.getFechaIngreso().getYear();
-        Integer mesIngreso = organizacion.getFechaIngreso().getMonthValue();
+        ArrayList <Actividad> listaActividades = new ArrayList<>();
+        ReporteComposicion reporte = new ReporteComposicion(fechaDesde, fechaHasta, listaActividades);
 
-        Integer anioActual = LocalDate.now().getYear();
-        Integer mesActual = LocalDate.now().getMonthValue();
-
-        System.out.println(organizacion.getRazonSocial());
         for(Actividad actividad : organizacion.getActividades()){
+            
             Double cantidadHC = 0.0;
-            if(anioIngreso == anioActual){
-                for (int mes = mesIngreso; mes <= mesActual; mes++)
-                    cantidadHC += calculadorHC.cacluarHcActividad(actividad, mes, anioIngreso);
-            }
-            else{
-                for (int mes = mesIngreso; mes <= 12; mes++)
-                    cantidadHC += calculadorHC.cacluarHcActividad(actividad, mes, anioIngreso);
-                for (int mes = 1; mes <= mesActual; mes++)
-                    cantidadHC += calculadorHC.cacluarHcActividad(actividad, mes, anioActual);
-                for (int anio = anioIngreso + 1; anio < anioActual; anio++)
-                    for (int mes = 1; mes <= 12; mes++)
-                        cantidadHC += calculadorHC.cacluarHcActividad(actividad, mes, anio);
-            }
+            
+            cantidadHC += calculadorHC.cacluarHcActividadPeriodo(actividad, fechaDesde, fechaHasta);
 
-            System.out.println(actividad.getNombre() + ": " + cantidadHC.toString());
+            Actividad act = new Actividad(actividad.getNombre(), actividad.getTipoDeConsumo());
+            Consumo con = new Consumo(1, 1, cantidadHC);
+            ArrayList <Consumo> lista = new ArrayList<>();
+            lista.add(con);
+            act.setConsumos(lista);
+
+            reporte.getActividades().add(act);
         }
+
+        return reporte;
     }
 
-    public void reporteCompHC_SecTer(AgenteSectorial agenteSectorial){
+    // Me quede acá. Despues sigo
+    public void reporteCompHC_SecTer(AgenteSectorial agenteSectorial, LocalDate fechaDesde, LocalDate fechaHasta){
 
-        System.out.println(agenteSectorial.getNombre());
-        for (Organizacion organizacion : agenteSectorial.getOrganizaciones()){
-            this.reporteCompHC_Org(organizacion);
+        ArrayList <Actividad> listaActividades = new ArrayList<>();
+        
+        for( Organizacion organizacion : agenteSectorial.getOrganizaciones()){
+            for(Actividad actividad : organizacion.getActividades()){
+                
+                if()
+                Double cantidadHC = 0.0;
+                
+                cantidadHC += calculadorHC.cacluarHcActividadPeriodo(actividad, fechaDesde, fechaHasta);
+    
+                Actividad act = new Actividad(actividad.getNombre(), actividad.getTipoDeConsumo());
+                Consumo con = new Consumo(1, 1, cantidadHC);
+                ArrayList <Consumo> lista = new ArrayList<>();
+                lista.add(con);
+                act.setConsumos(lista);
+
+                listaActividades.add(act);
+            }
         }
+
+        return reporte;
     }
 
     public void reporteCompHC_Pais(String pais){

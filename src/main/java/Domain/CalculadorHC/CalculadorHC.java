@@ -10,6 +10,8 @@ import Domain.Trayecto.Trayecto;
 import java.io.IOException;
 import java.time.LocalDate;
 
+// import org.apache.poi.ss.formula.PlainCellCache.Loc;
+
 public class CalculadorHC {
 
     private RepositorioFactores factoresDeEmision = RepositorioFactores.getInstance();
@@ -135,6 +137,60 @@ public class CalculadorHC {
             for (int anio = anioIngreso + 1; anio < anioActual; anio++)
                 for (int mes = 1; mes <= 12; mes++)
                     cantidadHC += organizacion.calcularHC(mes, anio);
+        }
+
+        return cantidadHC;
+    }
+
+    // Calcular HC de un periodo 
+
+    public Double calcularHcPeriodo(Organizacion organizacion, LocalDate fechaDesde, LocalDate fechaHasta) throws IOException {
+        
+        Double cantidadHC = 0.0;
+
+        Integer mesDesde = fechaDesde.getMonthValue();
+        Integer anioDesde = fechaDesde.getYear();
+        Integer mesHasta = fechaHasta.getMonthValue();
+        Integer anioHasta = fechaHasta.getYear();
+
+        if(anioDesde == anioHasta){
+            for (int mes = mesDesde; mes <= mesHasta; mes++)
+                cantidadHC += calcularHC(organizacion, mes, anioDesde);
+        }
+        else{
+            for (int mes = mesDesde; mes <= 12; mes++)
+                cantidadHC += calcularHC(organizacion, mes, anioDesde);
+            for (int mes = 1; mes <= mesHasta; mes++)
+                cantidadHC += calcularHC(organizacion, mes, anioHasta);
+            for (int anio = anioDesde + 1; anio < anioHasta; anio++)
+                for (int mes = 1; mes <= 12; mes++)
+                    cantidadHC += calcularHC(organizacion, mes, anio);
+        }
+
+        return cantidadHC;
+    }
+
+    public Double cacluarHcActividadPeriodo(Actividad actividad, LocalDate fechaDesde, LocalDate fechaHasta){
+        
+        Double cantidadHC = 0.0;
+
+        Integer mesDesde = fechaDesde.getMonthValue();
+        Integer anioDesde = fechaDesde.getYear();
+        Integer mesHasta = fechaHasta.getMonthValue();
+        Integer anioHasta = fechaHasta.getYear();
+
+        if(anioDesde == anioHasta){
+            for (int mes = mesDesde; mes <= mesHasta; mes++)
+                cantidadHC += cacluarHcActividad(actividad, mes, anioDesde);
+        }
+        else{
+            for (int mes = mesDesde; mes <= 12; mes++)
+                cantidadHC += cacluarHcActividad(actividad, mes, anioHasta);
+            for (int mes = 1; mes <= mesHasta; mes++)
+                cantidadHC += cacluarHcActividad(actividad, mes, anioHasta);
+            for (int anio = anioDesde + 1; anio < anioHasta; anio++)
+                for (int mes = 1; mes <= 12; mes++)
+                    cantidadHC += cacluarHcActividad(actividad, mes, anio);
         }
 
         return cantidadHC;
