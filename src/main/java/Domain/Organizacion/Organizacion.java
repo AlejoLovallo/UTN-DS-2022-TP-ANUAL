@@ -44,6 +44,7 @@ public class Organizacion {
   private ArrayList<Reporte> reportes;
 
   private LocalDate fechaIngreso;
+  private String paisOrigen;
 
   @Transient
   private ServicioMediciones servicioMediciones;
@@ -104,6 +105,8 @@ public class Organizacion {
   }
 
   public LocalDate getFechaIngreso() { return fechaIngreso; }
+
+  public String getPaisOrigen() { return paisOrigen; }
 
   //////////////////////////////////  SETTERS
 

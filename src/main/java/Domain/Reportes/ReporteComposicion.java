@@ -2,6 +2,7 @@ package Domain.Reportes;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import Domain.Organizacion.Actividad;
 import Domain.Organizacion.Consumo;
@@ -11,11 +12,11 @@ public class ReporteComposicion extends Reporte {
     private ArrayList <Actividad> actividades;
 
     // CONSTRUCTOR
-
     public ReporteComposicion(LocalDate _fechaDesde, LocalDate _fechaHasta, ArrayList <Actividad> _actividades) {
         super(_fechaDesde, _fechaHasta);
         this.actividades = _actividades;
     }
+
 
     // GETTERS
 
