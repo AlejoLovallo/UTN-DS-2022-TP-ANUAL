@@ -11,8 +11,8 @@ public class ReporteEvolucion extends Reporte {
 
     // CONSTRUCTOR
 
-    public ReporteEvolucion(LocalDate _fechaDesde, LocalDate _fechaHasta, ArrayList <Consumo> _consumos) {
-        super(_fechaDesde, _fechaHasta);
+    public ReporteEvolucion(String _nombre, TipoDeReporte _tipoDeReporte, LocalDate _fechaDesde, LocalDate _fechaHasta, ArrayList <Consumo> _consumos) {
+        super(_nombre, _tipoDeReporte, _fechaDesde, _fechaHasta);
         this.consumos = _consumos;
     }
 

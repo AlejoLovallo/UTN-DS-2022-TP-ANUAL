@@ -8,8 +8,8 @@ public class ReporteTotal extends Reporte {
 
     // CONSTRUCTOR
 
-    public ReporteTotal(LocalDate _fechaDesde, LocalDate _fechaHasta, Double _cantidadHC) {
-        super(_fechaDesde, _fechaHasta);
+    public ReporteTotal(String _nombre,TipoDeReporte _tipoDeReporte, LocalDate _fechaDesde, LocalDate _fechaHasta, Double _cantidadHC) {
+        super(_nombre, _tipoDeReporte, _fechaDesde, _fechaHasta);
         this.cantidadHC = _cantidadHC;
     }
 

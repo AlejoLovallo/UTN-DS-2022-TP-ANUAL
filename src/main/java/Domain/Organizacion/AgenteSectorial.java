@@ -1,5 +1,8 @@
 package Domain.Organizacion;
 import Domain.CalculadorHC.CalculadorHC;
+import Domain.Reportes.GeneradorReportes;
+import Domain.Reportes.Reporte;
+import Domain.Reportes.TipoDeReporte;
 import Domain.Usuarios.Excepciones.UsuarioException;
 //import jdk.vm.ci.meta.Local;
 
@@ -26,6 +29,11 @@ public class AgenteSectorial {
   private ArrayList<Organizacion> organizaciones = new ArrayList<>();
   @Transient
   private CalculadorHC calculadorHC = CalculadorHC.getInstance();
+
+  private ArrayList<Reporte> reportes;
+  private GeneradorReportes generadorReportes = GeneradorReportes.getInstance();
+
+
 
   //////////////////////////////////  CONSTRUCTORES
   public AgenteSectorial(){
@@ -56,6 +64,10 @@ public class AgenteSectorial {
     return organizaciones;
   }
 
+  public ArrayList <Reporte> getReportes (){
+    return reportes;
+  }
+
   //////////////////////////////////  SETTERS
   public void setNombre(String nombre) {
     this.razonSocial = nombre;
@@ -80,13 +92,17 @@ public class AgenteSectorial {
     return calculadorHC.calcularHC(this, mes, anio);
   }
 
-  public LocalDate getFechaMasTemprana(){
-    LocalDate fechaMasTemprana = this.getOrganizaciones().get(0).getFechaIngreso();
-    for(Organizacion organizacion : this.getOrganizaciones())
-      if(LocalDate.MIN.isAfter(organizacion.getFechaIngreso()))
-        fechaMasTemprana = organizacion.getFechaIngreso();
 
-    return fechaMasTemprana;
+  public Reporte conseguirReporte(TipoDeReporte tipoDeReporte, LocalDate fechaDesde, LocalDate fechaHasta) throws IOException{
+    switch(tipoDeReporte){
+      case TOTAL:
+      return generadorReportes.reporteHC_SecTer(this, fechaDesde, fechaHasta);
+      case COMPOSICION:
+        return generadorReportes.reporteCompHC_SecTer(this, fechaDesde, fechaHasta);
+      case EVOLUCION:
+        return generadorReportes.reporteEvolucionHC_SecTer(this, fechaDesde, fechaHasta);
+    }
+    return null;
   }
 
 }

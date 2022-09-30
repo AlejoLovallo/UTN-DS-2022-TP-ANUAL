@@ -25,6 +25,7 @@ public class CalculadorHC {
         }
         return instance;
     }
+    
     // GETTERS
     public RepositorioFactores getFactoresDeEmision() {
         return factoresDeEmision;

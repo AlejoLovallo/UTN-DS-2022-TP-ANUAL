@@ -12,8 +12,8 @@ public class ReporteComposicion extends Reporte {
     private ArrayList <Actividad> actividades;
 
     // CONSTRUCTOR
-    public ReporteComposicion(LocalDate _fechaDesde, LocalDate _fechaHasta, ArrayList <Actividad> _actividades) {
-        super(_fechaDesde, _fechaHasta);
+    public ReporteComposicion(String _nombre, TipoDeReporte _tipoDeReporte, LocalDate _fechaDesde, LocalDate _fechaHasta, ArrayList <Actividad> _actividades) {
+        super(_nombre, _tipoDeReporte, _fechaDesde, _fechaHasta);
         this.actividades = _actividades;
     }
 
