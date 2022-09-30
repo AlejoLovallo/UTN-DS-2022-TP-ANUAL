@@ -1,35 +1,57 @@
 package Domain.Usuarios;
+import Domain.BaseDeDatos.EntityManagerHelper;
 import Domain.Usuarios.Excepciones.ContraseniaEsInvalidaException;
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 
+import javax.persistence.*;
 
-public class Usuario {
+@Entity
+@Table(name="usuario")
+public class Usuario{
   //////////////////////////////////  VARIABLES
-  private final String salt = "+@351";
-  private String contraHasheada;
+  @Id
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
+  private int id_usuario;
+  @Column
+  private String mail;
+  @Column
   private String username;
-  private String email;
-  private UltimoIntento ultimoAcceso;
+  @Column
+  private String contraHasheada;
+  @Column
   private Boolean validado;
-  private ArrayList<CriterioValidacion> validadoresContrasenia;
-  //private Contacto contacto;
 
+
+  @Transient
+  private UltimoIntento ultimoAcceso;
+
+  @Transient
+  private ArrayList<CriterioValidacion> validadoresContrasenia;
+
+  @Transient
+  private final String salt = "+@351";
 
   //////////////////////////////////  CONSTRUCTORES
-  public Usuario(String username,String email,String contra,boolean validado) {
+
+  private Usuario(){
+
+  }
+
+  public Usuario(String username, String mail, String contra, boolean validado) {
     if(!isContraseniaValida(contra)){
       throw new ContraseniaEsInvalidaException("no pasa por alguna de las validaciones de seguridad");
     }
     this.validado = validado;
     this.contraHasheada = generateHash(contra);
     this.username = username;
-    this.email = email;
+    this.mail = mail;
     this.ultimoAcceso = new UltimoIntento();
     //this.contacto = contacto;
   }
+
 
   //////////////////////////////////  GETTERS
   public boolean isValido(){
@@ -40,14 +62,32 @@ public class Usuario {
     return this.username;
   }
 
-  public String getEmail() {
-    return this.email;
+  public String getMail() {
+    return this.mail;
+  }
+
+  public void setUsername(String username) {
+    this.username = username;
+    updateUsuario();
+  }
+
+  public void setContraHasheada(String contraHasheada) {
+    this.contraHasheada = contraHasheada;
+    updateUsuario();
   }
 
   //////////////////////////////////  SETTERS
   public void setValidado(Boolean validado) {
     this.validado = validado;
+    updateUsuario();
   }
+
+  public void setMail(String mail){
+    this.mail = mail;
+    updateUsuario();
+  }
+
+
 
 
   //////////////////////////////////  INTERFACE
@@ -96,5 +136,32 @@ public class Usuario {
     }
 
     return sb.toString();
+  }
+
+
+  public void updateUsuario(){
+    try {
+      EntityManagerHelper.beginTransaction();
+      System.out.println("----------------LUEGO DE BEGIN TRAN-------------------");
+      EntityManagerHelper.getEntityManager().persist(this);
+      System.out.println("----------------LUEGO DE INSERT TRAN-------------------");
+      EntityManagerHelper.commit();
+      System.out.println("----------------LUEGO DE COMMIT-------------------");
+    } catch (Exception e) {
+      e.getCause();
+      e.printStackTrace();
+    } finally {
+      EntityManagerHelper.closeEntityManager();
+      System.out.println("----------------LUEGO DE CLOSE CON-------------------");
+    }
+  }
+
+  public static Usuario getUsuario(int usuarioID) {
+    EntityManager em = EntityManagerHelper.getEntityManager();
+    EntityManagerHelper.beginTransaction();
+    Usuario usuario = em.find(Usuario.class, usuarioID);
+    em.detach(usuario);
+    EntityManagerHelper.commit();
+    return usuario;
   }
 }

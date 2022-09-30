@@ -1,21 +1,23 @@
 package Domain.Espacios;
 
-import Domain.Espacios.Espacio;
-import Domain.Espacios.TipoDireccion;
+import Domain.BaseDeDatos.EntityManagerHelper;
+import javax.persistence.*;
 
+@Entity
+@Table(name="estacion")
 public class Estacion extends Espacio {
+  
+  @Column
   private String nombre;
-  public Integer numeroDeEstacion;
-  public double distEstAnt;
-  public double distEstPos;
 
   //////////////////////////////////  CONSTRUCTOR
+  public Estacion(){
 
-  public Estacion(String nombre, Integer numeroDeEstacion, double distEstAnt, double distEstPos) {
+  }
+
+
+  public Estacion(String nombre, Integer numeroDeEstacion) {
     this.nombre = nombre;
-    this.numeroDeEstacion = numeroDeEstacion;
-    this.distEstAnt = distEstAnt;
-    this.distEstPos = distEstPos;
   }
 
 
@@ -25,36 +27,42 @@ public class Estacion extends Espacio {
     return this.nombre;
   }
 
-  public Integer getNumeroDeEstacion() {
-    return this.numeroDeEstacion;
-  }
-
-  public double getDistEstAnt(){
-    return this.distEstAnt;
-  }
-
-  public double getDistEstPos() {
-    return this.distEstPos;
-  }
 
   //////////////////////////////////  SETTERS
 
   public void setNombre(String nombre) {
     this.nombre = nombre;
-  }
-
-  public void setNumeroDeEstacion(Integer numeroDeEstacion) {
-    this.numeroDeEstacion = numeroDeEstacion;
-  }
-
-  public void setDistEstAnt(Float distEstAnt) {
-    this.distEstAnt = distEstAnt;
-  }
-
-  public void setDistEstPos(Float distEstPos) {
-    this.distEstPos = distEstPos;
+    updateEstacion();
   }
 
   //////////////////////////////////  INTERFACE
+
+  public void updateEstacion(){
+    EntityManagerFactory emf =
+        Persistence.createEntityManagerFactory("ds");
+    System.out.println("----------------LUEGO DE Crear Entity Manager-------------------");
+    EntityManager em = emf.createEntityManager();
+    try {
+      em.getTransaction().begin();
+      System.out.println("----------------LUEGO DE BEGIN TRAN-------------------");
+      em.merge(this);
+      System.out.println("----------------LUEGO DE UPDATE TRAN-------------------");
+      em.getTransaction().commit();
+      System.out.println("----------------LUEGO DE COMMIT-------------------");
+    } catch (Exception e) {
+      e.getCause();
+      e.printStackTrace();
+    } finally {
+      em.close();
+      System.out.println("----------------LUEGO DE CLOSE CON-------------------");
+    }
+  }
+
+  public Estacion getEstacion(int direccionid) {
+    EntityManager em = EntityManagerHelper.getEntityManager();
+    Estacion estacion = em.find(Estacion.class, new Long(direccionid));
+    em.detach(estacion);
+    return estacion;
+  }
 
 }

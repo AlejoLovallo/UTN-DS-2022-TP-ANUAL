@@ -52,7 +52,7 @@ public class UsuariosTest {
     @Test
     public void usuarioCreadoCorrectamente() {
         Assertions.assertEquals(username,this.usuariosTest.getUsername());
-        Assertions.assertEquals(email, this.usuariosTest.getEmail());
+        Assertions.assertEquals(email, this.usuariosTest.getMail());
         Assertions.assertEquals(validado, this.usuariosTest.isValido());
     }
 
@@ -100,7 +100,7 @@ public class UsuariosTest {
         this.repositorioUsuariosTest.crearUsuario(username, email, contra, validado);
 
         Assertions.assertEquals(username,this.usuariosTest.getUsername());
-        Assertions.assertEquals(email, this.usuariosTest.getEmail());
+        Assertions.assertEquals(email, this.usuariosTest.getMail());
         //Assertions.assertEquals(contra, this.usuariosTest.getMedioTransporte());
         //Assertions.assertEquals(validado, this.usuariosTest.get());
     }
@@ -120,13 +120,13 @@ public class UsuariosTest {
     public void crearAdmin() {
         Admin adminTest = repositorioUsuariosTest.crearAdmin("admin", "admin@gmail.com","contrartghy6");
         Assertions.assertEquals("admin",adminTest.getUsername());
-        Assertions.assertEquals("admin@gmail.com", adminTest.getEmail());
+        Assertions.assertEquals("admin@gmail.com", adminTest.getMail());
     }
 
     @Test
     public void adminCreadoCorrectamente() {
         Assertions.assertEquals(username,this.admin.getUsername());
-        Assertions.assertEquals(email, this.admin.getEmail());
+        Assertions.assertEquals(email, this.admin.getMail());
         Assertions.assertEquals(validado, this.admin.isValido());
     }
 

@@ -2,7 +2,6 @@ package Administrador;
 
 import Domain.CalculadorHC.FactorEmision;
 import Domain.CalculadorHC.RepositorioFactores;
-import Domain.Espacios.Espacio;
 import Domain.Usuarios.Admin;
 import Domain.Usuarios.RepositorioUsuarios;
 import Domain.Usuarios.Usuario;
@@ -40,7 +39,7 @@ public class AdminTest {
     @Test
     public void adminCreadoCorrectamente() {
         Assertions.assertEquals(username,this.admin.getUsername());
-        Assertions.assertEquals(email, this.admin.getEmail());
+        Assertions.assertEquals(email, this.admin.getMail());
         Assertions.assertEquals(validado, this.admin.isValido());
     }
 

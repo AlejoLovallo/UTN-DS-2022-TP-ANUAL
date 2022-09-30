@@ -7,21 +7,45 @@ import Domain.Organizacion.Sector;
 import Domain.Trayecto.Trayecto;
 
 import java.io.IOException;
-import java.nio.DoubleBuffer;
 import java.util.ArrayList;
-import java.util.HashMap;
+import javax.persistence.*;
 
+@Entity
+@Table(name="miembro")
 public class Miembro {
+  @Id
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
+  private int id_miembro;
+
+  @Transient
   private String id;
+
+  @ManyToOne(cascade=CascadeType.MERGE)
+  @JoinColumn(name = "id_sector", referencedColumnName = "id_sector")
   private Sector sector;
+
+  @ManyToOne(cascade=CascadeType.MERGE)
+  @JoinColumn(name = "id_persona", referencedColumnName = "id_persona")
+  private Persona persona;
+
+  // FALTA DEFINIR LA PARTICION DE CLASE
   private ArrayList<Trayecto> trayectos;
 
+  @Transient
   private CalculadorHC calculadorHC = CalculadorHC.getInstance();
 
 
   //////////////////////////////////  CONSTRUCTOR
+  private Miembro(){
+
+  }
+
   public Miembro(String _id, Sector _sector){
     this.id = _id;
+    this.sector = _sector;
+  }
+
+  public Miembro(Sector _sector){
     this.sector = _sector;
   }
 

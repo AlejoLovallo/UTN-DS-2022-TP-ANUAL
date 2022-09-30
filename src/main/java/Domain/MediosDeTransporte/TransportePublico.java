@@ -1,18 +1,31 @@
 package Domain.MediosDeTransporte;
 
-import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
 
+import Domain.BaseDeDatos.EntityManagerHelper;
 import Domain.Espacios.Estacion;
+import javax.persistence.*;
 
+@Entity
+@Table(name="transportepublico")
 public class TransportePublico extends MedioDeTransporte {
 
+  @Enumerated(EnumType.STRING)
   private TipoTransportePublico tipoTransportePublico;
+  @Column
   private String linea;
-  public List<Estacion> paradas;
+
+  Map<Estacion, Double> paradas = new HashMap<>();
+  
 
   //////////////////////////////////  CONSTRUCTOR
 
-  public TransportePublico(TipoTransportePublico tipoTransportePublico, String linea, List<Estacion> paradas) {
+  private TransportePublico(){
+
+  }
+
+  public TransportePublico(TipoTransportePublico tipoTransportePublico, String linea, Map<Estacion, Double> paradas) {
     this.tipoTransportePublico = tipoTransportePublico;
     this.linea = linea;
     this.paradas = paradas;
@@ -28,7 +41,7 @@ public class TransportePublico extends MedioDeTransporte {
     return this.linea;
   }
 
-  public List<Estacion> getParadas() {
+  public Map<Estacion, Double> getParadas() {
     return this.paradas;
   }
 
@@ -37,19 +50,51 @@ public class TransportePublico extends MedioDeTransporte {
 
   public void setTipoTransportePublico(TipoTransportePublico tipoTransportePublico) {
     this.tipoTransportePublico = tipoTransportePublico;
+    updateTransportePublico();
   }
 
   public void setLinea(String linea) {
     this.linea = linea;
+    updateTransportePublico();
   }
 
-  public void setParadas(List<Estacion> paradas) {
+  public void setParadas(Map<Estacion, Double> paradas) {
     this.paradas = paradas;
+    updateTransportePublico();
   }
 
   //////////////////////////////////  INTERFACE
-  public void darDeAltaParada(Estacion estacion){
-    this.paradas.add(estacion.getNumeroDeEstacion(),estacion);
+  public void darDeAltaParada(Estacion estacion, Double distanciaProx){
+    this.paradas.put(estacion, distanciaProx);
+    updateTransportePublico();
+  }
+
+  public void updateTransportePublico(){
+    EntityManagerFactory emf =
+        Persistence.createEntityManagerFactory("ds");
+    System.out.println("----------------LUEGO DE Crear Entity Manager-------------------");
+    EntityManager em = emf.createEntityManager();
+    try {
+      em.getTransaction().begin();
+      System.out.println("----------------LUEGO DE BEGIN TRAN-------------------");
+      em.merge(this);
+      System.out.println("----------------LUEGO DE UPDATE TRAN-------------------");
+      em.getTransaction().commit();
+      System.out.println("----------------LUEGO DE COMMIT-------------------");
+    } catch (Exception e) {
+      e.getCause();
+      e.printStackTrace();
+    } finally {
+      em.close();
+      System.out.println("----------------LUEGO DE CLOSE CON-------------------");
+    }
+  }
+
+  public TransportePublico getTransportePublico(int transportePublicoid) {
+    EntityManager em = EntityManagerHelper.getEntityManager();
+    TransportePublico transportePublico = em.find(TransportePublico.class, new Long(transportePublicoid));
+    em.detach(transportePublico);
+    return transportePublico;
   }
 
 }

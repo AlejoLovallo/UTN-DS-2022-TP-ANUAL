@@ -3,16 +3,38 @@ package Domain.Miembro;
 import Domain.Usuarios.Usuario;
 
 import java.util.ArrayList;
+import java.util.List;
+import javax.persistence.*;
 
+@Entity
+@Table(name="persona")
 public class Persona {
+  @Id
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
+  private int id_persona;
+  @Column
   private String nombre;
+  @Column
   private String apellido;
+
+  @Enumerated(EnumType.STRING)
   private TipoDocumento tipoDocumento;
+
+  @Column(name="nroDocumento")
   private String documento;
-  private ArrayList<Miembro> listaMiembros;
+
+  @OneToMany(mappedBy = "persona")
+ // @JoinColumn(name="id_miembro",referencedColumnName = "id_miembro")
+  private List<Miembro> listaMiembros;
+  @OneToOne
+  @JoinColumn(name="id_usuario",referencedColumnName = "id_usuario")
   private Usuario usuario;
 
   //////////////////////////////////  CONSTRUCTOR
+  private Persona(){
+
+  }
+
   public Persona(String _nombre, String _apellido, TipoDocumento _tipoDocumento, String _documento){
     this.setNombre(_nombre);
     this.setApellido(_apellido);
@@ -43,7 +65,7 @@ public class Persona {
     return usuario;
   }
 
-  public ArrayList<Miembro> getMiembros(){
+  public List<Miembro> getMiembros(){
     return listaMiembros;
   }
 

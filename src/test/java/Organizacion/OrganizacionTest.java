@@ -6,10 +6,10 @@ import Domain.Espacios.Espacio;
 import Domain.Espacios.TipoDireccion;
 import Domain.Miembro.Miembro;
 import Domain.Organizacion.*;
-import Domain.ServicioMedicion.FrecuenciaServicio;
+import Domain.Organizacion.FrecuenciaServicio;
 import Domain.ServicioMedicion.ServicioExcel;
-import Domain.ServicioMedicion.TipoDeActividad;
-import Domain.ServicioMedicion.TipoDeConsumo;
+import Domain.Organizacion.TipoDeActividad;
+import Domain.Organizacion.TipoDeConsumo;
 import Domain.Usuarios.Contacto;
 import Utils.Common;
 import org.junit.jupiter.api.AfterEach;
@@ -19,10 +19,8 @@ import org.junit.jupiter.api.Assertions;
 import Domain.CalculadorHC.CalculadorHC;
 
 import java.io.IOException;
-import java.sql.SQLOutput;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Arrays;
 

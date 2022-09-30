@@ -1,46 +1,79 @@
 package Domain.Organizacion;
 import Domain.CalculadorHC.CalculadorHC;
 import Domain.Miembro.Miembro;
-import Domain.ServicioMedicion.Actividad;
-import Domain.ServicioMedicion.ServicioHCExcel;
+import Domain.Reportes.GeneradorReportes;
+import Domain.Reportes.Reporte;
+import Domain.Reportes.TipoDeReporte;
 import Domain.ServicioMedicion.ServicioMediciones;
 import Domain.Usuarios.Contacto;
 
-import java.text.ParseException;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.io.IOException;
-import java.util.*;
+import java.util.List;
+import javax.persistence.*;
 
+import org.hibernate.jpa.event.internal.jpa.ListenerFactoryBeanManagerStandardImpl;
+
+//import org.apache.poi.ss.formula.PlainCellCache.Loc;
+
+@Entity
+@Table(name="organizacion")
 public class Organizacion {
+  @Id
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
+  private int id_organizacion;
+  @Column
   private String razonSocial;
+  @Enumerated(EnumType.STRING)
   private TipoOrganizacion tipo;
+  @Enumerated(EnumType.STRING)
   private ClasificacionOrganizacion clasificacion;
-  private ArrayList<Sector> sectores = new ArrayList<>();
-  private Contacto contacto;
+
+  @ManyToOne
+  @JoinColumn(name="id_agente",referencedColumnName = "id_agente")
   private AgenteSectorial agenteSectorial;
-  private ServicioMediciones servicioMediciones;
+
+  @OneToMany(mappedBy = "organizacion")
+  private List<Sector> sectores = new ArrayList<>();
+
+  /// DEFINIR ESTO!!!
+  @OneToOne
+  @JoinColumn(name="id_contacto",referencedColumnName = "id_contacto")
+  private Contacto contacto;
+
+  @Transient
   private String archivoMediciones;
-  private ArrayList<ServicioHCExcel> reportes = new ArrayList<>();
 
-  private ArrayList<Actividad> actividades = new ArrayList<>();
+  @Transient /// PERO A CHEQUEAR
+  private ArrayList<Actividad> actividades;
+  private ArrayList<Reporte> reportes;
 
+  private LocalDate fechaIngreso;
+  private String paisOrigen;
+
+  @Transient
+  private ServicioMediciones servicioMediciones;
+  @Transient
   private CalculadorHC calculadorHC = CalculadorHC.getInstance();
+  @Transient
   private Integer numDiasPorSemana;
+
+  private GeneradorReportes generadorReportes = GeneradorReportes.getInstance();
 
 
   //////////////////////////////////  CONSTRUCTORES
+  public Organizacion(){
+
+  }
+
   public Organizacion(String _razonSocial, TipoOrganizacion _tipo, ClasificacionOrganizacion _clasificacion, Contacto contacto, Integer numDiasPorSemana){
     this.razonSocial = _razonSocial;
     this.tipo = _tipo;
     this.clasificacion = _clasificacion;
     this.contacto = contacto;
     this.numDiasPorSemana = numDiasPorSemana;
-  }
-
-  public Organizacion(String _razonSocial, TipoOrganizacion _tipo, ClasificacionOrganizacion _clasificacion){
-    this.razonSocial = _razonSocial;
-    this.tipo = _tipo;
-    this.clasificacion = _clasificacion;
+    this.fechaIngreso = LocalDate.now();
   }
 
   //////////////////////////////////  GETTERS
@@ -56,7 +89,7 @@ public class Organizacion {
     return razonSocial;
   }
 
-  public ArrayList<Sector> getSectores(){
+  public List<Sector> getSectores(){
     return this.sectores;
   }
 
@@ -71,14 +104,20 @@ public class Organizacion {
 
   public String getArchivoMediciones() { return archivoMediciones; }
 
-  public ArrayList<ServicioHCExcel> getReportes() { return reportes; }
-
   public Integer getNumDiasPorSemana() {
     return numDiasPorSemana;
   }
 
-  public ArrayList<Actividad> getActividades() {
+  public ArrayList <Actividad> getActividades() {
     return actividades;
+  }
+
+  public LocalDate getFechaIngreso() { return fechaIngreso; }
+
+  public String getPaisOrigen() { return paisOrigen; }
+
+  public ArrayList<Reporte> getReportes() {
+    return reportes;
   }
 
   //////////////////////////////////  SETTERS
@@ -118,8 +157,9 @@ public class Organizacion {
     this.numDiasPorSemana = numDiasPorSemana;
   }
 
-  //////////////////////////////////  INTERFACE
+  public void setFechaIngreso(LocalDate fechaIngreso) { this.fechaIngreso = fechaIngreso; }
 
+  //////////////////////////////////  INTERFACE
 
   public void registrarSector(Sector sector){
     this.sectores.add(sector);
@@ -132,25 +172,26 @@ public class Organizacion {
     return true;
   }
 
-  public ArrayList<Actividad> cargarMedicionesInternas(String fileName) throws IOException, ParseException {
-    return servicioMediciones.cargarMediciones(fileName);
+  public void cargarMedicionesInternas(String fileName) throws IOException {
+    ArrayList <Actividad> act = servicioMediciones.cargarMediciones(fileName, this);
+    for (Actividad actividad : act){
+      this.actividades.add(actividad);
+    }
   }
 
-  // TODO Revisar resultado por unidades y ver el calculo completo
-  public Double calcularHC() throws IOException {
-    return calculadorHC.calcularHC(this);
+  public Double calcularHC(Integer mes, Integer anio) throws IOException {
+    return calculadorHC.calcularHC(this, mes, anio);
   }
 
-  public Double calcularHCAA() throws IOException {
-    return calculadorHC.calcularHCAA(this);
+  public Reporte conseguirReporte(TipoDeReporte tipoDeReporte, LocalDate fechaDesde, LocalDate fechaHasta) throws IOException{
+    switch(tipoDeReporte){
+      case COMPOSICION:
+        return generadorReportes.reporteCompHC_Org(this, fechaDesde, fechaHasta);
+      case EVOLUCION:
+        return generadorReportes.reporteEvolucionHC_Org(this, fechaDesde, fechaHasta);
+    }
+    return null;
   }
 
-  public Double calcularHCMesAnio(int mes, int anio) throws IOException {
-    return calculadorHC.calcularHCMesAnio(this, mes, anio);
-  }
-
-  public void darDeBajaActividad(Actividad actividad) {
-    actividad.darDeBaja();
-  }
 
 }

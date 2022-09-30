@@ -9,7 +9,7 @@ import Domain.MediosDeTransporte.VehiculoParticular;
 import Domain.Miembro.Miembro;
 import Domain.Organizacion.*;
 import Domain.ServicioMedicion.ServicioExcel;
-import Domain.ServicioMedicion.TipoDeActividad;
+import Domain.Organizacion.TipoDeActividad;
 import Domain.Usuarios.Contacto;
 import Domain.Trayecto.*;
 import Utils.Common;
@@ -21,7 +21,6 @@ import org.junit.jupiter.api.Test;
 import java.io.IOException;
 import java.text.ParseException;
 import java.time.LocalDate;
-import java.time.Year;
 import java.util.ArrayList;
 
 public class CalculadorHCTest {

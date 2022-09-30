@@ -13,14 +13,13 @@ import Domain.Organizacion.ClasificacionOrganizacion;
 import Domain.Organizacion.Organizacion;
 import Domain.Organizacion.Sector;
 import Domain.Organizacion.TipoOrganizacion;
-import Domain.ServicioMedicion.TipoDeActividad;
+import Domain.Organizacion.TipoDeActividad;
 import Domain.Trayecto.Tramo;
 import Domain.Trayecto.Trayecto;
 import Domain.Usuarios.RepositorioUsuarios;
 import Domain.Usuarios.Usuario;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class Common {
   public static Organizacion getOrganizacionMinisterio() {

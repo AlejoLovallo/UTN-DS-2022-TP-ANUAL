@@ -41,7 +41,20 @@ _Traerse cambios de develop:_
 ```
 ```
 
+******
 
+Problemas de llevar el der a la practiva
+
+clase direccion: El Der tiene campos de menos
+
+clase Espacio: La tenemos codeada como abstracta , creo que en hibernate no se va a instanciar nunca.
+
+clase FactorEmision: id_usuario_update ???
+
+clase Organizacion: El archivo de mediciones y el num dias por semana no lo estamos guardando, es necesario??
+
+La organizacion tiene un Contacto y en el DER no esta eso. 
+Falta tambien actividades
 
 
 
