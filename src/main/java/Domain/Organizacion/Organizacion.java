@@ -49,7 +49,6 @@ public class Organizacion {
   private ArrayList<Actividad> actividades;
   private ArrayList<Reporte> reportes;
 
-  private LocalDate fechaIngreso;
   private String paisOrigen;
 
   @Transient
@@ -73,7 +72,6 @@ public class Organizacion {
     this.clasificacion = _clasificacion;
     this.contacto = contacto;
     this.numDiasPorSemana = numDiasPorSemana;
-    this.fechaIngreso = LocalDate.now();
   }
 
   //////////////////////////////////  GETTERS
@@ -111,8 +109,6 @@ public class Organizacion {
   public ArrayList <Actividad> getActividades() {
     return actividades;
   }
-
-  public LocalDate getFechaIngreso() { return fechaIngreso; }
 
   public String getPaisOrigen() { return paisOrigen; }
 
@@ -156,8 +152,6 @@ public class Organizacion {
   public void setNumDiasPorSemana(Integer numDiasPorSemana) {
     this.numDiasPorSemana = numDiasPorSemana;
   }
-
-  public void setFechaIngreso(LocalDate fechaIngreso) { this.fechaIngreso = fechaIngreso; }
 
   //////////////////////////////////  INTERFACE
 
