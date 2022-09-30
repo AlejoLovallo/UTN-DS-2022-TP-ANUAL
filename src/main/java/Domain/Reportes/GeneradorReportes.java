@@ -227,28 +227,37 @@ public class GeneradorReportes {
             return rep.get();
         }else{
 
-            ArrayList<Consumo> listaConsumos = new ArrayList<>();
-            for(Organizacion organizacion : agenteSectorial.getOrganizaciones()){
-                ReporteEvolucion aux = (ReporteEvolucion) this.reporteEvolucionHC_Org(organizacion, fechaDesde, fechaHasta);
-                for(Consumo consumo : aux.getConsumos()){
-                    if(listaConsumos.stream().filter(unConsumo ->
-                            unConsumo.getAnio() == consumo.getAnio() && unConsumo.getMes() == consumo.getMes()
-                    ).count() == 0){
-                        listaConsumos.add(consumo);
-                    }
-                    else{
-                        Optional<Consumo> opConsumo = listaConsumos.stream().filter(unConsumo ->
-                                unConsumo.getAnio() == consumo.getAnio() && unConsumo.getMes() == consumo.getMes()
-                        ).findAny();
+            Integer mesDesde = fechaDesde.getMonthValue();
+            Integer anioDesde = fechaDesde.getYear();
+            Integer mesHasta = fechaHasta.getMonthValue();
+            Integer anioHasta = fechaHasta.getYear();
 
-                        opConsumo.get().setConsumo(opConsumo.get().getConsumo() + consumo.getConsumo());
-                    }
+            ArrayList<Consumo> evolucionHC = new ArrayList<>();
+            if(anioDesde == anioHasta){
+                for (int mes = mesDesde; mes <= mesHasta; mes++){
+                    Consumo consumo = new Consumo(mes, anioDesde, calculadorHC.calcularHC(agenteSectorial, mes, anioDesde));
+                    evolucionHC.add(consumo);
                 }
             }
-            ReporteEvolucion reporte = new ReporteEvolucion(agenteSectorial.getNombre(), TipoDeReporte.EVOLUCION, fechaDesde, fechaHasta, listaConsumos);
+            else{
+                for (int mes = mesDesde; mes <= 12; mes++){
+                    Consumo consumo = new Consumo(mes, anioDesde, calculadorHC.calcularHC(agenteSectorial, mes, anioDesde));
+                    evolucionHC.add(consumo);
+                }
+                for (int anio = anioDesde + 1; anio < anioHasta; anio++)
+                    for (int mes = 1; mes <= 12; mes++){
+                        Consumo consumo = new Consumo(mes, anio, calculadorHC.calcularHC(agenteSectorial, mes, anio));
+                        evolucionHC.add(consumo);
+                    }
+                for (int mes = 1; mes <= mesHasta; mes++){
+                    Consumo consumo = new Consumo(mes, anioHasta, calculadorHC.calcularHC(agenteSectorial, mes, anioHasta));
+                    evolucionHC.add(consumo);
+                }
+            }
+            ReporteEvolucion reporte = new ReporteEvolucion(agenteSectorial.getNombre(), TipoDeReporte.EVOLUCION, fechaDesde, fechaHasta, evolucionHC);
             repositorioReportes.getReportes().add(reporte);
             return reporte;
         }
-        
     }
+
 }
