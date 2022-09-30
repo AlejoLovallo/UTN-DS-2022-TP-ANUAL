@@ -10,7 +10,7 @@ public class EliminarUsuariosTestDB {
   public static void main(String[] args) {
     RepositorioUsuariosDB repositorioUsuariosDB = new RepositorioUsuariosDB();
 
-    Usuario usuario = repositorioUsuariosDB.buscar(5);
+    Usuario usuario = repositorioUsuariosDB.buscar(27);
 
     repositorioUsuariosDB.eliminar(usuario);
 

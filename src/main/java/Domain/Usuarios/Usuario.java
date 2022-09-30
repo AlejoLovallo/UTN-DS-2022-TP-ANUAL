@@ -1,5 +1,8 @@
 package Domain.Usuarios;
 import Domain.Usuarios.Excepciones.ContraseniaEsInvalidaException;
+import org.hibernate.annotations.NotFound;
+import org.hibernate.annotations.NotFoundAction;
+
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
@@ -31,9 +34,11 @@ public class Usuario{
   //private Boolean isAdmin;
 
 
-  @Transient
-  //@OneToOne(mappedBy = "usuario")
-  private UltimoIntento ultimoAcceso;
+  //@Transient
+  @OneToOne(cascade = CascadeType.ALL)//(mappedBy = "usuario")
+  @NotFound(action = NotFoundAction.IGNORE)
+  @JoinColumn(name = "id_ultimointento" , referencedColumnName = "id_ultimointento")
+  private UltimoIntento ultimointento;
 
   @Transient
   private ArrayList<CriterioValidacion> validadoresContrasenia;
@@ -61,7 +66,7 @@ public class Usuario{
     catch (AddressException ex) {
       throw new RuntimeException("Debe ingresar una direccion de email valida");
     }
-    this.ultimoAcceso = new UltimoIntento();
+    this.ultimointento = new UltimoIntento();
     //this.isAdmin = false;
     this.mail = mail;
     //this.contacto = contacto;
@@ -132,7 +137,7 @@ public class Usuario{
   }
 
   public boolean intentoAcceso(){
-    return this.ultimoAcceso.validar_acceso();
+    return this.ultimointento.validar_acceso();
   }
 
   private boolean isContraseniaValida(String contra){

@@ -6,17 +6,17 @@ import javax.persistence.*;
 import java.time.Duration;
 import java.time.LocalDateTime;
 
-//@Entity
-//@Table(name = "ultimoIntento")
+@Entity
+@Table(name = "ultimoIntento")
 public class UltimoIntento {
   //////////////////////////////////  VARIABLES
-  //@Id
-  //@GeneratedValue(strategy = GenerationType.IDENTITY)
-  private int id_ultimoIntento;
+  @Id
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
+  private int id_ultimointento;
 
-  //@Column
+  @Column
   private LocalDateTime ultimoAcceso;
-  //@Column
+  @Column
   private int intento;
 
 
