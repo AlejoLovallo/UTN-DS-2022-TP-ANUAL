@@ -2,6 +2,9 @@ package Domain.Usuarios;
 import Domain.BaseDeDatos.EntityManagerHelper;
 import Domain.Organizacion.Organizacion;
 import org.apache.commons.lang3.Validate;
+import org.hibernate.annotations.NotFound;
+import org.hibernate.annotations.NotFoundAction;
+
 import javax.mail.internet.AddressException;
 import javax.mail.internet.InternetAddress;
 import javax.persistence.*;
@@ -19,13 +22,15 @@ public class Contacto {
     private String apellido;
     @Column
     private Integer telefono;
-    @Column
+    @Column(name = "mail")
     private String email;
 
-    @OneToOne
+    /*
+    @OneToOne(cascade = CascadeType.ALL)
+    //@NotFound(action = NotFoundAction.IGNORE)
     @JoinColumn(name="id_organizacion",referencedColumnName = "id_organizacion")
     private Organizacion organizacion;
-
+*/
 
 
     //////////////////////////////////  CONSTRUCTORES
@@ -78,31 +83,31 @@ public class Contacto {
 
     public void setNombre(String nombre) {
         this.nombre = nombre;
-        update();
+        //update();
     }
 
     public void setApellido(String apellido) {
         this.apellido = apellido;
-        update();
+        //update();
     }
 
     public void setTelefono(Integer telefono) {
         this.telefono = telefono;
-        update();
+        //update();
     }
 
     public void setEmail(String email) {
         this.email = email;
-        update();
+        //update();
     }
-
+/*
     public void setOrganizacion(Organizacion organizacion) {
         this.organizacion = organizacion;
-        update();
-    }
+        //update();
+    }*/
 
     //////////////////////////////////  INTERFACE
-
+/*
     public void update(){
         EntityManagerHelper.tranUpdate(this);
     }
@@ -119,5 +124,5 @@ public class Contacto {
 
     public void insert(){
         EntityManagerHelper.tranPersist(this);
-    }
+    }*/
 }

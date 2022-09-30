@@ -45,20 +45,21 @@ public class UltimoIntento {
     //this.ultimoAcceso = LocalDateTime.now();
     setUltimoAcceso(LocalDateTime.now());
     this.intento++;
-    setIntento(this.intento);
+    //setIntento(this.intento);
     return false;
   }
 
   private void setUltimoAcceso(LocalDateTime ultimoAcceso) {
     this.ultimoAcceso = ultimoAcceso;
-    update();
+    //update();
   }
 
   private void setIntento(int intento) {
     this.intento = intento;
-    update();
+    //update();
   }
 
+  /*
   public void update(){
     EntityManagerHelper.tranUpdate(this);
   }
@@ -75,5 +76,5 @@ public class UltimoIntento {
 
   public void insert(){
     EntityManagerHelper.tranPersist(this);
-  }
+  }*/
 }

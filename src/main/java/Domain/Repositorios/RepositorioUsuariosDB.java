@@ -1,6 +1,7 @@
 package Domain.Repositorios;
 
 import Domain.Usuarios.Usuario;
+import org.apache.poi.ss.formula.functions.T;
 
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
@@ -9,9 +10,11 @@ import javax.persistence.criteria.Root;
 
 public class RepositorioUsuariosDB extends Repositorio<Usuario> {
 
-  public RepositorioUsuariosDB(DBService<Usuario> usuarioService) {
-    super(usuarioService);
+  public RepositorioUsuariosDB() {
+    super(new DBHibernate<Usuario>(Usuario.class));
   }
+
+
 
   public Boolean existe(String nombreDeUsuario, String contrasenia){
     return buscarUsuario(nombreDeUsuario, contrasenia) != null;

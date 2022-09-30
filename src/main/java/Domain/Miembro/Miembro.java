@@ -8,6 +8,7 @@ import Domain.Trayecto.Trayecto;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 import javax.persistence.*;
 
 @Entity
@@ -18,18 +19,19 @@ public class Miembro {
   private int id_miembro;
 
   @Transient
-  private String id;
+  private String nombre;
 
-  @ManyToOne(cascade=CascadeType.MERGE)
+  @ManyToOne(cascade=CascadeType.ALL)
   @JoinColumn(name = "id_sector", referencedColumnName = "id_sector")
   private Sector sector;
 
-  @ManyToOne(cascade=CascadeType.MERGE)
+  @ManyToOne(cascade=CascadeType.ALL)
   @JoinColumn(name = "id_persona", referencedColumnName = "id_persona")
   private Persona persona;
 
   // FALTA DEFINIR LA PARTICION DE CLASE
-  private ArrayList<Trayecto> trayectos;
+  @OneToMany(cascade=CascadeType.ALL , mappedBy = "miembro")
+  private List<Trayecto> trayectos;
 
   @Transient
   private CalculadorHC calculadorHC = CalculadorHC.getInstance();
@@ -40,8 +42,8 @@ public class Miembro {
 
   }
 
-  public Miembro(String _id, Sector _sector){
-    this.id = _id;
+  public Miembro(String nombre, Sector _sector){
+    this.nombre = nombre;
     this.sector = _sector;
   }
 
@@ -51,15 +53,24 @@ public class Miembro {
 
   //////////////////////////////////  GETTERS
 
-  public ArrayList<Trayecto> getTrayectos() {
+  public List<Trayecto> getTrayectos() {
     return trayectos;
   }
 
   public Sector getSector() { return sector; }
   //////////////////////////////////  SETTERS
+
+
+  public void setPersona(Persona persona) {
+    this.persona = persona;
+  }
+
+
   public void setTrayectos(ArrayList<Trayecto> trayectos) {
     this.trayectos = trayectos;
   }
+
+
 
   //////////////////////////////////  INTERFACE
 

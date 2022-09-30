@@ -2,6 +2,11 @@ package Domain.Usuarios;
 import Domain.CalculadorHC.FactorEmision;
 import Domain.CalculadorHC.RepositorioFactores;
 
+import javax.persistence.Entity;
+import javax.persistence.PrimaryKeyJoinColumn;
+import javax.persistence.Table;
+import javax.persistence.Transient;
+
 /*
 +cambiarValoresdeFE()
 -configurarParametrosGenerales()
@@ -12,15 +17,29 @@ import Domain.CalculadorHC.RepositorioFactores;
 +validarUsuario(Usuario,boolean)
  */
 
+/*
+@Entity
+@Table(name="usuario")*/
+@Entity
+@PrimaryKeyJoinColumn(name="id_usuario")
 public class Admin extends Usuario {
   //////////////////////////////////  VARIABLES
+  @Transient
   private RepositorioFactores repoFactoresDeEmision = RepositorioFactores.getInstance();
 
   //////////////////////////////////  CONSTRUCTORES
   public Admin(String username, String email, String contra, boolean validado) {
     super(username, email, contra, validado);
-    super.setIsAdmin(true);
+    //super.setIsAdmin(true);
   }
+
+  public Admin(){
+    super();
+  }
+
+
+
+
 
 
   //////////////////////////////////  GETTERS

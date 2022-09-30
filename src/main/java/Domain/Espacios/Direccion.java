@@ -1,13 +1,18 @@
 package Domain.Espacios;
 
-import Domain.BaseDeDatos.EntityManagerHelper;
-import org.apache.poi.ss.formula.functions.T;
 import javax.persistence.*;
 
 
 @Entity
 @Table(name="direccion")
+@PrimaryKeyJoinColumn(name="id_espacio")
 public class Direccion extends Espacio {
+
+  //@Id
+  //@GeneratedValue(strategy = GenerationType.IDENTITY) //ANTERIOR
+  //@GeneratedValue(strategy = GenerationType.TABLE) //POR HERENCIA
+  //private int id_direccion;
+
   @Column
   private String pais;
   @Column
@@ -20,16 +25,16 @@ public class Direccion extends Espacio {
   /**
    * TODO: Las marco como trasient pero fijarse cuales quedan y cuales no.
    */
-  @Transient
+  @Column
   private String provincia;
-  @Transient
+  @Column
   private String municipio;
-  @Transient
+  @Column
   private String localidad;
 
   //////////////////////////////////  CONSTRUCTOR
 
-  public Direccion(){
+  private Direccion(){
 
   }
 
@@ -67,35 +72,35 @@ public class Direccion extends Espacio {
   //////////////////////////////////  SETTERS
   public void setPais(String pais) {
     this.pais = pais;
-    updateDireccion();
+    //updateDireccion();
   }
   public void setProvincia(String provincia) {
     this.provincia = provincia;
-    updateDireccion();
+    //updateDireccion();
   }
   public void setMunicipio(String municipio) {
     this.municipio = municipio;
-    updateDireccion();
+    //updateDireccion();
   }
   public void setLocalidad(String localidad) {
     this.localidad = localidad;
-    updateDireccion();
+    //updateDireccion();
   }
   public void setCalle(String _calle){
     this.calle = _calle;
-    updateDireccion();
+    //updateDireccion();
   }
   public void setAltura(Integer _altura){
     this.altura = _altura;
-    updateDireccion();
+    //updateDireccion();
   }
   public void setTipoEspacio(TipoDireccion _tipoEspacio){
     this.tipoDireccion = _tipoEspacio;
-    updateDireccion();
+    //updateDireccion();
   }
 
   //////////////////////////////////  INTERFACE
-
+/*
   public void updateDireccion(){
     EntityManagerFactory emf =
         Persistence.createEntityManagerFactory("ds");
@@ -122,6 +127,6 @@ public class Direccion extends Espacio {
     Direccion direccion = em.find(Direccion.class, new Long(direccionID));
     em.detach(direccion);
     return direccion;
-  }
+  }*/
 
 }

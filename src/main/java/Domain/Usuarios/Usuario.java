@@ -1,5 +1,4 @@
 package Domain.Usuarios;
-import Domain.BaseDeDatos.EntityManagerHelper;
 import Domain.Usuarios.Excepciones.ContraseniaEsInvalidaException;
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
@@ -11,11 +10,12 @@ import javax.mail.internet.InternetAddress;
 import javax.persistence.*;
 
 @Entity
-@Table(name="usuario")
+@Table(name = "usuario"/*, catalog = "curso"*/)
 public class Usuario{
   //////////////////////////////////  VARIABLES
   @Id
-  @GeneratedValue(strategy = GenerationType.IDENTITY)
+  //@GeneratedValue(strategy = GenerationType.IDENTITY)
+  @GeneratedValue(strategy = GenerationType.AUTO)
   private int id_usuario;
   @Column
   private String mail;
@@ -26,9 +26,9 @@ public class Usuario{
   @Column
   private Boolean validado;
 
-  @Transient
+  //@Transient
   //@Column
-  private Boolean isAdmin;
+  //private Boolean isAdmin;
 
 
   @Transient
@@ -43,7 +43,7 @@ public class Usuario{
 
   //////////////////////////////////  CONSTRUCTORES
 
-  private Usuario(){
+  public Usuario(){
 
   }
 
@@ -62,7 +62,7 @@ public class Usuario{
       throw new RuntimeException("Debe ingresar una direccion de email valida");
     }
     this.ultimoAcceso = new UltimoIntento();
-    this.isAdmin = false;
+    //this.isAdmin = false;
     this.mail = mail;
     //this.contacto = contacto;
   }
@@ -76,15 +76,15 @@ public class Usuario{
   public String getUsername() {
     return this.username;
   }
-
+/*
   public Boolean getIsAdmin() {
     return isAdmin;
   }
 
   public void setIsAdmin(Boolean admin) {
     isAdmin = admin;
-    update();
-  }
+    //update();
+  }*/
 
   public String getMail() {
     return this.mail;
@@ -92,18 +92,18 @@ public class Usuario{
 
   public void setUsername(String username) {
     this.username = username;
-    update();
+    //update();
   }
 
   public void setContraHasheada(String contraHasheada) {
     this.contraHasheada = contraHasheada;
-    update();
+    //update();
   }
 
   //////////////////////////////////  SETTERS
   public void setValidado(Boolean validado) {
     this.validado = validado;
-    update();
+    //update();
   }
 
   public void setMail(String mail){
@@ -111,7 +111,7 @@ public class Usuario{
       InternetAddress emailAddr = new InternetAddress(mail);
       emailAddr.validate();
       this.mail = mail;
-      update();
+      //update();
     }
     catch (AddressException ex) {
       throw new RuntimeException("Debe ingresar una direccion de email valida");
@@ -169,7 +169,7 @@ public class Usuario{
     return sb.toString();
   }
 
-
+/*
   public void update(){
     EntityManagerHelper.tranUpdate(this);
   }
@@ -186,5 +186,5 @@ public class Usuario{
 
   public void insert(){
     EntityManagerHelper.tranPersist(this);
-  }
+  }*/
 }

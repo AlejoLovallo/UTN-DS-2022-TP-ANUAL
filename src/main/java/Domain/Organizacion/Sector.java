@@ -17,21 +17,21 @@ public class Sector {
   private int id_sector;
   @Column
   private String nombre;
-  @ManyToOne
+  @ManyToOne(cascade = CascadeType.ALL)
   @JoinColumn(name = "id_espacio",referencedColumnName = "id_espacio")
   private Espacio espacioDeTrabajo;
-  @ManyToOne
+  @ManyToOne(cascade = CascadeType.ALL)
   @JoinColumn(name = "id_organizacion", referencedColumnName = "id_organizacion")
   private Organizacion organizacion;
 
-  @OneToMany(mappedBy = "sector")
+  @OneToMany(mappedBy = "sector" , cascade = CascadeType.ALL)
   private List<Miembro> miembros = new ArrayList<>();
 
   @Transient
   private CalculadorHC calculadorHC;
 
  // CONSTRUCTOR
-  public Sector(){
+  private Sector(){
 
   }
 
@@ -39,7 +39,25 @@ public class Sector {
     this.nombre = nombre;
     this.espacioDeTrabajo = espacioDeTrabajo;
     this.organizacion = organizacion;
-    this.miembros = miembros;
+    if(miembros == null)
+      this.miembros = new ArrayList<>();
+    else
+      this.miembros = miembros;
+  }
+
+  public Sector(String nombre, Espacio espacioDeTrabajo, Organizacion organizacion, Miembro miembro) {
+    this.nombre = nombre;
+    this.espacioDeTrabajo = espacioDeTrabajo;
+    this.organizacion = organizacion;
+    this.miembros = new ArrayList<>();
+    this.miembros.add(miembro);
+  }
+
+  public Sector(String nombre, Espacio espacioDeTrabajo, Organizacion organizacion) {
+    this.nombre = nombre;
+    this.espacioDeTrabajo = espacioDeTrabajo;
+    this.organizacion = organizacion;
+    this.miembros = new ArrayList<>();
   }
 
   // GETTERS

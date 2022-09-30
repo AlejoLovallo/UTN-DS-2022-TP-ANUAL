@@ -2,6 +2,8 @@ package Domain.Miembro;
 
 import Domain.BaseDeDatos.EntityManagerHelper;
 import Domain.Usuarios.Usuario;
+import org.hibernate.annotations.NotFound;
+import org.hibernate.annotations.NotFoundAction;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,10 +26,12 @@ public class Persona {
   @Column(name="nroDocumento")
   private String documento;
 
-  @OneToMany(mappedBy = "persona")
+  @OneToMany(mappedBy = "persona" , cascade = CascadeType.ALL)
+  @NotFound(action = NotFoundAction.IGNORE)
  // @JoinColumn(name="id_miembro",referencedColumnName = "id_miembro")
   private List<Miembro> listaMiembros;
-  @OneToOne
+  @OneToOne(cascade = CascadeType.ALL)
+  @NotFound(action = NotFoundAction.IGNORE)
   @JoinColumn(name="id_usuario",referencedColumnName = "id_usuario")
   private Usuario usuario;
 

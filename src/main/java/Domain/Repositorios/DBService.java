@@ -13,4 +13,5 @@ public interface DBService<T> {
   void agregar(Object unObjeto);
   void modificar(Object unObjeto);
   void eliminar(Object unObjeto);
+  Class<T> getType();
 }

@@ -15,7 +15,12 @@ public class DBHibernate<T> implements DBService<T> {
     this.type = type;
   }
 
+  public Class<T> getType() {
+    return type;
+  }
+
   public List<T> buscarTodos() {
+    System.out.println("-------------------------------- ENTRE A LA CONSULTA de todos los datos de la tabla "+ type + " ----------------------------------------------------");
     CriteriaBuilder builder = EntityManagerHelper.getEntityManager().getCriteriaBuilder();
     CriteriaQuery<T> critera = builder.createQuery(this.type);
     critera.from(type);
@@ -24,6 +29,7 @@ public class DBHibernate<T> implements DBService<T> {
   }
 
   public T buscar(int id) {
+    System.out.println("---------------------------------------------- ENTRE A LA CONSULTA de la tabla "+ type + " --------------------------------------------------------");
     return EntityManagerHelper.getEntityManager().find(type, id);
   }
 
@@ -49,20 +55,30 @@ public class DBHibernate<T> implements DBService<T> {
   }
 
   public void agregar(Object unObjeto) {
+
+    System.out.println("---------------------------------------------- ENTRE A LA INSERCION de la tabla " + type + " ----------------------------------------------------");
+
+    //EntityManagerHelper entityManagerHelper = EntityManagerHelper.getEntityManager();
     EntityManagerHelper.getEntityManager().getTransaction().begin();
     EntityManagerHelper.getEntityManager().persist(unObjeto);
     EntityManagerHelper.getEntityManager().getTransaction().commit();
+    EntityManagerHelper.closeEntityManager();
+
   }
 
   public void modificar(Object unObjeto) {
+    System.out.println("------------------------------------------------ENTRE A LA MODIFICACION de la tabla "+ type + " -------------------------------------------------");
     EntityManagerHelper.getEntityManager().getTransaction().begin();
     EntityManagerHelper.getEntityManager().merge(unObjeto);
     EntityManagerHelper.getEntityManager().getTransaction().commit();
+    EntityManagerHelper.closeEntityManager();
   }
 
   public void eliminar(Object unObjeto) {
+    System.out.println("------------------------------------------------ ENTRE A LA ELIMINACION de la tabla "+ type + " --------------------------------------------------");
     EntityManagerHelper.getEntityManager().getTransaction().begin();
     EntityManagerHelper.getEntityManager().remove(unObjeto);
     EntityManagerHelper.getEntityManager().getTransaction().commit();
+    EntityManagerHelper.closeEntityManager();
   }
 }

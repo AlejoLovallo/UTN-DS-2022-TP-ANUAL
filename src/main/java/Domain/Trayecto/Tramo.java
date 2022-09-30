@@ -78,17 +78,17 @@ public class Tramo {
 
   public void setPuntoPartida(Espacio puntoPartida) {
     this.puntoPartida = puntoPartida;
-    update();
+    //update();
   }
 
   public void setPuntoLLegada(Espacio puntoLLegada) {
     this.puntoLLegada = puntoLLegada;
-    update();
+    //update();
   }
 
   public void setMedio(MedioDeTransporte medio) {
     this.medio = medio;
-    update();
+    //update();
   }
 
 
@@ -100,6 +100,7 @@ public class Tramo {
 
 
   //// DB
+  /*
   public void update(){
     EntityManagerHelper.tranUpdate(this);
   }
@@ -116,5 +117,5 @@ public class Tramo {
 
   public void insert(){
     EntityManagerHelper.tranPersist(this);
-  }
+  }*/
 }

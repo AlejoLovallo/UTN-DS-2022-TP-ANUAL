@@ -5,7 +5,12 @@ import javax.persistence.*;
 
 @Entity
 @Table(name="estacion")
+@PrimaryKeyJoinColumn(name="id_espacio")
 public class Estacion extends Espacio {
+  //@Id
+  //@GeneratedValue(strategy = GenerationType.IDENTITY) //ANTERIOR
+  //@GeneratedValue(strategy = GenerationType.TABLE) //POR HERENCIA
+  //private int id_estacion	;
   @Column
   private String nombre;
   @Column
@@ -16,7 +21,7 @@ public class Estacion extends Espacio {
   public double distEstPos;
 
   //////////////////////////////////  CONSTRUCTOR
-  public Estacion(){
+  private Estacion(){
 
   }
 
@@ -51,26 +56,26 @@ public class Estacion extends Espacio {
 
   public void setNombre(String nombre) {
     this.nombre = nombre;
-    updateEstacion();
+    //updateEstacion();
   }
 
   public void setNumeroDeEstacion(Integer numeroDeEstacion) {
     this.numeroDeEstacion = numeroDeEstacion;
-    updateEstacion();
+    //updateEstacion();
   }
 
   public void setDistEstAnt(Float distEstAnt) {
     this.distEstAnt = distEstAnt;
-    updateEstacion();
+    //updateEstacion();
   }
 
   public void setDistEstPos(Float distEstPos) {
     this.distEstPos = distEstPos;
-    updateEstacion();
+    //updateEstacion();
   }
 
   //////////////////////////////////  INTERFACE
-
+/*
   public void updateEstacion(){
     EntityManagerFactory emf =
         Persistence.createEntityManagerFactory("ds");
@@ -97,6 +102,6 @@ public class Estacion extends Espacio {
     Estacion estacion = em.find(Estacion.class, new Long(direccionid));
     em.detach(estacion);
     return estacion;
-  }
+  }*/
 
 }

@@ -49,24 +49,26 @@ public class TransportePublico extends MedioDeTransporte {
 
   public void setTipoTransportePublico(TipoTransportePublico tipoTransportePublico) {
     this.tipoTransportePublico = tipoTransportePublico;
-    updateTransportePublico();
+    //updateTransportePublico();
   }
 
   public void setLinea(String linea) {
     this.linea = linea;
-    updateTransportePublico();
+    //updateTransportePublico();
   }
 
   public void setParadas(List<Estacion> paradas) {
     this.paradas = paradas;
-    updateTransportePublico();
+    //updateTransportePublico();
   }
 
   //////////////////////////////////  INTERFACE
   public void darDeAltaParada(Estacion estacion){
     this.paradas.add(estacion.getNumeroDeEstacion(),estacion);
-    updateTransportePublico();
+    //updateTransportePublico();
   }
+
+  /*
 
   public void updateTransportePublico(){
     EntityManagerFactory emf =
@@ -94,6 +96,6 @@ public class TransportePublico extends MedioDeTransporte {
     TransportePublico transportePublico = em.find(TransportePublico.class, new Long(transportePublicoid));
     em.detach(transportePublico);
     return transportePublico;
-  }
+  }*/
 
 }

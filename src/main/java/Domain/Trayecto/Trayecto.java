@@ -18,7 +18,7 @@ public class Trayecto {
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private int id_trayecto;
 
-  @OneToMany(mappedBy = "trayecto" , cascade = CascadeType.PERSIST)
+  @OneToMany(mappedBy = "trayecto" , cascade = CascadeType.ALL)
   private List<Tramo> tramos;
 
   @Column
@@ -73,19 +73,19 @@ public class Trayecto {
 
   public void setTramos(ArrayList<Tramo> tramos) {
     this.tramos = tramos;
-    update();
+    //update();
   }
 
   public Boolean setMiembro(Miembro _miembro){
     this.miembro = _miembro;
-    update();
+    //update();
     return true;
   }
 
   //////////////////////////////////  INTERFACE
   public Boolean addTramo(Tramo _tramo){
     this.tramos.add(_tramo);
-    update();
+    //update();
     return true;
   }
 
@@ -107,7 +107,7 @@ public class Trayecto {
 
   public void setFrecuenciaSemanal(Integer frecuenciaSemanal) {
     this.frecuenciaSemanal = frecuenciaSemanal;
-    update();
+    //update();
   }
 
   public LocalDate getFechaInicio() {
@@ -116,7 +116,7 @@ public class Trayecto {
 
   public void setFechaInicio(LocalDate fechaInicio) {
     this.fechaInicio = fechaInicio;
-    update();
+    //update();
   }
 
   public LocalDate getFechaFin() {
@@ -125,7 +125,7 @@ public class Trayecto {
 
   public void setFechaFin(LocalDate fechaFin) {
     this.fechaFin = fechaFin;
-    update();
+    //update();
   }
 
   public Integer diasDelMesActivo(Integer mes, Integer año) {
@@ -216,7 +216,7 @@ public class Trayecto {
     }
     return esBisiesto;
   }
-
+/*
   ////// DB
   public void update(){
     EntityManagerHelper.tranUpdate(this);
@@ -234,6 +234,6 @@ public class Trayecto {
 
   public void insert(){
     EntityManagerHelper.tranPersist(this);
-  }
+  }*/
 
 }

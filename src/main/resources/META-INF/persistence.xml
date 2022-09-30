@@ -8,6 +8,17 @@
         <provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
 
         <class>ds.tp</class>
+        <class>Domain.MediosDeTransporte.TransportePublico</class>
+        <class>Domain.MediosDeTransporte.VehiculoParticular</class>
+        <class>Domain.MediosDeTransporte.MedioDeTransporte</class>
+
+        <class>Domain.Espacios.Espacio</class>
+        <class>Domain.Espacios.Estacion</class>
+        <class>Domain.Espacios.Direccion</class>
+
+        <class>Domain.Usuarios.Admin</class>
+        <class>Domain.Usuarios.Usuario</class>
+
         <exclude-unlisted-classes>true</exclude-unlisted-classes>
 
         <properties>

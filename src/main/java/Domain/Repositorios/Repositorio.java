@@ -23,12 +23,13 @@ public class Repositorio<T> {
 
   public void modificar(Object unObjeto){
     if(!unObjeto.getClass().getSimpleName().equalsIgnoreCase("bitacora") ) {
-      System.out.println("ENTRE A LA MODIFICACION ");
+
       this.dbService.modificar(unObjeto);
     }
   }
 
   public void eliminar(Object unObjeto){
+
     this.dbService.eliminar(unObjeto);
   }
 
@@ -41,6 +42,7 @@ public class Repositorio<T> {
   }
 
   public T buscar(int id){
+
     return this.dbService.buscar(id);
   }
 

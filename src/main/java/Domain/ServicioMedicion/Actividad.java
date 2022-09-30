@@ -72,27 +72,27 @@ public class Actividad {
   //////////////////////////////////  SETTERS
   public void setConsumo(Double consumo) {
     this.consumo = consumo;
-    update();
+    //update();
   }
 
   public void setUnidadDeConsumo(UnidadDeConsumo unidadDeConsumo) {
     this.unidadDeConsumo = unidadDeConsumo;
-    update();
+    //update();
   }
 
   public void setEstaActivo(Boolean estaActivo) {
     this.estaActivo = estaActivo;
-    update();
+    //update();
   }
 
   public void setTipoDeConsumo(TipoDeConsumo tipoDeConsumo) {
     this.tipoDeConsumo = tipoDeConsumo;
-    update();
+    //update();
   }
 
   public void setTipoDeActividad(TipoDeActividad tipoDeActividad) {
     this.tipoDeActividad = tipoDeActividad;
-    update();
+    //update();
   }
 
 
@@ -167,7 +167,7 @@ public class Actividad {
 //    System.out.println(haceCuantoExisteLaActividad);
 //  }
 
-
+/*
   public void update(){
     EntityManagerHelper.tranUpdate(this);
   }
@@ -184,6 +184,6 @@ public class Actividad {
 
   public void insert(){
     EntityManagerHelper.tranPersist(this);
-  }
+  }*/
 
 }

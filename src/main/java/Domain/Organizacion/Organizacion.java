@@ -5,6 +5,8 @@ import Domain.ServicioMedicion.Actividad;
 import Domain.ServicioMedicion.ServicioHCExcel;
 import Domain.ServicioMedicion.ServicioMediciones;
 import Domain.Usuarios.Contacto;
+import org.hibernate.annotations.NotFound;
+import org.hibernate.annotations.NotFoundAction;
 
 import java.text.ParseException;
 import java.util.ArrayList;
@@ -16,6 +18,7 @@ import javax.persistence.*;
 @Table(name="organizacion")
 public class Organizacion {
   @Id
+  //TODO revisar
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private int id_organizacion;
   @Column
@@ -24,16 +27,20 @@ public class Organizacion {
   private TipoOrganizacion tipo;
   @Enumerated(EnumType.STRING)
   private ClasificacionOrganizacion clasificacion;
+  @Column(name = "numdiasxsemana")
+  private Integer numDiasPorSemana;
 
-  @ManyToOne
+  @ManyToOne(cascade = CascadeType.ALL)
+  @NotFound(action = NotFoundAction.IGNORE)
   @JoinColumn(name="id_agente",referencedColumnName = "id_agente")
   private AgenteSectorial agenteSectorial;
 
-  @OneToMany(mappedBy = "organizacion")
+  @OneToMany(mappedBy = "organizacion",cascade = CascadeType.ALL)
+  @NotFound(action = NotFoundAction.IGNORE)
   private List<Sector> sectores = new ArrayList<>();
 
-  /// DEFINIR ESTO!!!
-  @OneToOne
+  @OneToOne(cascade = CascadeType.ALL)
+  //@NotFound(action = NotFoundAction.IGNORE)
   @JoinColumn(name="id_contacto",referencedColumnName = "id_contacto")
   private Contacto contacto;
 
@@ -49,12 +56,11 @@ public class Organizacion {
   private ServicioMediciones servicioMediciones;
   @Transient
   private CalculadorHC calculadorHC = CalculadorHC.getInstance();
-  @Transient
-  private Integer numDiasPorSemana;
+
 
 
   //////////////////////////////////  CONSTRUCTORES
-  public Organizacion(){
+  private Organizacion(){
 
   }
 
@@ -64,6 +70,8 @@ public class Organizacion {
     this.clasificacion = _clasificacion;
     this.contacto = contacto;
     this.numDiasPorSemana = numDiasPorSemana;
+    /*if(contacto != null)
+      contacto.setOrganizacion(this);*/
   }
 
   public Organizacion(String _razonSocial, TipoOrganizacion _tipo, ClasificacionOrganizacion _clasificacion){
