@@ -117,32 +117,6 @@ public class CalculadorHC {
         return cantidadHC;
     }
 
-    public Double calcularHcTotal(Organizacion organizacion) throws IOException {
-        Double cantidadHC = 0.0;
-
-        Integer anioIngreso = organizacion.getFechaIngreso().getYear();
-        Integer mesIngreso = organizacion.getFechaIngreso().getMonthValue();
-
-        Integer anioActual = LocalDate.now().getYear();
-        Integer mesActual = LocalDate.now().getMonthValue();
-
-        if(anioActual == anioIngreso){
-            for (int mes = mesIngreso; mes <= mesActual; mes++)
-                cantidadHC += organizacion.calcularHC(mes, anioIngreso);
-        }
-        else{
-            for (int mes = mesIngreso; mes <= 12; mes++)
-                cantidadHC += organizacion.calcularHC(mes, anioIngreso);
-            for (int mes = 1; mes <= mesActual; mes++)
-                cantidadHC += organizacion.calcularHC(mes, anioActual);
-            for (int anio = anioIngreso + 1; anio < anioActual; anio++)
-                for (int mes = 1; mes <= 12; mes++)
-                    cantidadHC += organizacion.calcularHC(mes, anio);
-        }
-
-        return cantidadHC;
-    }
-
     // Calcular HC de un periodo 
 
     public Double calcularHcPeriodo(Organizacion organizacion, LocalDate fechaDesde, LocalDate fechaHasta) throws IOException {
