@@ -26,6 +26,7 @@ public class ServicioManualTest {
     @AfterEach
     public void clean(){}
 
+    /*
     @Test
     public void calcularDist(){
         List<Estacion> paradas = new ArrayList<>();
@@ -41,6 +42,6 @@ public class ServicioManualTest {
 
 
 
-    }
+    }*/
 
 }

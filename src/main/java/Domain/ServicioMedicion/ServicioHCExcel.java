@@ -1,5 +1,7 @@
 package Domain.ServicioMedicion;
 
+import Domain.Organizacion.FrecuenciaServicio;
+
 import java.util.Calendar;
 import java.util.Date;
 

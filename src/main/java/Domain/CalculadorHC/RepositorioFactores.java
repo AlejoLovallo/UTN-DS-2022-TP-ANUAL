@@ -1,7 +1,7 @@
 package Domain.CalculadorHC;
 
 import Domain.CalculadorHC.Excepciones.FactorDeEmisionNoEncontradoException;
-import Domain.ServicioMedicion.TipoDeActividad;
+import Domain.Organizacion.TipoDeActividad;
 
 import java.util.ArrayList;
 import java.util.Optional;

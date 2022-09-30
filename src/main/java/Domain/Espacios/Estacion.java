@@ -15,10 +15,6 @@ public class Estacion extends Espacio {
   private String nombre;
   @Column
   public Integer numeroDeEstacion;
-  @Column
-  public double distEstAnt;
-  @Column
-  public double distEstPos;
 
   //////////////////////////////////  CONSTRUCTOR
   private Estacion(){
@@ -26,11 +22,9 @@ public class Estacion extends Espacio {
   }
 
 
-  public Estacion(String nombre, Integer numeroDeEstacion, double distEstAnt, double distEstPos) {
+  public Estacion(String nombre, Integer numeroDeEstacion) {
     this.nombre = nombre;
     this.numeroDeEstacion = numeroDeEstacion;
-    this.distEstAnt = distEstAnt;
-    this.distEstPos = distEstPos;
   }
 
 
@@ -44,13 +38,6 @@ public class Estacion extends Espacio {
     return this.numeroDeEstacion;
   }
 
-  public double getDistEstAnt(){
-    return this.distEstAnt;
-  }
-
-  public double getDistEstPos() {
-    return this.distEstPos;
-  }
 
   //////////////////////////////////  SETTERS
 
@@ -64,15 +51,6 @@ public class Estacion extends Espacio {
     //updateEstacion();
   }
 
-  public void setDistEstAnt(Float distEstAnt) {
-    this.distEstAnt = distEstAnt;
-    //updateEstacion();
-  }
-
-  public void setDistEstPos(Float distEstPos) {
-    this.distEstPos = distEstPos;
-    //updateEstacion();
-  }
 
   //////////////////////////////////  INTERFACE
 /*

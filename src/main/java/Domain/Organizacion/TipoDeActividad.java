@@ -1,4 +1,4 @@
-package Domain.ServicioMedicion;
+package Domain.Organizacion;
 
 public enum TipoDeActividad {
   COMBUSTION_FIJA,

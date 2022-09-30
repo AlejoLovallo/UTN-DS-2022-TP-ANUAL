@@ -1,5 +1,7 @@
 package Domain.CalculadorDistancia;
 
+import java.util.Map.Entry;
+
 import Domain.Espacios.Espacio;
 import Domain.Espacios.Estacion;
 import Domain.MediosDeTransporte.MedioDeTransporte;
@@ -15,17 +17,17 @@ public class ServicioManual extends ServicioDistancia{
     TransportePublico transportePublico = (TransportePublico) medioDeTransporte;
     Estacion estacionInicial = (Estacion) puntoPartida;
     Estacion estacionFinal = (Estacion) puntoLLegada;
-    Integer numeroEstacionInicial = estacionInicial.getNumeroDeEstacion();
-    Integer numeroEstacionFinal = estacionFinal.getNumeroDeEstacion();
 
-    if(numeroEstacionFinal < numeroEstacionInicial) {
-        Integer aux = numeroEstacionFinal;
-        numeroEstacionFinal = numeroEstacionInicial;
-        numeroEstacionInicial = aux;
-    }
+    Boolean flag = false;
 
-    for (int i = numeroEstacionInicial; i < numeroEstacionFinal; i++){
-        distanciaTotal += transportePublico.paradas.get(i).getDistEstPos();
+    for (Entry<Estacion, Double> entry : transportePublico.getParadas().entrySet()){
+        
+        if(entry.getKey().equals(estacionInicial))
+            flag = true;
+        if (flag)
+            distanciaTotal += transportePublico.getParadas().hashCode();
+        if(entry.getKey().equals(estacionFinal))
+            flag = false;
     }
 
     return distanciaTotal;

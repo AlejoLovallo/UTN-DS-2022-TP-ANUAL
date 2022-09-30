@@ -1,18 +1,23 @@
 package Domain.Organizacion;
 import Domain.CalculadorHC.CalculadorHC;
 import Domain.Miembro.Miembro;
-import Domain.ServicioMedicion.Actividad;
-import Domain.ServicioMedicion.ServicioHCExcel;
+import Domain.Reportes.GeneradorReportes;
+import Domain.Reportes.Reporte;
+import Domain.Reportes.TipoDeReporte;
 import Domain.ServicioMedicion.ServicioMediciones;
 import Domain.Usuarios.Contacto;
 import org.hibernate.annotations.NotFound;
 import org.hibernate.annotations.NotFoundAction;
 
-import java.text.ParseException;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.io.IOException;
 import java.util.List;
 import javax.persistence.*;
+
+import org.hibernate.jpa.event.internal.jpa.ListenerFactoryBeanManagerStandardImpl;
+
+//import org.apache.poi.ss.formula.PlainCellCache.Loc;
 
 @Entity
 @Table(name="organizacion")
@@ -27,8 +32,6 @@ public class Organizacion {
   private TipoOrganizacion tipo;
   @Enumerated(EnumType.STRING)
   private ClasificacionOrganizacion clasificacion;
-  @Column(name = "numdiasxsemana")
-  private Integer numDiasPorSemana;
 
   @ManyToOne(cascade = CascadeType.ALL)
   @NotFound(action = NotFoundAction.IGNORE)
@@ -48,15 +51,22 @@ public class Organizacion {
   private String archivoMediciones;
 
   @Transient /// PERO A CHEQUEAR
-  private ArrayList<ServicioHCExcel> reportes = new ArrayList<>();
-  @Transient /// PERO A CHEQUEAR
-  private ArrayList<Actividad> actividades = new ArrayList<>();
+  //TODO
+  private ArrayList<Actividad> actividades;
+  @Transient
+  private ArrayList<Reporte> reportes;
+  @Transient
+  private LocalDate fechaIngreso;
+  @Transient
+  private String paisOrigen;
 
   @Transient
   private ServicioMediciones servicioMediciones;
   @Transient
   private CalculadorHC calculadorHC = CalculadorHC.getInstance();
 
+
+  private GeneradorReportes generadorReportes = GeneradorReportes.getInstance();
 
 
   //////////////////////////////////  CONSTRUCTORES
@@ -69,7 +79,7 @@ public class Organizacion {
     this.tipo = _tipo;
     this.clasificacion = _clasificacion;
     this.contacto = contacto;
-    this.numDiasPorSemana = numDiasPorSemana;
+    //this.numDiasPorSemana = numDiasPorSemana;
     /*if(contacto != null)
       contacto.setOrganizacion(this);*/
   }
@@ -108,14 +118,21 @@ public class Organizacion {
 
   public String getArchivoMediciones() { return archivoMediciones; }
 
-  public ArrayList<ServicioHCExcel> getReportes() { return reportes; }
-
+  /*
   public Integer getNumDiasPorSemana() {
     return numDiasPorSemana;
+  }*/
+
+  public ArrayList <Actividad> getActividades() {
+    return actividades;
   }
 
-  public ArrayList<Actividad> getActividades() {
-    return actividades;
+  public LocalDate getFechaIngreso() { return fechaIngreso; }
+
+  public String getPaisOrigen() { return paisOrigen; }
+
+  public ArrayList<Reporte> getReportes() {
+    return reportes;
   }
 
   //////////////////////////////////  SETTERS
@@ -150,13 +167,14 @@ public class Organizacion {
   public void setServicioMediciones(ServicioMediciones servicioMediciones) {this.servicioMediciones = servicioMediciones;}
 
   public void setArchivoMediciones(String archivoMediciones) { this.archivoMediciones = archivoMediciones; }
-
+/*
   public void setNumDiasPorSemana(Integer numDiasPorSemana) {
     this.numDiasPorSemana = numDiasPorSemana;
-  }
+  }*/
+
+  public void setFechaIngreso(LocalDate fechaIngreso) { this.fechaIngreso = fechaIngreso; }
 
   //////////////////////////////////  INTERFACE
-
 
   public void registrarSector(Sector sector){
     this.sectores.add(sector);
@@ -169,25 +187,26 @@ public class Organizacion {
     return true;
   }
 
-  public ArrayList<Actividad> cargarMedicionesInternas(String fileName) throws IOException, ParseException {
-    return servicioMediciones.cargarMediciones(fileName);
+  public void cargarMedicionesInternas(String fileName) throws IOException {
+    ArrayList <Actividad> act = servicioMediciones.cargarMediciones(fileName, this);
+    for (Actividad actividad : act){
+      this.actividades.add(actividad);
+    }
   }
 
-  // TODO Revisar resultado por unidades y ver el calculo completo
-  public Double calcularHC() throws IOException {
-    return calculadorHC.calcularHC(this);
+  public Double calcularHC(Integer mes, Integer anio) throws IOException {
+    return calculadorHC.calcularHC(this, mes, anio);
   }
 
-  public Double calcularHCAA() throws IOException {
-    return calculadorHC.calcularHCAA(this);
+  public Reporte conseguirReporte(TipoDeReporte tipoDeReporte, LocalDate fechaDesde, LocalDate fechaHasta) throws IOException{
+    switch(tipoDeReporte){
+      case COMPOSICION:
+        return generadorReportes.reporteCompHC_Org(this, fechaDesde, fechaHasta);
+      case EVOLUCION:
+        return generadorReportes.reporteEvolucionHC_Org(this, fechaDesde, fechaHasta);
+    }
+    return null;
   }
 
-  public Double calcularHCMesAnio(int mes, int anio) throws IOException {
-    return calculadorHC.calcularHCMesAnio(this, mes, anio);
-  }
-
-  public void darDeBajaActividad(Actividad actividad) {
-    actividad.darDeBaja();
-  }
 
 }

@@ -1,8 +1,7 @@
 package Domain.CalculadorHC;
 
 import Domain.BaseDeDatos.EntityManagerHelper;
-import Domain.Espacios.Direccion;
-import Domain.ServicioMedicion.TipoDeActividad;
+import Domain.Organizacion.TipoDeActividad;
 import javax.persistence.*;
 
 @Entity
