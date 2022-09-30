@@ -65,6 +65,9 @@ public class Organizacion {
   @Transient
   private CalculadorHC calculadorHC = CalculadorHC.getInstance();
 
+  @Transient
+  private Integer numDiasPorSemana;
+
 
   private GeneradorReportes generadorReportes = GeneradorReportes.getInstance();
 
@@ -79,7 +82,7 @@ public class Organizacion {
     this.tipo = _tipo;
     this.clasificacion = _clasificacion;
     this.contacto = contacto;
-    //this.numDiasPorSemana = numDiasPorSemana;
+    this.numDiasPorSemana = numDiasPorSemana;
     /*if(contacto != null)
       contacto.setOrganizacion(this);*/
   }
@@ -113,15 +116,15 @@ public class Organizacion {
   public AgenteSectorial getAgenteSectorial() {
     return agenteSectorial;
   }
+  public Integer getNumDiasPorSemana() {
+    return numDiasPorSemana;
+  }
 
   public ServicioMediciones getServicioMediciones() { return servicioMediciones;  }
 
   public String getArchivoMediciones() { return archivoMediciones; }
 
-  /*
-  public Integer getNumDiasPorSemana() {
-    return numDiasPorSemana;
-  }*/
+
 
   public ArrayList <Actividad> getActividades() {
     return actividades;
@@ -167,10 +170,8 @@ public class Organizacion {
   public void setServicioMediciones(ServicioMediciones servicioMediciones) {this.servicioMediciones = servicioMediciones;}
 
   public void setArchivoMediciones(String archivoMediciones) { this.archivoMediciones = archivoMediciones; }
-/*
-  public void setNumDiasPorSemana(Integer numDiasPorSemana) {
-    this.numDiasPorSemana = numDiasPorSemana;
-  }*/
+
+  public void setNumDiasPorSemana(Integer numDiasPorSemana) { this.numDiasPorSemana = numDiasPorSemana; }
 
   public void setFechaIngreso(LocalDate fechaIngreso) { this.fechaIngreso = fechaIngreso; }
 
