@@ -2,10 +2,8 @@ package Domain.Reportes;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.HashMap;
 
 import Domain.Organizacion.Actividad;
-import Domain.Organizacion.Consumo;
 
 public class ReporteComposicion extends Reporte {
 

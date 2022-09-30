@@ -7,8 +7,6 @@ import Domain.Organizacion.Actividad;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.Optional;
 
 public class GeneradorReportes {
@@ -251,8 +249,6 @@ public class GeneradorReportes {
             repositorioReportes.getReportes().add(reporte);
             return reporte;
         }
-
-
         
     }
 }

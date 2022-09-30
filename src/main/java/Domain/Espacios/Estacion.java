@@ -6,14 +6,9 @@ import javax.persistence.*;
 @Entity
 @Table(name="estacion")
 public class Estacion extends Espacio {
+  
   @Column
   private String nombre;
-  @Column
-  public Integer numeroDeEstacion;
-  @Column
-  public double distEstAnt;
-  @Column
-  public double distEstPos;
 
   //////////////////////////////////  CONSTRUCTOR
   public Estacion(){
@@ -21,11 +16,8 @@ public class Estacion extends Espacio {
   }
 
 
-  public Estacion(String nombre, Integer numeroDeEstacion, double distEstAnt, double distEstPos) {
+  public Estacion(String nombre, Integer numeroDeEstacion) {
     this.nombre = nombre;
-    this.numeroDeEstacion = numeroDeEstacion;
-    this.distEstAnt = distEstAnt;
-    this.distEstPos = distEstPos;
   }
 
 
@@ -35,37 +27,11 @@ public class Estacion extends Espacio {
     return this.nombre;
   }
 
-  public Integer getNumeroDeEstacion() {
-    return this.numeroDeEstacion;
-  }
-
-  public double getDistEstAnt(){
-    return this.distEstAnt;
-  }
-
-  public double getDistEstPos() {
-    return this.distEstPos;
-  }
 
   //////////////////////////////////  SETTERS
 
   public void setNombre(String nombre) {
     this.nombre = nombre;
-    updateEstacion();
-  }
-
-  public void setNumeroDeEstacion(Integer numeroDeEstacion) {
-    this.numeroDeEstacion = numeroDeEstacion;
-    updateEstacion();
-  }
-
-  public void setDistEstAnt(Float distEstAnt) {
-    this.distEstAnt = distEstAnt;
-    updateEstacion();
-  }
-
-  public void setDistEstPos(Float distEstPos) {
-    this.distEstPos = distEstPos;
     updateEstacion();
   }
 

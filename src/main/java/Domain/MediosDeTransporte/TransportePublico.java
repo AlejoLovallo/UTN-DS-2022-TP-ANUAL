@@ -1,6 +1,7 @@
 package Domain.MediosDeTransporte;
 
-import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
 
 import Domain.BaseDeDatos.EntityManagerHelper;
 import Domain.Espacios.Estacion;
@@ -15,8 +16,8 @@ public class TransportePublico extends MedioDeTransporte {
   @Column
   private String linea;
 
-  @Transient
-  public List<Estacion> paradas;
+  Map<Estacion, Double> paradas = new HashMap<>();
+  
 
   //////////////////////////////////  CONSTRUCTOR
 
@@ -24,7 +25,7 @@ public class TransportePublico extends MedioDeTransporte {
 
   }
 
-  public TransportePublico(TipoTransportePublico tipoTransportePublico, String linea, List<Estacion> paradas) {
+  public TransportePublico(TipoTransportePublico tipoTransportePublico, String linea, Map<Estacion, Double> paradas) {
     this.tipoTransportePublico = tipoTransportePublico;
     this.linea = linea;
     this.paradas = paradas;
@@ -40,7 +41,7 @@ public class TransportePublico extends MedioDeTransporte {
     return this.linea;
   }
 
-  public List<Estacion> getParadas() {
+  public Map<Estacion, Double> getParadas() {
     return this.paradas;
   }
 
@@ -57,14 +58,14 @@ public class TransportePublico extends MedioDeTransporte {
     updateTransportePublico();
   }
 
-  public void setParadas(List<Estacion> paradas) {
+  public void setParadas(Map<Estacion, Double> paradas) {
     this.paradas = paradas;
     updateTransportePublico();
   }
 
   //////////////////////////////////  INTERFACE
-  public void darDeAltaParada(Estacion estacion){
-    this.paradas.add(estacion.getNumeroDeEstacion(),estacion);
+  public void darDeAltaParada(Estacion estacion, Double distanciaProx){
+    this.paradas.put(estacion, distanciaProx);
     updateTransportePublico();
   }
 

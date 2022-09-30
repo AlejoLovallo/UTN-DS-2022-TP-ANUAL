@@ -1,10 +1,7 @@
 package Domain.Reportes;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.function.ToIntBiFunction;
 
-import Domain.Organizacion.Consumo;
 
 public abstract class Reporte {
     
