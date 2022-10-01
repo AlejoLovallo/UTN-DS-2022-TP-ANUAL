@@ -8,7 +8,7 @@ public class EliminarOrganizacionesTestDB {
   public static void main(String[] args) {
     RepositorioOrganizacionesDB repositorioOrganizacionesDB = new RepositorioOrganizacionesDB();
 
-    Organizacion organizacion = repositorioOrganizacionesDB.buscar(5);
+    Organizacion organizacion = repositorioOrganizacionesDB.buscar(17);
 
     repositorioOrganizacionesDB.eliminar(organizacion);
 

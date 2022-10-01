@@ -2,12 +2,25 @@ package Domain.Reportes;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.List;
 
 import Domain.Organizacion.Consumo;
 
+import javax.persistence.*;
+
+@Entity
+@Table(name="reporteevolucion")
+@PrimaryKeyJoinColumn(name="id_reporte")
+
 public class ReporteEvolucion extends Reporte {
 
-    private ArrayList <Consumo> consumos;
+    @ManyToMany(cascade = { CascadeType.ALL })
+    @JoinTable(
+        name = "reporteevolucion_consumo",
+        joinColumns = { @JoinColumn(name = "id_reporte") },
+        inverseJoinColumns = { @JoinColumn(name = "id_consumo") }
+    )
+    private List<Consumo> consumos;
 
     // CONSTRUCTOR
 
@@ -18,7 +31,7 @@ public class ReporteEvolucion extends Reporte {
 
     // GETTERS
 
-    public ArrayList<Consumo> getConsumos() {
+    public List<Consumo> getConsumos() {
         return consumos;
     }
 

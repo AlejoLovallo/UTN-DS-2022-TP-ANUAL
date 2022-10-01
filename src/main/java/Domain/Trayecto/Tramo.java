@@ -24,19 +24,18 @@ public class Tramo {
 
   @Transient
   private ServicioDistancia estrategia;
+
   @OneToOne(cascade = CascadeType.PERSIST)
-  @JoinColumn(name = "puntoPartida",referencedColumnName = "id_espacio")
+  @JoinColumn(name = "puntoSalida",referencedColumnName = "id_espacio")
   private Espacio puntoPartida;
+
   @OneToOne(cascade = CascadeType.PERSIST)
   @JoinColumn(name="puntoLlegada",referencedColumnName = "id_espacio")
   private Espacio puntoLLegada;
+
   @ManyToOne
   @JoinColumn(name="id_transporte",referencedColumnName = "id_transporte")
   private MedioDeTransporte medio;
-/*
-  @ManyToMany(mappedBy = "tramo" , cascade = CascadeType.PERSIST)
-  private List<Trayecto> trayectos;*/
-
 
   @ManyToOne
   @JoinColumn(name="id_trayecto",referencedColumnName = "id_trayecto")

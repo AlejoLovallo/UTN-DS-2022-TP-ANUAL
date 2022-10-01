@@ -1,10 +1,33 @@
 package Domain.Organizacion;
 
+import Domain.Reportes.ReporteEvolucion;
+
+import javax.persistence.*;
+import java.util.List;
+
+@Entity
+@Table(name = "consumo")
 public class Consumo {
-    
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int id_consumo;
+
+    @Column
     private Integer mes;
+
+    @Column
     private Integer anio;
+
+    @Column
     private Double consumo;
+
+    @ManyToOne
+    @JoinColumn(name="id_actividad", referencedColumnName = "id_actividad")
+    private Actividad actividad;
+
+    @ManyToMany(mappedBy = "consumos")
+    private List<ReporteEvolucion> reporteEvolucion;
     
 
     // CONSTRUCTOR 

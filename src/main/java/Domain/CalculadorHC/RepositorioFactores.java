@@ -32,7 +32,7 @@ public class RepositorioFactores {
     public FactorEmision getFactorDeEmisionSegunActividad(TipoDeActividad tipoDeActividad) {
 
         Optional <FactorEmision> factor = factoresDeEmision.stream()
-                .filter(f -> f.getTipoDeActividad().equals(tipoDeActividad)).findAny();
+                .filter(f -> f.getTipoActividad().equals(tipoDeActividad)).findAny();
 
         return factor.get();
     }

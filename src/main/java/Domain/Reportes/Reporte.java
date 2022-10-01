@@ -1,14 +1,44 @@
 package Domain.Reportes;
 
+import Domain.Organizacion.AgenteSectorial;
+import Domain.Organizacion.Organizacion;
+import org.hibernate.annotations.NotFound;
+import org.hibernate.annotations.NotFoundAction;
+
+import javax.persistence.*;
 import java.time.LocalDate;
 
-
+@Entity
+@Table(name = "reporte")
+@Inheritance(strategy= InheritanceType.JOINED)
 public abstract class Reporte {
-    
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private int id_reporte;
+
+    @Column
     private String nombre;
+
+    @Column
+    @Enumerated(EnumType.STRING)
     private TipoDeReporte tipoDeReporte;
+
+    @Column
     private LocalDate fechaDesde;
+
+    @Column
     private LocalDate fechaHasta;
+
+    @ManyToOne(cascade = CascadeType.ALL)
+    @NotFound(action = NotFoundAction.IGNORE)
+    @JoinColumn(name="id_agente",referencedColumnName = "id_agente")
+    private AgenteSectorial agenteSectorial;
+
+    @ManyToOne(cascade = CascadeType.ALL)
+    @NotFound(action = NotFoundAction.IGNORE)
+    @JoinColumn(name="id_organizacion",referencedColumnName = "id_organizacion")
+    private Organizacion organizacion;
 
     // CONSTRUCTOR
     public Reporte (String _nombre, TipoDeReporte tipoDeReporte, LocalDate _fechaDesde, LocalDate _fechaHasta){

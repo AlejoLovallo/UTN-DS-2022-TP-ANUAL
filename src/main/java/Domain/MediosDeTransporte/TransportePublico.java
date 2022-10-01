@@ -12,6 +12,7 @@ import javax.persistence.*;
 public class TransportePublico extends MedioDeTransporte {
 
   @Enumerated(EnumType.STRING)
+  @Column(name = "tipoTransporte")
   private TipoTransportePublico tipoTransportePublico;
   @Column
   private String linea;

@@ -19,6 +19,7 @@ public class Miembro {
   private int id_miembro;
 
   @Transient
+  //@Column(name = "rol")
   private String nombre;
 
   @ManyToOne(cascade=CascadeType.ALL)

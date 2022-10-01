@@ -35,7 +35,7 @@ public class Organizacion {
 
   @ManyToOne(cascade = CascadeType.ALL)
   @NotFound(action = NotFoundAction.IGNORE)
-  @JoinColumn(name="id_agente",referencedColumnName = "id_agente")
+  @JoinColumn(name="id_Agente",referencedColumnName = "id_agente")
   private AgenteSectorial agenteSectorial;
 
   @OneToMany(mappedBy = "organizacion",cascade = CascadeType.ALL)
@@ -53,11 +53,16 @@ public class Organizacion {
   @Transient /// PERO A CHEQUEAR
   //TODO
   private ArrayList<Actividad> actividades;
+
   @Transient
+  //TODO
   private ArrayList<Reporte> reportes;
+
   @Transient
+  //TODO
   private LocalDate fechaIngreso;
-  @Transient
+
+  @Column(name = "pais")
   private String paisOrigen;
 
   @Transient
@@ -65,10 +70,12 @@ public class Organizacion {
   @Transient
   private CalculadorHC calculadorHC = CalculadorHC.getInstance();
 
-  @Transient
+  @Column(name = "numdiasxsemana")
   private Integer numDiasPorSemana;
 
 
+  @Transient
+  //TODO ver relacion
   private GeneradorReportes generadorReportes = GeneradorReportes.getInstance();
 
 

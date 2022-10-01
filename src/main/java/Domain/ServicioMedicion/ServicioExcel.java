@@ -9,7 +9,6 @@ import org.apache.poi.ss.usermodel.*;
 import java.io.File;
 import java.io.IOError;
 import java.io.IOException;
-import java.sql.Date;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -85,7 +84,7 @@ public class ServicioExcel extends ServicioMediciones{
         Integer mes = fechaPeriodoImputacion.getMonthValue();
         Integer anio = fechaPeriodoImputacion.getYear();
 
-        Optional<Actividad> act = org.getActividades().stream().filter(unaActividad -> tipoActividad.equals(unaActividad.getNombre().toString()) && tipoConsumo.equals(unaActividad.getTipoDeConsumo().toString())).findAny();
+        Optional<Actividad> act = org.getActividades().stream().filter(unaActividad -> tipoActividad.equals(unaActividad.getNombre().toString()) && tipoConsumo.equals(unaActividad.getTipoConsumo().toString())).findAny();
 
         Actividad actividad = act.get(); // CHEQUEAR ESTO PORQUE ES UN DESASTRE
 

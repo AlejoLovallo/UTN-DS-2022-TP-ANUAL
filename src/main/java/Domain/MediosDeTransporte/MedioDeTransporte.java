@@ -6,7 +6,7 @@ import javax.persistence.*;
 
 @Entity
 @Table(name = "mediotransporte")
-@Inheritance(strategy =  InheritanceType.TABLE_PER_CLASS)
+@Inheritance(strategy =  InheritanceType.JOINED)
 public abstract class MedioDeTransporte {
     @Id
     //@GeneratedValue(strategy = GenerationType.IDENTITY) //Anterior

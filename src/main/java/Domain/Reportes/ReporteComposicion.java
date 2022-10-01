@@ -2,12 +2,26 @@ package Domain.Reportes;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.List;
 
 import Domain.Organizacion.Actividad;
 
+import javax.persistence.*;
+
+@Entity
+@Table(name="reportecomposicion")
+@PrimaryKeyJoinColumn(name="id_reporte")
+
 public class ReporteComposicion extends Reporte {
 
-    private ArrayList <Actividad> actividades;
+
+    @ManyToMany(cascade = { CascadeType.ALL })
+    @JoinTable(
+        name = "reportecomposicion_actividad",
+        joinColumns = { @JoinColumn(name = "id_reporte") },
+        inverseJoinColumns = { @JoinColumn(name = "id_actividad") }
+    )
+    private List<Actividad> actividades;
 
     // CONSTRUCTOR
     public ReporteComposicion(String _nombre, TipoDeReporte _tipoDeReporte, LocalDate _fechaDesde, LocalDate _fechaHasta, ArrayList <Actividad> _actividades) {
@@ -18,7 +32,7 @@ public class ReporteComposicion extends Reporte {
 
     // GETTERS
 
-    public ArrayList<Actividad> getActividades() {
+    public List<Actividad> getActividades() {
         return actividades;
     }
 
@@ -34,7 +48,7 @@ public class ReporteComposicion extends Reporte {
     public void mostrarReporte() {
         
         for(Actividad actividad : this.getActividades()){
-            System.out.println(actividad.getNombre() + ", " +  actividad.getTipoDeConsumo() + " = " + actividad.getConsumos().get(0).getConsumo());
+            System.out.println(actividad.getNombre() + ", " +  actividad.getTipoConsumo() + " = " + actividad.getConsumos().get(0).getConsumo());
         }
         
 

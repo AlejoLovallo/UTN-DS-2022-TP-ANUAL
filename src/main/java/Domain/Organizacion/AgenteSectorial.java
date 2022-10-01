@@ -9,6 +9,7 @@ import Domain.Usuarios.Excepciones.UsuarioException;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.List;
 import javax.persistence.*;
 
 @Entity
@@ -18,20 +19,26 @@ public class AgenteSectorial {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private int id_agente;
-  @Column
+
+  @Column(name = "razonSocial")
   private String razonSocial;
   @Column
   private String territorio;
+
+  @Column(name = "tipo")
   @Enumerated(EnumType.STRING)
   private TipoSectorTerritorial tipoSectorTerritorial;
 
+  @OneToMany(mappedBy = "agenteSectorial", cascade = CascadeType.ALL)
+  private List<Organizacion> organizaciones = new ArrayList<>();
+
+  @OneToMany(mappedBy = "agenteSectorial", cascade = CascadeType.ALL)
+  private List<Reporte> reportes;
+
   @Transient
-  private ArrayList<Organizacion> organizaciones = new ArrayList<>();
+  private GeneradorReportes generadorReportes = GeneradorReportes.getInstance();
   @Transient
   private CalculadorHC calculadorHC = CalculadorHC.getInstance();
-
-  private ArrayList<Reporte> reportes;
-  private GeneradorReportes generadorReportes = GeneradorReportes.getInstance();
 
 
 
@@ -60,11 +67,11 @@ public class AgenteSectorial {
     return tipoSectorTerritorial;
   }
 
-  public ArrayList<Organizacion> getOrganizaciones() {
+  public List<Organizacion> getOrganizaciones() {
     return organizaciones;
   }
 
-  public ArrayList <Reporte> getReportes (){
+  public List <Reporte> getReportes (){
     return reportes;
   }
 

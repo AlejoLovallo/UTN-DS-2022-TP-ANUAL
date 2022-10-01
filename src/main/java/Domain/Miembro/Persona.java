@@ -24,7 +24,7 @@ public class Persona {
   private TipoDocumento tipoDocumento;
 
   @Column(name="nroDocumento")
-  private String documento;
+  private String nroDocumento;
 
   @OneToMany(mappedBy = "persona" , cascade = CascadeType.ALL)
   @NotFound(action = NotFoundAction.IGNORE)
@@ -44,7 +44,7 @@ public class Persona {
     this.setNombre(_nombre);
     this.setApellido(_apellido);
     this.setTipoDocumento(_tipoDocumento);
-    this.setDocumento(_documento);
+    this.setNroDocumento(_documento);
     this.listaMiembros = new ArrayList<Miembro>();
   }
 
@@ -62,8 +62,8 @@ public class Persona {
     return tipoDocumento;
   }
 
-  public String getDocumento() {
-    return documento;
+  public String getNroDocumento() {
+    return nroDocumento;
   }
 
   public Usuario getUsuario() {
@@ -88,8 +88,8 @@ public class Persona {
     this.tipoDocumento = tipoDocumento;
   }
 
-  public void setDocumento(String documento) {
-    this.documento = documento;
+  public void setNroDocumento(String nroDocumento) {
+    this.nroDocumento = nroDocumento;
   }
 
   public void setUsuario(Usuario usuario) {

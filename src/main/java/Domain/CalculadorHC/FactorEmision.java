@@ -9,12 +9,16 @@ import javax.persistence.*;
 public class FactorEmision {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id_factor")
+    private int id;
+
     @Column
     private Double numero;
 
-    @Transient
-    private TipoDeActividad tipoDeActividad;
-    @Transient
+    @Column
+    @Enumerated(EnumType.STRING)
+    private TipoDeActividad tipoActividad;
+    @Column
     private Unidad unidad;
 
     // CONSTRUCTOR
@@ -23,15 +27,15 @@ public class FactorEmision {
     }
 
     public FactorEmision(TipoDeActividad tipoDeActividad, Double numero, Unidad unidad) {
-        this.tipoDeActividad = tipoDeActividad;
+        this.tipoActividad = tipoDeActividad;
         this.numero = numero;
         this.unidad = unidad;
     }
 
     // GETTERS
 
-    public  TipoDeActividad getTipoDeActividad() {
-        return tipoDeActividad;
+    public  TipoDeActividad getTipoActividad() {
+        return tipoActividad;
     }
 
     public Double getNumero() {
@@ -46,8 +50,8 @@ public class FactorEmision {
     // SETTERS
 
 
-    public void setTipoDeActividad(TipoDeActividad tipoDeActividad) {
-        this.tipoDeActividad = tipoDeActividad;
+    public void setTipoActividad(TipoDeActividad tipoActividad) {
+        this.tipoActividad = tipoActividad;
         updateFactorEmision();
     }
 

@@ -19,6 +19,8 @@ public class Direccion extends Espacio {
   private String calle;
   @Column
   private Integer altura;
+
+  @Column(name = "tipo_espacio")
   @Enumerated(EnumType.STRING)
   private TipoDireccion tipoDireccion;
 

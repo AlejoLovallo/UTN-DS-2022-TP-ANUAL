@@ -1,18 +1,14 @@
 package BaseDeDatos.Inserts;
-import Domain.Repositorios.DBHibernate;
 import Domain.Repositorios.RepositorioUsuariosDB;
-import Domain.Usuarios.Admin;
 import Domain.Usuarios.Usuario;
 
-public class RepositorioUsuariosTestDB {
+public class RepositorioUsuariosTestDB2 {
   public static void main(String[] args) {
 
-    Usuario user = new Usuario("insertUsuario","insertUsuario@gmail.com","insertUsuario54+",true);
+    //Usuario user = new Usuario("insertUsuario","insertUsuario@gmail.com","insertUsuario54+",true);
 
-    //Miembro miembro = new Miembro();
 
     RepositorioUsuariosDB repositorioUsuarios = new RepositorioUsuariosDB();
-    repositorioUsuarios.agregar(user);
 
     repositorioUsuarios.crearUsuario("insertUsuario","insertUsuario@gmail.com","insertUsuario54+",false);
 

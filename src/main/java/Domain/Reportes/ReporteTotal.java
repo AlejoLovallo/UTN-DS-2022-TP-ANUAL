@@ -1,9 +1,18 @@
 package Domain.Reportes;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.PrimaryKeyJoinColumn;
+import javax.persistence.Table;
 import java.time.LocalDate;
+
+@Entity
+@Table(name="reportetotal")
+@PrimaryKeyJoinColumn(name="id_reporte")
 
 public class ReporteTotal extends Reporte {
 
+    @Column(name = "cantidadHC")
     private Double cantidadHC;
 
     // CONSTRUCTOR
