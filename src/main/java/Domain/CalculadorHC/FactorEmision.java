@@ -46,6 +46,9 @@ public class FactorEmision {
         return unidad;
     }
 
+    public int getId() {
+        return id;
+    }
 
     // SETTERS
 

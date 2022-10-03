@@ -93,7 +93,7 @@ public class RepositorioPersonasDB extends Repositorio<Persona>{
 
     Root<Persona> condicionRaiz = personaCriteriaQuery.from(Persona.class);
 
-    condicionRaiz.join("usuario");
+    //condicionRaiz.join("usuario");
 
     Predicate condicionNroDocumento = criteriaBuilder.like(condicionRaiz.get("nroDocumento"), "%"+ nroDocumento +"%");
     //Predicate condicionContrasenia = criteriaBuilder.equal(condicionRaiz.get("password"), contrasenia);
