@@ -18,6 +18,31 @@
 
         <class>Domain.Usuarios.Admin</class>
         <class>Domain.Usuarios.Usuario</class>
+        <class>Domain.Usuarios.Contacto</class>
+        <class>Domain.Usuarios.UltimoIntento</class>
+
+
+        <class>Domain.Miembro.Persona</class>
+        <class>Domain.Miembro.Miembro</class>
+
+        <class>Domain.Organizacion.Actividad</class>
+        <class>Domain.Organizacion.Consumo</class>
+        <class>Domain.Organizacion.Organizacion</class>
+        <class>Domain.Organizacion.AgenteSectorial</class>
+        <class>Domain.Organizacion.Sector</class>
+
+        <class>Domain.Reportes.Reporte</class>
+        <class>Domain.Reportes.ReporteEvolucion</class>
+        <class>Domain.Reportes.ReporteComposicion</class>
+        <class>Domain.Reportes.ReporteTotal</class>
+
+        <class>Domain.Trayecto.Trayecto</class>
+        <class>Domain.Trayecto.Tramo</class>
+
+
+
+        <class>Domain.CalculadorHC.FactorEmision</class>
+
 
         <exclude-unlisted-classes>true</exclude-unlisted-classes>
 

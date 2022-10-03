@@ -39,15 +39,18 @@ public class AgregarMiembrosTestDB {
 
     persona.setUsuario(user);
 
+    persona.agregarMiembro(miembro);
+
     miembro.setPersona(persona);
 
 
-    repositorioOrganizacionesDB.agregar(organizacion);
+    //repositorioOrganizacionesDB.agregar(organizacion);
 
-    repositorioSectoresDB.agregar(sector);
+    //repositorioSectoresDB.agregar(sector);
 
 
     repositorioPersonas.agregar(persona);
+
 
   }
 }

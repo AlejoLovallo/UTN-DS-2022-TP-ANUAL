@@ -116,6 +116,10 @@ public class RepositorioUsuariosDB extends Repositorio<Usuario> {
 
   public Usuario crearUsuario(String username, String email, String contra, boolean validado){
     try{
+
+      if(existe(username))
+        throw new UsuarioException("porque ya hay un usuario con ese username");
+
       Usuario usuarioNuevo = new Usuario(username,email,contra,validado);
       //this.usuarios.add(usuarioNuevo);
       agregar(usuarioNuevo);
@@ -127,6 +131,10 @@ public class RepositorioUsuariosDB extends Repositorio<Usuario> {
 
   public Admin crearAdmin(String username, String email, String contra){
     try{
+
+      if(existe(username))
+        throw new UsuarioException("porque ya hay un usuario con ese username");
+
       Admin adminNuevo = new Admin(username,email,contra,true);
       //this.usuarios.add(adminNuevo);
       agregar(adminNuevo);
@@ -135,4 +143,8 @@ public class RepositorioUsuariosDB extends Repositorio<Usuario> {
       return null;
     }
   }
+
+
+
+
 }

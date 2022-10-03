@@ -55,30 +55,34 @@ public class DBHibernate<T> implements DBService<T> {
   }
 
   public void agregar(Object unObjeto) {
+    if (unObjeto != null){
+      System.out.println("---------------------------------------------- ENTRE A LA INSERCION de la tabla " + type + " ----------------------------------------------------");
 
-    System.out.println("---------------------------------------------- ENTRE A LA INSERCION de la tabla " + type + " ----------------------------------------------------");
-
-    //EntityManagerHelper entityManagerHelper = EntityManagerHelper.getEntityManager();
-    EntityManagerHelper.getEntityManager().getTransaction().begin();
-    EntityManagerHelper.getEntityManager().persist(unObjeto);
-    EntityManagerHelper.getEntityManager().getTransaction().commit();
-    EntityManagerHelper.closeEntityManager();
-
+      //EntityManagerHelper entityManagerHelper = EntityManagerHelper.getEntityManager();
+      EntityManagerHelper.getEntityManager().getTransaction().begin();
+      EntityManagerHelper.getEntityManager().persist(unObjeto);
+      EntityManagerHelper.getEntityManager().getTransaction().commit();
+      EntityManagerHelper.closeEntityManager();
+    }
   }
 
   public void modificar(Object unObjeto) {
-    System.out.println("------------------------------------------------ENTRE A LA MODIFICACION de la tabla "+ type + " -------------------------------------------------");
-    EntityManagerHelper.getEntityManager().getTransaction().begin();
-    EntityManagerHelper.getEntityManager().merge(unObjeto);
-    EntityManagerHelper.getEntityManager().getTransaction().commit();
-    EntityManagerHelper.closeEntityManager();
+    if (unObjeto != null){
+      System.out.println("------------------------------------------------ENTRE A LA MODIFICACION de la tabla "+ type + " -------------------------------------------------");
+      EntityManagerHelper.getEntityManager().getTransaction().begin();
+      EntityManagerHelper.getEntityManager().merge(unObjeto);
+      EntityManagerHelper.getEntityManager().getTransaction().commit();
+      EntityManagerHelper.closeEntityManager();
+    }
   }
 
   public void eliminar(Object unObjeto) {
-    System.out.println("------------------------------------------------ ENTRE A LA ELIMINACION de la tabla "+ type + " --------------------------------------------------");
-    EntityManagerHelper.getEntityManager().getTransaction().begin();
-    EntityManagerHelper.getEntityManager().remove(unObjeto);
-    EntityManagerHelper.getEntityManager().getTransaction().commit();
-    EntityManagerHelper.closeEntityManager();
+    if (unObjeto != null){
+      System.out.println("------------------------------------------------ ENTRE A LA ELIMINACION de la tabla "+ type + " --------------------------------------------------");
+      EntityManagerHelper.getEntityManager().getTransaction().begin();
+      EntityManagerHelper.getEntityManager().remove(unObjeto);
+      EntityManagerHelper.getEntityManager().getTransaction().commit();
+      EntityManagerHelper.closeEntityManager();
+    }
   }
 }

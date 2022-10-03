@@ -12,11 +12,14 @@ import javax.persistence.*;
 @Entity
 @Table(name="persona")
 public class Persona {
+
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private int id_persona;
+
   @Column
   private String nombre;
+
   @Column
   private String apellido;
 
@@ -30,6 +33,7 @@ public class Persona {
   @NotFound(action = NotFoundAction.IGNORE)
  // @JoinColumn(name="id_miembro",referencedColumnName = "id_miembro")
   private List<Miembro> listaMiembros;
+
   @OneToOne(cascade = CascadeType.ALL)
   @NotFound(action = NotFoundAction.IGNORE)
   @JoinColumn(name="id_usuario",referencedColumnName = "id_usuario")
@@ -120,4 +124,18 @@ public class Persona {
     EntityManagerHelper.tranPersist(this);
   }
 
+
+  public static String toString(Persona persona) {
+    if(persona == null) return "la persona es nula";
+
+    return "Persona{" +
+        "id_persona=" + persona.id_persona +
+        ", nombre='" + persona.nombre + '\'' +'\n'+
+        ", apellido='" + persona.apellido + '\'' +'\n'+
+        ", tipoDocumento=" + persona.tipoDocumento +'\n'+
+        ", nroDocumento='" + persona.nroDocumento + '\'' + '\n'+
+        ", listaMiembros=" + Miembro.toString(persona.listaMiembros) + '\n'+
+        ", usuario=" + Usuario.toString(persona.usuario) +
+        '}';
+  }
 }

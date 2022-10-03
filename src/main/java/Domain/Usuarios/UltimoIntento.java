@@ -21,6 +21,16 @@ public class UltimoIntento {
 
 
 
+  public static String toString(UltimoIntento ultimoIntento) {
+    if(ultimoIntento == null) return "El ultimo intento es nulo";
+
+    return "UltimoIntento{" +
+        "id_ultimointento=" + ultimoIntento.id_ultimointento +
+        ", ultimoAcceso=" + ultimoIntento.ultimoAcceso +
+        ", intento=" + ultimoIntento.intento +
+        '}';
+  }
+
   //////////////////////////////////  CONSTRUCTORES
   public UltimoIntento() {
     this.intento = 1;

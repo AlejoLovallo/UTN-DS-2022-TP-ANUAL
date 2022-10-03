@@ -174,7 +174,21 @@ public class Usuario{
     return sb.toString();
   }
 
-/*
+
+  public static String toString(Usuario usuario) {
+    if(usuario == null) return "el usuario es nulo";
+
+    return "Usuario{" +
+        "id_usuario=" + usuario.id_usuario +
+        ", mail='" + usuario.mail + '\'' +'\n'+
+        ", username='" + usuario.username + '\'' +'\n'+
+        ", contraHasheada='" + usuario.contraHasheada + '\'' +'\n'+
+        ", validado=" + usuario.validado +'\n'+
+        ", ultimointento=" + UltimoIntento.toString(usuario.ultimointento) +
+        '}';
+  }
+
+  /*
   public void update(){
     EntityManagerHelper.tranUpdate(this);
   }

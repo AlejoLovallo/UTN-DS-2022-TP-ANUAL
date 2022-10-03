@@ -116,4 +116,27 @@ public class Miembro {
     this.trayectos.remove(trayecto);
   }
 
+
+  public static String toString(Miembro miembro) {
+    if(miembro == null) return "el miembro es nulo";
+
+    return "Miembro{" +
+        "id_miembro=" + miembro.id_miembro +
+        ", nombre='" + miembro.nombre + '\'' +
+        ", sector=" + miembro.sector +
+        ", persona=" + miembro.persona +
+        ", trayectos=" + miembro.trayectos +
+        ", calculadorHC=" + miembro.calculadorHC +
+        '}';
+  }
+
+  public static String toString(List<Miembro> miembros) {
+    if(miembros == null) return "los miembros son nulo";
+
+    for (Miembro mi : miembros) {
+     return Miembro.toString(mi);
+    }
+
+    return "default";
+  }
 }
