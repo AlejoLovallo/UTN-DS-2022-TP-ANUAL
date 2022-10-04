@@ -12,9 +12,9 @@ public class RepositorioOrganizacionesTestDB {
   public static void main(String[] args) {
     RepositorioOrganizacionesDB repositorioOrganizacionesDB = new RepositorioOrganizacionesDB();
 
-    Contacto contacto = new Contacto("contactoPrueba", "ContactoPrueba", 515151541, "contacto@gmail.com");
+    Contacto contacto = new Contacto("contactoPrueba", "ContactoPrueba", 515151541, "tomas.casa123@gmail.com");
 
-    Organizacion organizacion = new Organizacion( "RazonSocial", TipoOrganizacion.Empresa, ClasificacionOrganizacion.EmpresaSectorSecundario, contacto, 5);
+    Organizacion organizacion = new Organizacion( "RazonSocial", TipoOrganizacion.Empresa, ClasificacionOrganizacion.Ministerio, contacto, 5);
 
     //contacto.setOrganizacion(organizacion);
 

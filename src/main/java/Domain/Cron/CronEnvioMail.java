@@ -1,6 +1,7 @@
 package Domain.Cron;
 
 import Domain.Organizacion.RepositorioOrganizaciones;
+import Domain.Repositorios.RepositorioOrganizacionesDB;
 import org.quartz.Job;
 import org.quartz.JobDetail;
 import org.quartz.JobExecutionContext;
@@ -26,8 +27,9 @@ public class CronEnvioMail implements Job {
     Logger.getInstance().loggearCron("Proxima ejecucion: " + jobContext.getNextFireTime());
     Logger.getInstance().loggearCron("--------------------------------------------------------------------");
 
-    //TODO agregar el envio de mail
-    RepositorioOrganizaciones.GetInstance().enviarMailDeRecomendaciones();
+    RepositorioOrganizacionesDB repositorioOrganizacionesDB = new RepositorioOrganizacionesDB();
+
+    repositorioOrganizacionesDB.enviarMailDeRecomendaciones();
 
     //aca uso el jobdatamap con mis objetos de negocio
     CountDownLatch contadorSincronico = (CountDownLatch) jobDetail.getJobDataMap().get("contadorSincronico");

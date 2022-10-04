@@ -23,13 +23,15 @@ import org.hibernate.jpa.event.internal.jpa.ListenerFactoryBeanManagerStandardIm
 @Table(name="organizacion")
 public class Organizacion {
   @Id
-  //TODO revisar
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private int id_organizacion;
+
   @Column
   private String razonSocial;
+
   @Enumerated(EnumType.STRING)
   private TipoOrganizacion tipo;
+
   @Enumerated(EnumType.STRING)
   private ClasificacionOrganizacion clasificacion;
 
@@ -50,13 +52,15 @@ public class Organizacion {
   @Transient
   private String archivoMediciones;
 
-  @Transient /// PERO A CHEQUEAR
-  //TODO
-  private ArrayList<Actividad> actividades;
+  //@Transient /// PERO A CHEQUEAR
+  @OneToMany(mappedBy = "organizacion",cascade = CascadeType.ALL)
+  @NotFound(action = NotFoundAction.IGNORE)
+  private List<Actividad> actividades = new ArrayList<>();
 
-  @Transient
-  //TODO
-  private ArrayList<Reporte> reportes;
+  //@Transient
+  @OneToMany(mappedBy = "organizacion",cascade = CascadeType.ALL)
+  @NotFound(action = NotFoundAction.IGNORE)
+  private List<Reporte> reportes = new ArrayList<>();
 
   @Transient
   //TODO
@@ -75,7 +79,6 @@ public class Organizacion {
 
 
   @Transient
-  //TODO ver relacion
   private GeneradorReportes generadorReportes = GeneradorReportes.getInstance();
 
 
@@ -133,7 +136,7 @@ public class Organizacion {
 
 
 
-  public ArrayList <Actividad> getActividades() {
+  public List <Actividad> getActividades() {
     return actividades;
   }
 
@@ -141,7 +144,7 @@ public class Organizacion {
 
   public String getPaisOrigen() { return paisOrigen; }
 
-  public ArrayList<Reporte> getReportes() {
+  public List<Reporte> getReportes() {
     return reportes;
   }
 

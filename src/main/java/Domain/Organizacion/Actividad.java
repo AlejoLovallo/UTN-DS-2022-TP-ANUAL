@@ -32,6 +32,11 @@ public class Actividad {
   @JoinColumn(name="id_factor",referencedColumnName = "id_factor")
   private FactorEmision factorEmision;
 
+  @ManyToOne(cascade = CascadeType.ALL)
+  @NotFound(action = NotFoundAction.IGNORE)
+  @JoinColumn(name="id_organizacion",referencedColumnName = "id_organizacion")
+  private Organizacion organizacion;
+
   @ManyToMany(mappedBy = "actividades")
   private List<ReporteComposicion> reporteComposicions;
 

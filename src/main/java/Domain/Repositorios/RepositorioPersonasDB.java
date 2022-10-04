@@ -27,13 +27,13 @@ public class RepositorioPersonasDB extends Repositorio<Persona>{
     if(!repositorioUsuariosDB.existe(username))
       return null;
 
-    //TODO buscar en la DB de Persona
+
     return this.dbService.buscar(condicionPersonaJoinUsuario(username));
   }
 
   public Persona buscarPersonaPorNroDocumento(String nroDocumento){
 
-    //TODO buscar en la DB de Persona
+
     return this.dbService.buscar(condicionPersonaPorNroDocumento(nroDocumento));
   }
 
@@ -61,7 +61,7 @@ public class RepositorioPersonasDB extends Repositorio<Persona>{
     Persona personaNueva = new Persona(_nombre,_apellido,_tipoDocumento,_documento);
     personaNueva.setUsuario(user);
 
-    //TODO testear
+
     this.dbService.agregar(personaNueva);
 
     return personaNueva;

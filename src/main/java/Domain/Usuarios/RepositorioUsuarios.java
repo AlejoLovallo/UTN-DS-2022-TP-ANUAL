@@ -27,7 +27,6 @@ public class RepositorioUsuarios {
 
   //////////////////////////////////  CONSTRUCTORES
   private RepositorioUsuarios(){
-    //todo traer todos los usuarios de la DB
     this.usuarios = new ArrayList<>();
   }
 

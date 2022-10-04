@@ -100,7 +100,19 @@ public class Contacto {
         this.email = email;
         //update();
     }
-/*
+
+    @Override
+    public String toString() {
+        return "Contacto{" +
+            "id_contacto=" + id_contacto +
+            ", nombre='" + nombre + '\'' +
+            ", apellido='" + apellido + '\'' +
+            ", telefono=" + telefono +
+            ", email='" + email + '\'' +
+            '}';
+    }
+
+    /*
     public void setOrganizacion(Organizacion organizacion) {
         this.organizacion = organizacion;
         //update();

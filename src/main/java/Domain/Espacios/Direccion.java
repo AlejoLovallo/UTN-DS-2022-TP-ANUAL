@@ -24,9 +24,6 @@ public class Direccion extends Espacio {
   @Enumerated(EnumType.STRING)
   private TipoDireccion tipoDireccion;
 
-  /**
-   * TODO: Las marco como trasient pero fijarse cuales quedan y cuales no.
-   */
   @Column
   private String provincia;
   @Column
