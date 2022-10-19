@@ -1,9 +1,4 @@
 package Organizacion;
-<<<<<<< HEAD
-import Administrador.AdminTest;
-import Domain.CalculadorHC.CalculadorHC;
-=======
->>>>>>> develop
 import Domain.CalculadorHC.FactorEmision;
 import Domain.CalculadorHC.RepositorioFactores;
 import Domain.Espacios.Direccion;
@@ -11,14 +6,10 @@ import Domain.Espacios.Espacio;
 import Domain.Espacios.TipoDireccion;
 import Domain.Miembro.Miembro;
 import Domain.Organizacion.*;
-<<<<<<< HEAD
-import Domain.ServicioMedicion.ServicioExcel;
-=======
 import Domain.Organizacion.FrecuenciaServicio;
 import Domain.ServicioMedicion.ServicioExcel;
 import Domain.Organizacion.TipoDeActividad;
 import Domain.Organizacion.TipoDeConsumo;
->>>>>>> develop
 import Domain.Usuarios.Contacto;
 import Utils.Common;
 import org.junit.jupiter.api.AfterEach;
@@ -29,13 +20,9 @@ import Domain.CalculadorHC.CalculadorHC;
 
 import java.io.IOException;
 import java.text.ParseException;
-<<<<<<< HEAD
-=======
 import java.text.SimpleDateFormat;
->>>>>>> develop
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Date;
 
 public class OrganizacionTest {
   protected Organizacion organizacionEmpresa;
@@ -125,16 +112,16 @@ public class OrganizacionTest {
   @Test
   public void setRegistrarSector(){
 
-  Espacio espacio=new Direccion("Argentina", "Buenos Aires", "CABA", "CABA","Cordoba",3000, TipoDireccion.Trabajo);
-  Sector sector1=new Sector("Administracion",espacio, organizacionEmpresa,new ArrayList<Miembro>());
-  Sector sector2=new Sector("direccion", espacio,organizacionEmpresa,new ArrayList<Miembro>());
+    Espacio espacio=new Direccion("Argentina", "Buenos Aires", "CABA", "CABA","Cordoba",3000, TipoDireccion.Trabajo);
+    Sector sector1=new Sector("Administracion",espacio, organizacionEmpresa,new ArrayList<Miembro>());
+    Sector sector2=new Sector("direccion", espacio,organizacionEmpresa,new ArrayList<Miembro>());
 
 
-  this.organizacionEmpresa.registrarSector(sector1);
-  this.organizacionEmpresa.registrarSector(sector2);
+    this.organizacionEmpresa.registrarSector(sector1);
+    this.organizacionEmpresa.registrarSector(sector2);
 
-  Assertions.assertEquals(Arrays.asList(sector1,sector2),this.organizacionEmpresa.getSectores());
-}
+    Assertions.assertEquals(Arrays.asList(sector1,sector2),this.organizacionEmpresa.getSectores());
+  }
 
   @Test
   public void aceptarvinculacion(){
@@ -145,105 +132,61 @@ public class OrganizacionTest {
     sectores.add(sector);
 
     organizacionEmpresa.setSectores(sectores);
-<<<<<<< HEAD
 
     miembros.forEach(miembro -> this.organizacionEmpresa.aceptarVinculacion(miembro, organizacionEmpresa.getSectores().get(0)));
 
-=======
-
-    miembros.forEach(miembro -> this.organizacionEmpresa.aceptarVinculacion(miembro, organizacionEmpresa.getSectores().get(0)));
-
->>>>>>> develop
     Assertions.assertEquals(Arrays.asList(miembros.get(0),miembros.get(1)),this.organizacionEmpresa.getSectores().get(0).getMiembros());
     Assertions.assertTrue(this.organizacionEmpresa.aceptarVinculacion(miembros.get(0), organizacionEmpresa.getSectores().get(0)));
     Assertions.assertTrue(this.organizacionEmpresa.aceptarVinculacion(miembros.get(1), organizacionEmpresa.getSectores().get(0)));
   }
 
-@Test
+  @Test
   public void RepoOrganizaciones(){
-  RepositorioOrganizaciones repoOrg = null;
+    RepositorioOrganizaciones repoOrg = null;
 
-  Assertions.assertNull(repoOrg);
-  Assertions.assertNotNull(repoOrg.GetInstance());
+    Assertions.assertNull(repoOrg);
+    Assertions.assertNotNull(repoOrg.GetInstance());
   }
 
   @Test
   public void RepoSectores(){
-  RepositorioSectores repoSector = null;
+    RepositorioSectores repoSector = null;
 
-  Assertions.assertNull(repoSector);
-  Assertions.assertNotNull(repoSector.getInstance());
+    Assertions.assertNull(repoSector);
+    Assertions.assertNotNull(repoSector.getInstance());
   }
-<<<<<<< HEAD
-
-  @Test
-  public void subirReportesDeMediciones() throws IOException, ParseException {
-    ArrayList< FactorEmision > factoresDeEmision = new ArrayList<>();
-=======
 /*
   //TODO volver a testear
   @Test
   public void subirReportesDeMediciones() throws IOException, ParseException {
     ArrayList<FactorEmision> factoresDeEmision = new ArrayList<>();
->>>>>>> develop
     factoresDeEmision.add(Common.getFactorDeEmision());
     RepositorioFactores.getInstance().setFactoresDeEmision(factoresDeEmision);
     organizacionEmpresa.setServicioMediciones(ServicioExcel.getInstance());
     organizacionEmpresa.setArchivoMediciones("example.xls");
     CalculadorHC.getInstance().procesarActividadAnual(organizacionEmpresa);
-
-<<<<<<< HEAD
-    Assertions.assertEquals(organizacionEmpresa.getReportes().get(0).getFechaCarga().getDate(), 1);
-    Assertions.assertEquals(organizacionEmpresa.getReportes().get(0).getFechaCarga().getMonth(), 4);
-    Assertions.assertEquals(organizacionEmpresa.getReportes().get(0).getFechaCarga().getYear(), 122);
-
-    Assertions.assertEquals(organizacionEmpresa.getReportes().get(1).getFechaCarga().getDate(), 2);
-    Assertions.assertEquals(organizacionEmpresa.getReportes().get(1).getFechaCarga().getMonth(), 5);
-    Assertions.assertEquals(organizacionEmpresa.getReportes().get(1).getFechaCarga().getYear(), 121);
-
-    Assertions.assertEquals(organizacionEmpresa.getReportes().get(2).getFechaCarga().getDate(), 3);
-    Assertions.assertEquals(organizacionEmpresa.getReportes().get(2).getFechaCarga().getMonth(), 6);
-    Assertions.assertEquals(organizacionEmpresa.getReportes().get(2).getFechaCarga().getYear(), 120);
-
-    Assertions.assertEquals(organizacionEmpresa.getReportes().get(3).getFechaCarga().getDate(), 4);
-    Assertions.assertEquals(organizacionEmpresa.getReportes().get(3).getFechaCarga().getMonth(), 7);
-    Assertions.assertEquals(organizacionEmpresa.getReportes().get(3).getFechaCarga().getYear(), 119);
-  }
-=======
     Assertions.assertEquals(organizacionEmpresa.getActividades().get(0).getTipoDeActividad(), TipoDeActividad.COMBUSTION_FIJA);
     Assertions.assertEquals(organizacionEmpresa.getActividades().get(1).getTipoDeActividad(), TipoDeActividad.COMBUSTION_FIJA);
     Assertions.assertEquals(organizacionEmpresa.getActividades().get(2).getTipoDeActividad(), TipoDeActividad.COMBUSTION_FIJA);
     Assertions.assertEquals(organizacionEmpresa.getActividades().get(3).getTipoDeActividad(), TipoDeActividad.COMBUSTION_FIJA);
-
     Assertions.assertEquals(organizacionEmpresa.getActividades().get(0).getTipoDeConsumo(), TipoDeConsumo.NAFTA);
     Assertions.assertEquals(organizacionEmpresa.getActividades().get(1).getTipoDeConsumo(), TipoDeConsumo.CARBON);
     Assertions.assertEquals(organizacionEmpresa.getActividades().get(2).getTipoDeConsumo(), TipoDeConsumo.NAFTA);
     Assertions.assertEquals(organizacionEmpresa.getActividades().get(3).getTipoDeConsumo(), TipoDeConsumo.CARBON);
-
     Assertions.assertEquals(organizacionEmpresa.getActividades().get(0).getConsumo(),30.0);
     Assertions.assertEquals(organizacionEmpresa.getActividades().get(1).getConsumo(), 100.0);
     Assertions.assertEquals(organizacionEmpresa.getActividades().get(2).getConsumo(), 40.0);
     Assertions.assertEquals(organizacionEmpresa.getActividades().get(3).getConsumo(), 4500.0);
-
     Assertions.assertEquals(organizacionEmpresa.getActividades().get(0).getFrecuenciaServicio(), FrecuenciaServicio.MENSUAL);
     Assertions.assertEquals(organizacionEmpresa.getActividades().get(1).getFrecuenciaServicio(), FrecuenciaServicio.ANUAL);
     Assertions.assertEquals(organizacionEmpresa.getActividades().get(2).getFrecuenciaServicio(), FrecuenciaServicio.MENSUAL);
     Assertions.assertEquals(organizacionEmpresa.getActividades().get(3).getFrecuenciaServicio(), FrecuenciaServicio.ANUAL);
-
     SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy");
     Assertions.assertEquals("01/05/2022", formato.format(organizacionEmpresa.getActividades().get(0).getFechaCarga()));
     Assertions.assertEquals("02/06/2021", formato.format(organizacionEmpresa.getActividades().get(1).getFechaCarga()));
     Assertions.assertEquals("03/07/2020", formato.format(organizacionEmpresa.getActividades().get(2).getFechaCarga()));
     Assertions.assertEquals("04/08/2019", formato.format(organizacionEmpresa.getActividades().get(3).getFechaCarga()));
-
-
-
-
-
-
-
 //ESTO VA EN CALCULADORHCTEST calculoHCOrganizacion()
-
 //    Assertions.assertEquals(organizacionEmpresa.getActividades().get(0).obtenercantidadHCTotal(), 240.0);
 //    Assertions.assertEquals(organizacionEmpresa.getActividades().get(1).obtenercantidadHCTotal(), 250.00000000000003);
 //    Assertions.assertEquals(organizacionEmpresa.getActividades().get(2).obtenercantidadHCTotal(), 2080.0);
@@ -272,8 +215,6 @@ public class OrganizacionTest {
 //    Assertions.assertEquals(organizacionEmpresa.calcularHCMesAnio(7, 2020), 830.0);
 //    Assertions.assertEquals(organizacionEmpresa.calcularHCMesAnio(6, 2021), 846.6666666666666);
 //    Assertions.assertEquals(organizacionEmpresa.calcularHCMesAnio(5, 2022), 906.6666666666667);
-
   }*/
->>>>>>> develop
 
 }

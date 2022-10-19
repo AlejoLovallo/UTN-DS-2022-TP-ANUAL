@@ -90,12 +90,12 @@ public class ServicioExcel extends ServicioMediciones{
 
         if (actividad != null){
           if(periodicidad.equals(FrecuenciaServicio.MENSUAL.toString())){
-              actividad.agregarConsumo(mes, anio, valorConsumo);
-            }else{
-              for(int i = 1; i < mes; i++){
-                actividad.agregarConsumo(i, anio, valorConsumo/(mes -1));
-              }
+            actividad.agregarConsumo(mes, anio, valorConsumo);
+          }else{
+            for(int i = 1; i < mes; i++){
+              actividad.agregarConsumo(i, anio, valorConsumo/(mes -1));
             }
+          }
         }else{
 
           actividades.add(crearActividad(tipoActividad, tipoConsumo, periodicidad, mes, anio, valorConsumo));
@@ -117,11 +117,11 @@ public class ServicioExcel extends ServicioMediciones{
   }
 
   public Actividad crearActividad(String tipoActividad,
-                                 String tipoConsumo,
-                                 String periodicidad,
-                                 Integer mes,
-                                 Integer anio,
-                                 Double valorConsumo)
+                                  String tipoConsumo,
+                                  String periodicidad,
+                                  Integer mes,
+                                  Integer anio,
+                                  Double valorConsumo)
   {
     TipoDeActividad tipoDeActividad = TipoDeActividad.valueOf(tipoActividad);
     TipoDeConsumo tipoDeConsumo = TipoDeConsumo.valueOf(tipoConsumo);
@@ -137,22 +137,9 @@ public class ServicioExcel extends ServicioMediciones{
     System.out.println("La fecha con Date Formateada: " + (new SimpleDateFormat("dd/MM/yyyy")).format(Date.from(fechaPeriodoImputacion.atStartOfDay(ZoneId.systemDefault()).toInstant())));
      */
 
-    //ACA TRANSFORMA EL DATO QUE VIENE DEL EXCEL EN UN DATE
-    SimpleDateFormat formatoDelTexto = new SimpleDateFormat("M/d/y");
-    java.util.Date fecha = formatoDelTexto.parse(periodo_inputacion);
-
-    //ACA TRANSFORMA EL DATE DE "EEE MMM dd HH:mm:ss zzz uuuu" A "yyyy-MM-dd"
-    Date date = Date.valueOf(
-            ZonedDateTime.parse(
-                    fecha.toString(), DateTimeFormatter.ofPattern("EEE MMM dd HH:mm:ss zzz uuuu").withLocale(Locale.US)
-            ).toLocalDate()
-    );
-
-    System.out.print("La fecha transformada es: " + date);
-
     Actividad actividad = new Actividad(
-            tipoDeActividad,
-            tipoDeConsumo
+        tipoDeActividad,
+        tipoDeConsumo
     );
 
     if(periodicidad.equals(FrecuenciaServicio.MENSUAL.toString())){
