@@ -38,11 +38,146 @@
   <div class="form">
 
     <ul class="tab-group">
-      <li class="tab"><a href="#signUp">Registrarme</a></li>
+      <li class="tab"><a href="#signUpOrg">Registrar Organizacion</a></li>
+      <li class="tab"><a href="#signUpMem">Registrar Miembro</a></li>
       <li class="tab"><a href="#signIn">Iniciar Sesión</a></li>
     </ul>
 
     <button type="submit" class="button button-back" onclick="window.location.href='/menu_inicio'">VOLVER ATRAS</button>
+
+    <div class="tab-content">
+      <div id="signUpOrg">
+
+        <br>
+        
+        <h1>¡Registrá tu Organización!</h1>
+
+        <form class="" style="">
+
+          <h2>Datos personales</h2>
+
+          <div class="top-row">
+            <div class="field-wrap">
+              <label>
+                Razón Social<span class="req">*</span>
+              </label>
+              <br>
+              <br>
+              <input type="text" required autocomplete="off" id="Nombre" name="Nombre">
+            </div>
+
+            <div class="field-wrap">
+              <label>
+                Cuit<span class="req">*</span>
+              </label>
+              <br>
+              <br>
+              <input type="text" required autocomplete="off" id="Apellido" name="Apellido">
+            </div>
+          </div>
+
+          <div class="top-row">
+            <div class="field-wrap">
+              <label>
+                Fecha de nacimiento<span class="req">*</span>
+              </label>
+              <br>
+              <br>
+              <input type="text" required autocomplete="off" id="Fecha de nacimiento" name="Fecha de nacimiento" class="input-datos" />
+            </div>
+
+          <div class="field-wrap">
+            <label>
+              Tipo de Organizacion<span class="req">*</span>
+            </label>
+            <br>
+            <br>
+              <select class ="select-css" name="seleccionDeSexo" id="Sexo" onChange=changetextbox()>
+                <option value="0">Seleccione el tipo</option>
+                <option value="1">Gubernamental</option>
+                <option value="2">ONG</option>
+                <option value="3">Empresa</option>
+                <option value="3">Institución</option>
+              </select>
+          </div>
+        </div>
+
+          <div class="top-row">
+            <div class="field-wrap">
+              <label>
+                Clasificación<span class="req">*</span>
+              </label>
+              <br>
+              <br>
+                <select class ="select-css" name="seleccionDeSexo" id="Sexo" onChange=changetextbox()>
+                  <option value="0">Seleccione el tipo</option>
+                  <option value="1">Ministerio</option>
+                  <option value="2">Universidad</option>
+                  <option value="3">Escuela</option>
+                  <option value="3">Empresa Sector Primario</option>
+                  <option value="3">Empresa Sector Secundario</option>
+                </select>
+            </div>
+
+            <div class="field-wrap">
+              <label>
+                Localidad <span class="req">*</span>
+              </label>
+              <br>
+              <br>
+              <input type="text" required autocomplete="off" id="Localidad" name="Localidad"
+                class="input-datos" />
+            </div>
+          </div>
+
+          <h2>Datos de usuario</h2>
+
+          <div class="field-wrap">
+            <label>
+              Email<span class="req">*</span>
+            </label>
+            <br>
+            <br>
+            <input type="email" required autocomplete="off" id="Email" name="mail" class="input-datos" />
+          </div>
+
+          <div class="field-wrap">
+            <label>
+              Nombre de usuario<span class="req">*</span>
+            </label>
+            <br>
+            <br>
+            <input type="text" required autocomplete="off" id="NombreUsuario" name="usuario" class="input-datos" />
+          </div>
+
+          <div class="field-wrap">
+            <label>
+              Ingrese una contraseña<span class="req">*</span>
+            </label>
+            <br>
+            <br>
+            <input type="password" required autocomplete="off" id="Password" name="password" class="input-datos" />
+          </div>
+
+          <button type="submit" id="myBtn" class="button button-back">Registrarme</button>
+
+          <!--Enable textbox according to previus select in combobox and enable button once textboxs filled-->
+
+          <script type="text/javascript">
+
+            function verify() {
+              if (document.getElementById("nombre").value === "") {
+                document.getElementById('startbutton').disabled = true;
+                alert("Llene todos los campos obligatorios");
+              }
+              else {
+                document.getElementById('startbutton').disabled = false;
+              }
+            }
+          </script>
+
+      </div>
+    </div>    
 
     <div class="tab-content">
       <div id="signUp">
@@ -168,7 +303,7 @@
           </script>
 
       </div>
-    </div>    
+    </div>
 
   <div class="tab-content">
     <div id="signIn">
