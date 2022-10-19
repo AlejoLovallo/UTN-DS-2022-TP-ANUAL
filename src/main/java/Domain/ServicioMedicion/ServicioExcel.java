@@ -1,21 +1,19 @@
 package Domain.ServicioMedicion;
 
+import Domain.Organizacion.*;
 import Domain.Organizacion.Excepciones.ImposibilidadDeCrearWorkbookException;
 import Domain.Organizacion.Excepciones.ImposiblidadDeCerrarWorkbookException;
+
 import org.apache.poi.ss.usermodel.*;
 
 import java.io.File;
 import java.io.IOError;
 import java.io.IOException;
-import java.sql.Date;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.time.ZonedDateTime;
+import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.time.format.FormatStyle;
 import java.util.ArrayList;
 import java.util.Iterator;
-import java.util.Locale;
+import java.util.Optional;
 
 public class ServicioExcel extends ServicioMediciones{
   private static ServicioExcel instance = null;
@@ -28,7 +26,7 @@ public class ServicioExcel extends ServicioMediciones{
   }
 
   @Override
-  public ArrayList<Actividad> cargarMediciones(String fileName) throws IOException, IOError, ParseException {
+  public ArrayList<Actividad> cargarMediciones(String fileName, Organizacion org) throws IOException, IOError {
     Workbook workbook = null;
     try{
       File file = new File("src/main/java/Domain/Utils/" + fileName);
@@ -70,7 +68,9 @@ public class ServicioExcel extends ServicioMediciones{
 
         cell = cellIterator.next();
         String valor = dataFormatter.formatCellValue(cell);
-        //System.out.print(valor + "\t");
+        System.out.print(valor + "\t");
+        Double valorConsumo = Double.parseDouble(valor);
+
 
         cell = cellIterator.next();
         String periodicidad = dataFormatter.formatCellValue(cell);
@@ -80,7 +80,28 @@ public class ServicioExcel extends ServicioMediciones{
         String periodo_imputacion = dataFormatter.formatCellValue(cell);
         //System.out.print(periodo_imputacion + "\t");
 
-        actividades.add(leerActividad(tipoActividad, tipoConsumo, valor, periodicidad, periodo_imputacion));
+        LocalDate fechaPeriodoImputacion = LocalDate.parse(periodo_imputacion, DateTimeFormatter.ofPattern("M/d/yy"));
+        Integer mes = fechaPeriodoImputacion.getMonthValue();
+        Integer anio = fechaPeriodoImputacion.getYear();
+
+        Optional<Actividad> act = org.getActividades().stream().filter(unaActividad -> tipoActividad.equals(unaActividad.getNombre().toString()) && tipoConsumo.equals(unaActividad.getTipoConsumo().toString())).findAny();
+
+        Actividad actividad = act.get(); // CHEQUEAR ESTO PORQUE ES UN DESASTRE
+
+        if (actividad != null){
+          if(periodicidad.equals(FrecuenciaServicio.MENSUAL.toString())){
+              actividad.agregarConsumo(mes, anio, valorConsumo);
+            }else{
+              for(int i = 1; i < mes; i++){
+                actividad.agregarConsumo(i, anio, valorConsumo/(mes -1));
+              }
+            }
+        }else{
+
+          actividades.add(crearActividad(tipoActividad, tipoConsumo, periodicidad, mes, anio, valorConsumo));
+
+        }
+
       }
       System.out.println();
     }
@@ -95,14 +116,26 @@ public class ServicioExcel extends ServicioMediciones{
     return actividades;
   }
 
-  public Actividad leerActividad(String tipoActividad,
+  public Actividad crearActividad(String tipoActividad,
                                  String tipoConsumo,
-                                 String valor,
                                  String periodicidad,
-                                 String periodo_inputacion) throws ParseException {
+                                 Integer mes,
+                                 Integer anio,
+                                 Double valorConsumo)
+  {
     TipoDeActividad tipoDeActividad = TipoDeActividad.valueOf(tipoActividad);
     TipoDeConsumo tipoDeConsumo = TipoDeConsumo.valueOf(tipoConsumo);
-    Double valorConsumo = Double.parseDouble(valor);
+
+
+    // Del String periodoImputacion se pasa a LocalDate dado que sólo maneja fechas (sin horas)
+    //LocalDate fechaPeriodoImputacion = LocalDate.parse(periodo_inputacion, DateTimeFormatter.ofPattern("M/d/yy"));
+    // Se pasa a Date el LocalDate
+    //Date datePeriodoImputacion = Date.valueOf(fechaPeriodoImputacion);
+    /*
+    System.out.println("La fecha con LocalDate: " + fechaPeriodoImputacion);
+    System.out.println("La fecha con Date: " + Date.from(fechaPeriodoImputacion.atStartOfDay(ZoneId.systemDefault()).toInstant()));
+    System.out.println("La fecha con Date Formateada: " + (new SimpleDateFormat("dd/MM/yyyy")).format(Date.from(fechaPeriodoImputacion.atStartOfDay(ZoneId.systemDefault()).toInstant())));
+     */
 
     //ACA TRANSFORMA EL DATO QUE VIENE DEL EXCEL EN UN DATE
     SimpleDateFormat formatoDelTexto = new SimpleDateFormat("M/d/y");
@@ -119,19 +152,23 @@ public class ServicioExcel extends ServicioMediciones{
 
     Actividad actividad = new Actividad(
             tipoDeActividad,
-            tipoDeConsumo,
-            FrecuenciaServicio.valueOf(periodicidad),
-            date,
-            null
+            tipoDeConsumo
     );
 
-    actividad.setConsumo(valorConsumo);
-
+    if(periodicidad.equals(FrecuenciaServicio.MENSUAL.toString())){
+      actividad.agregarConsumo(mes, anio, valorConsumo);
+    }else{
+      for(int i = 1; i < mes; i++){
+        actividad.agregarConsumo(i, anio, valorConsumo/(mes -1));
+      }
+    }
     return actividad;
   }
-/*
-  public static void main(String[] args) throws IOException, IOError {
+
+  /*
+  public static void main(String[] args) throws IOException, IOError, ParseException {
     ServicioExcel lector = ServicioExcel.getInstance();
     lector.cargarMediciones("example.xls");
-  }*/
+  }
+   */
 }

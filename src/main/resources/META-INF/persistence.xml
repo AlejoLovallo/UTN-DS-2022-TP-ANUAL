@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<persistence xmlns="http://xmlns.jcp.org/xml/ns/persistence"
+             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+             xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence
+             http://xmlns.jcp.org/xml/ns/persistence/persistence_2_1.xsd"
+             version="2.1">
+    <persistence-unit name="ds" transaction-type="RESOURCE_LOCAL">
+        <provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
+
+        <class>ds.tp</class>
+        <class>Domain.MediosDeTransporte.TransportePublico</class>
+        <class>Domain.MediosDeTransporte.VehiculoParticular</class>
+        <class>Domain.MediosDeTransporte.MedioDeTransporte</class>
+
+        <class>Domain.Espacios.Espacio</class>
+        <class>Domain.Espacios.Estacion</class>
+        <class>Domain.Espacios.Direccion</class>
+
+        <class>Domain.Usuarios.Admin</class>
+        <class>Domain.Usuarios.Usuario</class>
+        <class>Domain.Usuarios.Contacto</class>
+        <class>Domain.Usuarios.UltimoIntento</class>
+
+
+        <class>Domain.Miembro.Persona</class>
+        <class>Domain.Miembro.Miembro</class>
+
+        <class>Domain.Organizacion.Actividad</class>
+        <class>Domain.Organizacion.Consumo</class>
+        <class>Domain.Organizacion.Organizacion</class>
+        <class>Domain.Organizacion.AgenteSectorial</class>
+        <class>Domain.Organizacion.Sector</class>
+
+        <class>Domain.Reportes.Reporte</class>
+        <class>Domain.Reportes.ReporteEvolucion</class>
+        <class>Domain.Reportes.ReporteComposicion</class>
+        <class>Domain.Reportes.ReporteTotal</class>
+
+        <class>Domain.Trayecto.Trayecto</class>
+        <class>Domain.Trayecto.Tramo</class>
+
+
+
+        <class>Domain.CalculadorHC.FactorEmision</class>
+
+
+        <exclude-unlisted-classes>true</exclude-unlisted-classes>
+
+        <properties>
+
+            <property name="hibernate.archive.autodetection" value="class"/>
+            <!-- CONNECTION SETTINGS -->
+            <property name="hibernate.connection.driver_class" value="com.mysql.cj.jdbc.Driver" />
+            <property name="hibernate.connection.url" value="jdbc:mysql://localhost:3306/impactoambiental" />
+            <property name="hibernate.connection.username" value="sa" />
+            <property name="hibernate.connection.password" value="dike2361!"/>
+            <!-- HIBERNATE CONFIG SETTINGS -->
+            <property name="hibernate.show_sql" value="true"/>
+            <property name="hibernate.format_sql" value="true"/>
+            <property name="use_sql_comments" value="true" />
+            <property name="hibernate.hbm2ddl.auto" value="update" />
+
+        </properties>
+    </persistence-unit>
+</persistence>

@@ -1,4 +1,4 @@
-package AfenteSectorial;
+package AgenteSectorial;
 
 import Domain.Organizacion.*;
 import Domain.Usuarios.Contacto;
@@ -8,8 +8,8 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 
 public class AgenteSectorialTest {
     private AgenteSectorial agenteSectorialTest;
@@ -77,9 +77,9 @@ public class AgenteSectorialTest {
     public void agregarOrganizacion(){
         //GIVEN DADO
         Contacto contactoOrganizacion = new Contacto("Nombre", "Apellido", 1234, "email@gmail.com");
-        ArrayList<Organizacion> organizacioneslActual = this.agenteSectorialTest.getOrganizaciones();
+        List<Organizacion> organizacioneslActual = this.agenteSectorialTest.getOrganizaciones();
         Organizacion nuevaOrganizacion = new Organizacion("razonSocaial", TipoOrganizacion.Empresa,ClasificacionOrganizacion.EmpresaSectorPrimario,contactoOrganizacion, 5);
-        ArrayList<Organizacion> organizacionesActualizadas = organizacioneslActual;
+        List<Organizacion> organizacionesActualizadas = organizacioneslActual;
         organizacionesActualizadas.add(nuevaOrganizacion);
         //WHEN CUANDO
         this.agenteSectorialTest.agregarOrganizacion(nuevaOrganizacion);
@@ -94,9 +94,9 @@ public class AgenteSectorialTest {
     public void asignarseOrganizaciones(){
         //GIVEN DADO
         Contacto contactoOrganizacion = new Contacto("Nombre", "Apellido", 1234, "email@gmail.com");
-        ArrayList<Organizacion> organizacioneslActual = this.agenteSectorialTest.getOrganizaciones();
+        List<Organizacion> organizacioneslActual = this.agenteSectorialTest.getOrganizaciones();
         Organizacion nuevaOrganizacion = new Organizacion("razonSocaial", TipoOrganizacion.Empresa,ClasificacionOrganizacion.EmpresaSectorPrimario,contactoOrganizacion, 5);
-        ArrayList<Organizacion> organizacionesActualizadas = organizacioneslActual;
+        List<Organizacion> organizacionesActualizadas = organizacioneslActual;
         organizacionesActualizadas.add(nuevaOrganizacion);
         //WHEN CUANDO
         RepositorioAgentes.GetInstance().agregarOrganizacionAAgente(agenteSectorialTest, nuevaOrganizacion);

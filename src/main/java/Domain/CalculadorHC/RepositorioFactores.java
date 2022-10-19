@@ -1,7 +1,7 @@
 package Domain.CalculadorHC;
 
 import Domain.CalculadorHC.Excepciones.FactorDeEmisionNoEncontradoException;
-import Domain.ServicioMedicion.TipoDeActividad;
+import Domain.Organizacion.TipoDeActividad;
 
 import java.util.ArrayList;
 import java.util.Optional;
@@ -32,7 +32,7 @@ public class RepositorioFactores {
     public FactorEmision getFactorDeEmisionSegunActividad(TipoDeActividad tipoDeActividad) {
 
         Optional <FactorEmision> factor = factoresDeEmision.stream()
-                .filter(f -> f.getTipoDeActividad().equals(tipoDeActividad)).findAny();
+                .filter(f -> f.getTipoActividad().equals(tipoDeActividad)).findAny();
 
         return factor.get();
     }

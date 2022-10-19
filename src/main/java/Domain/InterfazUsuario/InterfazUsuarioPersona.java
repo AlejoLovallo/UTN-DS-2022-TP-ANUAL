@@ -3,13 +3,10 @@ package Domain.InterfazUsuario;
 import Domain.Miembro.Persona;
 import Domain.Miembro.RepositorioPersonas;
 import Domain.Miembro.TipoDocumento;
-import Domain.Usuarios.Contacto;
-import Domain.Notificaciones.MedioDeNotificacion;
 import Domain.Usuarios.Excepciones.UsuarioException;
 import Domain.Usuarios.RepositorioUsuarios;
 import Domain.Usuarios.Usuario;
 
-import java.util.List;
 
 
 public class InterfazUsuarioPersona {

@@ -1,5 +1,6 @@
 package Domain.Trayecto;
 
+import Domain.BaseDeDatos.EntityManagerHelper;
 import Domain.Espacios.Espacio;
 import Domain.Miembro.Miembro;
 
@@ -7,13 +8,28 @@ import java.io.IOException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.GregorianCalendar;
+import java.util.List;
+import javax.persistence.*;
 
-
+@Entity
+@Table(name="trayecto")
 public class Trayecto {
-  private ArrayList<Tramo> tramos;
+  @Id
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
+  private int id_trayecto;
+
+  @OneToMany(mappedBy = "trayecto" , cascade = CascadeType.ALL)
+  private List<Tramo> tramos;
+
+  @Column
   private Integer frecuenciaSemanal;
+  @Column
   private LocalDate fechaInicio;
+  @Column
   private LocalDate fechaFin;
+
+  @ManyToOne(cascade = CascadeType.ALL)
+  @JoinColumn(name="id_miembro",referencedColumnName = "id_miembro")
   private Miembro miembro;
 
 
@@ -35,7 +51,7 @@ public class Trayecto {
 
   //////////////////////////////////  GETTERS
 
-  public ArrayList<Tramo> getTramos(){
+  public List<Tramo> getTramos(){
     return this.tramos;
   }
 
@@ -57,16 +73,19 @@ public class Trayecto {
 
   public void setTramos(ArrayList<Tramo> tramos) {
     this.tramos = tramos;
+    //update();
   }
 
   public Boolean setMiembro(Miembro _miembro){
     this.miembro = _miembro;
+    //update();
     return true;
   }
 
   //////////////////////////////////  INTERFACE
   public Boolean addTramo(Tramo _tramo){
     this.tramos.add(_tramo);
+    //update();
     return true;
   }
 
@@ -88,6 +107,7 @@ public class Trayecto {
 
   public void setFrecuenciaSemanal(Integer frecuenciaSemanal) {
     this.frecuenciaSemanal = frecuenciaSemanal;
+    //update();
   }
 
   public LocalDate getFechaInicio() {
@@ -96,6 +116,7 @@ public class Trayecto {
 
   public void setFechaInicio(LocalDate fechaInicio) {
     this.fechaInicio = fechaInicio;
+    //update();
   }
 
   public LocalDate getFechaFin() {
@@ -104,6 +125,7 @@ public class Trayecto {
 
   public void setFechaFin(LocalDate fechaFin) {
     this.fechaFin = fechaFin;
+    //update();
   }
 
   public Integer diasDelMesActivo(Integer mes, Integer año) {
@@ -194,5 +216,24 @@ public class Trayecto {
     }
     return esBisiesto;
   }
+/*
+  ////// DB
+  public void update(){
+    EntityManagerHelper.tranUpdate(this);
+  }
+
+  public static Trayecto get(int trayectoID) {
+    EntityManager em = EntityManagerHelper.getEntityManager();
+    EntityManagerHelper.beginTransaction();
+    Trayecto trayecto = em.find(Trayecto.class, trayectoID);
+    em.detach(trayecto);
+    EntityManagerHelper.commit();
+    EntityManagerHelper.closeEntityManager();
+    return trayecto;
+  }
+
+  public void insert(){
+    EntityManagerHelper.tranPersist(this);
+  }*/
 
 }

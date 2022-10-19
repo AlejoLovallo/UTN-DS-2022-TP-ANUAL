@@ -1,35 +1,77 @@
 package Domain.Usuarios;
 import Domain.Usuarios.Excepciones.ContraseniaEsInvalidaException;
+import org.hibernate.annotations.NotFound;
+import org.hibernate.annotations.NotFoundAction;
+
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 
+import javax.mail.internet.AddressException;
+import javax.mail.internet.InternetAddress;
+import javax.persistence.*;
 
-public class Usuario {
+@Entity
+@Table(name = "usuario"/*, catalog = "curso"*/)
+public class Usuario{
   //////////////////////////////////  VARIABLES
-  private final String salt = "+@351";
-  private String contraHasheada;
+  @Id
+  //@GeneratedValue(strategy = GenerationType.IDENTITY)
+  @GeneratedValue(strategy = GenerationType.AUTO)
+  private int id_usuario;
+  @Column
+  private String mail;
+  @Column
   private String username;
-  private String email;
-  private UltimoIntento ultimoAcceso;
+  @Column
+  private String contraHasheada;
+  @Column
   private Boolean validado;
-  private ArrayList<CriterioValidacion> validadoresContrasenia;
-  //private Contacto contacto;
 
+  //@Transient
+  //@Column
+  //private Boolean isAdmin;
+
+
+  //@Transient
+  @OneToOne(cascade = CascadeType.ALL)//(mappedBy = "usuario")
+  @NotFound(action = NotFoundAction.IGNORE)
+  @JoinColumn(name = "id_ultimointento" , referencedColumnName = "id_ultimointento")
+  private UltimoIntento ultimointento;
+
+  @Transient
+  private ArrayList<CriterioValidacion> validadoresContrasenia;
+
+  @Transient
+  private final String salt = "+@351";
 
   //////////////////////////////////  CONSTRUCTORES
-  public Usuario(String username,String email,String contra,boolean validado) {
+
+  public Usuario(){
+
+  }
+
+  public Usuario(String username, String mail, String contra, boolean validado) {
     if(!isContraseniaValida(contra)){
       throw new ContraseniaEsInvalidaException("no pasa por alguna de las validaciones de seguridad");
     }
     this.validado = validado;
     this.contraHasheada = generateHash(contra);
     this.username = username;
-    this.email = email;
-    this.ultimoAcceso = new UltimoIntento();
+    try {
+      InternetAddress emailAddr = new InternetAddress(mail);
+      emailAddr.validate();
+    }
+    catch (AddressException ex) {
+      throw new RuntimeException("Debe ingresar una direccion de email valida");
+    }
+    this.ultimointento = new UltimoIntento();
+    //this.isAdmin = false;
+    this.mail = mail;
     //this.contacto = contacto;
   }
+
 
   //////////////////////////////////  GETTERS
   public boolean isValido(){
@@ -39,15 +81,49 @@ public class Usuario {
   public String getUsername() {
     return this.username;
   }
+/*
+  public Boolean getIsAdmin() {
+    return isAdmin;
+  }
 
-  public String getEmail() {
-    return this.email;
+  public void setIsAdmin(Boolean admin) {
+    isAdmin = admin;
+    //update();
+  }*/
+
+  public String getMail() {
+    return this.mail;
+  }
+
+  public void setUsername(String username) {
+    this.username = username;
+    //update();
+  }
+
+  public void setContraHasheada(String contraHasheada) {
+    this.contraHasheada = contraHasheada;
+    //update();
   }
 
   //////////////////////////////////  SETTERS
   public void setValidado(Boolean validado) {
     this.validado = validado;
+    //update();
   }
+
+  public void setMail(String mail){
+    try {
+      InternetAddress emailAddr = new InternetAddress(mail);
+      emailAddr.validate();
+      this.mail = mail;
+      //update();
+    }
+    catch (AddressException ex) {
+      throw new RuntimeException("Debe ingresar una direccion de email valida");
+    }
+  }
+
+
 
 
   //////////////////////////////////  INTERFACE
@@ -61,7 +137,7 @@ public class Usuario {
   }
 
   public boolean intentoAcceso(){
-    return this.ultimoAcceso.validar_acceso();
+    return this.ultimointento.validar_acceso();
   }
 
   private boolean isContraseniaValida(String contra){
@@ -97,4 +173,37 @@ public class Usuario {
 
     return sb.toString();
   }
+
+
+  public static String toString(Usuario usuario) {
+    if(usuario == null) return "el usuario es nulo";
+
+    return "Usuario{" +
+        "id_usuario=" + usuario.id_usuario +
+        ", mail='" + usuario.mail + '\'' +'\n'+
+        ", username='" + usuario.username + '\'' +'\n'+
+        ", contraHasheada='" + usuario.contraHasheada + '\'' +'\n'+
+        ", validado=" + usuario.validado +'\n'+
+        ", ultimointento=" + UltimoIntento.toString(usuario.ultimointento) +
+        '}';
+  }
+
+  /*
+  public void update(){
+    EntityManagerHelper.tranUpdate(this);
+  }
+
+  public static Usuario get(int usuarioID) {
+    EntityManager em = EntityManagerHelper.getEntityManager();
+    EntityManagerHelper.beginTransaction();
+    Usuario usuario = em.find(Usuario.class, usuarioID);
+    em.detach(usuario);
+    EntityManagerHelper.commit();
+    EntityManagerHelper.closeEntityManager();
+    return usuario;
+  }
+
+  public void insert(){
+    EntityManagerHelper.tranPersist(this);
+  }*/
 }

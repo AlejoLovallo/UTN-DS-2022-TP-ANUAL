@@ -64,7 +64,11 @@ public class RepoPersonasTest {
 
         //THEN ENTONCES
         Assertions.assertEquals("username", interfazUsuarioPersona.getUsuario().getUsername());
+<<<<<<< HEAD
         Assertions.assertEquals("mail", interfazUsuarioPersona.getUsuario().getEmail());
+=======
+        Assertions.assertEquals("mail", interfazUsuarioPersona.getUsuario().getMail());
+>>>>>>> develop
         Assertions.assertEquals("nombre", interfazUsuarioPersona.getPersona().getNombre());
         Assertions.assertEquals("apellido", interfazUsuarioPersona.getPersona().getApellido());
 

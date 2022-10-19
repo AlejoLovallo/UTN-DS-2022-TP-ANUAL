@@ -21,6 +21,7 @@ import org.junit.jupiter.api.Test;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.List;
 
 public class TrayectoTest {
 
@@ -89,7 +90,7 @@ public class TrayectoTest {
         Tramo tramo2 = Common.getTramoTest("Calle4", "Calle5");
 
         //GIVEN DADO
-        ArrayList<Tramo> tramosActuales = this.trayectoTest.getTramos();
+        List<Tramo> tramosActuales = this.trayectoTest.getTramos();
         ArrayList<Tramo> nuevosTramos = new ArrayList<Tramo>();
 
         //WHEN CUANDO
@@ -118,7 +119,7 @@ public class TrayectoTest {
     public void addTramo(){
 
         //GIVEN DADO
-        ArrayList<Tramo> tramosActuales = this.trayectoTest.getTramos();
+        List<Tramo> tramosActuales = this.trayectoTest.getTramos();
         Tramo nuevoTramo = Common.getTramoTest("Calle10", "Calle20");
 
         //WHEN CUANDO

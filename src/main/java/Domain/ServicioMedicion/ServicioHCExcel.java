@@ -1,5 +1,7 @@
 package Domain.ServicioMedicion;
 
+import Domain.Organizacion.FrecuenciaServicio;
+
 import java.util.Calendar;
 import java.util.Date;
 
@@ -7,6 +9,8 @@ public class ServicioHCExcel {
   private Double calculoHC;
   private FrecuenciaServicio periodicidad;
   private Date fechaCarga;
+  private  int mes;
+
 
   public ServicioHCExcel(Double _hc, FrecuenciaServicio _periodicidad, Date _fecha){
     this.setCalculoHC(_hc);
@@ -33,6 +37,14 @@ public class ServicioHCExcel {
 
   public Date getFechaCarga() {
     return fechaCarga;
+  }
+
+  public void setMes(int mes) {
+    this.mes = mes;
+  }
+
+  public int getMes() {
+    return mes;
   }
 
   public void setFechaCarga(Date fechaCarga) {

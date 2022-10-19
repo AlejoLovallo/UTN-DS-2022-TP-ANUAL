@@ -13,7 +13,6 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 
 public class PersonaTest {
     protected Persona unaPersona;
@@ -35,7 +34,7 @@ public class PersonaTest {
     Assertions.assertEquals("Ester",this.unaPersona.getNombre());
     Assertions.assertEquals("Exposito",this.unaPersona.getApellido());
     Assertions.assertEquals(TipoDocumento.DNI,this.unaPersona.getTipoDocumento());
-    Assertions.assertEquals("456789546",this.unaPersona.getDocumento());
+    Assertions.assertEquals("456789546",this.unaPersona.getNroDocumento());
   }
 
   @Test
@@ -73,13 +72,13 @@ public class PersonaTest {
 
   @Test
   public void setDoc(){
-    String docActual=this.unaPersona.getDocumento();
+    String docActual=this.unaPersona.getNroDocumento();
     String docNuevo="123456789";
 
-    this.unaPersona.setDocumento(docNuevo);
+    this.unaPersona.setNroDocumento(docNuevo);
 
     Assertions.assertEquals("456789546",docActual);
-    Assertions.assertEquals(docNuevo,this.unaPersona.getDocumento());
+    Assertions.assertEquals(docNuevo,this.unaPersona.getNroDocumento());
   }
 
   @Test

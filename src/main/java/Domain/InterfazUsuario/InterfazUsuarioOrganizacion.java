@@ -4,6 +4,7 @@ import Domain.Organizacion.Organizacion;
 import Domain.Usuarios.Usuario;
 
 public class InterfazUsuarioOrganizacion {
+  
   private InterfazUsuarioOrganizacion instance = null;
   private Usuario usuario;
   private Organizacion organizacion;

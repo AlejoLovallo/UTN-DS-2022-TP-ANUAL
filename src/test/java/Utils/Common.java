@@ -13,7 +13,7 @@ import Domain.Organizacion.ClasificacionOrganizacion;
 import Domain.Organizacion.Organizacion;
 import Domain.Organizacion.Sector;
 import Domain.Organizacion.TipoOrganizacion;
-import Domain.ServicioMedicion.TipoDeActividad;
+import Domain.Organizacion.TipoDeActividad;
 import Domain.Trayecto.Tramo;
 import Domain.Trayecto.Trayecto;
 import Domain.Usuarios.RepositorioUsuarios;
@@ -125,6 +125,10 @@ public class Common {
   public static FactorEmision getFactorDeEmision() {
     return new FactorEmision(TipoDeActividad.COMBUSTION_FIJA, 2.0, Unidad.m3);
   }
+
+    public static FactorEmision getFactorDeEmisionCOMBUSTION_MOVIL() {
+      return new FactorEmision(TipoDeActividad.COMBUSTION_MOVIL, 2.0, Unidad.m3);
+    }
 }
 
 

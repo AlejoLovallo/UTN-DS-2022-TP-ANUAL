@@ -7,35 +7,71 @@ import Domain.Organizacion.Sector;
 import Domain.Trayecto.Trayecto;
 
 import java.io.IOException;
-import java.nio.DoubleBuffer;
 import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.List;
+import javax.persistence.*;
 
+@Entity
+@Table(name="miembro")
 public class Miembro {
-  private String id;
-  private Sector sector;
-  private ArrayList<Trayecto> trayectos;
+  @Id
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
+  private int id_miembro;
 
+  @Transient
+  //@Column(name = "rol")
+  private String nombre;
+
+  @ManyToOne(cascade=CascadeType.ALL)
+  @JoinColumn(name = "id_sector", referencedColumnName = "id_sector")
+  private Sector sector;
+
+  @ManyToOne(cascade=CascadeType.ALL)
+  @JoinColumn(name = "id_persona", referencedColumnName = "id_persona")
+  private Persona persona;
+
+  // FALTA DEFINIR LA PARTICION DE CLASE
+  @OneToMany(cascade=CascadeType.ALL , mappedBy = "miembro")
+  private List<Trayecto> trayectos;
+
+  @Transient
   private CalculadorHC calculadorHC = CalculadorHC.getInstance();
 
 
   //////////////////////////////////  CONSTRUCTOR
-  public Miembro(String _id, Sector _sector){
-    this.id = _id;
+  private Miembro(){
+
+  }
+
+  public Miembro(String nombre, Sector _sector){
+    this.nombre = nombre;
+    this.sector = _sector;
+  }
+
+  public Miembro(Sector _sector){
     this.sector = _sector;
   }
 
   //////////////////////////////////  GETTERS
 
-  public ArrayList<Trayecto> getTrayectos() {
+  public List<Trayecto> getTrayectos() {
     return trayectos;
   }
 
   public Sector getSector() { return sector; }
   //////////////////////////////////  SETTERS
+
+
+  public void setPersona(Persona persona) {
+    this.persona = persona;
+  }
+
+
   public void setTrayectos(ArrayList<Trayecto> trayectos) {
     this.trayectos = trayectos;
   }
+
+
 
   //////////////////////////////////  INTERFACE
 
@@ -78,6 +114,30 @@ public class Miembro {
 
   public void desvincularTrayecto(Trayecto trayecto){
     this.trayectos.remove(trayecto);
+  }
+
+
+  public static String toString(Miembro miembro) {
+    if(miembro == null) return "el miembro es nulo";
+
+    return "Miembro{" +
+        "id_miembro=" + miembro.id_miembro +
+        ", nombre='" + miembro.nombre + '\'' +
+        ", sector=" + miembro.sector +
+        ", persona=" + miembro.persona +
+        ", trayectos=" + miembro.trayectos +
+        ", calculadorHC=" + miembro.calculadorHC +
+        '}';
+  }
+
+  public static String toString(List<Miembro> miembros) {
+    if(miembros == null) return "los miembros son nulo";
+
+    for (Miembro mi : miembros) {
+     return Miembro.toString(mi);
+    }
+
+    return "default";
   }
 
 }

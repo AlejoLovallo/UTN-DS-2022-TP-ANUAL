@@ -5,6 +5,7 @@ import Domain.Usuarios.Usuario;
 
 import java.util.ArrayList;
 
+//TODO deletear
 public class RepositorioPersonas {
   //////////////////////////////////  VARIABLES
   private static RepositorioPersonas instance = null;
@@ -13,7 +14,6 @@ public class RepositorioPersonas {
 
   //////////////////////////////////  CONSTRUCTORES
   private RepositorioPersonas(){
-    //todo traer todos los usuarios de la DB
     this.personas = new ArrayList<>();
   }
 
@@ -25,14 +25,12 @@ public class RepositorioPersonas {
   }
 
   public Persona buscarPersonaPorUsuario(Usuario usuarioABuscar){
-    //TODO buscar en la DB de Persona
     return this.personas.stream().filter(persona -> persona.getUsuario().equals(usuarioABuscar)).findFirst().orElse(null);
   }
 
   public Persona crearPersona(String _nombre, String _apellido, TipoDocumento _tipoDocumento, String _documento, Usuario user){
     Persona personaNueva = new Persona(_nombre,_apellido,_tipoDocumento,_documento);
     personaNueva.setUsuario(user);
-    //TODO agregar a DB de Persona
     this.personas.add(personaNueva);
     return personaNueva;
   }
