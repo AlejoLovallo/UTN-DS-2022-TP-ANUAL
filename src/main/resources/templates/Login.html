@@ -3,7 +3,7 @@
 
 <head>
   <meta charset="UTF-8">
-  <title>TP ANUAL - REGISTRARSE/INICIAR SESIÓN</title>
+  <title>Login</title>
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
     integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
   <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
@@ -86,21 +86,21 @@
               <input type="text" required autocomplete="off" id="Fecha de nacimiento" name="Fecha de nacimiento" class="input-datos" />
             </div>
 
-          <div class="field-wrap">
-            <label>
+            <div class="field-wrap">
+              <label>
               Tipo de Organizacion<span class="req">*</span>
-            </label>
-            <br>
-            <br>
-              <select class ="select-css" name="seleccionDeSexo" id="Sexo" onChange=changetextbox()>
-                <option value="0">Seleccione el tipo</option>
-                <option value="1">Gubernamental</option>
-                <option value="2">ONG</option>
-                <option value="3">Empresa</option>
-                <option value="3">Institución</option>
-              </select>
+              </label>
+              <br>
+              <br>
+                <select class ="select-css" name="seleccionDeSexo" id="Sexo" onChange=changetextbox()>
+                  <option value="0">Seleccione el tipo</option>
+                  <option value="1">Gubernamental</option>
+                  <option value="2">ONG</option>
+                  <option value="3">Empresa</option>
+                  <option value="3">Institución</option>
+                </select>
+            </div>
           </div>
-        </div>
 
           <div class="top-row">
             <div class="field-wrap">
@@ -180,7 +180,7 @@
     </div>    
 
     <div class="tab-content">
-      <div id="signUp">
+      <div id="signUpMem">
 
         <br>
         
@@ -353,5 +353,28 @@
 <script src="../static/js/Login.js"></script>
 
 </body>
+
+<footer class="footer-distributed">
+
+  <div class="footer-right">
+
+    <a href="https://github.com/AlejoLovallo/UTN-DS-2022-TP-ANUAL"><img src="../images/logo_github.jpeg"
+      class="imagen_footer" alt="icon"></a>
+  
+  </div>
+
+  <div class="footer-left">
+
+    <p class="footer-links">
+
+      <a href="#">Acerca de nosotros</a>
+
+      <a href="#">Contacto</a>
+    </p>
+
+    <p>Diseño de Sistemas &copy; 2022</p>
+  </div>
+
+</footer>
 
 </html>
