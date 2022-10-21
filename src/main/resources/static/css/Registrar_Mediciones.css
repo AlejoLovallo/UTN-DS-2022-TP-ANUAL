@@ -1,109 +1,140 @@
 body {
     overflow-x: hidden;
-    font-family: 'Titillium Web', sans-serif;
-    display: flex;
-    flex-direction: column;
+    font-family: Arial, Helvetica, sans-serif;
 }
 
+.form {
+    background: #3c6f3d;
+    padding: 50px;
+    padding-top: 30px;
+    max-width: 1000px;
+    margin: 40px auto;
+    border-radius: 4px;
+    box-shadow: 0 4px 10px 4px rgba(19, 35, 47, 0.3);
+    flex: 1;
+    width: 100%;
+}
+
+.tab-group {
+list-style: none;
+padding: 0;
+margin: 0 0 40px 0;
+}
+.tab-group:after {
+content: "";
+display: table;
+clear: both;
+}
+.tab-group li a {
+display: block;
+text-decoration: none;
+padding: 15px;
+background: rgba(160, 179, 176, 0.25);
+color: #9ca2a0;
+font-size: 20px;
+float: left;
+width: 33%;
+height: 33%;
+text-align: center;
+cursor: pointer;
+-webkit-transition: .5s ease;
+transition: .5s ease;
+margin-right: 1px;
+}
+
+
+.tab-group li a:hover {
+background: #222;
+color: #ffffff;
+}
+.tab-group .active a {
+background: #222;
+color: #ffffff;
+}
+
+.tab-content > div:last-child {
+display: none;
+}
+
+label {
+  position: absolute;
+  -webkit-transform: translateY(6px);
+          transform: translateY(6px);
+  left: 13px;
+  color: rgb(255, 255, 255);
+  -webkit-transition: all 0.25s ease;
+  transition: all 0.25s ease;
+  -webkit-backface-visibility: hidden;
+  pointer-events: none;
+  font-size: 22px;
+}
+label .req {
+  margin: 2px;
+  color: #da8617;
+}
+
+label.active {
+  -webkit-transform: translateY(-50px);
+          transform: translateY(-16px);
+  left: 2px;
+  font-size: 14px;
+}
+label.active .req {
+  opacity: 0;
+}
+
+label.highlight {
+  color: #ffffff;
+}
+
+input, textarea {
+  font-size: 22px;
+  display: block;
+  width: 100%;
+  height: 100%;
+  padding: 5px 10px;
+  background: none;
+  background-image: none;
+  border: 1px solid #a0b3b0;
+  color: #ffffff;
+  border-radius: 0;
+  -webkit-transition: border-color .25s ease, box-shadow .25s ease;
+  transition: border-color .25s ease, box-shadow .25s ease;
+}
+input:focus, textarea:focus {
+  outline: 0;
+  border-color: #da8617;
+}
+
+textarea {
+  border: 2px solid #a0b3b0;
+  resize: vertical;
+}
+
+.field-wrap {
+  position: relative;
+  margin-bottom: 25px;
+}
+
+.top-row:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+.top-row > div {
+  float: left;
+  width: 48%;
+  margin-right: 4%;
+}
+.top-row > div:last-child {
+  margin: 0;
+}
 .text-muted {
     color: rgb(3, 3, 3);
 }
 
 .text-primary {
     color: #1ee2e7;
-}
-
-table{
-    border-spacing:2px;
-    border-collapse: collapse;
-    text-align: center;
-}
-
-th{
-    padding:4px;
-    border: orange 1px solid;
-    text-align: center;
-}
-
-tr td{
-    border: orange 1px solid;
-    text-align: center;
-    padding: 10px;
-    vertical-align: middle;
-}
-.form {
-    background: #3c6f3d;
-    padding: 50px;
-    padding-top: 30px;
-    max-width: 850px;
-    margin: 40px auto;
-    border-radius: 4px;
-    box-shadow: 0 4px 10px 4px rgba(19, 35, 47, 0.3);
-    flex: 1;
-    width: 100%;
-  }
-
-.button {
-  border: 0;
-  outline: none;
-  margin-right: 10px;
-  border-radius: 0;
-  padding: 5px;
-  font-size: 12px;
-  font-weight: 200;
-  text-transform: uppercase;
-  letter-spacing: .1em;
-  color: #ffffff;
-  -webkit-transition: all 0.5s ease;
-  transition: all 0.5s ease;
-  -webkit-appearance: none;
-}
-
-.button-block {
-  display: block;
-  font-size: larger;
-  width: 100%;
-}
-
-.button-block:hover,
-.button-block:focus,
-.button-block:active,
-.button-block.active,
-.open .dropdown-toggle.button-block {
-    border-color: #8e714b;
-    border-width: thick;
-    color: rgb(255, 255, 255);
-    background-color: rgb(222, 211, 196);
-    cursor: pointer;
-}
-
-.button-back{
-  margin-bottom: 10px;
-  display: block;
-  font-size: large;
-  width: 100%;
-  top: 20px;
-}
-
-.button-accept{
-    display: block;
-    width: 100%;
-    top: 20px;
-    background: #0e8e0c;
-}
-
-.button-deny{
-width: 100%;
-top: 20px;
-background: #b4230d;
-}
-
-.button-accept:hover, .button-accept:focus {
-background: #10640c;
-}
-
-.button-deny:hover, .button-deny:focus {
-    background: #8c1111;
 }
 
 p {
@@ -115,6 +146,63 @@ p.large {
     font-size: 16px;
 }
 
+.button {
+    border: 0;
+    outline: none;
+    border-radius: 0;
+    padding: 15px 0;
+    font-size: 2rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: .1em;
+    background: #da8617;
+    color: #ffffff;
+    -webkit-transition: all 0.5s ease;
+    transition: all 0.5s ease;
+    -webkit-appearance: none;
+  }
+  .button:hover, .button:focus {
+    background: #da8617;
+  }
+  
+  .button-block {
+    display: block;
+    font-size: larger;
+    width: 100%;
+  }
+  
+  .button-block:hover,
+  .button-block:focus,
+  .button-block:active,
+  .button-block.active,
+  .open .dropdown-toggle.button-block {
+      border-color: #da8617;
+      border-width: thick;
+      color: rgb(255, 255, 255);
+      background-color: rgb(201, 119, 11);
+      cursor: pointer;
+  }
+  
+  .button-back{
+    margin-bottom: 10px;
+    display: block;
+    font-size: large;
+    width: 100%;
+    top: 20px;
+  }
+  
+  .button-back:hover,
+  .button-back:focus,
+  .button-back:active,
+  .button-back.active,
+  .open .dropdown-toggle.button-back {
+      border-color: #da8617;
+      border-width: thick;
+      color: rgb(255, 255, 255);
+      background-color: rgb(201, 119, 11);
+      cursor: pointer;
+  }
+  
 a,
 a:hover,
 a:focus,
@@ -565,17 +653,6 @@ body {
     webkit-tap-highlight-color: #1ee2e7;
 }
 
-a.home{
-    font-size: 14px;
-    
-}
-
-
-a.home:hover, a.home:focus {
-    color:rgb(226, 226, 226) !important;
-}
-
-
 a.page-scroll{
     border: 21px #fe0303 !important;
     font-size: 14px;
@@ -583,18 +660,17 @@ a.page-scroll{
     border-radius: 5%;
 }
 
-
 a.page-scroll:hover, a.page-scroll:focus {
     color:rgb(226, 226, 226) !important;
     background-color: #da1717af !important;
 }
 
-a.navbar-brand{
-    font-size: 30px !important;
+p.navbar-brand{
+    font-size: 20px !important;
     background: #da171700;
 }
 
-a.navbar-brand:hover{
+p.navbar-brand:hover{
     color: #ffffff !important;
     background: #da171700;
 }
