@@ -304,6 +304,16 @@ textarea {
   background-color: rgba(0, 0, 0, 0.1);
 }
 
+p.navbar-brand{
+  font-size: 20px !important;
+  background: #da171700;
+}
+
+p.navbar-brand:hover{
+  color: #ffffff !important;
+  background: #da171700;
+}
+
 .navbar-default {
   color: #000;
   border-color: transparent;
