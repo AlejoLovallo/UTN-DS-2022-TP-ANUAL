@@ -54,6 +54,9 @@ public class Persona {
 
   //////////////////////////////////  GETTERS
 
+
+  public int getId_persona() { return id_persona;}
+
   public String getNombre() {
     return nombre;
   }
