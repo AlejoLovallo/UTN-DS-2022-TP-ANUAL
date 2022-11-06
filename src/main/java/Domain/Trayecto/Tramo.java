@@ -1,6 +1,5 @@
 package Domain.Trayecto;
 
-import Domain.BaseDeDatos.EntityManagerHelper;
 import Domain.CalculadorDistancia.ServicioAPI;
 import Domain.CalculadorDistancia.ServicioManual;
 import Domain.Espacios.Espacio;
@@ -8,11 +7,8 @@ import Domain.CalculadorDistancia.ServicioDistancia;
 import Domain.MediosDeTransporte.MedioDeTransporte;
 import Domain.MediosDeTransporte.TransportePublico;
 import Domain.MediosDeTransporte.VehiculoParticular;
-import Domain.Usuarios.Usuario;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
 import javax.persistence.*;
 
 @Entity

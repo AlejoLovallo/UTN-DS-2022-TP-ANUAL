@@ -1,7 +1,7 @@
 package Domain.Server;
 
-import Spark.BooleanHelper;
-import Spark.HandlebarsTemplateEngineBuilder;
+import Domain.Spark.BooleanHelper;
+import spark.Spark;
 
 public class Router {
 
