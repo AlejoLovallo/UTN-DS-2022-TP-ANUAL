@@ -29,6 +29,9 @@ public class Usuario{
   @Column
   private Boolean validado;
 
+  @Transient
+  private String contraSinHash;
+
   //@Transient
   //@Column
   //private Boolean isAdmin;
@@ -103,6 +106,15 @@ public class Usuario{
   public void setContraHasheada(String contraHasheada) {
     this.contraHasheada = contraHasheada;
     //update();
+  }
+
+  public void setContraSinHash(String contra) {
+    this.contraSinHash = contra;
+    //update();
+  }
+
+  public String getContraSinHash() {
+    return contraSinHash;
   }
 
   //////////////////////////////////  SETTERS
