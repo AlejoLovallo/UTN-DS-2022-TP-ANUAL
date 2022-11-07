@@ -1,7 +1,8 @@
 package Domain.Server;
 
-import Spark.BooleanHelper;
-import Spark.HandlebarsTemplateEngineBuilder;
+import Domain.Controllers.MiembroController;
+import Domain.Spark.BooleanHelper;
+import spark.Spark;
 
 public class Router {
 
@@ -26,6 +27,11 @@ public class Router {
 
     Spark.get("/menu_login", loginController::menu_login, Router.engine);
     */
+    MiembroController miembroController = new MiembroController();
+    Spark.get("/menu_registrar_trayecto", miembroController::menuRegistrarTrayectos);
 
+    Spark.post("/enviar_solicitud", miembroController::menuEnviarSolicitud);
+    Spark.post("/menu_registrar_trayecto", miembroController::agregarTrayecto);
+    Spark.post("/menu_calcular_hc", miembroController::respuestaCalcularHC);
   }
 }

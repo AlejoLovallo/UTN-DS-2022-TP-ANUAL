@@ -1,6 +1,5 @@
 package Domain.Trayecto;
 
-import Domain.BaseDeDatos.EntityManagerHelper;
 import Domain.Espacios.Espacio;
 import Domain.Miembro.Miembro;
 
