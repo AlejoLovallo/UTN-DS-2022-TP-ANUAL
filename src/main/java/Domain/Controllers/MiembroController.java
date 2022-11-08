@@ -163,4 +163,33 @@ public class MiembroController {
             return null;
         }
     }
+
+    public Object getMiembro(Request req, Response res) throws ParseException {
+        String nombreUsuario = req.params(":username");
+        String organizacion = req.params(":organizacion");
+
+        RepositorioPersonasDB repositorioPersonasDB = new RepositorioPersonasDB();
+        Persona persona = repositorioPersonasDB.buscarPersonaPorUsername(nombreUsuario);
+
+        RepositorioOrganizacionesDB repoOrganizacionesDB = new RepositorioOrganizacionesDB();
+        Organizacion org = repoOrganizacionesDB.buscarOrganizacion(organizacion);
+
+        Miembro miem = null;
+        for(Miembro miembro : persona.getMiembros())
+        {
+            if(miembro.getSector().getOrganizacion().equals(org))
+            {
+                miem = miembro;
+            }
+        }
+
+        JSONObject resOrganizacion = ParserJSONMiembro.miembroToJSON(miem);
+
+        res.type("application/json");
+        res.body(resOrganizacion.toJSONString());
+
+        return null;
+    }
+
+
 }

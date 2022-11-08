@@ -38,6 +38,7 @@ public class Router {
 
     /*** MIEMBROS ROUTES ***/
     Spark.get("/menu_registrar_trayecto", miembroController::menuRegistrarTrayectos);
+    Spark.get("/miembro/:username/:organizacion", miembroController::getMiembro);
     Spark.post("/enviar_solicitud", miembroController::menuEnviarSolicitud);
     Spark.post("/menu_registrar_trayecto", miembroController::agregarTrayecto);
     Spark.post("/menu_calcular_hc", miembroController::respuestaCalcularHC);
