@@ -96,13 +96,14 @@ public class RepositorioUsuariosDB extends Repositorio<Usuario> {
     if(buscarUsuario(username) != null) usuarioConUsername = buscarUsuario(username);
     if (repositorioAdminDB.buscarAdmin(username) != null) usuarioConUsername = repositorioAdminDB.buscarAdmin(username);
 
+    if(usuarioConUsername == null) return null;
+
     //Si no encuentra el usuario por username
     if(!existe(username)){
       return null;
     }
 
     //Si el usuario esta validado
-    assert usuarioConUsername != null;
     if(!usuarioConUsername.isValido()){
       return null;
     }
