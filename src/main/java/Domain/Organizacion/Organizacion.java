@@ -6,6 +6,7 @@ import Domain.Reportes.Reporte;
 import Domain.Reportes.TipoDeReporte;
 import Domain.ServicioMedicion.ServicioMediciones;
 import Domain.Usuarios.Contacto;
+import Domain.Usuarios.Usuario;
 import org.hibernate.annotations.NotFound;
 import org.hibernate.annotations.NotFoundAction;
 
@@ -61,6 +62,11 @@ public class Organizacion {
   @OneToMany(mappedBy = "organizacion",cascade = CascadeType.ALL)
   @NotFound(action = NotFoundAction.IGNORE)
   private List<Reporte> reportes = new ArrayList<>();
+
+  @OneToOne(cascade = CascadeType.ALL)
+  @NotFound(action = NotFoundAction.IGNORE)
+  @JoinColumn(name="id_usuario",referencedColumnName = "id_usuario")
+  private Usuario usuario;
 
   @Transient
   //TODO
@@ -146,6 +152,14 @@ public class Organizacion {
 
   public List<Reporte> getReportes() {
     return reportes;
+  }
+
+  public Usuario getUsuario() {
+    return usuario;
+  }
+
+  public void setUsuario(Usuario usuario) {
+    this.usuario = usuario;
   }
 
   //////////////////////////////////  SETTERS
