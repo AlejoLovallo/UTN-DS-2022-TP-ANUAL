@@ -1,9 +1,16 @@
 package Domain.Repositorios;
 
+import Domain.Miembro.Excepciones.PersonaException;
+import Domain.Miembro.Persona;
 import Domain.Notificaciones.MailSender;
 import Domain.Notificaciones.Notificar;
 import Domain.Notificaciones.NotificarGuiaDeRecomendaciones;
+import Domain.Organizacion.ClasificacionOrganizacion;
+import Domain.Organizacion.Excepciones.OrganizacionException;
 import Domain.Organizacion.Organizacion;
+import Domain.Organizacion.TipoOrganizacion;
+import Domain.Usuarios.Contacto;
+import Domain.Usuarios.Excepciones.UsuarioException;
 import Domain.Usuarios.Usuario;
 
 import javax.persistence.criteria.*;
@@ -62,6 +69,30 @@ public class RepositorioOrganizacionesDB extends Repositorio<Organizacion>{
 
   }
 
+  public Organizacion buscarOrganizacionPorNombre(String nombre){
+
+    return this.dbService.buscar(condicionOrganizacionPorNombre(nombre));
+
+  }
+
+  private BusquedaCondicional condicionOrganizacionPorNombre(String nombre) {
+    CriteriaBuilder criteriaBuilder = criteriaBuilder();
+    CriteriaQuery<Organizacion> organizacionCriteriaQuery = criteriaBuilder.createQuery(Organizacion.class);
+
+    Root<Organizacion> condicionRaiz = organizacionCriteriaQuery.from(Organizacion.class);
+
+    //condicionRaiz.join("usuario");
+
+    Predicate condicionRazonSocial = criteriaBuilder.equal(condicionRaiz.get("razonSocial"),  nombre );
+    //Predicate condicionContrasenia = criteriaBuilder.equal(condicionRaiz.get("password"), contrasenia);
+
+    //Predicate condicionExisteUsuario = criteriaBuilder.and(condicionNombreDeUsuario, condicionContrasenia);
+
+    organizacionCriteriaQuery.where(condicionRazonSocial);
+
+    return new BusquedaCondicional(null, organizacionCriteriaQuery);
+  }
+
 
   private BusquedaCondicional condicionOrganizacionJoinUsuario(String nombreDeUsuario){
     CriteriaBuilder criteriaBuilder = criteriaBuilder();
@@ -85,5 +116,24 @@ public class RepositorioOrganizacionesDB extends Repositorio<Organizacion>{
 
   public void agregarOrganizacion(Organizacion organizacion){
     this.dbService.agregar(organizacion);
+  }
+
+  public Organizacion crearOrganizacion(String nombre,ClasificacionOrganizacion _clasificacion,TipoOrganizacion _tipo,Contacto contacto, Usuario user){
+    RepositorioUsuariosDB repositorioUsuariosDB = new RepositorioUsuariosDB();
+
+    if(user == null) throw new UsuarioException("El usuario es nulo");
+
+    if(repositorioUsuariosDB.existe(user.getUsername())) throw new OrganizacionException("Ya hay un usuario en la DB");
+
+    if(this.buscarOrganizacionPorNombre(nombre) != null) throw new OrganizacionException("Ya hay una organizacion con el mismo nombre");
+
+
+    Organizacion organizacionNueva = new Organizacion(nombre, _tipo,  _clasificacion,  contacto);
+    organizacionNueva.setUsuario(user);
+
+
+    this.dbService.agregar(organizacionNueva);
+
+    return organizacionNueva;
   }
 }
