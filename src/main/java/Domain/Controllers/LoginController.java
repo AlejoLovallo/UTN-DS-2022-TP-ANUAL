@@ -60,11 +60,13 @@ public class LoginController {
 
     if(organizacion.isPresent()){
       //TODO mandar a la vista de organizacion
+      response.cookie("organizacion",organizacion.get().getRazonSocial());
       //response.redirect("");
       return;
     }
     if(persona.isPresent()){
       //TODO hacer que vaya a la vista de Persona
+      response.cookie("persona",persona.get().getNroDocumento());
       //response.redirect("");
     }
   }
