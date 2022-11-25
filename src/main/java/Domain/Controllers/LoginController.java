@@ -18,7 +18,8 @@ import java.util.Optional;
 
 public class LoginController {
 
-  public void menuLogin(Request request, Response response) throws ParseException {
+  //POST
+  public void loguear(Request request, Response response) throws ParseException {
     JSONParser parser = new JSONParser();
     JSONObject pedido = (JSONObject) parser.parse(request.body());
 
@@ -26,7 +27,7 @@ public class LoginController {
 
     if(!usuario.isPresent()){
       //TODO marcar error
-
+      response.redirect("/menu_login");
       return;
     }
 
@@ -37,7 +38,7 @@ public class LoginController {
     //Lo vuelvo a ver porque lo lleno con el validador de usuario
     if(!usuario.isPresent()){
       //TODO marcar error
-
+      response.redirect("/menu_login");
       return;
     }
 
@@ -69,5 +70,10 @@ public class LoginController {
       response.cookie("persona",persona.get().getNroDocumento());
       //response.redirect("");
     }
+  }
+
+  //GET
+  public void menu_login(){
+
   }
 }
