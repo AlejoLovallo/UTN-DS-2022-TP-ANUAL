@@ -3,6 +3,7 @@ package Domain.CalculadorHC;
 import Domain.MediosDeTransporte.VehiculoParticular;
 import Domain.Miembro.Miembro;
 import Domain.Organizacion.*;
+import Domain.Repositorios.RepositorioFactoresEmisionDB;
 import Domain.Repositorios.RepositorioOrganizacionesDB;
 import Domain.Trayecto.Tramo;
 import Domain.Trayecto.Trayecto;
@@ -15,7 +16,7 @@ import java.time.LocalDate;
 
 public class CalculadorHC {
 
-    private RepositorioFactores factoresDeEmision = RepositorioFactores.getInstance();
+    private RepositorioFactoresEmisionDB factoresDeEmision = new RepositorioFactoresEmisionDB();
 
     private static CalculadorHC instance = null;
 
@@ -28,7 +29,7 @@ public class CalculadorHC {
     }
     
     // GETTERS
-    public RepositorioFactores getFactoresDeEmision() {
+    public RepositorioFactoresEmisionDB getFactoresDeEmision() {
         return factoresDeEmision;
     }
 

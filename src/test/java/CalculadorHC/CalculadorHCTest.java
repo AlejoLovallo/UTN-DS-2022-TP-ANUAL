@@ -8,6 +8,7 @@ import Domain.MediosDeTransporte.TipoVehiculo;
 import Domain.MediosDeTransporte.VehiculoParticular;
 import Domain.Miembro.Miembro;
 import Domain.Organizacion.*;
+import Domain.Repositorios.RepositorioFactoresEmisionDB;
 import Domain.Trayecto.Tramo;
 import Domain.Trayecto.Trayecto;
 import Domain.ServicioMedicion.ServicioExcel;
@@ -36,6 +37,8 @@ public class CalculadorHCTest {
     @BeforeEach
     public void iniciarVariables()
     {
+        RepositorioFactoresEmisionDB repositorioFactoresEmisionDB = new RepositorioFactoresEmisionDB();
+
         Tramo tramo = new Tramo(espacio1, espacio2, new VehiculoParticular(TipoVehiculo.Auto, TipoCombustible.Nafta, 1));
         tramo.getMedioTransporte().setConsumoPorKm(1d);
 
@@ -54,8 +57,8 @@ public class CalculadorHCTest {
         organizacion.getSectores().add(sector);
         sector.getMiembros().add(miembro);
 
-        RepositorioFactores.getInstance().agregarFactorDeEmision(new FactorEmision(TipoDeActividad.COMBUSTION_MOVIL, 0.5, Unidad.lt));
-        RepositorioFactores.getInstance().agregarFactorDeEmision(new FactorEmision(TipoDeActividad.COMBUSTION_FIJA, 2.0, Unidad.lt));
+        repositorioFactoresEmisionDB.agregarFactorDeEmision(new FactorEmision(TipoDeActividad.COMBUSTION_MOVIL, 0.5, Unidad.lt));
+        repositorioFactoresEmisionDB.agregarFactorDeEmision(new FactorEmision(TipoDeActividad.COMBUSTION_FIJA, 2.0, Unidad.lt));
 
         agenteSectorial.getOrganizaciones().add(organizacion);
     }

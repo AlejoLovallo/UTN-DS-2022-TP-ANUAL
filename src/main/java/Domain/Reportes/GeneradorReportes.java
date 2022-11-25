@@ -4,6 +4,7 @@ import Domain.CalculadorHC.CalculadorHC;
 import Domain.Organizacion.*;
 import Domain.Organizacion.Actividad;
 import Domain.Repositorios.RepositorioOrganizacionesDB;
+import Domain.Repositorios.RepositorioReportesDB;
 
 import java.io.IOException;
 import java.time.LocalDate;
@@ -13,7 +14,7 @@ import java.util.Optional;
 public class GeneradorReportes {
 
     private RepositorioOrganizacionesDB repositorioOrganizaciones = new RepositorioOrganizacionesDB();
-    private RepositorioReportes repositorioReportes = RepositorioReportes.GetInstance();
+    private RepositorioReportesDB repositorioReportes = new RepositorioReportesDB();
     private CalculadorHC calculadorHC = CalculadorHC.getInstance();
     
     private static GeneradorReportes instance = null;

@@ -14,9 +14,9 @@ import Domain.Organizacion.Organizacion;
 import Domain.Organizacion.Sector;
 import Domain.Organizacion.TipoOrganizacion;
 import Domain.Organizacion.TipoDeActividad;
+import Domain.Repositorios.RepositorioUsuariosDB;
 import Domain.Trayecto.Tramo;
 import Domain.Trayecto.Trayecto;
-import Domain.Usuarios.RepositorioUsuarios;
 import Domain.Usuarios.Usuario;
 
 import java.util.ArrayList;
@@ -86,7 +86,9 @@ public class Common {
     return new Usuario("juan98", "email", "juan1998", true);
   }
   public static Usuario getUsuarioQueEsteEnElRepo() {
-    return RepositorioUsuarios.getInstance().crearUsuario("juan98", "email", "juan1998", true);
+    RepositorioUsuariosDB repositorioUsuariosDB = new RepositorioUsuariosDB();
+
+    return repositorioUsuariosDB.crearUsuario("juan98", "email", "juan1998", true);
   }
 
 
