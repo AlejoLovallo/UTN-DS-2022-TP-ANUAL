@@ -7,6 +7,8 @@ import Domain.Espacios.TipoDireccion;
 import Domain.Miembro.Miembro;
 import Domain.Organizacion.*;
 import Domain.Organizacion.FrecuenciaServicio;
+import Domain.Repositorios.RepositorioOrganizacionesDB;
+import Domain.Repositorios.RepositorioSectoresDB;
 import Domain.ServicioMedicion.ServicioExcel;
 import Domain.Organizacion.TipoDeActividad;
 import Domain.Organizacion.TipoDeConsumo;
@@ -29,7 +31,7 @@ public class OrganizacionTest {
   protected Contacto contacto = new Contacto("Organizacion", "ApellidoEmpresa", 987654321, "org@gmail.com");
 
   private void initializeOrganizacion(){
-    this.organizacionEmpresa = new Organizacion("OrganizacionTest", TipoOrganizacion.Empresa, ClasificacionOrganizacion.EmpresaSectorPrimario, contacto, 5);
+    this.organizacionEmpresa = new Organizacion("OrganizacionTest", TipoOrganizacion.Empresa, ClasificacionOrganizacion.EmpresaSectorPrimario, contacto);
   }
 
   @BeforeEach
@@ -142,18 +144,16 @@ public class OrganizacionTest {
 
 @Test
   public void RepoOrganizaciones(){
-  RepositorioOrganizaciones repoOrg = null;
+  RepositorioOrganizacionesDB repoOrg = null;
 
   Assertions.assertNull(repoOrg);
-  Assertions.assertNotNull(repoOrg.GetInstance());
   }
 
   @Test
   public void RepoSectores(){
-  RepositorioSectores repoSector = null;
+  RepositorioSectoresDB repoSector = null;
 
   Assertions.assertNull(repoSector);
-  Assertions.assertNotNull(repoSector.getInstance());
   }
 /*
   //TODO volver a testear

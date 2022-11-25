@@ -23,19 +23,19 @@ import java.util.ArrayList;
 
 public class Common {
   public static Organizacion getOrganizacionMinisterio() {
-    return new Organizacion("Ministerio test", TipoOrganizacion.Gubernamental, ClasificacionOrganizacion.Ministerio, null, 5);
+    return new Organizacion("Ministerio test", TipoOrganizacion.Gubernamental, ClasificacionOrganizacion.Ministerio, null);
   }
 
   public static Organizacion getOrganizacionUniversidad() {
-    return new Organizacion("Universidad test", TipoOrganizacion.Institucion, ClasificacionOrganizacion.Universidad, null, 5);
+    return new Organizacion("Universidad test", TipoOrganizacion.Institucion, ClasificacionOrganizacion.Universidad, null);
   }
 
   public static Organizacion getOrganizacionEscuela() {
-    return new Organizacion("Escuela test", TipoOrganizacion.Institucion, ClasificacionOrganizacion.Escuela, null, 5);
+    return new Organizacion("Escuela test", TipoOrganizacion.Institucion, ClasificacionOrganizacion.Escuela, null);
   }
 
   public static Organizacion getOrganizacionConUnMiembro() {
-    Organizacion organizacion = new Organizacion("Escuela test", TipoOrganizacion.Institucion, ClasificacionOrganizacion.Escuela, null, 5);
+    Organizacion organizacion = new Organizacion("Escuela test", TipoOrganizacion.Institucion, ClasificacionOrganizacion.Escuela, null);
     ArrayList<Sector> sectores = new ArrayList<>();
     Sector sector = Common.getMiembro().getSector();
     sector.getMiembros().add(Common.getMiembro());
@@ -46,11 +46,11 @@ public class Common {
 
 
   public static Organizacion getOrganizacionEmpresaPrimaria() {
-    return new Organizacion("Empresa primaria test", TipoOrganizacion.Empresa, ClasificacionOrganizacion.EmpresaSectorPrimario, null, 5);
+    return new Organizacion("Empresa primaria test", TipoOrganizacion.Empresa, ClasificacionOrganizacion.EmpresaSectorPrimario, null);
   }
 
   public static Organizacion getOrganizacionEmpresaSecundaria() {
-    return new Organizacion("Empresa secundaria test", TipoOrganizacion.Empresa, ClasificacionOrganizacion.EmpresaSectorSecundario, null, 5);
+    return new Organizacion("Empresa secundaria test", TipoOrganizacion.Empresa, ClasificacionOrganizacion.EmpresaSectorSecundario, null);
   }
 
   public static Sector getSectorTrabajo(){

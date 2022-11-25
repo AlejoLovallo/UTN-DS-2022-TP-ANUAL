@@ -14,7 +14,7 @@ public class RepositorioOrganizacionesTestDB {
 
     Contacto contacto = new Contacto("contactoPrueba", "ContactoPrueba", 515151541, "tomas.casa123@gmail.com");
 
-    Organizacion organizacion = new Organizacion( "RazonSocial", TipoOrganizacion.Empresa, ClasificacionOrganizacion.Ministerio, contacto, 5);
+    Organizacion organizacion = new Organizacion( "RazonSocial", TipoOrganizacion.Empresa, ClasificacionOrganizacion.Ministerio, contacto);
 
     //contacto.setOrganizacion(organizacion);
 

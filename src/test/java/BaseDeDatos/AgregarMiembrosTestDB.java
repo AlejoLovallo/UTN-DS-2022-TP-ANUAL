@@ -29,7 +29,7 @@ public class AgregarMiembrosTestDB {
 
     Contacto contacto = new Contacto("pepitoSandCompleto", "pepitoSandCompleto", 515151541, "contacto@gmail.com");
 
-    Organizacion organizacion = new Organizacion( "Empresa Pepe Completo", TipoOrganizacion.Empresa, ClasificacionOrganizacion.EmpresaSectorSecundario, contacto, 5);
+    Organizacion organizacion = new Organizacion( "Empresa Pepe Completo", TipoOrganizacion.Empresa, ClasificacionOrganizacion.EmpresaSectorSecundario, contacto);
 
     Miembro miembro = new Miembro(null);
 

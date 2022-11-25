@@ -2,7 +2,7 @@ package Notificaciones;
 
 import Domain.Notificaciones.*;
 import Domain.Organizacion.Organizacion;
-import Domain.Organizacion.RepositorioOrganizaciones;
+import Domain.Repositorios.RepositorioOrganizacionesDB;
 import Domain.Usuarios.Contacto;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -86,7 +86,7 @@ public class NotificacionesTest {
 
     @Test
     void enviarNotificacionDeRecomendacionesAOrganizacones() {
-        RepositorioOrganizaciones repo = RepositorioOrganizaciones.GetInstance();
+        RepositorioOrganizacionesDB repo = new RepositorioOrganizacionesDB();
 
         repo.agregarOrganizacion(organizacion1);
         repo.agregarOrganizacion(organizacion2);
@@ -126,12 +126,12 @@ public class NotificacionesTest {
 
     public static Organizacion getOrganizacion1() {
         Contacto contacto = new Contacto("Juan", "Perez", 123456789, "Oteroerik52@gmail.com");
-        return new Organizacion(null, null, null, contacto, 5);
+        return new Organizacion(null, null, null, contacto);
     }
 
     public static Organizacion getOrganizacion2() {
         Contacto contacto = new Contacto("Juan", "Perez", 123456789, "Oteroerik15@gmail.com");
-        return new Organizacion(null, null, null, contacto, 5);
+        return new Organizacion(null, null, null, contacto);
     }
 
 }

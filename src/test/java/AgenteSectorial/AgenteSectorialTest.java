@@ -14,6 +14,8 @@ import java.util.List;
 public class AgenteSectorialTest {
     private AgenteSectorial agenteSectorialTest;
 
+    /*
+
     private void initializeAgenteSectorial(){
         this.agenteSectorialTest = new AgenteSectorial("AgenteSectorialTest", "territorio", TipoSectorTerritorial.Ministerio);
         agenteSectorialTest.agregarOrganizacion(Common.getOrganizacionConUnMiembro());
@@ -122,5 +124,5 @@ public class AgenteSectorialTest {
         AgenteSectorial unAgente =  RepositorioAgentes.GetInstance().buscarAgente("nombre");
         RepositorioAgentes.GetInstance().agregarOrganizacionAAgente(unAgente, unaOrganizacion);
         Assertions.assertTrue(unAgente.getOrganizaciones().contains(unaOrganizacion));
-    }
+    }*/
 }

@@ -2,9 +2,9 @@ package Miembro;
 
 import Domain.InterfazUsuario.InterfazUsuarioPersona;
 import Domain.Miembro.Persona;
-import Domain.Miembro.RepositorioPersonas;
 import Domain.Miembro.TipoDocumento;
-import Domain.Usuarios.RepositorioUsuarios;
+import Domain.Repositorios.RepositorioPersonasDB;
+import Domain.Repositorios.RepositorioUsuariosDB;
 import Domain.Usuarios.Usuario;
 import Utils.Common;
 import org.junit.jupiter.api.AfterEach;
@@ -13,10 +13,10 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 public class RepoPersonasTest {
-    protected RepositorioPersonas repoPersonas;
+    protected RepositorioPersonasDB repoPersonas;
 
     private void initializePersona(){
-        this.repoPersonas = RepositorioPersonas.getInstance();
+        this.repoPersonas = new RepositorioPersonasDB();
     }
 
     @BeforeEach
@@ -68,8 +68,11 @@ public class RepoPersonasTest {
         Assertions.assertEquals("nombre", interfazUsuarioPersona.getPersona().getNombre());
         Assertions.assertEquals("apellido", interfazUsuarioPersona.getPersona().getApellido());
 
-        Assertions.assertEquals(RepositorioPersonas.getInstance().buscarPersonaPorUsuario(interfazUsuarioPersona.getUsuario()), interfazUsuarioPersona.getPersona());
-        Assertions.assertTrue(RepositorioUsuarios.getInstance().validarUsuario(interfazUsuarioPersona.getUsuario(), true));
+        RepositorioPersonasDB repositorioPersonasDB = new RepositorioPersonasDB();
+        RepositorioUsuariosDB repositorioUsuariosDB = new RepositorioUsuariosDB();
+
+        Assertions.assertEquals(repositorioPersonasDB.buscarPersonaPorUsuario(interfazUsuarioPersona.getUsuario()), interfazUsuarioPersona.getPersona());
+        Assertions.assertTrue(repositorioUsuariosDB.validarUsuario(interfazUsuarioPersona.getUsuario(), true));
 
     }
 }
