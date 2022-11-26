@@ -4,7 +4,7 @@ import Domain.Usuarios.Admin;
 import Domain.Usuarios.Excepciones.ContraseniaEsInvalidaException;
 import Domain.Usuarios.Excepciones.UsuarioException;
 import Domain.Usuarios.Usuario;
-import org.apache.poi.ss.formula.functions.T;
+import Domain.Repositorios.RepositorioAdminDB;
 
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
@@ -90,15 +90,25 @@ public class RepositorioUsuariosDB extends Repositorio<Usuario> {
 
 
   public Usuario validarLogueoUsuario(String username, String contra){
-    Usuario usuarioConUsername = buscarUsuario(username);
+
+    RepositorioAdminDB repositorioAdminDB = new RepositorioAdminDB();
+    Usuario usuarioConUsername = null;
+    if(buscarUsuario(username) != null) usuarioConUsername = buscarUsuario(username);
+    if (repositorioAdminDB.buscarAdmin(username) != null) usuarioConUsername = repositorioAdminDB.buscarAdmin(username);
+
+    if(usuarioConUsername == null) return null;
+
     //Si no encuentra el usuario por username
     if(!existe(username)){
       return null;
     }
+
     //Si el usuario esta validado
     if(!usuarioConUsername.isValido()){
       return null;
     }
+
+
     //Si el intento de contrasenia es fallido se devolvera nulo
     // lo pongo en los dos lados por si la contrasenia es correcta pero no paso el tiempo del ultimo acceso
     if(usuarioConUsername.isColision(contra)){
@@ -108,6 +118,9 @@ public class RepositorioUsuariosDB extends Repositorio<Usuario> {
       }
       throw new ContraseniaEsInvalidaException("no paso el tiempo de inicio de sesion");
     }
+
+    //Si el intento de contrasenia es fallido se devolvera nulo
+    // lo pongo en los dos lados por si la contrasenia es correcta pero no paso el tiempo del ultimo acceso
     //Y esto esta por la contrasenia es incorrecta se actualizara el intento de acceso
     modificar(usuarioConUsername);
     usuarioConUsername.intentoAcceso();

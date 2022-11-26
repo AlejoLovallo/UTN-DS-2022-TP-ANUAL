@@ -1,26 +1,18 @@
 package Organizacion;
-import Domain.CalculadorHC.FactorEmision;
-import Domain.CalculadorHC.RepositorioFactores;
 import Domain.Espacios.Direccion;
 import Domain.Espacios.Espacio;
 import Domain.Espacios.TipoDireccion;
 import Domain.Miembro.Miembro;
 import Domain.Organizacion.*;
-import Domain.Organizacion.FrecuenciaServicio;
-import Domain.ServicioMedicion.ServicioExcel;
-import Domain.Organizacion.TipoDeActividad;
-import Domain.Organizacion.TipoDeConsumo;
+import Domain.Repositorios.RepositorioOrganizacionesDB;
+import Domain.Repositorios.RepositorioSectoresDB;
 import Domain.Usuarios.Contacto;
 import Utils.Common;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Assertions;
-import Domain.CalculadorHC.CalculadorHC;
 
-import java.io.IOException;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 
@@ -29,7 +21,7 @@ public class OrganizacionTest {
   protected Contacto contacto = new Contacto("Organizacion", "ApellidoEmpresa", 987654321, "org@gmail.com");
 
   private void initializeOrganizacion(){
-    this.organizacionEmpresa = new Organizacion("OrganizacionTest", TipoOrganizacion.Empresa, ClasificacionOrganizacion.EmpresaSectorPrimario, contacto, 5);
+    this.organizacionEmpresa = new Organizacion("OrganizacionTest", TipoOrganizacion.Empresa, ClasificacionOrganizacion.EmpresaSectorPrimario, contacto);
   }
 
   @BeforeEach
@@ -142,18 +134,16 @@ public class OrganizacionTest {
 
 @Test
   public void RepoOrganizaciones(){
-  RepositorioOrganizaciones repoOrg = null;
+  RepositorioOrganizacionesDB repoOrg = null;
 
   Assertions.assertNull(repoOrg);
-  Assertions.assertNotNull(repoOrg.GetInstance());
   }
 
   @Test
   public void RepoSectores(){
-  RepositorioSectores repoSector = null;
+  RepositorioSectoresDB repoSector = null;
 
   Assertions.assertNull(repoSector);
-  Assertions.assertNotNull(repoSector.getInstance());
   }
 /*
   //TODO volver a testear

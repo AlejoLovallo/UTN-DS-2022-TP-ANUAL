@@ -53,6 +53,8 @@ public class RepositorioPersonasDB extends Repositorio<Persona>{
 
     RepositorioUsuariosDB repositorioUsuariosDB = new RepositorioUsuariosDB();
 
+    if(user == null) throw new PersonaException("El usuario es nulo");
+
     if(repositorioUsuariosDB.existe(user.getUsername())) throw new PersonaException("Ya hay un usuario en la DB");
 
     if(this.existe(_documento)) throw new PersonaException("Ya hay una persona con el mismo numero de Documento");

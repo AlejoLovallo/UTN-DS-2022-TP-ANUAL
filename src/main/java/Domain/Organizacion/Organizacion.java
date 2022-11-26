@@ -6,6 +6,7 @@ import Domain.Reportes.Reporte;
 import Domain.Reportes.TipoDeReporte;
 import Domain.ServicioMedicion.ServicioMediciones;
 import Domain.Usuarios.Contacto;
+import Domain.Usuarios.Usuario;
 import org.hibernate.annotations.NotFound;
 import org.hibernate.annotations.NotFoundAction;
 
@@ -62,6 +63,11 @@ public class Organizacion {
   @NotFound(action = NotFoundAction.IGNORE)
   private List<Reporte> reportes = new ArrayList<>();
 
+  @OneToOne(cascade = CascadeType.ALL)
+  @NotFound(action = NotFoundAction.IGNORE)
+  @JoinColumn(name="id_usuario",referencedColumnName = "id_usuario")
+  private Usuario usuario;
+
   @Transient
   //TODO
   private LocalDate fechaIngreso;
@@ -87,12 +93,12 @@ public class Organizacion {
 
   }
 
-  public Organizacion(String _razonSocial, TipoOrganizacion _tipo, ClasificacionOrganizacion _clasificacion, Contacto contacto, Integer numDiasPorSemana){
+  public Organizacion(String _razonSocial, TipoOrganizacion _tipo, ClasificacionOrganizacion _clasificacion, Contacto contacto){
     this.razonSocial = _razonSocial;
     this.tipo = _tipo;
     this.clasificacion = _clasificacion;
     this.contacto = contacto;
-    this.numDiasPorSemana = numDiasPorSemana;
+    //this.numDiasPorSemana = numDiasPorSemana;
     /*if(contacto != null)
       contacto.setOrganizacion(this);*/
   }
@@ -146,6 +152,14 @@ public class Organizacion {
 
   public List<Reporte> getReportes() {
     return reportes;
+  }
+
+  public Usuario getUsuario() {
+    return usuario;
+  }
+
+  public void setUsuario(Usuario usuario) {
+    this.usuario = usuario;
   }
 
   //////////////////////////////////  SETTERS

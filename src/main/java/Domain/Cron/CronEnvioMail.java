@@ -1,6 +1,5 @@
 package Domain.Cron;
 
-import Domain.Organizacion.RepositorioOrganizaciones;
 import Domain.Repositorios.RepositorioOrganizacionesDB;
 import org.quartz.Job;
 import org.quartz.JobDetail;

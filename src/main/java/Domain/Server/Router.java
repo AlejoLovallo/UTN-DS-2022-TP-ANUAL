@@ -26,7 +26,11 @@ public class Router {
 
     Spark.get("/menu_inicio", loginController::inicio, Router.engine);
 
+    //TODO hacer funcion de loginController(menu_login) para mandar el HTML
     Spark.get("/menu_login", loginController::menu_login, Router.engine);
+
+    //TODO este post recibe los datos del json
+    Spark.post("/menu_login", loginController::loguear, Router.engine);
     */
 
     /*** CONTROLLERS ***/
