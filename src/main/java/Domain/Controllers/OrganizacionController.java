@@ -34,11 +34,53 @@ import java.util.List;
 
 public class OrganizacionController {
 
+    public String htmlToString(String nombreArchivo)
+    {
+        //TODO: revisar si funciona
+        File archivoHTML = new File("src/main/resources/templates/Registrar_Mediciones.html");
+        return archivoHTML.toString();
+    }
+
+    //GET
+    public Object cargardoMediciones(Request request, Response response)
+    {
+        response.type("text/html");
+
+        response.body(htmlToString("Registro_Mediciones.html"));
+        return null;
+    }
+
+    //GET
+    public Object aceptadoMiembros(Request request, Response response)
+    {
+        response.type("text/html");
+
+        response.body(htmlToString("Aceptar_Miembros.html"));
+        return null;
+    }
+
+    //GET
+    public Object visualizadoReportes(Request request, Response response)
+    {
+        response.type("text/html");
+
+        response.body(htmlToString("Visualizar_Reporte.html"));
+        return null;
+    }
+
+    public Object calculadorDeHC(Request request, Response response)
+    {
+        response.type("text/html");
+
+        response.body(htmlToString("Calcular_HC.html"));
+        return null;
+    }
+
   public Object getOrganizacion(Request req, Response res) throws ParseException {
       String nombreOg = req.params(":nombre");
 
       RepositorioOrganizacionesDB repoOrganizacionesDB = new RepositorioOrganizacionesDB();
-      Organizacion org = repoOrganizacionesDB.buscarOrganizacion(nombreOg);
+      Organizacion org = repoOrganizacionesDB.buscarOrganizacionPorNombre(nombreOg);
 
       JSONObject resOrganizacion = ParserJSONOrganizacion.organizacionToJSON(org);
 
@@ -56,8 +98,8 @@ public class OrganizacionController {
     return null;
   }
 
-
-  public void respuestaListaAceptarMiembro(Request request, Response response)
+    //TODO: rehacer y no usar objeto SolicitudPendiente
+  /*public void respuestaListaAceptarMiembro(Request request, Response response)
   {
       String username = request.cookie("username");
       //TODO:buscar por nombre usuario
@@ -115,7 +157,7 @@ public class OrganizacionController {
         //RECALCULAR MIEMBROS PARA MOSTRAR LISTA ACTUALIZADA
         respuestaListaAceptarMiembro(request, response);
         return;
-    }
+    }*/
 
     public void respuestaCalcularHC(Request request, Response response) throws IOException {
         String username = request.cookie("username");

@@ -19,6 +19,7 @@ import org.json.simple.parser.ParseException;
 import spark.Request;
 import spark.Response;
 
+import java.io.File;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -26,6 +27,40 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class MiembroController {
+
+    public String htmlToString(String nombreArchivo)
+    {
+        //TODO: revisar si funciona
+        File archivoHTML = new File("src/main/resources/templates/Registrar_Mediciones.html");
+        return archivoHTML.toString();
+    }
+
+    //GET
+    public Object registradoDeTrayectos(Request request, Response response)
+    {
+        response.type("text/html");
+
+        response.body(htmlToString("Registrar_Trayectos.html"));
+        return null;
+    }
+
+    //GET
+    public Object solicitarVinculacion(Request request, Response response)
+    {
+        response.type("text/html");
+
+        response.body(htmlToString("Solicitar_Vinculacion.html"));
+        return null;
+    }
+
+    //GET
+    public Object visualizadoReportes(Request request, Response response)
+    {
+        response.type("text/html");
+
+        response.body(htmlToString("Visualizar_Reporte.html"));
+        return null;
+    }
 
     public Object agregarTrayecto(Request request, Response response) throws ParseException {
 
