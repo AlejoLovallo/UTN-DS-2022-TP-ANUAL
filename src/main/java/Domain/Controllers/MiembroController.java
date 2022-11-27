@@ -171,6 +171,44 @@ public class MiembroController {
         String nombreSector = request.queryParams("sector");
 
         RepositorioOrganizacionesDB repositorioOrganizacionesDB = new RepositorioOrganizacionesDB();
+        Organizacion organizacion = repositorioOrganizacionesDB.buscarOrganizacionPorNombre(nombreOrganizacion);
+
+        Sector miembroSector = null;
+        for(Sector sector : organizacion.getSectores())
+        {
+            if(sector.getNombre().equals(nombreSector))
+            {
+                miembroSector = sector;
+                break;
+            }
+        }
+
+        if(miembroSector == null)
+        {
+            //TODO: enviar mensaje que no existe
+            return null;
+        }
+        else{
+            Miembro miembro = new Miembro(persona.getNombre(), miembroSector);
+            miembro.setActivo(false);
+            persona.getMiembros().add(miembro);
+            miembroSector.getMiembros().add(miembro);
+            return null;
+        }
+    }
+
+/*
+    public Object menuEnviarSolicitud(Request request, Response response)
+    {
+        String username = request.cookie("username");
+
+        RepositorioPersonasDB repositorioPersonasDB = new RepositorioPersonasDB();
+        Persona persona = repositorioPersonasDB.buscarPersonaPorUsername(username);
+
+        String nombreOrganizacion = request.queryParams("organizacion");
+        String nombreSector = request.queryParams("sector");
+
+        RepositorioOrganizacionesDB repositorioOrganizacionesDB = new RepositorioOrganizacionesDB();
         Organizacion organizacion = repositorioOrganizacionesDB.buscarOrganizacion(nombreOrganizacion);
 
         Sector miembroSector = null;
@@ -198,7 +236,7 @@ public class MiembroController {
             return null;
         }
     }
-
+*/
     public Object getMiembro(Request req, Response res) throws ParseException {
         String nombreUsuario = req.params(":username");
         String organizacion = req.params(":organizacion");
@@ -207,7 +245,7 @@ public class MiembroController {
         Persona persona = repositorioPersonasDB.buscarPersonaPorUsername(nombreUsuario);
 
         RepositorioOrganizacionesDB repoOrganizacionesDB = new RepositorioOrganizacionesDB();
-        Organizacion org = repoOrganizacionesDB.buscarOrganizacion(organizacion);
+        Organizacion org = repoOrganizacionesDB.buscarOrganizacionPorNombre(organizacion);
 
         Miembro miem = null;
         for(Miembro miembro : persona.getMiembros())

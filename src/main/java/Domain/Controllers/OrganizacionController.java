@@ -11,8 +11,10 @@ import Domain.Organizacion.SolicitudPendiente;
 import Domain.Repositorios.RepositorioOrganizacionesDB;
 import Domain.Repositorios.RepositorioPersonasDB;
 import Domain.Repositorios.RepositorioSolicitudesDB;
+import Domain.Repositorios.RepositorioUsuariosDB;
 import Domain.Trayecto.Tramo;
 import Domain.Trayecto.Trayecto;
+import Domain.Usuarios.Usuario;
 import com.mchange.v2.io.FileUtils;
 import org.eclipse.jetty.util.ajax.JSON;
 import org.json.simple.JSONArray;
@@ -24,12 +26,14 @@ import spark.Response;
 
 import javax.servlet.ServletException;
 import java.io.*;
+import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 
 public class OrganizacionController {
@@ -98,7 +102,61 @@ public class OrganizacionController {
     return null;
   }
 
-    //TODO: rehacer y no usar objeto SolicitudPendiente
+  public Object respuestaListaMiembros(Request request, Response response)
+  {
+      String username = request.cookie("username");
+
+      RepositorioUsuariosDB repositorioUsuariosDB = new RepositorioUsuariosDB();
+      Usuario usuario = repositorioUsuariosDB.buscarUsuario(username);
+
+      RepositorioOrganizacionesDB repositorioOrganizacionesDB = new RepositorioOrganizacionesDB();
+      Organizacion organizacion = repositorioOrganizacionesDB.buscarOrganizacionPorUsuario(usuario);
+
+      response.type("application/json");
+
+      JSONArray listaMiembros = new JSONArray();
+      for(Sector sector : organizacion.getSectores())
+      {
+          for(Miembro miembro : sector.getMiembros())
+          {
+              listaMiembros.add(ParserJSONMiembro.miembroToJSON(miembro));
+          }
+      }
+
+      response.body(listaMiembros.toString());
+      return null;
+  }
+
+    public Object respuestaAceptarMiembro(Request request, Response response)
+    {
+        String username = request.cookie("username");
+
+        RepositorioUsuariosDB repositorioUsuariosDB = new RepositorioUsuariosDB();
+        Usuario usuario = repositorioUsuariosDB.buscarUsuario(username);
+
+        RepositorioOrganizacionesDB repositorioOrganizacionesDB = new RepositorioOrganizacionesDB();
+        Organizacion organizacion = repositorioOrganizacionesDB.buscarOrganizacionPorUsuario(usuario);
+
+        String idPersona = request.queryParams("Persona");
+        String idSector = request.queryParams("Sector");
+
+        RepositorioPersonasDB repositorioPersonasDB = new RepositorioPersonasDB();
+        Persona persona = repositorioPersonasDB.buscarPersonaPorNroDocumento(idPersona);
+
+        Optional<Sector> sector = organizacion.getSectores().stream().filter(
+                s -> s.getId_sector() == Integer.parseInt(idSector)
+        ).findAny();
+
+        Optional<Miembro> miembro = sector.get().getMiembros().stream().filter(
+                m -> m.getPersona().equals(persona)
+        ).findAny();
+
+        miembro.get().setActivo(true);
+
+        //TODO: devolver mensaje confirmando ejecucion de operacion
+        return null;
+    }
+
   /*public void respuestaListaAceptarMiembro(Request request, Response response)
   {
       String username = request.cookie("username");
@@ -161,9 +219,13 @@ public class OrganizacionController {
 
     public void respuestaCalcularHC(Request request, Response response) throws IOException {
         String username = request.cookie("username");
-        //TODO:buscar por nombre usuario
-        //Organizacion organizacion = RepositorioOrganizacion.buscarPorID(idOrg);
-        Organizacion organizacion = null;
+
+        RepositorioUsuariosDB repositorioUsuariosDB = new RepositorioUsuariosDB();
+        Usuario usuario = repositorioUsuariosDB.buscarUsuario(username);
+
+        RepositorioOrganizacionesDB repositorioOrganizacionesDB = new RepositorioOrganizacionesDB();
+        Organizacion organizacion = repositorioOrganizacionesDB.buscarOrganizacionPorUsuario(usuario);
+
         String mes = request.queryParams("Mes");
         String anio = request.queryParams("Anio");
 
@@ -177,17 +239,17 @@ public class OrganizacionController {
     public Object cargarMediciones(Request request, Response response) throws ServletException, IOException {
         String username = request.cookie("username");
 
-        //TODO: verificar como subir archivo
-        Path path = Paths.get(request.queryParams("archivo_mediciones"));
-        byte[] buffer = java.nio.file.Files.readAllBytes(path);
+        File mediciones = new File("src/main/Domain/Utils/" + username + ".xls");
 
-        File mediciones = new File("../Utils/" + username + ".xls");
+        InputStream is = request.raw().getPart("archivo_mediciones").getInputStream();
+        Files.copy(is, mediciones.toPath());
 
-        OutputStream outStream = new FileOutputStream(mediciones);
-        outStream.write(buffer);
+        RepositorioUsuariosDB repositorioUsuariosDB = new RepositorioUsuariosDB();
+        Usuario usuario = repositorioUsuariosDB.buscarUsuario(username);
 
-        //TODO:buscar organizacion por nombre usuario
-        Organizacion organizacion = null;
+        RepositorioOrganizacionesDB repositorioOrganizacionesDB = new RepositorioOrganizacionesDB();
+        Organizacion organizacion = repositorioOrganizacionesDB.buscarOrganizacionPorUsuario(usuario);
+
         organizacion.cargarMedicionesInternas(username + ".xls");
         return null;
     }
