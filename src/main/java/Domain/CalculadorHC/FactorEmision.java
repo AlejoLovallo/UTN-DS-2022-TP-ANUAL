@@ -18,6 +18,7 @@ public class FactorEmision {
     @Column
     @Enumerated(EnumType.STRING)
     private TipoDeActividad tipoActividad;
+
     @Column
     private Unidad unidad;
 

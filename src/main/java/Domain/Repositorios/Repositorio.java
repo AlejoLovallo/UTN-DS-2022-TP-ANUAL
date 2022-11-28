@@ -23,7 +23,6 @@ public class Repositorio<T> {
 
   public void modificar(Object unObjeto){
     if(!unObjeto.getClass().getSimpleName().equalsIgnoreCase("bitacora") ) {
-
       this.dbService.modificar(unObjeto);
     }
   }
