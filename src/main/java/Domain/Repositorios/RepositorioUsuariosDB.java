@@ -28,7 +28,9 @@ public class RepositorioUsuariosDB extends Repositorio<Usuario> {
   }
 
   public Boolean existe(String nombreDeUsuario){
-    return buscarUsuario(nombreDeUsuario) != null;
+    Usuario usuario = null;
+    usuario = buscarUsuario(nombreDeUsuario);
+    return  usuario != null;
   }
 
   public Usuario buscarUsuario(String nombreDeUsuario, String contrasenia){
@@ -79,7 +81,7 @@ public class RepositorioUsuariosDB extends Repositorio<Usuario> {
 
   public boolean validarUsuario(String username, Boolean validacion){
     //Usuario usuarioAValidar = this.usuarios.stream().filter(u -> u.getUsername().equals(username)).findFirst().orElse(null);
-    if(!existe(username)){
+    if(existe(username)){
       Usuario usuarioAValidar = buscarUsuario(username);
       usuarioAValidar.setValidado(validacion);
       this.dbService.modificar(usuarioAValidar);
