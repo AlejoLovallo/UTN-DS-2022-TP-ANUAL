@@ -77,7 +77,7 @@ public class CalculadorHCTest {
         Assertions.assertNotEquals(0, resultadoHC);
     }
 /*
-    //TODO volver a testear
+
     @Test
     public void calculoHCOrganizacion() throws IOException, ParseException {
         ArrayList<FactorEmision> factoresDeEmision = new ArrayList<>();

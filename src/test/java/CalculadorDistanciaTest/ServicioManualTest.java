@@ -12,7 +12,9 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class ServicioManualTest {
     protected ServicioManual servManual;
@@ -26,22 +28,24 @@ public class ServicioManualTest {
     @AfterEach
     public void clean(){}
 
-    /*
+
     @Test
     public void calcularDist(){
-        List<Estacion> paradas = new ArrayList<>();
-        Estacion estacion1Test = new Estacion("Estacion1",1,1.5f,2.5f);
-        Estacion estacion2Test = new Estacion("Estacion2",2,3.5f,4.5f);
-        paradas.add(estacion1Test);
-        paradas.add(estacion2Test);
+        Map<Estacion, Double> paradas = new HashMap<>();
+        Estacion estacion1Test = new Estacion("Estacion1",1);
+        Estacion estacion2Test = new Estacion("Estacion2",2);
+        Estacion estacion3Test = new Estacion("Estacion2",3);
+        paradas.put(estacion1Test,1.0);
+        paradas.put(estacion2Test,1.0);
+        paradas.put(estacion3Test,1.0);
         MedioDeTransporte untransporte= new TransportePublico(TipoTransportePublico.Colectivo,"2",paradas);
-        Espacio partida =new Estacion("Estacion1",1,1.5f,2.5f);
-        Espacio llegada= new Estacion("Estacion2",2,3.5f,4.5f);
+        Espacio partida =new Estacion("Estacion1",1);
+        Espacio llegada= new Estacion("Estacion3",3);
 
-        Assertions.assertEquals(4.5f,this.servManual.calcularDistancia(untransporte,partida,llegada));
+        Assertions.assertEquals(2.0,this.servManual.calcularDistancia(untransporte,partida,llegada));
 
 
 
-    }*/
+    }
 
 }
