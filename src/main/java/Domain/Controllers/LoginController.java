@@ -11,6 +11,7 @@ import Domain.Usuarios.Usuario;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
+import spark.ModelAndView;
 import spark.Request;
 import spark.Response;
 
@@ -19,7 +20,7 @@ import java.util.Optional;
 public class LoginController {
 
   //POST
-  public void loguear(Request request, Response response) throws ParseException {
+  public String loguear(Request request, Response response) throws ParseException {
     JSONParser parser = new JSONParser();
     JSONObject pedido = (JSONObject) parser.parse(request.body());
 
@@ -28,7 +29,7 @@ public class LoginController {
     if(!usuario.isPresent()){
       //TODO marcar error
       response.redirect("/menu_login");
-      return;
+      return "error de JSON";
     }
 
     RepositorioUsuariosDB repositorioUsuariosDB = new RepositorioUsuariosDB();
@@ -39,7 +40,7 @@ public class LoginController {
     if(!usuario.isPresent()){
       //TODO marcar error
       response.redirect("/menu_login");
-      return;
+      return "error de usuario";
     }
 
     response.cookie("username",usuario.get().getUsername());
@@ -48,7 +49,7 @@ public class LoginController {
     if(usuario.get() instanceof Admin) {
       //TODO hacer que vaya a la vista de Admin
       //response.redirect("");
-      return;
+      return "Pantalla Admin";
     }
 
     RepositorioPersonasDB repositorioPersonasDB = new RepositorioPersonasDB();
@@ -63,13 +64,15 @@ public class LoginController {
       //TODO mandar a la vista de organizacion
       response.cookie("organizacion",organizacion.get().getRazonSocial());
       //response.redirect("");
-      return;
+      return "pantalla organizacion";
     }
     if(persona.isPresent()){
       //TODO hacer que vaya a la vista de Persona
       response.cookie("persona",persona.get().getNroDocumento());
       //response.redirect("");
+      return "pantalla persona";
     }
+    return "usuario default";
   }
 
   //GET
