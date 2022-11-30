@@ -7,6 +7,7 @@ import Domain.Repositorios.RepositorioOrganizacionesDB;
 import Domain.Repositorios.RepositorioPersonasDB;
 import Domain.Repositorios.RepositorioUsuariosDB;
 import Domain.Usuarios.Admin;
+import Domain.Usuarios.Excepciones.ContraseniaEsInvalidaException;
 import Domain.Usuarios.Usuario;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
@@ -33,7 +34,12 @@ public class LoginController {
     }
 
     RepositorioUsuariosDB repositorioUsuariosDB = new RepositorioUsuariosDB();
-    usuario = Optional.ofNullable(repositorioUsuariosDB.validarLogueoUsuario(usuario.get().getUsername(),usuario.get().getContraSinHash()));
+    try{
+      usuario = Optional.ofNullable(repositorioUsuariosDB.validarLogueoUsuario(usuario.get().getUsername(),usuario.get().getContraSinHash()));
+    }
+    catch (ContraseniaEsInvalidaException c){
+      return c.getMessage();
+    }
 
 
     //Lo vuelvo a ver porque lo lleno con el validador de usuario
