@@ -124,8 +124,8 @@ public class RepositorioUsuariosDB extends Repositorio<Usuario> {
     //Si el intento de contrasenia es fallido se devolvera nulo
     // lo pongo en los dos lados por si la contrasenia es correcta pero no paso el tiempo del ultimo acceso
     //Y esto esta por la contrasenia es incorrecta se actualizara el intento de acceso
-    modificar(usuarioConUsername);
     usuarioConUsername.intentoAcceso();
+    modificar(usuarioConUsername);
     throw new ContraseniaEsInvalidaException("la contrasenia no es la misma a la del usuario");
   }
 

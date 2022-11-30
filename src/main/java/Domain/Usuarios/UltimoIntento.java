@@ -47,13 +47,17 @@ public class UltimoIntento {
   }
 
   public boolean validar_acceso() {
-    if(Duration.between(this.ultimoAcceso,LocalDateTime.now()).toMillis()>formulaDeUltimaSesion()){
+
+    long diferenciaEnSegundos = Duration.between(this.ultimoAcceso,LocalDateTime.now()).getSeconds();
+
+    if (diferenciaEnSegundos > formulaDeUltimaSesion()){
+      setUltimoAcceso(LocalDateTime.now());
       //this.intento = 1;
       setIntento(1);
       return true;
     }
-    //this.ultimoAcceso = LocalDateTime.now();
     setUltimoAcceso(LocalDateTime.now());
+    //this.ultimoAcceso = LocalDateTime.now();
     this.intento++;
     //setIntento(this.intento);
     return false;
