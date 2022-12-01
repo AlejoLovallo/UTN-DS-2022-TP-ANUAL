@@ -1,7 +1,5 @@
 package Domain.Repositorios;
 
-import Domain.Miembro.Excepciones.PersonaException;
-import Domain.Miembro.Persona;
 import Domain.Notificaciones.MailSender;
 import Domain.Notificaciones.Notificar;
 import Domain.Notificaciones.NotificarGuiaDeRecomendaciones;
@@ -12,6 +10,7 @@ import Domain.Organizacion.TipoOrganizacion;
 import Domain.Usuarios.Contacto;
 import Domain.Usuarios.Excepciones.UsuarioException;
 import Domain.Usuarios.Usuario;
+import Domain.Organizacion.SolicitudPendiente;
 
 import javax.persistence.criteria.*;
 import java.util.List;
@@ -135,5 +134,22 @@ public class RepositorioOrganizacionesDB extends Repositorio<Organizacion>{
     this.dbService.agregar(organizacionNueva);
 
     return organizacionNueva;
+  }
+
+  public Organizacion buscarOrganizacion(String razonSocial){
+    return (Organizacion) this.dbService.buscar(condicionRazonSocial(razonSocial));
+  }
+
+  private BusquedaCondicional condicionRazonSocial(String razonSocial){
+    CriteriaBuilder criteriaBuilder = criteriaBuilder();
+    CriteriaQuery<Organizacion> organizacionCriteriaQuery = criteriaBuilder.createQuery(Organizacion.class);
+
+    Root<SolicitudPendiente> root = organizacionCriteriaQuery.from(SolicitudPendiente.class);
+
+    Predicate condicionPorRazonSocial = criteriaBuilder.like(root.get("razonSocial"), "%"+ razonSocial +"%");
+
+    organizacionCriteriaQuery.where(condicionPorRazonSocial);
+
+    return new BusquedaCondicional(null, organizacionCriteriaQuery);
   }
 }

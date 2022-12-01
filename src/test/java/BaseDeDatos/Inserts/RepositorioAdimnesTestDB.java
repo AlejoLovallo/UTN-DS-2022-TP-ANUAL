@@ -10,7 +10,7 @@ import Domain.Usuarios.Usuario;
 public class RepositorioAdimnesTestDB {
   public static void main(String[] args) {
 
-    Usuario user = new Admin("insertUsuario","insertUsuario@gmail.com","insertUsuario54+",true);
+    Usuario user = new Admin("usuarioAdmin","usuarioAdmin@gmail.com","insertUsuario54+",true);
 
     //Miembro miembro = new Miembro();
 

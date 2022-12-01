@@ -34,7 +34,7 @@ public class Persona {
  // @JoinColumn(name="id_miembro",referencedColumnName = "id_miembro")
   private List<Miembro> listaMiembros;
 
-  @OneToOne(cascade = CascadeType.ALL)
+  @OneToOne(cascade = CascadeType.DETACH)
   @NotFound(action = NotFoundAction.IGNORE)
   @JoinColumn(name="id_usuario",referencedColumnName = "id_usuario")
   private Usuario usuario;
@@ -53,6 +53,9 @@ public class Persona {
   }
 
   //////////////////////////////////  GETTERS
+
+
+  public int getId_persona() { return id_persona;}
 
   public String getNombre() {
     return nombre;

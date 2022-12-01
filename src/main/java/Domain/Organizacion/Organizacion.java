@@ -16,9 +16,6 @@ import java.io.IOException;
 import java.util.List;
 import javax.persistence.*;
 
-import org.hibernate.jpa.event.internal.jpa.ListenerFactoryBeanManagerStandardImpl;
-
-//import org.apache.poi.ss.formula.PlainCellCache.Loc;
 
 @Entity
 @Table(name="organizacion")
@@ -63,7 +60,7 @@ public class Organizacion {
   @NotFound(action = NotFoundAction.IGNORE)
   private List<Reporte> reportes = new ArrayList<>();
 
-  @OneToOne(cascade = CascadeType.ALL)
+  @OneToOne(cascade = CascadeType.DETACH)
   @NotFound(action = NotFoundAction.IGNORE)
   @JoinColumn(name="id_usuario",referencedColumnName = "id_usuario")
   private Usuario usuario;

@@ -48,7 +48,7 @@ public class AdminTest {
     public void validarUsuario(){
         RepositorioUsuariosDB repositorioUsuariosDB = new RepositorioUsuariosDB();
 
-        repositorioUsuariosDB.crearUsuario("username", "email@gmail.com",  "juan1998", false);
+        repositorioUsuariosDB.crearUsuario("u", "email@gmail.com",  "juan1998", false);
         Usuario usuario = repositorioUsuariosDB.buscarUsuario("username");
         Assertions.assertTrue(admin.validarUsuario(usuario, true));
     }

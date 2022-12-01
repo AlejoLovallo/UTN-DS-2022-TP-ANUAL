@@ -4,7 +4,12 @@ import Domain.CalculadorHC.CalculadorHC;
 import Domain.JSON.ParserJSONMiembro;
 import Domain.Miembro.Miembro;
 import Domain.Miembro.Persona;
+import Domain.Organizacion.Organizacion;
+import Domain.Organizacion.Sector;
+import Domain.Organizacion.SolicitudPendiente;
+import Domain.Repositorios.RepositorioOrganizacionesDB;
 import Domain.Repositorios.RepositorioPersonasDB;
+import Domain.Repositorios.RepositorioSolicitudesDB;
 import Domain.Trayecto.Tramo;
 import Domain.Trayecto.Trayecto;
 import org.json.simple.JSONArray;
@@ -22,13 +27,26 @@ import java.util.List;
 
 public class MiembroController {
 
-    public void agregarTrayecto(Request request, Response response) throws ParseException {
-        //Miembro miembr = TODO buscar miembro
+    public Object agregarTrayecto(Request request, Response response) throws ParseException {
+
+        String username = request.cookie("username");
+        RepositorioPersonasDB repositorioPersonasDB = new RepositorioPersonasDB();
+        Persona persona = repositorioPersonasDB.buscarPersonaPorUsername(username);
 
         JSONParser parser = new JSONParser();
         JSONObject pedido = (JSONObject) parser.parse(request.body());
 
-        //TODO: buscar si ya existe
+        String organizacion = request.queryParams("organizacion");
+        Miembro aux = null;
+        for(Miembro miembro : persona.getMiembros())
+        {
+            if(miembro.getSector().getOrganizacion().getRazonSocial().equals(organizacion))
+            {
+                aux = miembro;
+                break;
+            }
+        }
+
         Trayecto trayecto = new Trayecto();
 
         DateTimeFormatter formato = DateTimeFormatter.ofPattern("dd LLLL yyyy");
@@ -42,11 +60,14 @@ public class MiembroController {
         {
             tramos.add(parserJSONMiembro.JSONATramo((JSONObject)tramo));
         }
+
+        aux.getTrayectos().add(trayecto);
+        return null;
     }
 
-    public void menuRegistrarTrayectos(Request request, Response response)
+    public Object menuRegistrarTrayectos(Request request, Response response)
     {
-        String username = request.session().attribute("username");
+        String username = request.cookie("username");
 
         RepositorioPersonasDB repositorioPersonasDB = new RepositorioPersonasDB();
         Persona persona = repositorioPersonasDB.buscarPersonaPorUsername(username);
@@ -84,10 +105,11 @@ public class MiembroController {
 
         response.type("application/json");
         response.body(listaMiembrosJSON.toJSONString());
+        return null;
     }
 
-    public void respuestaCalcularHC(Request request, Response response) throws IOException {
-        String username = request.session().attribute("username");
+    public Object respuestaCalcularHC(Request request, Response response) throws IOException {
+        String username = request.cookie("username");
         String mes = request.queryParams("Mes");
         String anio = request.queryParams("Anio");
 
@@ -100,6 +122,74 @@ public class MiembroController {
 
         response.type("application/json");
         response.body("{ \"resultado\":" + resultado.toString() + "}");
-        return;
+        return null;
     }
+
+    public Object menuEnviarSolicitud(Request request, Response response)
+    {
+        String username = request.cookie("username");
+
+        RepositorioPersonasDB repositorioPersonasDB = new RepositorioPersonasDB();
+        Persona persona = repositorioPersonasDB.buscarPersonaPorUsername(username);
+
+        String nombreOrganizacion = request.queryParams("organizacion");
+        String nombreSector = request.queryParams("sector");
+
+        RepositorioOrganizacionesDB repositorioOrganizacionesDB = new RepositorioOrganizacionesDB();
+        Organizacion organizacion = repositorioOrganizacionesDB.buscarOrganizacion(nombreOrganizacion);
+
+        Sector miembroSector = null;
+        for(Sector sector : organizacion.getSectores())
+        {
+            if(sector.getNombre().equals(nombreSector))
+            {
+                miembroSector = sector;
+                break;
+            }
+        }
+
+        if(miembroSector == null)
+        {
+            //TODO: enviar mensaje que no existe
+            return null;
+        }
+        else{
+            RepositorioSolicitudesDB repositorioSolicitudesDB = new RepositorioSolicitudesDB();
+
+            SolicitudPendiente solicitudPendiente = new SolicitudPendiente();
+            solicitudPendiente.setPersona(persona);
+            solicitudPendiente.setSector(miembroSector);
+            repositorioSolicitudesDB.agregar(solicitudPendiente);
+            return null;
+        }
+    }
+
+    public Object getMiembro(Request req, Response res) throws ParseException {
+        String nombreUsuario = req.params(":username");
+        String organizacion = req.params(":organizacion");
+
+        RepositorioPersonasDB repositorioPersonasDB = new RepositorioPersonasDB();
+        Persona persona = repositorioPersonasDB.buscarPersonaPorUsername(nombreUsuario);
+
+        RepositorioOrganizacionesDB repoOrganizacionesDB = new RepositorioOrganizacionesDB();
+        Organizacion org = repoOrganizacionesDB.buscarOrganizacion(organizacion);
+
+        Miembro miem = null;
+        for(Miembro miembro : persona.getMiembros())
+        {
+            if(miembro.getSector().getOrganizacion().equals(org))
+            {
+                miem = miembro;
+            }
+        }
+
+        JSONObject resOrganizacion = ParserJSONMiembro.miembroToJSON(miem);
+
+        res.type("application/json");
+        res.body(resOrganizacion.toJSONString());
+
+        return null;
+    }
+
+
 }

@@ -4,13 +4,15 @@ import Domain.Controllers.LoginController;
 import Domain.Middleware.AuthMiddleware;
 import Domain.Spark.BooleanHelper;
 import Domain.Spark.HandlebarsTemplateEngineBuilder;
-import spark.ResponseTransformer;
 import spark.template.handlebars.HandlebarsTemplateEngine;
+import Domain.Controllers.MiembroController;
+import Domain.Controllers.OrganizacionController;
 import spark.Spark;
 
 public class Router {
 
   private static HandlebarsTemplateEngine engine;
+
   private static void initEngine() {
     Router.engine = HandlebarsTemplateEngineBuilder
         .create()
@@ -28,7 +30,6 @@ public class Router {
   private static void configure(){
 
 
-    LoginController loginController = new LoginController();
     Spark.before("/", AuthMiddleware::verificarSesion);
 /*
     Spark.get("/", loginController::inicio, Router.engine);
@@ -39,9 +40,33 @@ public class Router {
     Spark.get("/menu_login", loginController::menu_login, Router.engine);
 
 */
-    Spark.post("/menu_login", loginController::loguear);
+
 
     //TODO este post recibe los datos del json
+
+    /*** CONTROLLERS ***/
+    LoginController loginController = new LoginController();
+    OrganizacionController organizacionController = new OrganizacionController();
+    MiembroController miembroController = new MiembroController();
+
+    /*** LOGIN ROUTES ***/
+    Spark.post("/menu_login", loginController::loguear);
+
+    /*** ADMIN ROUTERS ***/
+
+    /*** MIEMBROS ROUTES ***/
+    Spark.get("/menu_registrar_trayecto", miembroController::menuRegistrarTrayectos);
+    Spark.get("/miembro/:username/:organizacion", miembroController::getMiembro);
+    Spark.post("/enviar_solicitud", miembroController::menuEnviarSolicitud);
+    Spark.post("/menu_registrar_trayecto", miembroController::agregarTrayecto);
+    Spark.post("/menu_calcular_hc", miembroController::respuestaCalcularHC);
+
+    /*** ORGANIZACIONES ROUTES ***/
+    Spark.get("/organizacion/:nombre",organizacionController::getOrganizacion);
+    Spark.post("/organizacion",organizacionController::crearOrganizacion);
+    Spark.put("/organizacion/:nombre",organizacionController::modificarOrganizacion);
+
+
 
   }
 }

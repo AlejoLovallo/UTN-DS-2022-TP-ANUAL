@@ -61,12 +61,27 @@ public class RepositorioPersonasDB extends Repositorio<Persona>{
 
 
     Persona personaNueva = new Persona(_nombre,_apellido,_tipoDocumento,_documento);
-    personaNueva.setUsuario(user);
 
+    repositorioUsuariosDB.agregar(user);
+
+    personaNueva.setUsuario(user);
 
     this.dbService.agregar(personaNueva);
 
     return personaNueva;
+  }
+
+  public Persona agregarPersona(Persona persona){
+    Usuario userPersona = persona.getUsuario();
+
+    if(userPersona == null) return null;
+
+    RepositorioUsuariosDB repositorioUsuariosDB = new RepositorioUsuariosDB();
+    repositorioUsuariosDB.agregar(userPersona);
+
+    this.agregar(persona);
+
+    return persona;
   }
 
   private BusquedaCondicional condicionPersonaJoinUsuario(String nombreDeUsuario){

@@ -4,7 +4,6 @@ import Domain.Usuarios.Admin;
 import Domain.Usuarios.Excepciones.ContraseniaEsInvalidaException;
 import Domain.Usuarios.Excepciones.UsuarioException;
 import Domain.Usuarios.Usuario;
-import Domain.Repositorios.RepositorioAdminDB;
 
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
@@ -115,9 +114,11 @@ public class RepositorioUsuariosDB extends Repositorio<Usuario> {
     // lo pongo en los dos lados por si la contrasenia es correcta pero no paso el tiempo del ultimo acceso
     if(usuarioConUsername.isColision(contra)){
       if(usuarioConUsername.intentoAcceso()){
+        usuarioConUsername.setUltIntentoCorrecto(true);
         modificar(usuarioConUsername);
         return usuarioConUsername;
       }
+      modificar(usuarioConUsername);
       throw new ContraseniaEsInvalidaException("no paso el tiempo de inicio de sesion");
     }
 
@@ -125,6 +126,7 @@ public class RepositorioUsuariosDB extends Repositorio<Usuario> {
     // lo pongo en los dos lados por si la contrasenia es correcta pero no paso el tiempo del ultimo acceso
     //Y esto esta por la contrasenia es incorrecta se actualizara el intento de acceso
     usuarioConUsername.intentoAcceso();
+    usuarioConUsername.setUltIntentoCorrecto(false);
     modificar(usuarioConUsername);
     throw new ContraseniaEsInvalidaException("la contrasenia no es la misma a la del usuario");
   }
