@@ -7,14 +7,16 @@ import Domain.Usuarios.Usuario;
 public class RepositorioUsuariosTestDB {
   public static void main(String[] args) {
 
-    Usuario user = new Usuario("insertUsuario","insertUsuario@gmail.com","insertUsuario54+",true);
+    /*Usuario user = new Usuario("insertUsuario","insertUsuario@gmail.com","insertUsuario54+",true);
 
     //Miembro miembro = new Miembro();
 
     RepositorioUsuariosDB repositorioUsuarios = new RepositorioUsuariosDB();
-    repositorioUsuarios.agregar(user);
+    repositorioUsuarios.agregar(user);*/
 
-    repositorioUsuarios.crearUsuario("insertUsuario","insertUsuario@gmail.com","insertUsuario54+",false);
+
+    RepositorioUsuariosDB repositorioUsuarios = new RepositorioUsuariosDB();
+    repositorioUsuarios.crearUsuario("usuarioNormal","usuarioNormal@gmail.com","juan1998",true);
 
   }
 }

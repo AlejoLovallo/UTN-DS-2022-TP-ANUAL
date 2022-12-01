@@ -1,7 +1,5 @@
 package Domain.Repositorios;
 
-import Domain.Miembro.Excepciones.PersonaException;
-import Domain.Miembro.Persona;
 import Domain.Notificaciones.MailSender;
 import Domain.Notificaciones.Notificar;
 import Domain.Notificaciones.NotificarGuiaDeRecomendaciones;
@@ -12,6 +10,7 @@ import Domain.Organizacion.TipoOrganizacion;
 import Domain.Usuarios.Contacto;
 import Domain.Usuarios.Excepciones.UsuarioException;
 import Domain.Usuarios.Usuario;
+import Domain.Organizacion.SolicitudPendiente;
 
 import javax.persistence.criteria.*;
 import java.util.List;
@@ -120,6 +119,22 @@ public class RepositorioOrganizacionesDB extends Repositorio<Organizacion>{
 
   public Organizacion crearOrganizacion(String nombre,ClasificacionOrganizacion _clasificacion,TipoOrganizacion _tipo,Contacto contacto, Usuario user){
     RepositorioUsuariosDB repositorioUsuariosDB = new RepositorioUsuariosDB();
+
+    if(user == null) throw new UsuarioException("El usuario es nulo");
+
+    if(repositorioUsuariosDB.existe(user.getUsername())) throw new OrganizacionException("Ya hay un usuario en la DB");
+
+    if(this.buscarOrganizacionPorNombre(nombre) != null) throw new OrganizacionException("Ya hay una organizacion con el mismo nombre");
+
+
+    Organizacion organizacionNueva = new Organizacion(nombre, _tipo,  _clasificacion,  contacto);
+    organizacionNueva.setUsuario(user);
+
+
+    this.dbService.agregar(organizacionNueva);
+
+    return organizacionNueva;
+  }
 
     if(user == null) throw new UsuarioException("El usuario es nulo");
 

@@ -1,7 +1,5 @@
 package Domain.Usuarios;
 
-import Domain.BaseDeDatos.EntityManagerHelper;
-
 import javax.persistence.*;
 import java.time.Duration;
 import java.time.LocalDateTime;
@@ -18,7 +16,8 @@ public class UltimoIntento {
   private LocalDateTime ultimoAcceso;
   @Column
   private int intento;
-
+  @Column
+  private Boolean ultIntentoCorrecto;
 
 
   public static String toString(UltimoIntento ultimoIntento) {
@@ -35,25 +34,43 @@ public class UltimoIntento {
   public UltimoIntento() {
     this.intento = 1;
     this.ultimoAcceso = LocalDateTime.now();
+    this.ultIntentoCorrecto = true;
   }
 
   //////////////////////////////////  GETTERS
 
   //////////////////////////////////  SETTERS
 
+
+  public Boolean getUltIntentoCorrecto() {
+    return ultIntentoCorrecto;
+  }
+
+  public void setUltIntentoCorrecto(Boolean ultIntentoCorrecto) {
+    this.ultIntentoCorrecto = ultIntentoCorrecto;
+  }
+
   //////////////////////////////////  INTERFACE
   private int formulaDeUltimaSesion(){
+    //Formula Exponencial
+    //return (int) Math.pow(3,this.intento);
+
+    //Formula lineal
     return this.intento * 3;
   }
 
   public boolean validar_acceso() {
-    if(Duration.between(this.ultimoAcceso,LocalDateTime.now()).toMillis()>formulaDeUltimaSesion()){
+
+    long diferenciaEnSegundos = Duration.between(this.ultimoAcceso,LocalDateTime.now()).getSeconds();
+
+    if (diferenciaEnSegundos > formulaDeUltimaSesion() || this.ultIntentoCorrecto){
+      setUltimoAcceso(LocalDateTime.now());
       //this.intento = 1;
       setIntento(1);
       return true;
     }
-    //this.ultimoAcceso = LocalDateTime.now();
     setUltimoAcceso(LocalDateTime.now());
+    //this.ultimoAcceso = LocalDateTime.now();
     this.intento++;
     //setIntento(this.intento);
     return false;
@@ -63,6 +80,7 @@ public class UltimoIntento {
     this.ultimoAcceso = ultimoAcceso;
     //update();
   }
+
 
   private void setIntento(int intento) {
     this.intento = intento;
