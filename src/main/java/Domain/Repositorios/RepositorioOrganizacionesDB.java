@@ -136,19 +136,20 @@ public class RepositorioOrganizacionesDB extends Repositorio<Organizacion>{
     return organizacionNueva;
   }
 
-    if(user == null) throw new UsuarioException("El usuario es nulo");
+  public Organizacion buscarOrganizacion(String razonSocial){
+    return (Organizacion) this.dbService.buscar(condicionRazonSocial(razonSocial));
+  }
 
-    if(repositorioUsuariosDB.existe(user.getUsername())) throw new OrganizacionException("Ya hay un usuario en la DB");
+  private BusquedaCondicional condicionRazonSocial(String razonSocial){
+    CriteriaBuilder criteriaBuilder = criteriaBuilder();
+    CriteriaQuery<Organizacion> organizacionCriteriaQuery = criteriaBuilder.createQuery(Organizacion.class);
 
-    if(this.buscarOrganizacionPorNombre(nombre) != null) throw new OrganizacionException("Ya hay una organizacion con el mismo nombre");
+    Root<SolicitudPendiente> root = organizacionCriteriaQuery.from(SolicitudPendiente.class);
 
+    Predicate condicionPorRazonSocial = criteriaBuilder.like(root.get("razonSocial"), "%"+ razonSocial +"%");
 
-    Organizacion organizacionNueva = new Organizacion(nombre, _tipo,  _clasificacion,  contacto);
-    organizacionNueva.setUsuario(user);
+    organizacionCriteriaQuery.where(condicionPorRazonSocial);
 
-
-    this.dbService.agregar(organizacionNueva);
-
-    return organizacionNueva;
+    return new BusquedaCondicional(null, organizacionCriteriaQuery);
   }
 }
