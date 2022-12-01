@@ -54,6 +54,11 @@ public class Miembro {
 
   //////////////////////////////////  GETTERS
 
+
+  public Persona getPersona() {
+    return persona;
+  }
+
   public List<Trayecto> getTrayectos() {
     return trayectos;
   }

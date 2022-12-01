@@ -5,18 +5,25 @@ import Domain.Espacios.Espacio;
 import Domain.Espacios.Estacion;
 import Domain.MediosDeTransporte.*;
 
+import Domain.Miembro.Miembro;
+import Domain.Miembro.Persona;
+import Domain.Organizacion.Sector;
 import Domain.Repositorios.RepositorioDireccionDB;
 import Domain.Repositorios.RepositorioTransportePublicoDB;
 import Domain.Repositorios.RepositorioVehiculoParticularDB;
 import Domain.Trayecto.Tramo;
+import Domain.Trayecto.Trayecto;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
+
+import java.time.format.DateTimeFormatter;
+import java.util.List;
 
 
 public class ParserJSONMiembro {
 
     //----------Desde JSON-------------//
-    public MedioDeTransporte JSONAMedioTransporte(JSONObject obj)
+    public static MedioDeTransporte JSONAMedioTransporte(JSONObject obj)
     {
         if(obj.get("tipo").equals("vehiculoParticular"))
         {
@@ -48,7 +55,7 @@ public class ParserJSONMiembro {
     }
 
 
-    public Tramo JSONATramo(JSONObject obj)
+    public static Tramo JSONATramo(JSONObject obj)
     {
         RepositorioDireccionDB repositorioDireccionDB = new RepositorioDireccionDB();
 
@@ -87,7 +94,7 @@ public class ParserJSONMiembro {
     }
 
     //---------------hacia JSON-------------------//
-    public JSONObject medioTransporteAJSON(MedioDeTransporte medio)
+    public static JSONObject medioTransporteAJSON(MedioDeTransporte medio)
     {
         JSONObject obj = new JSONObject();
         if(medio instanceof VehiculoParticular)
@@ -112,7 +119,7 @@ public class ParserJSONMiembro {
         return obj;
     }
 
-    public JSONObject EspacioAJSONObject(Espacio espacio)
+    public static JSONObject EspacioAJSONObject(Espacio espacio)
     {
         JSONObject obj = new JSONObject();
 
@@ -136,15 +143,69 @@ public class ParserJSONMiembro {
         return obj;
     }
 
-    public JSONObject tramoAJSONObject(Tramo tramo)
+    public static JSONObject tramoAJSONObject(Tramo tramo)
     {
         JSONObject tramoObj = new JSONObject();
         tramoObj.put("puntoSalida", EspacioAJSONObject(tramo.getPuntoPartida()));
         tramoObj.put("puntoLlegada", EspacioAJSONObject(tramo.getPuntoLlegada()));
-        tramoObj.put("medioTransporte", this.medioTransporteAJSON(tramo.getMedioTransporte()));
+        tramoObj.put("medioTransporte", ParserJSONMiembro.medioTransporteAJSON(tramo.getMedioTransporte()));
 
         return tramoObj;
     }
 
+    public static JSONObject sectorAJSON(Sector sector)
+    {
+        JSONObject ret = new JSONObject();
 
+        ret.put("organizacion", sector.getOrganizacion().getRazonSocial());
+        ret.put("nombreSector", sector.getNombre());
+
+        return ret;
+    }
+
+    public static JSONObject personaAJSON(Persona persona)
+    {
+        JSONObject ret = new JSONObject();
+
+        ret.put("nombre", persona.getNombre());
+        ret.put("apellido", persona.getApellido());
+        ret.put("dni", persona.getNroDocumento());
+
+        return ret;
+    }
+
+    public static JSONArray trayectosToJSON(List<Trayecto> trayectos)
+    {
+        JSONArray trayectosJSON = new JSONArray();
+
+        DateTimeFormatter formato = DateTimeFormatter.ofPattern("dd LLLL yyyy");
+        for(Trayecto trayecto : trayectos)
+        {
+            JSONObject trayectoObj = new JSONObject();
+            trayectoObj.put("frecuenciaSemanal", trayecto.getFrecuenciaSemanal());
+            trayectoObj.put("fechaInicio", trayecto.getFechaInicio().format(formato));
+            trayectoObj.put("fechaFin", trayecto.getFechaFin().format(formato));
+
+            JSONArray tramos = new JSONArray();
+            for(Tramo tramo : trayecto.getTramos())
+                tramos.add(ParserJSONMiembro.tramoAJSONObject(tramo));
+
+            trayectoObj.put("tramos", tramos);
+
+            trayectosJSON.add(trayectoObj);
+        }
+
+        return trayectosJSON;
+    }
+
+    public static JSONObject miembroToJSON(Miembro miembro)
+    {
+        JSONObject obj = new JSONObject();
+
+        obj.put("persona", ParserJSONMiembro.personaAJSON(miembro.getPersona()));
+        obj.put("sector", ParserJSONMiembro.sectorAJSON(miembro.getSector()));
+        obj.put("trayectos", trayectosToJSON(miembro.getTrayectos()));
+
+        return obj;
+    }
 }

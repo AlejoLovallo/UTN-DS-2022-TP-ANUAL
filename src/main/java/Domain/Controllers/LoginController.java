@@ -34,6 +34,12 @@ public class LoginController {
     }
 
     RepositorioUsuariosDB repositorioUsuariosDB = new RepositorioUsuariosDB();
+    /*if(!repositorioUsuariosDB.existe(usuario.get().getUsername())){
+      //TODO marcar error
+      response.redirect("/menu_login");
+      return "no existe un usuario con ese username";
+    }*/
+
     try{
       usuario = Optional.ofNullable(repositorioUsuariosDB.validarLogueoUsuario(usuario.get().getUsername(),usuario.get().getContraSinHash()));
     }
@@ -45,7 +51,7 @@ public class LoginController {
     //Lo vuelvo a ver porque lo lleno con el validador de usuario
     if(!usuario.isPresent()){
       //TODO marcar error
-      response.redirect("/menu_login");
+      //response.redirect("/menu_login");
       return "error de usuario";
     }
 

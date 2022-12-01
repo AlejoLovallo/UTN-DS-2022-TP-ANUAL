@@ -52,6 +52,10 @@ public class UltimoIntento {
 
   //////////////////////////////////  INTERFACE
   private int formulaDeUltimaSesion(){
+    //Formula Exponencial
+    //return (int) Math.pow(3,this.intento);
+
+    //Formula lineal
     return this.intento * 3;
   }
 

@@ -62,7 +62,9 @@ public class Sector {
 
   // GETTERS
 
-  public String getNombre() {
+  public int getId_sector() { return id_sector; }
+
+    public String getNombre() {
     return nombre;
   }
 
