@@ -9,7 +9,7 @@ public class UpdateUsuarioTestDB {
 
     RepositorioUsuariosDB repositorioUsuariosDB = new RepositorioUsuariosDB();
 
-    Usuario user = repositorioUsuariosDB.buscar(16);
+    Usuario user = repositorioUsuariosDB.buscar(5);
     user.setUsername("tomas");
 
     repositorioUsuariosDB.modificar(user);

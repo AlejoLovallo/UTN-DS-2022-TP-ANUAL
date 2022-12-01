@@ -59,12 +59,12 @@ public class AdminTest {
         RepositorioFactoresEmisionDB repositorioFactoresEmisionDB = new RepositorioFactoresEmisionDB();
 
         //GIVEN DADO
-        ArrayList<FactorEmision> factoresDeEmision = new ArrayList<FactorEmision>(repositorioFactoresEmisionDB.getFactoresDeEmision());
-        ArrayList<FactorEmision> nuevosFactoresDeEmision = factoresDeEmision;
+        ArrayList<FactorEmision> nuevosFactoresDeEmision = new ArrayList<FactorEmision>(repositorioFactoresEmisionDB.getFactoresDeEmision());
+
         nuevosFactoresDeEmision.add(Common.getFactorDeEmision());
         //WHEN CUANDO
         admin.registrarFactorDeEmision(Common.getFactorDeEmision());
-        factoresDeEmision = new ArrayList<FactorEmision>(repositorioFactoresEmisionDB.getFactoresDeEmision());
+        ArrayList<FactorEmision>  factoresDeEmision = new ArrayList<FactorEmision>(repositorioFactoresEmisionDB.getFactoresDeEmision());
         //THEN ENTONCES
         //TODO Verificar los ids de los elementos de las 2 listas
         Assertions.assertEquals(nuevosFactoresDeEmision, factoresDeEmision);

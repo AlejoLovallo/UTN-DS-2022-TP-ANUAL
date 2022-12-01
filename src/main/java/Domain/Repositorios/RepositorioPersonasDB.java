@@ -52,17 +52,18 @@ public class RepositorioPersonasDB extends Repositorio<Persona>{
   public Persona crearPersona(String _nombre, String _apellido, TipoDocumento _tipoDocumento, String _documento, Usuario user){
 
     RepositorioUsuariosDB repositorioUsuariosDB = new RepositorioUsuariosDB();
+    RepositorioPersonasDB repositorioPersonasDB=new RepositorioPersonasDB();
 
     if(user == null) throw new PersonaException("El usuario es nulo");
 
-    if(repositorioUsuariosDB.existe(user.getUsername())) throw new PersonaException("Ya hay un usuario en la DB");
-
+    //if(repositorioUsuariosDB.existe(user.getUsername())) throw new PersonaException("Ya hay un usuario en la DB");
+    if(repositorioPersonasDB.buscarPersonaPorUsuario(user)!=null) throw new PersonaException("Ya hay una persona con ese usuario en la DB");
     if(this.existe(_documento)) throw new PersonaException("Ya hay una persona con el mismo numero de Documento");
 
 
     Persona personaNueva = new Persona(_nombre,_apellido,_tipoDocumento,_documento);
 
-    repositorioUsuariosDB.agregar(user);
+    //repositorioUsuariosDB.agregar(user);
 
     personaNueva.setUsuario(user);
 

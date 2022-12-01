@@ -60,10 +60,10 @@ public class RepoPersonasTest {
 
         //WHEN CUANDO
         InterfazUsuarioPersona interfazUsuarioPersona = new InterfazUsuarioPersona();
-        interfazUsuarioPersona.crearUsuarioPersona("username",  "mail@hotmail.com",  "contraseniadificil1234", "nombre" , "apellido", TipoDocumento.DNI,  "1112324");
+        interfazUsuarioPersona.crearUsuarioPersona("Username0",  "mail@hotmail.com",  "contraseniadificil1234", "nombre" , "apellido", TipoDocumento.DNI,  "11125324");
 
         //THEN ENTONCES
-        Assertions.assertEquals("username", interfazUsuarioPersona.getUsuario().getUsername());
+        Assertions.assertEquals("Username0", interfazUsuarioPersona.getUsuario().getUsername());
         Assertions.assertEquals("mail@hotmail.com", interfazUsuarioPersona.getUsuario().getMail());
         Assertions.assertEquals("nombre", interfazUsuarioPersona.getPersona().getNombre());
         Assertions.assertEquals("apellido", interfazUsuarioPersona.getPersona().getApellido());
