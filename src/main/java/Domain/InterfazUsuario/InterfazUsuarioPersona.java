@@ -1,10 +1,10 @@
 package Domain.InterfazUsuario;
 
 import Domain.Miembro.Persona;
-import Domain.Miembro.RepositorioPersonas;
 import Domain.Miembro.TipoDocumento;
+import Domain.Repositorios.RepositorioPersonasDB;
+import Domain.Repositorios.RepositorioUsuariosDB;
 import Domain.Usuarios.Excepciones.UsuarioException;
-import Domain.Usuarios.RepositorioUsuarios;
 import Domain.Usuarios.Usuario;
 
 
@@ -23,8 +23,11 @@ public class InterfazUsuarioPersona {
 
     public void ingresarUsuario(String username, String contra){
         try{
-            this.usuario = RepositorioUsuarios.getInstance().validarLogueoUsuario(username, contra);
-            this.persona = RepositorioPersonas.getInstance().buscarPersonaPorUsuario(this.usuario);
+            RepositorioPersonasDB repositorioPersonasDB = new RepositorioPersonasDB();
+            RepositorioUsuariosDB repositorioUsuariosDB = new RepositorioUsuariosDB();
+
+            this.usuario = repositorioUsuariosDB.validarLogueoUsuario(username, contra);
+            this.persona = repositorioPersonasDB.buscarPersonaPorUsuario(this.usuario);
             devolverUsuarioCorrecto();
         }
         catch (UsuarioException e){
@@ -34,8 +37,11 @@ public class InterfazUsuarioPersona {
 
     public void crearUsuarioPersona(String username, String mail, String contra, String nombre, String apellido, TipoDocumento tipoDocumento, String documento){
         try {
-            this.usuario = RepositorioUsuarios.getInstance().crearUsuario(username, mail, contra, false);
-            this.persona = RepositorioPersonas.getInstance().crearPersona(nombre, apellido, tipoDocumento, documento, this.usuario);
+            RepositorioUsuariosDB repositorioUsuariosDB = new RepositorioUsuariosDB();
+            RepositorioPersonasDB repositorioPersonasDB = new RepositorioPersonasDB();
+
+            this.usuario = repositorioUsuariosDB.crearUsuario(username, mail, contra, false);
+            this.persona = repositorioPersonasDB.crearPersona(nombre, apellido, tipoDocumento, documento, this.usuario);
             devolverUsuarioCorrecto();
         }
         catch (UsuarioException e){

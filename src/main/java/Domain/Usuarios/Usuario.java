@@ -103,6 +103,10 @@ public class Usuario{
     //update();
   }
 
+  public void setUltIntentoCorrecto(Boolean ultIntentoCorrecto){
+    this.ultimointento.setUltIntentoCorrecto(ultIntentoCorrecto);
+  }
+
   public void setContraHasheada(String contraHasheada) {
     this.contraHasheada = contraHasheada;
     //update();
@@ -111,6 +115,10 @@ public class Usuario{
   public void setContraSinHash(String contra) {
     this.contraSinHash = contra;
     //update();
+  }
+
+  public UltimoIntento getUltimointento() {
+    return ultimointento;
   }
 
   public String getContraSinHash() {

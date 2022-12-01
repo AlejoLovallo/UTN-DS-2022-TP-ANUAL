@@ -18,7 +18,9 @@ public class FactorEmision {
     @Column
     @Enumerated(EnumType.STRING)
     private TipoDeActividad tipoActividad;
+
     @Column
+    @Enumerated(EnumType.STRING)
     private Unidad unidad;
 
     // CONSTRUCTOR

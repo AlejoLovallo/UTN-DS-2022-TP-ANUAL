@@ -1,9 +1,9 @@
 package Administrador;
 
 import Domain.CalculadorHC.FactorEmision;
-import Domain.CalculadorHC.RepositorioFactores;
+import Domain.Repositorios.RepositorioFactoresEmisionDB;
+import Domain.Repositorios.RepositorioUsuariosDB;
 import Domain.Usuarios.Admin;
-import Domain.Usuarios.RepositorioUsuarios;
 import Domain.Usuarios.Usuario;
 import Utils.Common;
 import org.junit.jupiter.api.AfterEach;
@@ -46,27 +46,38 @@ public class AdminTest {
 
     @Test
     public void validarUsuario(){
-        Usuario usuario = RepositorioUsuarios.getInstance().crearUsuario("username", "email",  "juan1998", true);
+        RepositorioUsuariosDB repositorioUsuariosDB = new RepositorioUsuariosDB();
+
+        repositorioUsuariosDB.crearUsuario("u", "email@gmail.com",  "juan1998", false);
+        Usuario usuario = repositorioUsuariosDB.buscarUsuario("username");
         Assertions.assertTrue(admin.validarUsuario(usuario, true));
     }
 
     @Test
     public void registrarNuevoFE(){
+
+        RepositorioFactoresEmisionDB repositorioFactoresEmisionDB = new RepositorioFactoresEmisionDB();
+
         //GIVEN DADO
-        ArrayList<FactorEmision> factoresDeEmision = RepositorioFactores.getInstance().getFactoresDeEmision();
+        ArrayList<FactorEmision> factoresDeEmision = new ArrayList<FactorEmision>(repositorioFactoresEmisionDB.getFactoresDeEmision());
         ArrayList<FactorEmision> nuevosFactoresDeEmision = factoresDeEmision;
         nuevosFactoresDeEmision.add(Common.getFactorDeEmision());
         //WHEN CUANDO
         admin.registrarFactorDeEmision(Common.getFactorDeEmision());
+        factoresDeEmision = new ArrayList<FactorEmision>(repositorioFactoresEmisionDB.getFactoresDeEmision());
         //THEN ENTONCES
-        Assertions.assertEquals(nuevosFactoresDeEmision, RepositorioFactores.getInstance().getFactoresDeEmision());
+        //TODO Verificar los ids de los elementos de las 2 listas
+        Assertions.assertEquals(nuevosFactoresDeEmision, factoresDeEmision);
     }
 
     @Test
     public void cambiarValoresDeFE(){
+
+        RepositorioFactoresEmisionDB repositorioFactoresEmisionDB = new RepositorioFactoresEmisionDB();
+
         //GIVEN DADO
         FactorEmision factorEmision = Common.getFactorDeEmision();
-        ArrayList<FactorEmision> factoresDeEmision = RepositorioFactores.getInstance().getFactoresDeEmision();
+        ArrayList<FactorEmision> factoresDeEmision =  new ArrayList<FactorEmision>(repositorioFactoresEmisionDB.getFactoresDeEmision());
         ArrayList<FactorEmision> nuevosFactoresDeEmision = factoresDeEmision;
         nuevosFactoresDeEmision.add(factorEmision);
         Double numeroAnterior = factorEmision.getNumero();
@@ -75,6 +86,6 @@ public class AdminTest {
         admin.cambiarFactorDeEmision(factorEmision, 3.0);
         //THEN ENTONCES
         Assertions.assertEquals(numeroAnterior, 2.0);
-        Assertions.assertEquals(RepositorioFactores.getInstance().getFactorDeEmision(factorEmision).getNumero(), 3.0);
+        Assertions.assertEquals(repositorioFactoresEmisionDB.getFactorDeEmision(factorEmision).getNumero(), 3.0);
     }
 }
