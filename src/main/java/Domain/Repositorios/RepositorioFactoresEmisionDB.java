@@ -45,12 +45,12 @@ public class RepositorioFactoresEmisionDB extends Repositorio<FactorEmision>{
   }
 
   public boolean agregarFactorDeEmision(FactorEmision factor){
-    this.dbService.agregar(factor);
+    agregar(factor);
     return true;
   }
 
   public boolean updateFactorDeEmision(FactorEmision factor){
-    this.dbService.modificar(factor);
+    modificar(factor);
     return true;
   }
 

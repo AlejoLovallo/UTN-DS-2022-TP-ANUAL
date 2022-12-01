@@ -9,24 +9,18 @@ import java.util.Optional;
 public class ParserJSONUsuario {
 
   public static Usuario jsonToUsuarioPlano(JSONObject obj){
-    Optional<Usuario> usuario = Optional.empty();
 
-    if(obj.get("tipo").equals("Admin")) {
-      usuario = Optional.of(new Admin());
-    }
+    String username = (String) obj.get("username");
+    String contra = (String) obj.get("contra");
 
-    if(obj.get("tipo").equals("Usuario")){
-      usuario = Optional.of(new Usuario());
-    }
+    if (username == null) return  null;
+    if (contra == null) return  null;
 
-    if(usuario.isPresent()){
-      usuario.get().setContraSinHash((String) obj.get("username"));
-      usuario.get().setUsername((String) obj.get("contra"));
-      usuario.get().setUsername((String) obj.get("mail"));
-      usuario.get().setValidado((Boolean) obj.get("validado"));
-      return usuario.get();
-    }
-    return null;
+    Usuario usuario = new Usuario();
+    usuario.setUsername(username);
+    usuario.setContraSinHash(contra);
+
+    return usuario;
   }
 
   public static JSONObject usuarioToJSON(Usuario usuario){
@@ -42,4 +36,6 @@ public class ParserJSONUsuario {
 
     return usuarioJson;
   }
+
+
 }
