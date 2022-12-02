@@ -37,10 +37,11 @@ public class InterfazUsuarioPersona {
 
     public void crearUsuarioPersona(String username, String mail, String contra, String nombre, String apellido, TipoDocumento tipoDocumento, String documento){
         try {
-            RepositorioUsuariosDB repositorioUsuariosDB = new RepositorioUsuariosDB();
+            //RepositorioUsuariosDB repositorioUsuariosDB = new RepositorioUsuariosDB();
             RepositorioPersonasDB repositorioPersonasDB = new RepositorioPersonasDB();
 
-            this.usuario = repositorioUsuariosDB.crearUsuario(username, mail, contra, false);
+            //this.usuario = repositorioUsuariosDB.crearUsuario(username, mail, contra, false);
+            this.usuario=new Usuario(username,mail,contra,false);
             this.persona = repositorioPersonasDB.crearPersona(nombre, apellido, tipoDocumento, documento, this.usuario);
             devolverUsuarioCorrecto();
         }

@@ -9,6 +9,7 @@ import Domain.Organizacion.Consumo;
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.Optional;
 
 @Entity
@@ -96,15 +97,15 @@ public class Actividad {
 
     Optional<Consumo> consumoActividad  = this.consumos.stream().filter(unConsumo -> mes.equals(unConsumo.getMes()) && anio.equals(unConsumo.getAnio())).findAny();
 
-    Consumo con = consumoActividad.get();
-
-    if (con != null){
+    try{
+      Consumo con = consumoActividad.get();
       con.setConsumo(con.getConsumo() + consumo);
-    }else{
+    }
+    catch(NoSuchElementException e){
       Consumo consu = new Consumo(mes, anio, consumo);
       this.consumos.add(consu);
     }
-    
+
   }
 
   public Double encontrarConsumo(Integer mes, Integer anio){

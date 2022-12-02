@@ -39,10 +39,8 @@ public class ServicioManualTest {
         paradas.put(estacion2Test,1.0);
         paradas.put(estacion3Test,1.0);
         MedioDeTransporte untransporte= new TransportePublico(TipoTransportePublico.Colectivo,"2",paradas);
-        Espacio partida =new Estacion("Estacion1",1);
-        Espacio llegada= new Estacion("Estacion3",3);
 
-        Assertions.assertEquals(2.0,this.servManual.calcularDistancia(untransporte,partida,llegada));
+        Assertions.assertEquals(2.0,this.servManual.calcularDistancia(untransporte,estacion1Test,estacion3Test));
 
 
 

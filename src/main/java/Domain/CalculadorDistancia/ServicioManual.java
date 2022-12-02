@@ -12,24 +12,24 @@ public class ServicioManual extends ServicioDistancia{
     @Override
     public Double calcularDistancia(MedioDeTransporte medioDeTransporte, Espacio puntoPartida, Espacio puntoLLegada){
 
-    Double distanciaTotal = 0.0;
+        Double distanciaTotal = 0.0;
 
-    TransportePublico transportePublico = (TransportePublico) medioDeTransporte;
-    Estacion estacionInicial = (Estacion) puntoPartida;
-    Estacion estacionFinal = (Estacion) puntoLLegada;
+        TransportePublico transportePublico = (TransportePublico) medioDeTransporte;
+        Estacion estacionInicial = (Estacion) puntoLLegada;
+        Estacion estacionFinal = (Estacion) puntoPartida;
 
-    Boolean flag = false;
+        Boolean flag = false;
 
-    for (Entry<Estacion, Double> entry : transportePublico.getParadas().entrySet()){
-        
-        if(entry.getKey().equals(estacionInicial))
-            flag = true;
-        if (flag)
-            distanciaTotal += transportePublico.getParadas().hashCode();
-        if(entry.getKey().equals(estacionFinal))
-            flag = false;
+        for (Entry<Estacion, Double> entry : transportePublico.getParadas().entrySet()){
+
+            if(entry.getKey().equals(estacionInicial))
+                flag = true;
+            if(entry.getKey().equals(estacionFinal))
+                flag = false;
+            if (flag)
+                distanciaTotal += transportePublico.getParadas().get(entry.getKey());
+        }
+
+        return distanciaTotal;
     }
-
-    return distanciaTotal;
-  }
 }

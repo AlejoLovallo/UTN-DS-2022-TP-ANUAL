@@ -107,7 +107,7 @@ public class AgenteSectorialTest {
     public void agregarOrganizacionAAgente(){
         Organizacion unaOrganizacion =  Common.getOrganizacionMinisterio();
         RepositorioAgentesDB repoagentesDB = new RepositorioAgentesDB();
-        AgenteSectorial agente=repoagentesDB.crearAgente("nombre", "territorio", TipoSectorTerritorial.Provincia);
+        // AgenteSectorial agente=repoagentesDB.crearAgente("nombre", "territorio", TipoSectorTerritorial.Provincia);
         AgenteSectorial unAgente =  repoagentesDB.buscarAgente("nombre");
         repoagentesDB.agregarOrganizacionAAgente(unAgente, unaOrganizacion);
         Assertions.assertTrue(unAgente.getOrganizaciones().contains(unaOrganizacion));

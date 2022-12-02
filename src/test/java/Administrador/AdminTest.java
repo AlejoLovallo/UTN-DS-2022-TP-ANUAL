@@ -12,6 +12,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class AdminTest {
 
@@ -60,14 +61,26 @@ public class AdminTest {
 
         //GIVEN DADO
         ArrayList<FactorEmision> nuevosFactoresDeEmision = new ArrayList<FactorEmision>(repositorioFactoresEmisionDB.getFactoresDeEmision());
+        List listaDeID=new ArrayList<>();
 
-        nuevosFactoresDeEmision.add(Common.getFactorDeEmision());
+        for(FactorEmision fe :nuevosFactoresDeEmision){
+            int id=fe.getId();
+            listaDeID.add(id);
+        }
+        listaDeID.add(listaDeID.size()+1);
         //WHEN CUANDO
         admin.registrarFactorDeEmision(Common.getFactorDeEmision());
         ArrayList<FactorEmision>  factoresDeEmision = new ArrayList<FactorEmision>(repositorioFactoresEmisionDB.getFactoresDeEmision());
+        List listanuevaDeID=new ArrayList();
+
+        for(FactorEmision fe :factoresDeEmision){
+            int id=fe.getId();
+            listanuevaDeID.add(id);
+
+        }
+
         //THEN ENTONCES
-        //TODO Verificar los ids de los elementos de las 2 listas
-        Assertions.assertEquals(nuevosFactoresDeEmision, factoresDeEmision);
+        Assertions.assertEquals(listanuevaDeID, listaDeID);
     }
 
     @Test
