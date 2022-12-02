@@ -83,12 +83,12 @@ public class Common {
 
 
   public static Usuario getUsuario() {
-    return new Usuario("juan98", "email@hotmail.com", "juan1998", true);
+    return new Usuario("juan987", "email@hotmail.com", "juan1998", true);
   }
   public static Usuario getUsuarioQueEsteEnElRepo() {
     RepositorioUsuariosDB repositorioUsuariosDB = new RepositorioUsuariosDB();
 
-    return repositorioUsuariosDB.crearUsuario("juan98", "email", "juan1998", true);
+    return repositorioUsuariosDB.crearUsuario("juan97", "email@hotmail.com", "juan1998", true);
   }
 
 

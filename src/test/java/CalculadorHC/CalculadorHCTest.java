@@ -70,7 +70,7 @@ public class CalculadorHCTest {
 
     @Test
     public void calculoHCMiembroCorrectoVehiculoParticualr() throws IOException {
-        Integer mes = 4;
+        Integer mes = 12;
         Integer anio = 2015;
         Double resultadoHC = miembro.calcularHC(mes, anio);
         Assertions.assertNotNull(resultadoHC);

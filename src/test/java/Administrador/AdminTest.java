@@ -67,9 +67,10 @@ public class AdminTest {
             int id=fe.getId();
             listaDeID.add(id);
         }
-        listaDeID.add(listaDeID.size()+1);
+
         //WHEN CUANDO
         admin.registrarFactorDeEmision(Common.getFactorDeEmision());
+        listaDeID.add(repositorioFactoresEmisionDB.getFactoresDeEmision().get(repositorioFactoresEmisionDB.getFactoresDeEmision().size()-1).getId());
         ArrayList<FactorEmision>  factoresDeEmision = new ArrayList<FactorEmision>(repositorioFactoresEmisionDB.getFactoresDeEmision());
         List listanuevaDeID=new ArrayList();
 

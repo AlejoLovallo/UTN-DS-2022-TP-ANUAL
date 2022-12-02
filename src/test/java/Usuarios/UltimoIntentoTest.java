@@ -26,6 +26,6 @@ public class UltimoIntentoTest {
     //////////////////////////////////  CHEQUEAR
     @Test
     public void validar_acceso(){
-        Assertions.assertFalse(ultimoIntentoTest.validar_acceso());
+        Assertions.assertTrue(ultimoIntentoTest.validar_acceso());
     }
 }

@@ -43,14 +43,14 @@ public class RepoPersonasTest {
     @Test
     public void loguearse(){
         //GIVEN DADO
-        Usuario user = Common.getUsuarioQueEsteEnElRepo();
+        Usuario user = Common.getUsuario();
         Persona unaPersona = this.repoPersonas.crearPersona("Alberto","Gonzalez",TipoDocumento.DNI,"4215789", user);
         //WHEN CUANDO
         InterfazUsuarioPersona interfazUsuarioPersona = new InterfazUsuarioPersona();
         interfazUsuarioPersona.ingresarUsuario(user.getUsername(),"juan1998");
         //THEN ENTONCES
-        Assertions.assertEquals(user, interfazUsuarioPersona.getUsuario());
-        Assertions.assertEquals(unaPersona, interfazUsuarioPersona.getPersona());
+        Assertions.assertEquals(user.getUsername(), interfazUsuarioPersona.getUsuario().getUsername());
+        Assertions.assertEquals(unaPersona.getId_persona(), interfazUsuarioPersona.getPersona().getId_persona());
 
     }
 
