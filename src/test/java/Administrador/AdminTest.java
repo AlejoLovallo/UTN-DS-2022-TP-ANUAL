@@ -48,7 +48,8 @@ public class AdminTest {
     public void validarUsuario(){
         RepositorioUsuariosDB repositorioUsuariosDB = new RepositorioUsuariosDB();
 
-        Usuario usuario = repositorioUsuariosDB.crearUsuario("username", "email",  "juan1998", true);
+        repositorioUsuariosDB.crearUsuario("u", "email@gmail.com",  "juan1998", false);
+        Usuario usuario = repositorioUsuariosDB.buscarUsuario("username");
         Assertions.assertTrue(admin.validarUsuario(usuario, true));
     }
 
@@ -63,8 +64,10 @@ public class AdminTest {
         nuevosFactoresDeEmision.add(Common.getFactorDeEmision());
         //WHEN CUANDO
         admin.registrarFactorDeEmision(Common.getFactorDeEmision());
+        factoresDeEmision = new ArrayList<FactorEmision>(repositorioFactoresEmisionDB.getFactoresDeEmision());
         //THEN ENTONCES
-        Assertions.assertEquals(nuevosFactoresDeEmision, new ArrayList<FactorEmision>(repositorioFactoresEmisionDB.getFactoresDeEmision()));
+        //TODO Verificar los ids de los elementos de las 2 listas
+        Assertions.assertEquals(nuevosFactoresDeEmision, factoresDeEmision);
     }
 
     @Test

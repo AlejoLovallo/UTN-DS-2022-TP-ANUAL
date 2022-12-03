@@ -9,17 +9,12 @@ public class RepositorioPersonasTest {
 
   public static void main(String[] args) {
 
-    Usuario user = new Usuario("pepitoSandNuevo","pepitoGamerSand@gmail.com","contraSegura54+",true);
-
-    Persona persona = new Persona("pepeSand", "Prueba", TipoDocumento.DNI, "101469451");
-
-    //persona.setUsuario(user);
-
-    //Miembro miembro = new Miembro();
+    Usuario user = new Usuario("usuarioPersona","usuarioPersona@gmail.com","usuarioPersona12",true);
 
     RepositorioPersonasDB repositorioPersonas = new RepositorioPersonasDB();
 
-    repositorioPersonas.agregar(persona);
+
+    repositorioPersonas.crearPersona("persona","personaPrueba",TipoDocumento.DNI,"101469451",user);
 
   }
 }
