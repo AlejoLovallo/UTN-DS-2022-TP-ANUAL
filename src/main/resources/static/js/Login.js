@@ -1,88 +1,35 @@
-$('.form').find('input, textarea').on('keyup blur focus', function (e) {
+let attemptSignIn = 3;
 
-  var $this = $(this),
-    label = $this.prev('label');
+const validateSignIn = async () => {
+  let username = document.getElementById("NombreUsuarioSignIn").value;
+  let password = document.getElementById("PasswordSignIn").value;
 
-  if (e.type === 'keyup') {
-    if ($this.val() === '') {
-      label.removeClass('active highlight');
-    } else {
-      label.addClass('active highlight');
-    }
-  } else if (e.type === 'blur') {
-    if ($this.val() === '') {
-      label.removeClass('active highlight');
-    } else {
-      label.removeClass('highlight');
-    }
-  } else if (e.type === 'focus') {
+  const res = await fetch("http://127.0.0.1:9000/menu_login", {
+    method: "POST",
 
-    if ($this.val() === '') {
-      label.removeClass('highlight');
-    }
-    else if ($this.val() !== '') {
-      label.addClass('highlight');
-    }
-  }
+    body: JSON.stringify({
+      username,
+      password,
+    }),
 
-});
-
-$('.tab a').on('click', function (e) {
-
-  e.preventDefault();
-
-  $(this).parent().addClass('active');
-  $(this).parent().siblings().removeClass('active');
-
-  target = $(this).attr('href');
-
-  $('.tab-content > div').not(target).hide();
-
-  $(target).fadeIn(600);
-
-});
-
-$(function () {
-  $('a.page-scroll').bind('click', function (event) {
-    var $anchor = $(this);
-    $('html, body').stop().animate({
-      scrollTop: $($anchor.attr('href')).offset().top
-    }, 1500, 'easeInOutExpo');
-    event.preventDefault();
+    headers: {
+      "Content-type": "application/json; charset=UTF-8",
+    },
   });
-});
 
-// Highlight the top nav as scrolling occurs
-$('body').scrollspy({
-  target: '.navbar-fixed-top'
-})
+  const data = await res.json();
 
-// Closes the Responsive Menu on Menu Item Click
-$('.navbar-collapse ul li a').click(function () {
-  $('.navbar-toggle:visible').click();
-});
-
-var modal = document.getElementById("myModal");
-
-// Get the button that opens the modal
-var btn = document.getElementById("myBtn");
-
-// Get the <span> element that closes the modal
-var span = document.getElementsByClassName("close")[0];
-
-// When the user clicks the button, open the modal 
-btn.onclick = function () {
-  modal.style.display = "block";
-}
-
-// When the user clicks on <span> (x), close the modal
-span.onclick = function () {
-  modal.style.display = "none";
-  window.location.href = '/confirmar_asociacion_prod_cate'
-}
-
-// When the user clicks anywhere outside of the modal, close it
-window.onclick = function (event) {
-  if (event.target == modal) {
+  if (!data) {
+    alert("Ha ocurrido un error. Vuelve a intentarlo");
+    return false;
+  } else {
+    window.location.href = "/menu_logueado";
+    return true;
   }
-} 
+
+  return false;
+};
+
+const validateMemberCreation = async () => {};
+
+const validateOrganizationCreation = async () => {};
