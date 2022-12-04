@@ -137,7 +137,9 @@ public class Organizacion {
 
   public String getArchivoMediciones() { return archivoMediciones; }
 
-
+  public int getId() {
+    return id_organizacion;
+  }
 
   public List <Actividad> getActividades() {
     return actividades;

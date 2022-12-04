@@ -29,7 +29,7 @@ public class AgenteSectorial {
   @Enumerated(EnumType.STRING)
   private TipoSectorTerritorial tipoSectorTerritorial;
 
-  @OneToMany(mappedBy = "agenteSectorial", cascade = CascadeType.ALL)
+  @OneToMany(mappedBy = "agenteSectorial", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
   private List<Organizacion> organizaciones = new ArrayList<>();
 
   @OneToMany(mappedBy = "agenteSectorial", cascade = CascadeType.ALL)

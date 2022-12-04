@@ -63,7 +63,8 @@ public class RepositorioPersonasDB extends Repositorio<Persona>{
 
     Persona personaNueva = new Persona(_nombre,_apellido,_tipoDocumento,_documento);
 
-    repositorioUsuariosDB.agregar(user);
+    //TODO revisar
+    repositorioUsuariosDB.agregarUsuarioUser(user);
 
     personaNueva.setUsuario(user);
 

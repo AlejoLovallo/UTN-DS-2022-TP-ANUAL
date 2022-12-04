@@ -1,5 +1,6 @@
 package Domain.Repositorios;
 
+import Domain.Miembro.Excepciones.PersonaException;
 import Domain.Notificaciones.MailSender;
 import Domain.Notificaciones.Notificar;
 import Domain.Notificaciones.NotificarGuiaDeRecomendaciones;
@@ -123,11 +124,15 @@ public class RepositorioOrganizacionesDB extends Repositorio<Organizacion>{
     if(user == null) throw new UsuarioException("El usuario es nulo");
 
     if(repositorioUsuariosDB.existe(user.getUsername())) throw new OrganizacionException("Ya hay un usuario en la DB");
-
+    if(this.buscarOrganizacionPorUsuario(user)!=null) throw new OrganizacionException("Ya hay una organizacion con ese usuario en la DB");
     if(this.buscarOrganizacionPorNombre(nombre) != null) throw new OrganizacionException("Ya hay una organizacion con el mismo nombre");
 
 
     Organizacion organizacionNueva = new Organizacion(nombre, _tipo,  _clasificacion,  contacto);
+
+    //TODO revisar
+    repositorioUsuariosDB.agregarUsuarioUser(user);
+
     organizacionNueva.setUsuario(user);
 
 

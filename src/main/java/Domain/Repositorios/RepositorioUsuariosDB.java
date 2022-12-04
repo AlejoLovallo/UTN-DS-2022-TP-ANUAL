@@ -146,6 +146,21 @@ public class RepositorioUsuariosDB extends Repositorio<Usuario> {
     }
   }
 
+  public Usuario agregarUsuarioUser(Usuario user){
+    try{
+
+      if(existe(user.getUsername()))
+        throw new UsuarioException("porque ya hay un usuario con ese username");
+
+      //this.usuarios.add(usuarioNuevo);
+      agregar(user);
+      return user;
+    }catch (UsuarioException e){
+      return null;
+    }
+
+  }
+
   public Admin crearAdmin(String username, String email, String contra){
     try{
 
