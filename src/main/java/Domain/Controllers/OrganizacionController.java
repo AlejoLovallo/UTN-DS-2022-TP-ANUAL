@@ -265,7 +265,14 @@ public class OrganizacionController {
         HashMap<String, Object> params = new HashMap<>();
 
         JSONArray listaReportes = new JSONArray();
-        String username = request.cookie("username");
+        Optional<String> username = Optional.ofNullable(request.cookie("username"));
+
+        //TODO para hacer pruebas
+        username = Optional.of("usuarioNormal");
+
+        //TODO podemos mostrar otra parte sino en vez de Recomendaciones
+        if ( !username.isPresent() ) return new ModelAndView(params, "Recomendaciones.hbs");
+
 
         //buscar si es agente
         //else
@@ -273,12 +280,14 @@ public class OrganizacionController {
         RepositorioOrganizacionesDB repositorioOrganizacionesDB = new RepositorioOrganizacionesDB();
 
         RepositorioUsuariosDB repositorioUsuariosDB = new RepositorioUsuariosDB();
-        Usuario usuario = repositorioUsuariosDB.buscarUsuario(username);
+
+        Usuario usuario = repositorioUsuariosDB.buscarUsuario(username.get());
 
         Organizacion organizacion = repositorioOrganizacionesDB.buscarOrganizacionPorUsuario(usuario);
 
-        RepositorioReportesDB repositorioReportesDB = new RepositorioReportesDB();
-        List<Reporte> reporte = repositorioReportesDB.buscarTodos();
+        //TODO borrar
+        //RepositorioReportesDB repositorioReportesDB = new RepositorioReportesDB();
+        //List<Reporte> reporte = repositorioReportesDB.buscarTodos();
 
         List<ReporteComposicion> listaComposicion = organizacion.getReportes().stream().filter(
                 r -> r instanceof ReporteComposicion
