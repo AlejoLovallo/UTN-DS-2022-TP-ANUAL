@@ -38,6 +38,7 @@ public class Consumo {
         this.consumo = consumo;
     }
 
+    private Consumo(){}
 
     // GETTERS
 

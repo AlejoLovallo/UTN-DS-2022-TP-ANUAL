@@ -10,6 +10,7 @@ import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 @Entity
 @Table(name ="actividad")
@@ -49,7 +50,7 @@ public class Actividad {
   private List<Consumo> consumosActividad;
 
   //////////////////////////////////  CONSTRUCTORES
-  public Actividad(){
+  private Actividad(){
 
   }
 
@@ -60,7 +61,6 @@ public class Actividad {
   }
 
   //////////////////////////////////  GETTERS
-  private ArrayList <Consumo> consumos;
 
   //getters
 
@@ -70,7 +70,7 @@ public class Actividad {
 
   public UnidadDeConsumo getUnidad_Consumo() {return unidad_Consumo;}
 
-  public List <Consumo> getConsumos() {return consumos;}
+  public List <Consumo> getConsumos() {return consumosActividad;}
 
   public FactorEmision getFactorEmision() {
     return factorEmision;
@@ -88,13 +88,13 @@ public class Actividad {
 
   public void setNombre(TipoDeActividad nombre) {this.tipoActividad = nombre;}
 
-  public void setConsumos(ArrayList <Consumo> consumos) {this.consumos = consumos;}
+  public void setConsumos(ArrayList <Consumo> consumos) {this.consumosActividad = consumos;}
 
   //METHODS
 
   public void agregarConsumo(Integer mes, Integer anio, Double consumo){
 
-    Optional<Consumo> consumoActividad  = this.consumos.stream().filter(unConsumo -> mes.equals(unConsumo.getMes()) && anio.equals(unConsumo.getAnio())).findAny();
+    Optional<Consumo> consumoActividad  = this.consumosActividad.stream().filter(unConsumo -> mes.equals(unConsumo.getMes()) && anio.equals(unConsumo.getAnio())).findAny();
 
     Consumo con = consumoActividad.get();
 
@@ -102,7 +102,7 @@ public class Actividad {
       con.setConsumo(con.getConsumo() + consumo);
     }else{
       Consumo consu = new Consumo(mes, anio, consumo);
-      this.consumos.add(consu);
+      this.consumosActividad.add(consu);
     }
     
   }
@@ -111,7 +111,7 @@ public class Actividad {
 
     Double consumo = 0.0;
 
-    Optional<Consumo> consumoActividad  = this.consumos.stream().filter(unConsumo -> mes.equals(unConsumo.getMes()) && anio.equals(unConsumo.getAnio())).findAny();
+    Optional<Consumo> consumoActividad  = this.consumosActividad.stream().filter(unConsumo -> mes.equals(unConsumo.getMes()) && anio.equals(unConsumo.getAnio())).findAny();
 
     Consumo con = consumoActividad.get();
     if (con != null){

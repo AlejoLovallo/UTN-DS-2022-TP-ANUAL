@@ -5,13 +5,15 @@ import Domain.JSON.ParserJSONMiembro;
 import Domain.JSON.ParserJSONOrganizacion;
 import Domain.Miembro.Miembro;
 import Domain.Miembro.Persona;
+import Domain.Organizacion.AgenteSectorial;
 import Domain.Organizacion.Organizacion;
 import Domain.Organizacion.Sector;
 import Domain.Organizacion.SolicitudPendiente;
-import Domain.Repositorios.RepositorioOrganizacionesDB;
-import Domain.Repositorios.RepositorioPersonasDB;
-import Domain.Repositorios.RepositorioSolicitudesDB;
-import Domain.Repositorios.RepositorioUsuariosDB;
+import Domain.Reportes.Reporte;
+import Domain.Reportes.ReporteComposicion;
+import Domain.Reportes.ReporteEvolucion;
+import Domain.Reportes.ReporteTotal;
+import Domain.Repositorios.*;
 import Domain.Trayecto.Tramo;
 import Domain.Trayecto.Trayecto;
 import Domain.Usuarios.Usuario;
@@ -21,6 +23,7 @@ import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
+import spark.ModelAndView;
 import spark.Request;
 import spark.Response;
 
@@ -32,8 +35,10 @@ import java.nio.file.Paths;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 
 public class OrganizacionController {
@@ -254,4 +259,58 @@ public class OrganizacionController {
         return null;
     }
 
+
+    public ModelAndView mostrarReportes(Request request, Response response)
+    {
+        HashMap<String, Object> params = new HashMap<>();
+
+        JSONArray listaReportes = new JSONArray();
+        String username = request.cookie("username");
+
+        //buscar si es agente
+        //else
+
+        RepositorioOrganizacionesDB repositorioOrganizacionesDB = new RepositorioOrganizacionesDB();
+
+        RepositorioUsuariosDB repositorioUsuariosDB = new RepositorioUsuariosDB();
+        Usuario usuario = repositorioUsuariosDB.buscarUsuario(username);
+
+        Organizacion organizacion = repositorioOrganizacionesDB.buscarOrganizacionPorUsuario(usuario);
+
+        RepositorioReportesDB repositorioReportesDB = new RepositorioReportesDB();
+        List<Reporte> reporte = repositorioReportesDB.buscarTodos();
+
+        List<ReporteComposicion> listaComposicion = organizacion.getReportes().stream().filter(
+                r -> r instanceof ReporteComposicion
+        ).map(r -> (ReporteComposicion) r).collect(Collectors.toList());
+
+        List<ReporteEvolucion> listaEvolucion = (List<ReporteEvolucion>) organizacion.getReportes().stream().filter(
+                r -> r instanceof ReporteEvolucion
+        ).map(r -> (ReporteEvolucion) r).collect(Collectors.toList());
+
+        List<ReporteTotal> listaTotal = (List<ReporteTotal>) organizacion.getReportes().stream().filter(
+                r -> r instanceof ReporteTotal
+        ).map(r -> (ReporteTotal) r).collect(Collectors.toList());
+
+        params.put("composicion", listaComposicion);
+        params.put("evolucion", listaEvolucion);
+        params.put("total", listaTotal);
+
+        return new ModelAndView(params, "Reporte.hbs");
+    }
+
+
+    public ModelAndView listarRecomendaciones(Request request, Response response){
+        HashMap<String, Object> params = new HashMap<>();
+
+        ArrayList<String> listaRecomendaciones = new ArrayList<>();
+
+        listaRecomendaciones.add("recomendacion 1");
+        listaRecomendaciones.add("recomendacion 2");
+        listaRecomendaciones.add("recomendacion 3");
+
+        params.put("recomendaciones", listaRecomendaciones);
+
+        return new ModelAndView(params, "Recomendaciones.hbs");
+    }
 }

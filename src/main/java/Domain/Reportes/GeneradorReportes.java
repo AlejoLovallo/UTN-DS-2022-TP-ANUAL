@@ -10,6 +10,7 @@ import java.io.IOException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Optional;
+import java.util.Set;
 
 public class GeneradorReportes {
 
@@ -78,7 +79,7 @@ public class GeneradorReportes {
             return rep.get();
         }else{
 
-            ArrayList <Actividad> listaActividades = new ArrayList<>();
+            ArrayList<Actividad> listaActividades = new ArrayList<>();
             ReporteComposicion reporte = new ReporteComposicion(organizacion.getRazonSocial(), TipoDeReporte.COMPOSICION, fechaDesde, fechaHasta, listaActividades);
 
             for(Actividad actividad : organizacion.getActividades()){
@@ -103,7 +104,6 @@ public class GeneradorReportes {
         
     }
 
-    // Me quede acá. Despues sigo
     public Reporte reporteCompHC_SecTer(AgenteSectorial agenteSectorial, LocalDate fechaDesde, LocalDate fechaHasta){
 
         if (repositorioReportes.existeReporte(agenteSectorial.getNombre(), TipoDeReporte.COMPOSICION, fechaDesde, fechaHasta)){
@@ -133,6 +133,9 @@ public class GeneradorReportes {
             }
             ReporteComposicion reporte = new ReporteComposicion(agenteSectorial.getNombre(), TipoDeReporte.COMPOSICION, fechaDesde, fechaHasta, listaActividades);
             repositorioReportes.getReportes().add(reporte);
+
+            repositorioReportes.agregarReporte(reporte);
+
             return reporte;
         }
         
@@ -175,6 +178,9 @@ public class GeneradorReportes {
             }
             ReporteComposicion reporte = new ReporteComposicion(pais, TipoDeReporte.COMPOSICION, fechaDesde, fechaHasta, listaActividades);
             repositorioReportes.getReportes().add(reporte);
+
+            repositorioReportes.agregarReporte(reporte);
+
             return reporte;
         }
 
@@ -219,6 +225,9 @@ public class GeneradorReportes {
         }
         ReporteEvolucion reporte = new ReporteEvolucion(organizacion.getRazonSocial(), TipoDeReporte.EVOLUCION, fechaDesde, fechaHasta, evolucionHC);
         repositorioReportes.getReportes().add(reporte);
+
+        repositorioReportes.agregarReporte(reporte);
+
         return reporte;
     }
 
@@ -249,6 +258,9 @@ public class GeneradorReportes {
             }
             ReporteEvolucion reporte = new ReporteEvolucion(agenteSectorial.getNombre(), TipoDeReporte.EVOLUCION, fechaDesde, fechaHasta, listaConsumos);
             repositorioReportes.getReportes().add(reporte);
+
+            repositorioReportes.agregarReporte(reporte);
+
             return reporte;
         }
         

@@ -22,6 +22,7 @@ public class ReporteTotal extends Reporte {
         this.cantidadHC = _cantidadHC;
     }
 
+    private ReporteTotal(){}
 
     // GETTERS
 

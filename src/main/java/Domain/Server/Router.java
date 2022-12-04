@@ -23,7 +23,7 @@ public class Router {
 
   public static void init() {
     Router.initEngine();
-    Spark.staticFileLocation("/public");
+    Spark.staticFileLocation("/static");
     Router.configure();
   }
 
@@ -40,7 +40,6 @@ public class Router {
     Spark.get("/menu_login", loginController::menu_login, Router.engine);
 
 */
-
 
     //TODO este post recibe los datos del json
 
@@ -67,6 +66,7 @@ public class Router {
     Spark.put("/organizacion/:nombre",organizacionController::modificarOrganizacion);
 
 
-
+    Spark.get("/recomendaciones", organizacionController::listarRecomendaciones, Router.engine);
+    Spark.get("/reportes", organizacionController::mostrarReportes, Router.engine);
   }
 }

@@ -237,32 +237,29 @@ public class MiembroController {
         }
     }
 */
-    public Object getMiembro(Request req, Response res) throws ParseException {
-        String nombreUsuario = req.params(":username");
-        String organizacion = req.params(":organizacion");
+public Object getMiembro(Request req, Response res) throws ParseException {
+    String nombreUsuario = req.params(":username");
+    String organizacion = req.params(":organizacion");
 
-        RepositorioPersonasDB repositorioPersonasDB = new RepositorioPersonasDB();
-        Persona persona = repositorioPersonasDB.buscarPersonaPorUsername(nombreUsuario);
+    RepositorioPersonasDB repositorioPersonasDB = new RepositorioPersonasDB();
+    Persona persona = repositorioPersonasDB.buscarPersonaPorUsername(nombreUsuario);
 
-        RepositorioOrganizacionesDB repoOrganizacionesDB = new RepositorioOrganizacionesDB();
-        Organizacion org = repoOrganizacionesDB.buscarOrganizacionPorNombre(organizacion);
+    RepositorioOrganizacionesDB repoOrganizacionesDB = new RepositorioOrganizacionesDB();
+    Organizacion org = repoOrganizacionesDB.buscarOrganizacionPorNombre(organizacion);
 
-        Miembro miem = null;
-        for(Miembro miembro : persona.getMiembros())
+
+    for(Miembro miembro : persona.getMiembros())
+    {
+        if(miembro.getSector().getOrganizacion().equals(org))
         {
-            if(miembro.getSector().getOrganizacion().equals(org))
-            {
-                miem = miembro;
-            }
+            res.type("application/json");
+            JSONObject resOrganizacion = ParserJSONMiembro.miembroToJSON(miembro);
+            return resOrganizacion;
         }
-
-        JSONObject resOrganizacion = ParserJSONMiembro.miembroToJSON(miem);
-
-        res.type("application/json");
-        res.body(resOrganizacion.toJSONString());
-
-        return null;
     }
+    return null;
+}
+
 
 
 }
