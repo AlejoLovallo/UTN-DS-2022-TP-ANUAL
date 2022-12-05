@@ -4,6 +4,7 @@ import Domain.Miembro.Excepciones.MiembroNoPerteneceAOrganizacionException;
 import Domain.Miembro.Excepciones.UnicoSectorPorOrganizacionException;
 import Domain.Organizacion.Organizacion;
 import Domain.Organizacion.Sector;
+import Domain.Repositorios.RepositorioPersonasDB;
 import Domain.Trayecto.Trayecto;
 
 import java.io.IOException;
@@ -126,6 +127,8 @@ public class Miembro {
 
   public void agregarTrayecto(Trayecto trayecto){
         trayectos.add(trayecto);
+    RepositorioPersonasDB repositorioPersonasDB = new RepositorioPersonasDB();
+    repositorioPersonasDB.modificar(this.getPersona());
   }
 
   public void desvincularTrayecto(Trayecto trayecto){

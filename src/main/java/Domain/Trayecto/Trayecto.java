@@ -70,7 +70,7 @@ public class Trayecto {
 
   //////////////////////////////////  SETTERS
 
-  public void setTramos(ArrayList<Tramo> tramos) {
+  public void setTramos(List<Tramo> tramos) {
     this.tramos = tramos;
     //update();
   }

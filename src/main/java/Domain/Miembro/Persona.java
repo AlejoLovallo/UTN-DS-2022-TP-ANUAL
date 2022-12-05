@@ -1,6 +1,7 @@
 package Domain.Miembro;
 
 import Domain.BaseDeDatos.EntityManagerHelper;
+import Domain.Repositorios.RepositorioPersonasDB;
 import Domain.Usuarios.Usuario;
 import org.hibernate.annotations.NotFound;
 import org.hibernate.annotations.NotFoundAction;
@@ -105,6 +106,9 @@ public class Persona {
 
   public void agregarMiembro(Miembro miembro){
     this.listaMiembros.add(miembro);
+    miembro.setPersona(this);
+    RepositorioPersonasDB repositorioPersonasDB = new RepositorioPersonasDB();
+    repositorioPersonasDB.modificar(this);
   }
 
   //////////////////////////////////  INTERFACE

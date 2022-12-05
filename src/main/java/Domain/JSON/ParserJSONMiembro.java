@@ -32,14 +32,11 @@ public class ParserJSONMiembro {
             if(aux != null)
                 return aux;
             else{
-                VehiculoParticular vehiculo = new VehiculoParticular(
+
+                return repositorioVehiculoParticularDB.crearVehiculoParticular(
                         TipoVehiculo.valueOf((String)obj.get("vehiculo")),
                         TipoCombustible.valueOf((String)obj.get("combustible")),
-                        (Integer) obj.get("cantidadCompratido")
-                );
-
-                repositorioVehiculoParticularDB.agregar(vehiculo);
-                return vehiculo;
+                        (Integer) obj.get("cantidadCompartido"));
             }
         }
         else if(obj.get("tipo").equals("transportePublico"))
@@ -59,10 +56,8 @@ public class ParserJSONMiembro {
     {
         RepositorioDireccionDB repositorioDireccionDB = new RepositorioDireccionDB();
 
-        JSONArray direcciones = new JSONArray();
-
-        JSONObject jsonDirSalida = (JSONObject) direcciones.get(0);
-        JSONObject jsonDirLlegada = (JSONObject) direcciones.get(1);
+        JSONObject jsonDirSalida = (JSONObject) obj.get("puntoSalida");
+        JSONObject jsonDirLlegada = (JSONObject) obj.get("puntoLlegada");
 
         Direccion direccionSalida = repositorioDireccionDB.buscarDireccion(
                 (String)jsonDirSalida.get("pais"),
@@ -70,7 +65,7 @@ public class ParserJSONMiembro {
                 (String)jsonDirSalida.get("municipio"),
                 (String)jsonDirSalida.get("localidad"),
                 (String)jsonDirSalida.get("calle"),
-                (Integer)jsonDirSalida.get("altura"),
+                ((Long)jsonDirSalida.get("altura")).intValue(),
                 (String)jsonDirSalida.get("tipoDireccion")
         );
 
@@ -80,7 +75,7 @@ public class ParserJSONMiembro {
                 (String)jsonDirLlegada.get("municipio"),
                 (String)jsonDirLlegada.get("localidad"),
                 (String)jsonDirLlegada.get("calle"),
-                (Integer)jsonDirLlegada.get("altura"),
+                ((Long)jsonDirLlegada.get("altura")).intValue(),
                 (String)jsonDirLlegada.get("tipoDireccion")
         );
 
