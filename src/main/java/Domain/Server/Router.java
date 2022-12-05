@@ -60,13 +60,13 @@ public class Router {
     Spark.post("/enviar_solicitud", miembroController::menuEnviarSolicitud);
     Spark.post("/menu_registrar_trayecto", miembroController::agregarTrayecto);
     Spark.post("/menu_calcular_hc", miembroController::respuestaCalcularHC);
+    /** FALTA UN POST PARA CREAR EL MIEMBRO **/
+
 
     /*** ORGANIZACIONES ROUTES ***/
     Spark.get("/organizacion/:nombre",organizacionController::getOrganizacion);
     Spark.post("/organizacion",organizacionController::crearOrganizacion);
     Spark.put("/organizacion/:nombre",organizacionController::modificarOrganizacion);
-
-
 
   }
 }

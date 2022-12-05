@@ -28,9 +28,7 @@ public class LoginController {
     Optional<Usuario> usuario = Optional.ofNullable(ParserJSONUsuario.jsonToUsuarioPlano(pedido));
 
     if(!usuario.isPresent()){
-      //TODO marcar error
-      response.redirect("/menu_login");
-      return "error de JSON";
+      response.status(404);
     }
 
     RepositorioUsuariosDB repositorioUsuariosDB = new RepositorioUsuariosDB();

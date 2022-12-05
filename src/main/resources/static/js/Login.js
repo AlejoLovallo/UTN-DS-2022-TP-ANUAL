@@ -1,13 +1,144 @@
 let attemptSignIn = 3;
 
-const validateSignIn = async () => {
-  let username = document.getElementById("NombreUsuarioSignIn").value;
-  let password = document.getElementById("PasswordSignIn").value;
+const API_ENDPOINT = "http://127.0.0.1:9000";
 
-  const res = await fetch("http://127.0.0.1:9000/menu_login", {
+const validateSignIn = async () => {
+  const username = document.getElementById("NombreUsuarioSignIn").value;
+  const password = document.getElementById("PasswordSignIn").value;
+
+  /**
+   *
+   * PROBAR ESTO:
+   * YO PUSE UNA DIR NORMAL PARA PODER SEGUIR USANDO PERO PONER
+   * ENDPOINT QUE VA EN ESTE CASO: /menu_login
+   *
+   * **/
+  await fetch(`${API_ENDPOINT}/hello_post`, {
+    method: "POST", //Va: method: "POST"
+
+    /*body: JSON.stringify({
+      username,
+      password,
+    }),
+    */
+
+    headers: {
+      "Content-type": "application/json; charset=UTF-8",
+    },
+  })
+    .then((res) => {
+      console.log("OKKKK");
+      console.log(res);
+      alert(res);
+      window.location.href = "./Menu_miembro.html";
+    })
+    .catch((e) => {
+      console.log(e);
+    });
+};
+
+const verifyOrgFields = () => {
+  const socialReason = document.getElementById("RazonSocial").value;
+  const cuit = document.getElementById("Cuit").value;
+  const clasification = document.getElementById("ClasificacionOrg").value;
+  const type = document.getElementById("TipoOrg").value;
+  const location = document.getElementById("LocalidadOrg").value;
+
+  return {
+    socialReason,
+    cuit,
+    clasification,
+    type,
+    location,
+  };
+
+  return true;
+};
+
+const verifyUserOrgFields = () => {
+  const email = document.getElementById("EmailUserOrg").value;
+  const name = document.getElementById("NombreUsuarioOrg").value;
+  const password = document.getElementById("PasswordUserOrg").value;
+  const repeatPassword = document.getElementById("PasswordRepeatUserOrg").value;
+
+  if (password != repeatPassword) {
+    alert("Las contraseñas no coinciden");
+    return {};
+  }
+
+  return {
+    name,
+    email,
+    password,
+  };
+};
+
+const validateOrganizationCreation = async () => {
+  const org = verifyOrgFields();
+  const user = verifyUserOrgFields();
+  if (org && user != {}) {
+    const res = await fetch(`${API_ENDPOINT}/organizacion`, {
+      method: "POST",
+
+      body: JSON.stringify({
+        socialReason: org.socialReason,
+        cuit: org.cuit,
+        clasification: org.clasification,
+        type: org.type,
+        location: org.location,
+        user: {
+          mail: user.mail,
+          name: user.name,
+          password: user.password,
+        },
+      }),
+
+      headers: {
+        "Content-type": "application/json; charset=UTF-8",
+      },
+    });
+
+    const data = await res.json();
+
+    if (!data) {
+      alert("Ha ocurrido un error. Vuelve a intentarlo");
+      return false;
+    } else {
+      alert(
+        "Organizacion creada con exito. Un administrador dará de alta su pedido a la brevedad."
+      );
+    }
+  }
+};
+
+const validateRegisterMember = async () => {
+  const name = document.getElementById("NombreMember").value;
+  const surname = document.getElementById("ApellidoMember").value;
+  const birthDate = document.getElementById("NacimientoMember").value;
+  const sex = document.getElementById("SexoMember").value;
+  const city = document.getElementById("CiudadMember").value;
+  const location = document.getElementById("LocalidadMember").value;
+  const email = document.getElementById("EmailMember").value;
+  const username = document.getElementById("UsernameMember").value;
+  const password = document.getElementById("PasswordMember").value;
+  const repeatPassword = document.getElementById("PasswordRepeatMember").value;
+
+  if (password != repeatPassword) {
+    alert("Las contraseñas no coinciden");
+    return;
+  }
+
+  await fetch(`${API_ENDPOINT}/miembro`, {
     method: "POST",
 
     body: JSON.stringify({
+      name,
+      surname,
+      birthDate,
+      sex,
+      city,
+      location,
+      email,
       username,
       password,
     }),
@@ -15,21 +146,10 @@ const validateSignIn = async () => {
     headers: {
       "Content-type": "application/json; charset=UTF-8",
     },
-  });
-
-  const data = await res.json();
-
-  if (!data) {
-    alert("Ha ocurrido un error. Vuelve a intentarlo");
-    return false;
-  } else {
-    window.location.href = "/menu_logueado";
-    return true;
-  }
-
-  return false;
+  })
+    .then((res) => {})
+    .catch((error) => {
+      console.log("ERROR");
+      console.loog(error);
+    });
 };
-
-const validateMemberCreation = async () => {};
-
-const validateOrganizationCreation = async () => {};

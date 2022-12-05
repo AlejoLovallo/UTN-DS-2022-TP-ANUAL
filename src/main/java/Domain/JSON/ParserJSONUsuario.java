@@ -11,7 +11,7 @@ public class ParserJSONUsuario {
   public static Usuario jsonToUsuarioPlano(JSONObject obj){
 
     String username = (String) obj.get("username");
-    String contra = (String) obj.get("contra");
+    String contra = (String) obj.get("password");
 
     if (username == null) return  null;
     if (contra == null) return  null;
