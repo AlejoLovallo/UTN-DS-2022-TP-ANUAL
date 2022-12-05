@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Login</title>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+    integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+  <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+    integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+    crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+    integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+    crossorigin="anonymous"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+    integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+    crossorigin="anonymous"></script>
+  <link href='https://fonts.googleapis.com/css?family=Titillium+Web:400,300,600' rel='stylesheet' type='text/css'>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css">
+  <link rel="stylesheet" href="../static/css/Login.css">
+
+</head>
+
+<body>
+
+  <nav class="navbar navbar-default navbar-fixed-top navbar-shrink">
+    <div class="container">
+      <!-- Brand and toggle get grouped for better mobile display -->
+      <div class="navbar-header">
+        <p class="navbar-brand" href="/menu_inicio">Mi impacto ambiental</p>
+      </div>
+    </div>
+  </nav>
+
+
+
+  <!-- partial:index.partial.html -->
+  <div class="form">
+
+    <ul class="tab-group">
+      <li class="tab"><a href="#signIn">Iniciar Sesión</a></li>
+      <li class="tab"><a href="#signUpOrg">Registrar Organizacion</a></li>
+      <li class="tab"><a href="#signUpMem">Registrar Miembro</a></li>
+    
+    </ul>
+
+  
+    <div class="tab-content">
+      <div id="signUpOrg">
+
+        <br>
+        
+        <h1>¡Registrá tu Organización!</h1>
+
+        <form class="" style="">
+
+          <h2>Datos Organizacionales</h2>
+
+          <div class="top-row">
+            <div class="field-wrap">
+              <label>
+                Razón Social<span class="req">*</span>
+              </label>
+              <br>
+              <br>
+              <input type="text" required autocomplete="off" id="Razón social" name="Razón social">
+            </div>
+
+            <div class="field-wrap">
+              <label>
+                Cuit<span class="req">*</span>
+              </label>
+              <br>
+              <br>
+              <input type="text" required autocomplete="off" id="Cuit" name="Cuit">
+            </div>
+          </div>
+
+          <div class="top-row">
+            <div class="field-wrap">
+              <label>
+                Clasificación<span class="req">*</span>
+              </label>
+              <br>
+              <br>
+                <select class ="select-css" name="seleccionDeClasificacionOrg" id="clasificacionOrg" onChange=changetextbox()>
+                  <option value="0">Seleccione la clasificación</option>
+                  <option value="1">Ministerio</option>
+                  <option value="2">Universidad</option>
+                  <option value="3">Escuela</option>
+                  <option value="3">Empresa Sector Primario</option>
+                  <option value="3">Empresa Sector Secundario</option>
+                </select>
+            </div>
+
+            <div class="field-wrap">
+              <label>
+              Tipo de Organizacion<span class="req">*</span>
+              </label>
+              <br>
+              <br>
+                <select class ="select-css" name="seleccionDeTipoOrg" id="tipoOrg" onChange=changetextbox()>
+                  <option value="0">Seleccione el tipo</option>
+                  <option value="1">Gubernamental</option>
+                  <option value="2">ONG</option>
+                  <option value="3">Empresa</option>
+                  <option value="4">Institución</option>
+                </select>
+            </div>
+          </div>
+
+          <div class="top-row">
+
+            <div class="field-wrap">
+              <label>
+                Localidad <span class="req">*</span>
+              </label>
+              <br>
+              <br>
+              <input type="text" required autocomplete="off" id="LocalidadORg" name="Localidad"
+                class="input-datos" />
+            </div>
+          </div>
+          <br>
+
+          <h2>Datos de usuario</h2>
+
+          <div class="field-wrap">
+            <label>
+              Email<span class="req">*</span>
+            </label>
+            <br>
+            <br>
+            <input type="email" required autocomplete="off" id="EmailOrg" name="mail" class="input-datos" />
+          </div>
+
+          <div class="field-wrap">
+            <label>
+              Nombre de usuario<span class="req">*</span>
+            </label>
+            <br>
+            <br>
+            <input type="text" required autocomplete="off" id="NombreUsuarioOrg" name="usuario" class="input-datos" />
+          </div>
+
+          <div class="field-wrap">
+            <label>
+              Ingrese una contraseña<span class="req">*</span>
+            </label>
+            <br>
+            <br>
+            <input type="password" required autocomplete="off" id="PasswordOrg" name="password" class="input-datos" />
+          </div>
+
+          <div class="field-wrap">
+            <label>
+              Repita la contraseña<span class="req">*</span>
+            </label>
+            <br>
+            <br>
+            <input type="password" required autocomplete="off" id="PasswordOrgDuplicada" name="password" class="input-datos" />
+          </div>
+
+          <button type="submit" id="btnRegistroOrg" class="button button-back">Registrarme</button>
+
+          <!--Enable textbox according to previus select in combobox and enable button once textboxs filled-->
+
+          <script type="text/javascript">
+
+            function verify() {
+              if (document.getElementById("nombre").value === "") {
+                document.getElementById('startbutton').disabled = true;
+                alert("Llene todos los campos obligatorios");
+              }
+              else {
+                document.getElementById('startbutton').disabled = false;
+              }
+            }
+          </script>
+
+      </div>
+    </div>    
+
+    <div class="tab-content">
+      <div id="signUpMem">
+
+        <br>
+        
+        <h1>¡Registrate!</h1>
+
+        <form class="" style="">
+
+          <h2>Datos personales</h2>
+
+          <div class="top-row">
+            <div class="field-wrap">
+              <label>
+                Nombre<span class="req">*</span>
+              </label>
+              <br>
+              <br>
+              <input type="text" required autocomplete="off" id="Nombre" name="Nombre">
+            </div>
+
+            <div class="field-wrap">
+              <label>
+                Apellido<span class="req">*</span>
+              </label>
+              <br>
+              <br>
+              <input type="text" required autocomplete="off" id="Apellido" name="Apellido">
+            </div>
+          </div>
+
+          <div class="top-row">
+            <div class="field-wrap">
+              <label>
+                Fecha de nacimiento<span class="req">*</span>
+              </label>
+              <br>
+              <br>
+              <input type="text" required autocomplete="off" id="Fecha de nacimiento" name="Fecha de nacimiento" class="input-datos" />
+            </div>
+
+          <div class="field-wrap">
+            <label>
+              Sexo<span class="req">*</span>
+            </label>
+            <br>
+            <br>
+              <select class ="select-css" name="seleccionDeSexo" id="Sexo" onChange=changetextbox()>
+                <option value="0">Seleccione el sexo</option>
+                <option value="1">Masculino</option>
+                <option value="2">Femenino</option>
+                <option value="3">No Binario</option>
+              </select>
+          </div>
+        </div>
+
+          <div class="top-row">
+            <div class="field-wrap">
+              <label>
+                Ciudad<span class="req">*</span>
+              </label>
+              <br>
+              <br>
+              <input type="text" required autocomplete="off" id="Ciudad" name="Ciudad" class="input-datos" />
+            </div>
+
+            <div class="field-wrap">
+              <label>
+                Localidad <span class="req">*</span>
+              </label>
+              <br>
+              <br>
+              <input type="text" required autocomplete="off" id="Localidad" name="Localidad"
+                class="input-datos" />
+            </div>
+          </div>
+
+          <h2>Datos de usuario</h2>
+
+          <div class="field-wrap">
+            <label>
+              Email<span class="req">*</span>
+            </label>
+            <br>
+            <br>
+            <input type="email" required autocomplete="off" id="Email" name="mail" class="input-datos" />
+          </div>
+
+          <div class="field-wrap">
+            <label>
+              Nombre de usuario<span class="req">*</span>
+            </label>
+            <br>
+            <br>
+            <input type="text" required autocomplete="off" id="NombreUsuarioPersona" name="usuario" class="input-datos" />
+          </div>
+
+          <div class="field-wrap">
+            <label>
+              Ingrese una contraseña<span class="req">*</span>
+            </label>
+            <br>
+            <br>
+            <input type="password" required autocomplete="off" id="PasswordPersona" name="password" class="input-datos" />
+          </div>
+
+          <div class="field-wrap">
+            <label>
+              Repita la contraseña<span class="req">*</span>
+            </label>
+            <br>
+            <br>
+            <input type="password" required autocomplete="off" id="PasswordPersonaDuplicada" name="password" class="input-datos" />
+          </div>
+
+
+          <button type="submit" id="myBtn" class="button button-back">Registrarme</button>
+
+          <!--Enable textbox according to previus select in combobox and enable button once textboxs filled-->
+
+          <script type="text/javascript">
+
+            function verify() {
+              if (document.getElementById("nombre").value === "") {
+                document.getElementById('startbutton').disabled = true;
+                alert("Llene todos los campos obligatorios");
+              }
+              else {
+                document.getElementById('startbutton').disabled = false;
+              }
+            }
+          </script>
+
+      </div>
+    </div>
+
+  <div class="tab-content">
+    <div id="signIn">
+
+      <form class="" action="/loguearse" method="post" style="">
+
+        <div class="field-wrap">
+          <label>
+            Nombre de Usuario <span class="req">*</span>
+          </label>
+          <br>
+          <br>
+          <input type="text" required autocomplete="off" id="NombreUsuario" name="usuario" class="input-datos" />
+        </div>
+
+        <div class="field-wrap">
+          <label>
+            Contraseña<span class="req">*</span>
+          </label>
+          <br>
+          <br>
+          <input type="password" required autocomplete="off" id="Password" name="password" class="input-datos" />
+        </div>
+
+        <button type="submit" class="button button-back" onclick="window.location.href='./menu_logueado'">Iniciar
+          Sesión</button>
+
+      </form>
+
+    </div>
+
+  </div>
+
+</div>
+<div id="myModal" class="modal-reg">
+
+  <!-- Modal content -->
+  <div class="modal-content">
+    <span class="close">&times;</span>
+    <p>Se ha registrado con éxito</p>
+    <button type="mybtn" class="button button-modal"
+      onclick="window.location.href='/menu_logueado'">OK</button>
+  </div>
+</div>
+
+<script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
+<script src="../static/js/Login.js"></script>
+
+</body>
+
+<footer class="footer-distributed">
+
+  <div class="footer-right">
+
+    <a href="https://github.com/AlejoLovallo/UTN-DS-2022-TP-ANUAL"><img src="../images/logo_github.jpeg"
+      class="imagen_footer" alt="icon"></a>
+  
+  </div>
+
+  <div class="footer-left">
+
+    <p class="footer-links">
+
+      <a href="#">Acerca de nosotros</a>
+
+      <a href="#">Contacto</a>
+    </p>
+
+    <p>Diseño de Sistemas &copy; 2022</p>
+  </div>
+
+</footer>
+
+</html>
