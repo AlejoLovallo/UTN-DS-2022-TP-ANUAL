@@ -51,14 +51,14 @@ public class RepositorioActivdadTestDB {
 
         System.exit(0);*/
         RepositorioVehiculoParticularDB repositorioVehiculoParticularDB = new RepositorioVehiculoParticularDB();
-        VehiculoParticular v = repositorioVehiculoParticularDB.buscarVehiculoParticular("Moto", "GNC",1);
+        VehiculoParticular v = repositorioVehiculoParticularDB.buscarVehiculoParticular( "Moto", "GNC",1);
 
         RepositorioDireccionDB repositorioDireccionDB = new RepositorioDireccionDB();
         Direccion d1 = repositorioDireccionDB.buscarDireccion(
                 "ARGENTINA",
                 "BUENOS AIRES",
-                "CAPITAL FEDERAL",
-                "PEPITOSANDCOMPLETO",
+                "ADOLFO ALSINA",
+                "CARHUE",
                 "pepitoSandCompleto Barros1",
                 123,
                 "Trabajo"
@@ -67,16 +67,16 @@ public class RepositorioActivdadTestDB {
         Direccion d2 = repositorioDireccionDB.buscarDireccion(
                 "ARGENTINA",
                 "BUENOS AIRES",
-                "CAPITAL FEDERAL",
-                "PEPITOSANDCOMPLETO",
+                "ADOLFO ALSINA",
+                "CARHUE",
                 "pepitoSandCompleto Barros2",
                 123,
                 "Trabajo"
         );
 
-        System.out.println("---------------------------------------------");
+        System.out.println("------------------VALOR DISTANCIA---------------------------");
         System.out.println(
-        ServicioAPI.getInstance().calcularDistancia(v,d1,d2));
-        System.exit(0);
+        ServicioAPI.getInstance().calcularDistancia(v,d1,d2).toString());
+        //System.exit(0);
     }
 }
