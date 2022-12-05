@@ -32,10 +32,11 @@ public class Consumo {
 
     // CONSTRUCTOR 
 
-    public Consumo(Integer mes, Integer anio, Double consumo) {
+    public Consumo(Integer mes, Integer anio, Double consumo, Actividad _actividad) {
         this.mes = mes;
         this.anio = anio;
         this.consumo = consumo;
+        this.actividad = _actividad;
     }
 
     private Consumo(){}

@@ -88,8 +88,8 @@ public class GeneradorReportes {
                 
                 cantidadHC += calculadorHC.cacluarHcActividadPeriodo(actividad, fechaDesde, fechaHasta);
 
-                Actividad act = new Actividad(actividad.getNombre(), actividad.getTipoConsumo());
-                Consumo con = new Consumo(1, 1, cantidadHC);
+                Actividad act = new Actividad(actividad.getNombre(), actividad.getTipoConsumo(), organizacion);
+                Consumo con = new Consumo(1, 1, cantidadHC, act);
                 ArrayList <Consumo> lista = new ArrayList<>();
                 lista.add(con);
                 act.setConsumos(lista);
@@ -115,9 +115,9 @@ public class GeneradorReportes {
                 for(Actividad actividad : organizacion.getActividades()){
                     Double cantidadHC = 0.0;
                     if(listaActividades.stream().filter(unaActividad -> unaActividad.getNombre().equals(actividad.getNombre())).count() == 0){
-                        Actividad act = new Actividad(actividad.getNombre(), actividad.getTipoConsumo());
+                        Actividad act = new Actividad(actividad.getNombre(), actividad.getTipoConsumo(), organizacion);
                         cantidadHC += calculadorHC.cacluarHcActividadPeriodo(actividad, fechaDesde, fechaHasta);
-                        Consumo con = new Consumo(1, 1, cantidadHC);
+                        Consumo con = new Consumo(1, 1, cantidadHC, act);
                         ArrayList <Consumo> lista = new ArrayList<>();
                         lista.add(con);
                         act.setConsumos(lista);
@@ -158,9 +158,9 @@ public class GeneradorReportes {
                     for(Actividad actividad : aux.getActividades()){
                         Double cantidadHC = 0.0;
                         if(listaActividades.stream().filter(unaActividad -> unaActividad.getNombre().equals(actividad.getNombre())).count() == 0){
-                            Actividad act = new Actividad(actividad.getNombre(), actividad.getTipoConsumo());
+                            Actividad act = new Actividad(actividad.getNombre(), actividad.getTipoConsumo(), organizacion);
                             cantidadHC += calculadorHC.cacluarHcActividadPeriodo(actividad, fechaDesde, fechaHasta);
-                            Consumo con = new Consumo(1, 1, cantidadHC);
+                            Consumo con = new Consumo(1, 1, cantidadHC, act);
                             ArrayList <Consumo> lista = new ArrayList<>();
                             lista.add(con);
                             act.setConsumos(lista);
@@ -192,8 +192,6 @@ public class GeneradorReportes {
         if (repositorioReportes.existeReporte(organizacion.getRazonSocial(), TipoDeReporte.EVOLUCION, fechaDesde, fechaHasta)){
             Optional <Reporte> rep = repositorioReportes.conseguirReporte(organizacion.getRazonSocial(), TipoDeReporte.EVOLUCION, fechaDesde, fechaHasta);
             return rep.get();
-        }else{
-
         }
         
         Integer mesDesde = fechaDesde.getMonthValue();
@@ -202,24 +200,24 @@ public class GeneradorReportes {
         Integer anioHasta = fechaHasta.getYear();
 
         ArrayList<Consumo> evolucionHC = new ArrayList<>();
-        if(anioDesde == anioHasta){
+        if(anioDesde.equals(anioHasta)){
             for (int mes = mesDesde; mes <= mesHasta; mes++){
-                Consumo consumo = new Consumo(mes, anioDesde, calculadorHC.calcularHC(organizacion, mes, anioDesde));
+                Consumo consumo = new Consumo(mes, anioDesde, calculadorHC.calcularHC(organizacion, mes, anioDesde), null);
                 evolucionHC.add(consumo);
             }
         }
         else{
             for (int mes = mesDesde; mes <= 12; mes++){
-                Consumo consumo = new Consumo(mes, anioDesde, calculadorHC.calcularHC(organizacion, mes, anioDesde));
+                Consumo consumo = new Consumo(mes, anioDesde, calculadorHC.calcularHC(organizacion, mes, anioDesde), null);
                 evolucionHC.add(consumo);
             }
             for (int anio = anioDesde + 1; anio < anioHasta; anio++)
                 for (int mes = 1; mes <= 12; mes++){
-                    Consumo consumo = new Consumo(mes, anio, calculadorHC.calcularHC(organizacion, mes, anio));
+                    Consumo consumo = new Consumo(mes, anio, calculadorHC.calcularHC(organizacion, mes, anio), null);
                     evolucionHC.add(consumo);
                 }
             for (int mes = 1; mes <= mesHasta; mes++){
-                Consumo consumo = new Consumo(mes, anioHasta, calculadorHC.calcularHC(organizacion, mes, anioHasta));
+                Consumo consumo = new Consumo(mes, anioHasta, calculadorHC.calcularHC(organizacion, mes, anioHasta), null);
                 evolucionHC.add(consumo);
             }
         }

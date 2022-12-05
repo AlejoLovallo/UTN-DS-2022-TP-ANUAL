@@ -193,6 +193,10 @@ public class MiembroController {
             miembro.setActivo(false);
             persona.getMiembros().add(miembro);
             miembroSector.getMiembros().add(miembro);
+
+            repositorioOrganizacionesDB.modificar(organizacion);
+            repositorioPersonasDB.modificar(persona);
+
             return null;
         }
     }

@@ -94,9 +94,8 @@ public class OrganizacionController {
       JSONObject resOrganizacion = ParserJSONOrganizacion.organizacionToJSON(org);
 
       res.type("application/json");
-      res.body(resOrganizacion.toJSONString());
 
-      return null;
+      return resOrganizacion;
   }
 
  public Object crearOrganizacion(Request req, Response res) throws ParseException{
@@ -127,9 +126,7 @@ public class OrganizacionController {
               listaMiembros.add(ParserJSONMiembro.miembroToJSON(miembro));
           }
       }
-
-      response.body(listaMiembros.toString());
-      return null;
+      return listaMiembros;
   }
 
     public Object respuestaAceptarMiembro(Request request, Response response)
@@ -157,6 +154,7 @@ public class OrganizacionController {
         ).findAny();
 
         miembro.get().setActivo(true);
+        repositorioPersonasDB.modificar(persona);
 
         //TODO: devolver mensaje confirmando ejecucion de operacion
         return null;
@@ -222,7 +220,7 @@ public class OrganizacionController {
         return;
     }*/
 
-    public void respuestaCalcularHC(Request request, Response response) throws IOException {
+    public Object respuestaCalcularHC(Request request, Response response) throws IOException {
         String username = request.cookie("username");
 
         RepositorioUsuariosDB repositorioUsuariosDB = new RepositorioUsuariosDB();
@@ -237,8 +235,11 @@ public class OrganizacionController {
         Double resultado = organizacion.calcularHC(Integer.parseInt(mes), Integer.parseInt(anio));
 
         response.type("application/json");
-        response.body("{ \"resultado\":" + resultado.toString() + "}" );
-            return;
+
+        JSONObject calculo = new JSONObject();
+        calculo.put("resultado", resultado);
+
+        return calculo;
     }
 
     public Object cargarMediciones(Request request, Response response) throws ServletException, IOException {
@@ -256,6 +257,8 @@ public class OrganizacionController {
         Organizacion organizacion = repositorioOrganizacionesDB.buscarOrganizacionPorUsuario(usuario);
 
         organizacion.cargarMedicionesInternas(username + ".xls");
+
+        repositorioOrganizacionesDB.modificar(organizacion);
         return null;
     }
 

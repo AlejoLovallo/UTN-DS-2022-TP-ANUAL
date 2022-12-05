@@ -19,7 +19,7 @@ public class RepositorioDireccionDB extends Repositorio {
         super(new DBHibernate<Direccion>(Direccion.class));
     }
 
-    public Direccion crearTransportePublico(String pais, String provincia, String municipio, String localidad, String calle, Integer altura, TipoDireccion tipoDireccion){
+    public Direccion crearDireccion(String pais, String provincia, String municipio, String localidad, String calle, Integer altura, TipoDireccion tipoDireccion){
         Direccion direccion = new Direccion(pais, provincia, municipio, localidad, calle, altura, tipoDireccion);
 
         this.dbService.agregar(direccion);

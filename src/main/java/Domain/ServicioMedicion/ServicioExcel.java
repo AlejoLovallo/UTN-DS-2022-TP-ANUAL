@@ -4,6 +4,7 @@ import Domain.Organizacion.*;
 import Domain.Organizacion.Excepciones.ImposibilidadDeCrearWorkbookException;
 import Domain.Organizacion.Excepciones.ImposiblidadDeCerrarWorkbookException;
 
+import org.apache.commons.lang3.ObjectUtils;
 import org.apache.poi.ss.usermodel.*;
 
 import java.io.File;
@@ -13,6 +14,7 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.NoSuchElementException;
 import java.util.Optional;
 
 public class ServicioExcel extends ServicioMediciones{
@@ -84,22 +86,46 @@ public class ServicioExcel extends ServicioMediciones{
         Integer mes = fechaPeriodoImputacion.getMonthValue();
         Integer anio = fechaPeriodoImputacion.getYear();
 
-        Optional<Actividad> act = org.getActividades().stream().filter(unaActividad -> tipoActividad.equals(unaActividad.getNombre().toString()) && tipoConsumo.equals(unaActividad.getTipoConsumo().toString())).findAny();
+        Optional<Actividad> act = org.getActividades().stream().filter(
+                unaActividad ->
+                        unaActividad.getNombre().toString().equals(tipoActividad)
+                        && unaActividad.getTipoConsumo().toString().equals(tipoConsumo))
+                        //tipoActividad.equals(unaActividad.getNombre().toString())
+                        //&& tipoConsumo.equals(unaActividad.getTipoConsumo().toString()))
+                .findAny();
 
-        Actividad actividad = act.get(); // CHEQUEAR ESTO PORQUE ES UN DESASTRE
+        try{
+          Actividad actividad = act.get(); // CHEQUEAR ESTO PORQUE ES UN DESASTRE
 
-        if (actividad != null){
           if(periodicidad.equals(FrecuenciaServicio.MENSUAL.toString())){
-              actividad.agregarConsumo(mes, anio, valorConsumo);
+            actividad.agregarConsumo(mes, anio, valorConsumo);
+          }else{
+            for(int i = 1; i < mes; i++){
+              actividad.agregarConsumo(i, anio, valorConsumo/(mes -1));
+            }
+          }
+        }
+        catch (NoSuchElementException e)
+        {
+          try
+          {
+            Optional<Actividad> act2 = actividades.stream().filter(
+                    unaActividad ->
+                            unaActividad.getNombre().toString().equals(tipoActividad)
+                    && unaActividad.getTipoConsumo().toString().equals(tipoConsumo)
+            ).findAny();
+
+            if(periodicidad.equals(FrecuenciaServicio.MENSUAL.toString())){
+              act2.get().agregarConsumo(mes, anio, valorConsumo);
             }else{
               for(int i = 1; i < mes; i++){
-                actividad.agregarConsumo(i, anio, valorConsumo/(mes -1));
+                act2.get().agregarConsumo(i, anio, valorConsumo/(mes -1));
               }
             }
-        }else{
-
-          actividades.add(crearActividad(tipoActividad, tipoConsumo, periodicidad, mes, anio, valorConsumo));
-
+          }
+          catch(NoSuchElementException e2){
+            actividades.add(crearActividad(tipoActividad, tipoConsumo, periodicidad, mes, anio, valorConsumo, org));
+          }
         }
 
       }
@@ -121,7 +147,8 @@ public class ServicioExcel extends ServicioMediciones{
                                  String periodicidad,
                                  Integer mes,
                                  Integer anio,
-                                 Double valorConsumo)
+                                 Double valorConsumo,
+                                  Organizacion organizacion)
   {
     TipoDeActividad tipoDeActividad = TipoDeActividad.valueOf(tipoActividad);
     TipoDeConsumo tipoDeConsumo = TipoDeConsumo.valueOf(tipoConsumo);
@@ -139,7 +166,8 @@ public class ServicioExcel extends ServicioMediciones{
 
     Actividad actividad = new Actividad(
             tipoDeActividad,
-            tipoDeConsumo
+            tipoDeConsumo,
+            organizacion
     );
 
     if(periodicidad.equals(FrecuenciaServicio.MENSUAL.toString())){
