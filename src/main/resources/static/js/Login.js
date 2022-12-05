@@ -6,21 +6,14 @@ const validateSignIn = async () => {
   const username = document.getElementById("NombreUsuarioSignIn").value;
   const password = document.getElementById("PasswordSignIn").value;
 
-  /**
-   *
-   * PROBAR ESTO:
-   * YO PUSE UNA DIR NORMAL PARA PODER SEGUIR USANDO PERO PONER
-   * ENDPOINT QUE VA EN ESTE CASO: /menu_login
-   *
-   * **/
-  await fetch(`${API_ENDPOINT}/hello_post`, {
-    method: "POST", //Va: method: "POST"
+  await fetch(`${API_ENDPOINT}/menu_login`, {
+    method: "POST",
+    mode: "no-cors",
 
-    /*body: JSON.stringify({
+    body: JSON.stringify({
       username,
       password,
     }),
-    */
 
     headers: {
       "Content-type": "application/json; charset=UTF-8",
