@@ -2,15 +2,13 @@ package Domain.Organizacion;
 
 import Domain.CalculadorHC.FactorEmision;
 import Domain.Reportes.ReporteComposicion;
+import org.apache.commons.lang3.ObjectUtils;
 import org.hibernate.annotations.NotFound;
 import org.hibernate.annotations.NotFoundAction;
 import Domain.Organizacion.Consumo;
 
 import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
-import java.util.Set;
+import java.util.*;
 
 @Entity
 @Table(name ="actividad")
@@ -54,10 +52,12 @@ public class Actividad {
 
   }
 
-  public Actividad(TipoDeActividad _tipoActividad,TipoDeConsumo _tipoDeConsumo){
+  public Actividad(TipoDeActividad _tipoActividad,TipoDeConsumo _tipoDeConsumo, Organizacion _organizacion){
     this.tipoActividad=_tipoActividad;
     this.tipoConsumo =_tipoDeConsumo;
     //this.unidadDeConsumo=_unidadConsumo;
+    this.organizacion = _organizacion;
+    this.consumosActividad = new ArrayList<>();
   }
 
   //////////////////////////////////  GETTERS
@@ -82,6 +82,11 @@ public class Actividad {
 
   //setters
 
+
+  public void setOrganizacion(Organizacion organizacion) {
+    this.organizacion = organizacion;
+  }
+
   public void setUnidad_Consumo(UnidadDeConsumo unidad_Consumo) {this.unidad_Consumo = unidad_Consumo;}
 
   public void setTipoConsumo(TipoDeConsumo tipoConsumo) {this.tipoConsumo = tipoConsumo;}
@@ -94,14 +99,14 @@ public class Actividad {
 
   public void agregarConsumo(Integer mes, Integer anio, Double consumo){
 
-    Optional<Consumo> consumoActividad  = this.consumosActividad.stream().filter(unConsumo -> mes.equals(unConsumo.getMes()) && anio.equals(unConsumo.getAnio())).findAny();
-
-    Consumo con = consumoActividad.get();
-
-    if (con != null){
+    try{
+      Optional<Consumo> consumoActividad  = this.consumosActividad.stream().filter(unConsumo -> mes.equals(unConsumo.getMes()) && anio.equals(unConsumo.getAnio())).findAny();
+      Consumo con = consumoActividad.get();
       con.setConsumo(con.getConsumo() + consumo);
-    }else{
-      Consumo consu = new Consumo(mes, anio, consumo);
+    }
+    catch (NoSuchElementException e)
+    {
+      Consumo consu = new Consumo(mes, anio, consumo, this);
       this.consumosActividad.add(consu);
     }
     
@@ -109,15 +114,14 @@ public class Actividad {
 
   public Double encontrarConsumo(Integer mes, Integer anio){
 
-    Double consumo = 0.0;
-
     Optional<Consumo> consumoActividad  = this.consumosActividad.stream().filter(unConsumo -> mes.equals(unConsumo.getMes()) && anio.equals(unConsumo.getAnio())).findAny();
 
-    Consumo con = consumoActividad.get();
-    if (con != null){
-      consumo = con.getConsumo();
+    try{
+      Consumo con = consumoActividad.get();
+      return con.getConsumo();
     }
-
-    return consumo;
+    catch(NoSuchElementException e){
+      return 0.0;
+    }
   }
 }

@@ -15,11 +15,11 @@ public class RepositorioOrganizacionesTestDB {
     RepositorioUsuariosDB repositorioUsuariosDB = new RepositorioUsuariosDB();
     RepositorioOrganizacionesDB repositorioOrganizacionesDB = new RepositorioOrganizacionesDB();
 
-    Contacto contacto = new Contacto("contactoPrueba", "ContactoPrueba", 515151541, "tomas.casa123@gmail.com");
+    Contacto contacto = new Contacto("contactoPrueba2", "ContactoPrueba2", 515151541, "otromail@gmail.com");
 
-    Organizacion organizacion = new Organizacion( "OrganizacionPrueba", TipoOrganizacion.Empresa, ClasificacionOrganizacion.Ministerio, contacto);
+    Organizacion organizacion = new Organizacion( "OrganizacionPrueba2", TipoOrganizacion.Empresa, ClasificacionOrganizacion.Ministerio, contacto);
 
-    Usuario userOrg = repositorioUsuariosDB.crearUsuario("usuarioOrg","usuarioOrg@gmail.com","usuarioOrg12",true);
+    Usuario userOrg = repositorioUsuariosDB.crearUsuario("usuarioOrg2","usuarioOrg2@gmail.com","usuarioOrg12",true);
 
     organizacion.setUsuario(userOrg);
 

@@ -4,6 +4,7 @@ import Domain.Miembro.Miembro;
 import Domain.Reportes.GeneradorReportes;
 import Domain.Reportes.Reporte;
 import Domain.Reportes.TipoDeReporte;
+import Domain.Repositorios.RepositorioOrganizacionesDB;
 import Domain.ServicioMedicion.ServicioMediciones;
 import Domain.Usuarios.Contacto;
 import Domain.Usuarios.Usuario;
@@ -214,6 +215,9 @@ public class Organizacion {
     for (Actividad actividad : act){
       this.actividades.add(actividad);
     }
+
+    RepositorioOrganizacionesDB repositorioOrganizacionesDB = new RepositorioOrganizacionesDB();
+    repositorioOrganizacionesDB.modificar(this);
   }
 
   public Double calcularHC(Integer mes, Integer anio) throws IOException {
