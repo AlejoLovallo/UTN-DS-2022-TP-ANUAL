@@ -16,4 +16,4 @@ ADD src /code/src
 RUN ["mvn", "-Dmaven.test.skip", "package"]
 
 EXPOSE 4567
-CMD ["/usr/lib/jvm/java-19-openjdk-amd64/bin/java", "-jar", "target/sparkexample-jar-with-dependencies.jar"]
+CMD ["java", "-jar", "target/TpAnualDisenodeSistemas-1.0.jar"]

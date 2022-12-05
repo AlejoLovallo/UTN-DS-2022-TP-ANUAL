@@ -100,8 +100,7 @@ public class CalculadorHC {
         Double cantidadHC = 0.0;
 
         for(Miembro miembro : sector.getMiembros()){
-            if(miembro.getActivo())
-                cantidadHC += calcularHC(miembro, mes, anio);
+            cantidadHC += calcularHC(miembro, mes, anio);
         }
         return cantidadHC;
     }

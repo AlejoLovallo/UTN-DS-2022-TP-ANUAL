@@ -34,9 +34,6 @@ public class Miembro {
   @OneToMany(cascade=CascadeType.ALL , mappedBy = "miembro")
   private List<Trayecto> trayectos;
 
-  @Column(name = "activo")
-  private Boolean activo;
-
   @Transient
   private CalculadorHC calculadorHC = CalculadorHC.getInstance();
 
@@ -58,8 +55,6 @@ public class Miembro {
   //////////////////////////////////  GETTERS
 
 
-  public Boolean getActivo() {return activo;}
-
   public Persona getPersona() {
     return persona;
   }
@@ -71,8 +66,6 @@ public class Miembro {
   public Sector getSector() { return sector; }
   //////////////////////////////////  SETTERS
 
-
-  public void setActivo(Boolean activo) {this.activo = activo;}
 
   public void setPersona(Persona persona) {
     this.persona = persona;

@@ -1,88 +1,148 @@
-$('.form').find('input, textarea').on('keyup blur focus', function (e) {
+let attemptSignIn = 3;
 
-  var $this = $(this),
-    label = $this.prev('label');
+const API_ENDPOINT = "http://127.0.0.1:9000";
 
-  if (e.type === 'keyup') {
-    if ($this.val() === '') {
-      label.removeClass('active highlight');
-    } else {
-      label.addClass('active highlight');
-    }
-  } else if (e.type === 'blur') {
-    if ($this.val() === '') {
-      label.removeClass('active highlight');
-    } else {
-      label.removeClass('highlight');
-    }
-  } else if (e.type === 'focus') {
+const validateSignIn = async () => {
+  const username = document.getElementById("NombreUsuarioSignIn").value;
+  const password = document.getElementById("PasswordSignIn").value;
 
-    if ($this.val() === '') {
-      label.removeClass('highlight');
-    }
-    else if ($this.val() !== '') {
-      label.addClass('highlight');
-    }
+  await fetch(`${API_ENDPOINT}/menu_login`, {
+    method: "POST",
+    mode: "no-cors",
+
+    body: JSON.stringify({
+      username,
+      password,
+    }),
+
+    headers: {
+      "Content-type": "application/json; charset=UTF-8",
+    },
+  })
+    .then((res) => {
+      console.log("OKKKK");
+      console.log(res);
+      alert(res);
+      window.location.href = "./Menu_miembro.html";
+    })
+    .catch((e) => {
+      console.log(e);
+    });
+};
+
+const verifyOrgFields = () => {
+  const socialReason = document.getElementById("RazonSocial").value;
+  const cuit = document.getElementById("Cuit").value;
+  const clasification = document.getElementById("ClasificacionOrg").value;
+  const type = document.getElementById("TipoOrg").value;
+  const location = document.getElementById("LocalidadOrg").value;
+
+  return {
+    socialReason,
+    cuit,
+    clasification,
+    type,
+    location,
+  };
+
+  return true;
+};
+
+const verifyUserOrgFields = () => {
+  const email = document.getElementById("EmailUserOrg").value;
+  const name = document.getElementById("NombreUsuarioOrg").value;
+  const password = document.getElementById("PasswordUserOrg").value;
+  const repeatPassword = document.getElementById("PasswordRepeatUserOrg").value;
+
+  if (password != repeatPassword) {
+    alert("Las contraseñas no coinciden");
+    return {};
   }
 
-});
+  return {
+    name,
+    email,
+    password,
+  };
+};
 
-$('.tab a').on('click', function (e) {
+const validateOrganizationCreation = async () => {
+  const org = verifyOrgFields();
+  const user = verifyUserOrgFields();
+  if (org && user != {}) {
+    const res = await fetch(`${API_ENDPOINT}/organizacion`, {
+      method: "POST",
 
-  e.preventDefault();
+      body: JSON.stringify({
+        socialReason: org.socialReason,
+        cuit: org.cuit,
+        clasification: org.clasification,
+        type: org.type,
+        location: org.location,
+        user: {
+          mail: user.mail,
+          name: user.name,
+          password: user.password,
+        },
+      }),
 
-  $(this).parent().addClass('active');
-  $(this).parent().siblings().removeClass('active');
+      headers: {
+        "Content-type": "application/json; charset=UTF-8",
+      },
+    });
 
-  target = $(this).attr('href');
+    const data = await res.json();
 
-  $('.tab-content > div').not(target).hide();
-
-  $(target).fadeIn(600);
-
-});
-
-$(function () {
-  $('a.page-scroll').bind('click', function (event) {
-    var $anchor = $(this);
-    $('html, body').stop().animate({
-      scrollTop: $($anchor.attr('href')).offset().top
-    }, 1500, 'easeInOutExpo');
-    event.preventDefault();
-  });
-});
-
-// Highlight the top nav as scrolling occurs
-$('body').scrollspy({
-  target: '.navbar-fixed-top'
-})
-
-// Closes the Responsive Menu on Menu Item Click
-$('.navbar-collapse ul li a').click(function () {
-  $('.navbar-toggle:visible').click();
-});
-
-var modal = document.getElementById("myModal");
-
-// Get the button that opens the modal
-var btn = document.getElementById("myBtn");
-
-// Get the <span> element that closes the modal
-var span = document.getElementsByClassName("close")[0];
-
-// When the user clicks the button, open the modal 
-btn.onclick = function () {
-  modal.style.display = "block";
-}
-
-// When the user clicks on <span> (x), close the modal
-span.onclick = function () {
-  modal.style.display = "none";
-  window.location.href = '/confirmar_asociacion_prod_cate'
-}
-
-// When the user clicks anywhere outside of the modal, close it
-window.onclick = function (event) {
-  if (event.target == modal) {
+    if (!data) {
+      alert("Ha ocurrido un error. Vuelve a intentarlo");
+      return false;
+    } else {
+      alert(
+        "Organizacion creada con exito. Un administrador dará de alta su pedido a la brevedad."
+      );
+    }
   }
-} 
+};
+
+const validateRegisterMember = async () => {
+  const name = document.getElementById("NombreMember").value;
+  const surname = document.getElementById("ApellidoMember").value;
+  const birthDate = document.getElementById("NacimientoMember").value;
+  const sex = document.getElementById("SexoMember").value;
+  const city = document.getElementById("CiudadMember").value;
+  const location = document.getElementById("LocalidadMember").value;
+  const email = document.getElementById("EmailMember").value;
+  const username = document.getElementById("UsernameMember").value;
+  const password = document.getElementById("PasswordMember").value;
+  const repeatPassword = document.getElementById("PasswordRepeatMember").value;
+
+  if (password != repeatPassword) {
+    alert("Las contraseñas no coinciden");
+    return;
+  }
+
+  await fetch(`${API_ENDPOINT}/miembro`, {
+    method: "POST",
+
+    body: JSON.stringify({
+      name,
+      surname,
+      birthDate,
+      sex,
+      city,
+      location,
+      email,
+      username,
+      password,
+    }),
+
+    headers: {
+      "Content-type": "application/json; charset=UTF-8",
+    },
+  })
+    .then((res) => {})
+    .catch((error) => {
+      console.log("ERROR");
+      console.loog(error);
+    });
+};

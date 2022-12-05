@@ -1,6 +1,7 @@
 package Usuarios;
 
 
+import Domain.Miembro.Excepciones.UnicoSectorPorOrganizacionException;
 import Domain.Repositorios.RepositorioUsuariosDB;
 import Domain.Usuarios.Admin;
 import Domain.Usuarios.Excepciones.ContraseniaEsInvalidaException;
@@ -107,8 +108,12 @@ public class UsuariosTest {
 
 
     @Test
-    public void iniciarSesion_ContraseniaInvalida(){
-        Assertions.assertNull(this.repositorioUsuariosTest.validarLogueoUsuario(username,"1234"));
+    public void iniciarSesion_ContraseniaInvalida() {
+        Assertions.assertThrows(ContraseniaEsInvalidaException.class,
+                () -> {
+                    this.repositorioUsuariosTest.validarLogueoUsuario(username,"1234");
+                });
+
     }
 
     @Test

@@ -205,7 +205,6 @@ public class ParserJSONMiembro {
         obj.put("persona", ParserJSONMiembro.personaAJSON(miembro.getPersona()));
         obj.put("sector", ParserJSONMiembro.sectorAJSON(miembro.getSector()));
         obj.put("trayectos", trayectosToJSON(miembro.getTrayectos()));
-        obj.put("activo", miembro.getActivo());
 
         return obj;
     }
