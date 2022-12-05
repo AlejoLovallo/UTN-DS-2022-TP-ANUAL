@@ -95,6 +95,7 @@ public class OrganizacionController {
 
       res.type("application/json");
 
+      res.status(200);
       return resOrganizacion;
   }
 
@@ -126,6 +127,7 @@ public class OrganizacionController {
               listaMiembros.add(ParserJSONMiembro.miembroToJSON(miembro));
           }
       }
+      response.status(200);
       return listaMiembros;
   }
 
@@ -239,6 +241,7 @@ public class OrganizacionController {
         JSONObject calculo = new JSONObject();
         calculo.put("resultado", resultado);
 
+        response.status(200);
         return calculo;
     }
 
