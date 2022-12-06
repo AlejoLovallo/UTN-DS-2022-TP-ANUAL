@@ -1,9 +1,12 @@
 package Domain.ServicioMedicion;
 
+import Domain.CalculadorHC.FactorEmision;
 import Domain.Organizacion.*;
 import Domain.Organizacion.Excepciones.ImposibilidadDeCrearWorkbookException;
 import Domain.Organizacion.Excepciones.ImposiblidadDeCerrarWorkbookException;
 
+import Domain.Repositorios.RepositorioFactoresEmisionDB;
+import Domain.Repositorios.RepositorioPersonasDB;
 import org.apache.commons.lang3.ObjectUtils;
 import org.apache.poi.ss.usermodel.*;
 
@@ -89,9 +92,8 @@ public class ServicioExcel extends ServicioMediciones{
         Optional<Actividad> act = org.getActividades().stream().filter(
                 unaActividad ->
                         unaActividad.getNombre().toString().equals(tipoActividad)
-                        && unaActividad.getTipoConsumo().toString().equals(tipoConsumo))
-                        //tipoActividad.equals(unaActividad.getNombre().toString())
-                        //&& tipoConsumo.equals(unaActividad.getTipoConsumo().toString()))
+                        && unaActividad.getTipoConsumo().toString().equals(tipoConsumo)
+                )
                 .findAny();
 
         try{
@@ -164,10 +166,14 @@ public class ServicioExcel extends ServicioMediciones{
     System.out.println("La fecha con Date Formateada: " + (new SimpleDateFormat("dd/MM/yyyy")).format(Date.from(fechaPeriodoImputacion.atStartOfDay(ZoneId.systemDefault()).toInstant())));
      */
 
+    RepositorioFactoresEmisionDB repositorioFactoresEmisionDB = new RepositorioFactoresEmisionDB();
+    FactorEmision factorEmision = repositorioFactoresEmisionDB.getFactorDeEmisionSegunActividad(TipoDeActividad.valueOf(tipoActividad));
+
     Actividad actividad = new Actividad(
             tipoDeActividad,
             tipoDeConsumo,
-            organizacion
+            organizacion,
+            factorEmision
     );
 
     if(periodicidad.equals(FrecuenciaServicio.MENSUAL.toString())){

@@ -65,7 +65,9 @@ public class Router {
     Spark.post("/organizacion",organizacionController::crearOrganizacion);
     Spark.post("/organizacion/aceptar_miembro", organizacionController::respuestaAceptarMiembro);
     Spark.post("/organizacion/calcular_hc", organizacionController::respuestaCalcularHC);
+    Spark.post("/organizacion/cargar_mediciones", organizacionController::cargarMediciones);
     Spark.put("/organizacion/:nombre",organizacionController::modificarOrganizacion);
+
 
 
     Spark.get("/recomendaciones", organizacionController::listarRecomendaciones, Router.engine);
