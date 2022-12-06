@@ -1,11 +1,13 @@
 package Server;
 
-import static spark.Spark.*;
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.annotation.ComponentScan;
 
+@SpringBootApplication
+@ComponentScan(basePackages = "Controllers")
 public class Server {
   public static void main(String[] args) {
-    port(8080);
-    Router.init();
-    // get("/hello", (req, res) -> "Hello World");
+    SpringApplication.run(Server.class,args);
   }
 }
