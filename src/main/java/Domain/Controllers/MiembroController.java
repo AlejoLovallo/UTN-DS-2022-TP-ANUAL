@@ -68,8 +68,7 @@ public class MiembroController {
 
     public Object agregarTrayecto(Request request, Response response) throws ParseException {
 
-        //String username = request.cookie("username");
-        String username = "pepitoSandCompleto";
+        String username = request.cookie("username");
 
         RepositorioPersonasDB repositorioPersonasDB = new RepositorioPersonasDB();
         Persona persona = repositorioPersonasDB.buscarPersonaPorUsername(username);
@@ -173,8 +172,11 @@ public class MiembroController {
             resultado += miembro.calcularHC(Integer.parseInt(mes), Integer.parseInt(anio));
 
         response.type("application/json");
-        response.body("{ \"resultado\":" + resultado.toString() + "}");
-        return null;
+        JSONObject cantidadHC = new JSONObject();
+        cantidadHC.put("resultado", resultado);
+
+        response.status(200);
+        return cantidadHC;
     }
 
     public Object menuEnviarSolicitud(Request request, Response response)

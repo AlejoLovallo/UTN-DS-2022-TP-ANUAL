@@ -158,8 +158,10 @@ public class OrganizacionController {
         miembro.get().setActivo(true);
         repositorioPersonasDB.modificar(persona);
 
-        //TODO: devolver mensaje confirmando ejecucion de operacion
-        return null;
+        response.type("text/javascript");
+        response.status(200);
+
+        return "window.alert(\"Operacion ejecutada exitosamente\")";
     }
 
   /*public void respuestaListaAceptarMiembro(Request request, Response response)

@@ -27,16 +27,19 @@ public class ParserJSONMiembro {
     {
         if(obj.get("tipo").equals("vehiculoParticular"))
         {
+            //TODO: revisar que pasa si hay 2 vehiculos con los mismos atributos excepto por 'consumoPorKm'
             RepositorioVehiculoParticularDB repositorioVehiculoParticularDB = new RepositorioVehiculoParticularDB();
-            VehiculoParticular aux = repositorioVehiculoParticularDB.buscarVehiculoParticular((String)obj.get("vehiculo"), (String)obj.get("combustible"), (Integer)obj.get("cantidadCompratido"));
+            VehiculoParticular aux = repositorioVehiculoParticularDB.buscarVehiculoParticular((String)obj.get("vehiculo"), (String)obj.get("combustible"), ((Long)obj.get("cantidadPasajeros")).intValue());
             if(aux != null)
                 return aux;
             else{
-
-                return repositorioVehiculoParticularDB.crearVehiculoParticular(
+                repositorioVehiculoParticularDB.crearVehiculoParticular(
                         TipoVehiculo.valueOf((String)obj.get("vehiculo")),
                         TipoCombustible.valueOf((String)obj.get("combustible")),
-                        (Integer) obj.get("cantidadCompartido"));
+                        ((Long) obj.get("cantidadPasajeros")).intValue(),
+                        ((Double) obj.get("consumoPorKm"))
+                );
+                return repositorioVehiculoParticularDB.buscarVehiculoParticular((String)obj.get("vehiculo"), (String)obj.get("combustible"), ((Long)obj.get("cantidadPasajeros")).intValue());
             }
         }
         else if(obj.get("tipo").equals("transportePublico"))
@@ -78,6 +81,8 @@ public class ParserJSONMiembro {
                 ((Long)jsonDirLlegada.get("altura")).intValue(),
                 (String)jsonDirLlegada.get("tipoDireccion")
         );
+
+
 
         Tramo tramo = new Tramo(
                 direccionSalida,

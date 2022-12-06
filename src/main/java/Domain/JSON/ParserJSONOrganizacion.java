@@ -9,6 +9,8 @@ import org.json.simple.JSONObject;
 
 public class ParserJSONOrganizacion {
 
+    //TODO: Actividad to JSON metodo
+
    public static JSONObject organizacionToJSON(Organizacion organizacion){
       if(organizacion == null) return null;
 
