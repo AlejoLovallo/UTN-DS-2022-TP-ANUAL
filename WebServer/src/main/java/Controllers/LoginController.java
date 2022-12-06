@@ -1,15 +1,14 @@
 package Controllers;
-
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.ModelAndView;
+import spark.ModelAndView;
+import spark.Request;
+import spark.Response;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Scanner;
 
-@Controller
-//@CrossOrigin
 public class LoginController {
 
 /*
@@ -20,19 +19,15 @@ public class LoginController {
     //TODO hacer funcion de loginController(menu_login) para mandar el HTML
     Spark.get("/menu_login", loginController::menu_login, Router.engine);*/
 
-  @GetMapping(value = "/")
-  public ModelAndView index () {
-    ModelAndView modelAndView = new ModelAndView();
-    modelAndView.setViewName("Menu_Miembro");
-    return modelAndView;
+  public ModelAndView index (Request request, Response response) {
+    Map<String, Object> parametros = new HashMap<>();
+    return new ModelAndView(parametros,"index.hbs");
   }
 
 
-  @GetMapping(value = "/menu_login")
-  public ModelAndView menu_login () {
-    ModelAndView modelAndView = new ModelAndView();
-    modelAndView.setViewName("Menu_Miembro");
-    return modelAndView;
+  public ModelAndView menu_login (Request request, Response response) {
+    Map<String, Object> parametros = new HashMap<>();
+    return new ModelAndView(parametros,"index.hbs");
   }
 /*
   @RequestMapping(value = "/error", method = RequestMethod.GET)

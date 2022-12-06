@@ -5,6 +5,7 @@ import Domain.Reportes.GeneradorReportes;
 import Domain.Reportes.Reporte;
 import Domain.Reportes.TipoDeReporte;
 import Domain.Repositorios.RepositorioOrganizacionesDB;
+import Domain.ServicioMedicion.ServicioExcel;
 import Domain.ServicioMedicion.ServicioMediciones;
 import Domain.Usuarios.Contacto;
 import Domain.Usuarios.Usuario;
@@ -138,7 +139,9 @@ public class Organizacion {
 
   public String getArchivoMediciones() { return archivoMediciones; }
 
-
+  public int getId() {
+    return id_organizacion;
+  }
 
   public List <Actividad> getActividades() {
     return actividades;
@@ -211,6 +214,9 @@ public class Organizacion {
   }
 
   public void cargarMedicionesInternas(String fileName) throws IOException {
+    if(servicioMediciones == null)
+      servicioMediciones = ServicioExcel.getInstance();
+
     ArrayList <Actividad> act = servicioMediciones.cargarMediciones(fileName, this);
     for (Actividad actividad : act){
       this.actividades.add(actividad);

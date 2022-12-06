@@ -1,6 +1,7 @@
 package Domain.Repositorios;
 
 import Domain.Organizacion.AgenteSectorial;
+import Domain.Organizacion.Excepciones.AgenteSectorialException;
 import Domain.Organizacion.Organizacion;
 import Domain.Organizacion.TipoSectorTerritorial;
 
@@ -18,6 +19,12 @@ public class RepositorioAgentesDB extends Repositorio<AgenteSectorial>{
 
 
   public AgenteSectorial crearAgente(String nombre, String territorio, TipoSectorTerritorial tipoSectorTerritorial){
+
+    AgenteSectorial agenteExiste = this.buscarAgente(nombre);
+
+    if(agenteExiste != null) throw new AgenteSectorialException("ya hay un agente sectorial con el mismo nombre");
+
+
     AgenteSectorial agenteNuevo = new AgenteSectorial(nombre,territorio,tipoSectorTerritorial);
     this.dbService.agregar(agenteNuevo);
     return agenteNuevo;
@@ -30,8 +37,13 @@ public class RepositorioAgentesDB extends Repositorio<AgenteSectorial>{
   public AgenteSectorial agregarOrganizacionAAgente(AgenteSectorial agenteSectorial , Organizacion organizacion){
     //AgenteSectorial aAsociar = buscarAgente(nombre);
     if(agenteSectorial!=null){
+
+      RepositorioOrganizacionesDB repositorioOrganizacionesDB = new RepositorioOrganizacionesDB();
+
       agenteSectorial.agregarOrganizacion(organizacion);
       organizacion.setAgenteSectorial(agenteSectorial);
+
+      repositorioOrganizacionesDB.modificar(organizacion);
 
       this.dbService.modificar(agenteSectorial);
 
@@ -47,7 +59,7 @@ public class RepositorioAgentesDB extends Repositorio<AgenteSectorial>{
 
     Root<AgenteSectorial> root = agenteSectorialCriteriaQuery.from(AgenteSectorial.class);
 
-    Predicate condicionnPorNombre = criteriaBuilder.like(root.get("razonSocial"), "%"+ razonSocial +"%");
+    Predicate condicionnPorNombre = criteriaBuilder.equal(root.get("razonSocial"),  razonSocial );
 
     agenteSectorialCriteriaQuery.where(condicionnPorNombre);
 

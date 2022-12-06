@@ -52,6 +52,17 @@ public class Actividad {
 
   }
 
+
+  public Actividad(TipoDeActividad _tipoActividad,TipoDeConsumo _tipoDeConsumo, Organizacion _organizacion, FactorEmision _factorEmision){
+    this.tipoActividad=_tipoActividad;
+    this.tipoConsumo =_tipoDeConsumo;
+    //this.unidadDeConsumo=_unidadConsumo;
+    this.organizacion = _organizacion;
+    this.factorEmision = _factorEmision;
+    this.consumosActividad = new ArrayList<>();
+  }
+
+  //TODO: revisar si generar reporte necesita factor de emision
   public Actividad(TipoDeActividad _tipoActividad,TipoDeConsumo _tipoDeConsumo, Organizacion _organizacion){
     this.tipoActividad=_tipoActividad;
     this.tipoConsumo =_tipoDeConsumo;

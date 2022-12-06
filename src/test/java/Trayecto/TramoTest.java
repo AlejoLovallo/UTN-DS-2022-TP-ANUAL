@@ -84,12 +84,4 @@ public class TramoTest {
         Assertions.assertEquals(nuevoMedioDeTransporte,this.tramoTest.getMedioTransporte());
     }
 
-    /*
-    @Test
-    public void determinarDistancia() throws IOException {
-        double distancia = 0;
-        Assertions.assertEquals(distancia,this.tramoTest.determinarDistancia());
-    }
-*/
-
 }

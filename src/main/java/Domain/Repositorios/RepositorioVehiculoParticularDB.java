@@ -16,10 +16,13 @@ public class RepositorioVehiculoParticularDB extends Repositorio{
         super(new DBHibernate<VehiculoParticular>(VehiculoParticular.class));
     }
 
-    public VehiculoParticular crearVehiculoParticular(TipoVehiculo tipoVehiculo, TipoCombustible tipoCombustible, int cantidadPasajeros){
+    public VehiculoParticular crearVehiculoParticular(TipoVehiculo tipoVehiculo, TipoCombustible tipoCombustible, int cantidadPasajeros, double consumoPorKM){
         VehiculoParticular vehiculoParticular = new VehiculoParticular(tipoVehiculo, tipoCombustible, cantidadPasajeros);
 
         this.dbService.agregar(vehiculoParticular);
+        vehiculoParticular.setConsumoPorKm(consumoPorKM);
+        this.dbService.modificar(vehiculoParticular);
+
         return vehiculoParticular;
     }
 

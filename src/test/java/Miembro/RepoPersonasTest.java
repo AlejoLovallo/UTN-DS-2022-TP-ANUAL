@@ -43,14 +43,14 @@ public class RepoPersonasTest {
     @Test
     public void loguearse(){
         //GIVEN DADO
-        Usuario user = Common.getUsuarioQueEsteEnElRepo();
+        Usuario user = Common.getUsuario();
         Persona unaPersona = this.repoPersonas.crearPersona("Alberto","Gonzalez",TipoDocumento.DNI,"4215789", user);
         //WHEN CUANDO
         InterfazUsuarioPersona interfazUsuarioPersona = new InterfazUsuarioPersona();
         interfazUsuarioPersona.ingresarUsuario(user.getUsername(),"juan1998");
         //THEN ENTONCES
-        Assertions.assertEquals(user, interfazUsuarioPersona.getUsuario());
-        Assertions.assertEquals(unaPersona, interfazUsuarioPersona.getPersona());
+        Assertions.assertEquals(user.getUsername(), interfazUsuarioPersona.getUsuario().getUsername());
+        Assertions.assertEquals(unaPersona.getId_persona(), interfazUsuarioPersona.getPersona().getId_persona());
 
     }
 
@@ -60,18 +60,18 @@ public class RepoPersonasTest {
 
         //WHEN CUANDO
         InterfazUsuarioPersona interfazUsuarioPersona = new InterfazUsuarioPersona();
-        interfazUsuarioPersona.crearUsuarioPersona("username",  "mail",  "contraseniadificil1234", "nombre" , "apellido", TipoDocumento.DNI,  "1112324");
+        interfazUsuarioPersona.crearUsuarioPersona("Username18",  "mail@hotmail.com",  "contraseniadificil1234", "nombre" , "apellido", TipoDocumento.DNI,  "1141265R63234");
 
         //THEN ENTONCES
-        Assertions.assertEquals("username", interfazUsuarioPersona.getUsuario().getUsername());
-        Assertions.assertEquals("mail", interfazUsuarioPersona.getUsuario().getMail());
+        Assertions.assertEquals("Username18", interfazUsuarioPersona.getUsuario().getUsername());
+        Assertions.assertEquals("mail@hotmail.com", interfazUsuarioPersona.getUsuario().getMail());
         Assertions.assertEquals("nombre", interfazUsuarioPersona.getPersona().getNombre());
         Assertions.assertEquals("apellido", interfazUsuarioPersona.getPersona().getApellido());
 
         RepositorioPersonasDB repositorioPersonasDB = new RepositorioPersonasDB();
         RepositorioUsuariosDB repositorioUsuariosDB = new RepositorioUsuariosDB();
 
-        Assertions.assertEquals(repositorioPersonasDB.buscarPersonaPorUsuario(interfazUsuarioPersona.getUsuario()), interfazUsuarioPersona.getPersona());
+        Assertions.assertEquals(repositorioPersonasDB.buscarPersonaPorUsuario(interfazUsuarioPersona.getUsuario()).getId_persona(), interfazUsuarioPersona.getPersona().getId_persona());
         Assertions.assertTrue(repositorioUsuariosDB.validarUsuario(interfazUsuarioPersona.getUsuario(), true));
 
     }

@@ -27,6 +27,7 @@ import spark.ModelAndView;
 import spark.Request;
 import spark.Response;
 
+import javax.servlet.MultipartConfigElement;
 import javax.servlet.ServletException;
 import java.io.*;
 import java.nio.file.Files;
@@ -95,6 +96,7 @@ public class OrganizacionController {
 
       res.type("application/json");
 
+      res.status(200);
       return resOrganizacion;
   }
 
@@ -126,6 +128,7 @@ public class OrganizacionController {
               listaMiembros.add(ParserJSONMiembro.miembroToJSON(miembro));
           }
       }
+      response.status(200);
       return listaMiembros;
   }
 
@@ -156,8 +159,10 @@ public class OrganizacionController {
         miembro.get().setActivo(true);
         repositorioPersonasDB.modificar(persona);
 
-        //TODO: devolver mensaje confirmando ejecucion de operacion
-        return null;
+        response.type("text/javascript");
+        response.status(200);
+
+        return "window.alert(\"Operacion ejecutada exitosamente\")";
     }
 
   /*public void respuestaListaAceptarMiembro(Request request, Response response)
@@ -239,16 +244,19 @@ public class OrganizacionController {
         JSONObject calculo = new JSONObject();
         calculo.put("resultado", resultado);
 
+        response.status(200);
         return calculo;
     }
 
     public Object cargarMediciones(Request request, Response response) throws ServletException, IOException {
         String username = request.cookie("username");
 
-        File mediciones = new File("src/main/Domain/Utils/" + username + ".xls");
+        Path pathArchivo = Paths.get("src/main/java/Domain/Utils/" + username + ".xls");
+        Files.delete(pathArchivo);
 
+        request.attribute("org.eclipse.jetty.multipartConfig", new MultipartConfigElement("/temp"));
         InputStream is = request.raw().getPart("archivo_mediciones").getInputStream();
-        Files.copy(is, mediciones.toPath());
+        Files.copy(is, pathArchivo);
 
         RepositorioUsuariosDB repositorioUsuariosDB = new RepositorioUsuariosDB();
         Usuario usuario = repositorioUsuariosDB.buscarUsuario(username);
@@ -259,7 +267,10 @@ public class OrganizacionController {
         organizacion.cargarMedicionesInternas(username + ".xls");
 
         repositorioOrganizacionesDB.modificar(organizacion);
-        return null;
+
+        response.type("text/javascript");
+        response.status(200);
+        return "window.alert(\"Operacion realizada exitosamente\")";
     }
 
 

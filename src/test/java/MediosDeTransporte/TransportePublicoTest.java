@@ -9,23 +9,24 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class TransportePublicoTest {
-/*
-    //TODO volver a testear
+
     protected TransportePublico transportePublicoTest;
     protected TipoTransportePublico tipoTransportePublico = TipoTransportePublico.Colectivo;
     protected String linea = "LineaDeEjemplo";
-    protected List<Estacion> paradas = new ArrayList<>();
+    protected Map<Estacion,Double> paradas = new HashMap<>();
 
-    protected Estacion estacion1Test = new Estacion("Estacion1",1,1.5f,2.5f);
-    protected Estacion estacion2Test = new Estacion("Estacion2",2,3.5f,4.5f);
+    protected Estacion estacion1Test = new Estacion("Estacion1",1);
+    protected Estacion estacion2Test = new Estacion("Estacion2",2);
 
 
     private void initializeTransportePublico(){
-        paradas.add(estacion1Test);
-        paradas.add(estacion2Test);
+        paradas.put(estacion1Test,1.0);
+        paradas.put(estacion2Test,1.0);
         this.transportePublicoTest = new TransportePublico(tipoTransportePublico, linea, paradas);
     }
 
@@ -75,20 +76,19 @@ public class TransportePublicoTest {
     @Test
     public void setParadas(){
         //GIVEN DADO
-        List<Estacion> paradasActual = this.transportePublicoTest.getParadas();
-        List<Estacion> nuevasParadas = new ArrayList<>();
+        Map<Estacion,Double> paradasActual = this.transportePublicoTest.getParadas();
+        Map<Estacion,Double> nuevasParadas = new HashMap<>();
 
-        Estacion estacion1 = new Estacion("Estacion1",1,2.5f,3.5f);
-        Estacion estacion2 = new Estacion("Estacion2",2,1.5f,0.5f);
+        Estacion estacion1 = new Estacion("Estacion1",1);
+        Estacion estacion2 = new Estacion("Estacion2",2);
 
-        this.transportePublicoTest.darDeAltaParada(estacion1);
-        this.transportePublicoTest.darDeAltaParada(estacion2);
+        this.transportePublicoTest.darDeAltaParada(estacion1,1.0);
+        this.transportePublicoTest.darDeAltaParada(estacion2,1.0);
 
         //WHEN CUANDO
         this.transportePublicoTest.setParadas(nuevasParadas);
         //THEN ENTONCES
-        //Assertions.assertEquals(paradasActual,  );
         Assertions.assertEquals(nuevasParadas,this.transportePublicoTest.getParadas());
-    }*/
+    }
 
 }

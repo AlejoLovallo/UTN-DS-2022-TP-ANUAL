@@ -71,6 +71,11 @@ public class Tramo {
 
   //////////////////////////////////  SETTERS
 
+
+  public void setTrayecto(Trayecto trayecto) {
+    this.trayecto = trayecto;
+  }
+
   public void setPuntoPartida(Espacio puntoPartida) {
     this.puntoPartida = puntoPartida;
     //update();

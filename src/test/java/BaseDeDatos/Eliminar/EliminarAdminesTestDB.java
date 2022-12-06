@@ -9,8 +9,8 @@ public class EliminarAdminesTestDB {
 
   public static void main(String[] args) {
     RepositorioUsuariosDB repositorioUsuariosDB = new RepositorioUsuariosDB();
-
-    Usuario usuario = repositorioUsuariosDB.buscar(23);
+    repositorioUsuariosDB.crearAdmin("alfonsodiaz","mail_@yahoo.com","Ernesto2344");
+    Usuario usuario = repositorioUsuariosDB.buscar(4);
 
     repositorioUsuariosDB.eliminar(usuario);
 

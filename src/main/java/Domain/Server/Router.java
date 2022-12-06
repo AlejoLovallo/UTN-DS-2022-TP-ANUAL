@@ -54,16 +54,20 @@ public class Router {
     /*** ADMIN ROUTERS ***/
 
     /*** MIEMBROS ROUTES ***/
-    Spark.get("/menu_registrar_trayecto", miembroController::menuRegistrarTrayectos);
+    Spark.get("/visualizar_trayectos", miembroController::visualizarTrayectos);
     Spark.get("/miembro/:username/:organizacion", miembroController::getMiembro);
     Spark.post("/enviar_solicitud", miembroController::menuEnviarSolicitud);
-    Spark.post("/menu_registrar_trayecto", miembroController::agregarTrayecto);
-    Spark.post("/menu_calcular_hc", miembroController::respuestaCalcularHC);
+    Spark.post("/agregar_trayecto", miembroController::agregarTrayecto);
+    Spark.post("/calcularHC", miembroController::respuestaCalcularHC);
 
     /*** ORGANIZACIONES ROUTES ***/
     Spark.get("/organizacion/:nombre",organizacionController::getOrganizacion);
     Spark.post("/organizacion",organizacionController::crearOrganizacion);
+    Spark.post("/organizacion/aceptar_miembro", organizacionController::respuestaAceptarMiembro);
+    Spark.post("/organizacion/calcular_hc", organizacionController::respuestaCalcularHC);
+    Spark.post("/organizacion/cargar_mediciones", organizacionController::cargarMediciones);
     Spark.put("/organizacion/:nombre",organizacionController::modificarOrganizacion);
+
 
 
     Spark.get("/recomendaciones", organizacionController::listarRecomendaciones, Router.engine);

@@ -12,6 +12,8 @@
         href="https://startbootstrap.com/templates/agency/font-awesome-4.1.0/css/font-awesome.min.css">
     <link href='https://fonts.googleapis.com/css?family=Titillium+Web:400,300,600' rel='stylesheet' type='text/css'>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css">
+
+    <script src="../static/js/member.js"></script>
 </head>
 
 <body id="page-top" class="index" data-pinterest-extension-installed="cr1.3.4">
@@ -30,10 +32,10 @@
                         <a href="#page-top"></a>
                     </li>
                     <li class="">
-                        <a class="home" href="./Menu_Miembro.html"> Home </a>
+                        <a class="home" href="./Menu_Miembro.html">Volver al Inicio</a>
                     </li>
                     <li>
-                        <a class="page-scroll" href="./Login.html">Cerrar Sesión</a>
+                        <a class="page-scroll" href="./" onclick="closeMemberSesion()">Cerrar Sesión</a>
                     </li>
                 </ul>
             </div>
@@ -43,102 +45,96 @@
         <!-- /.container-fluid -->
     </nav>
 
-    <br>
-    <br>
-    <br>
-    
     <section id="team" class="bg-light-gray">
         <div class="form">
-            <form class="" style="">
-
+            <form>
                 <h2>Registrá tu trayecto</h2>
-
                 <br>
-    
+
                 <div class="field-wrap">
-                    <label>
-                    Frecuencia Semanal<span class="req">*</span>
+                    <label name="weekly_frequency_journey">
+                        Frecuencia Semanal<span class="req">*</span>
                     </label>
                     <br>
                     <br>
                     <input type="text" required autocomplete="off">
                 </div>
-    
+
                 <div class="field-wrap">
                     <label>
-                    Fecha Inicio<span class="req">*</span>
+                        Fecha Inicio<span class="req">*</span>
                     </label>
                     <br>
                     <br>
-                    <input type="text" required autocomplete="off">
+                    <input type="date" required autocomplete="off">
                 </div>
-                
-    
-            
+
+
+
                 <div class="field-wrap">
                     <label>
-                    Fecha Fin<span class="req">*</span>
+                        Fecha Fin<span class="req">*</span>
                     </label>
                     <br>
                     <br>
-                    <input type="text" required autocomplete="off" />
+                    <input type="date" required autocomplete="off" />
                 </div>
                 <br>
                 <ul class="tab-group">
-                    <li class="tab"><a href="#AgregarTramo"> +  Agregar Tramo</a></li>
+                    <li class="tab"><a href="#AgregarTramo"> + Agregar Tramo</a></li>
                 </ul>
                 <br>
                 <br>
 
                 <div class="tab-content">
-                    
-                <div id="AgregarTramo">
-            
-                 <form class="" style="">
-    
-                    <h2>Datos del tramo</h2>
-                    <br>
-        
-                    <div class="field-wrap">
-                    <label>
-                        Lugar de salida<span class="req">*</span>
-                    </label>
-                    <br>
-                    <br>
-                    <input type="text" required autocomplete="off"/>
-                    </div>
-        
-                    <div class="field-wrap">
-                    <label>
-                        Lugar de llegada<span class="req">*</span>
-                    </label>
-                    <br>
-                    <br>
-                    <input type="text" required autocomplete="off"/>
-                    </div>
-        
-                    <div class="field-wrap">
-                    <label>
-                        Medio de transporte<span class="req">*</span>
-                    </label>
-                    <br>
-                    <br>
-                    <input type="text" required autocomplete="off"/>
-                    </div>
 
-                    <br>
-                    <ul class="tab-group">
-                        <li class="tab"><a href="#AgregarTramo"> +  Agregar Tramo</a></li>
-                        <li class="tab"><a href="#AgregarTramo"> -  Eliminar Tramo</a></li>
-                    </ul>
-                    <br>
-                    <br>
-        
-                    <button type="submit" id="myBtn" class="button button-back">Registrar trayecto</button>
-                 </form>
-            </div>
-            </div>
-        </form>
+                    <div id="AgregarTramo">
+
+                        <form class="" style="">
+
+                            <h2>Datos del tramo</h2>
+                            <br>
+
+                            <div class="field-wrap">
+                                <label>
+                                    Lugar de salida<span class="req">*</span>
+                                </label>
+                                <br>
+                                <br>
+                                <input type="text" required autocomplete="off" />
+                            </div>
+
+                            <div class="field-wrap">
+                                <label>
+                                    Lugar de llegada<span class="req">*</span>
+                                </label>
+                                <br>
+                                <br>
+                                <input type="text" required autocomplete="off" />
+                            </div>
+
+                            <div class="field-wrap">
+                                <label>
+                                    Medio de transporte<span class="req">*</span>
+                                </label>
+                                <br>
+                                <br>
+                                <input type="text" required autocomplete="off" />
+                            </div>
+
+                            <br>
+                            <ul class="tab-group">
+                                <li class="tab"><a href="#AgregarTramo"> + Agregar Tramo</a></li>
+                                <li class="tab"><a href="#AgregarTramo"> - Eliminar Tramo</a></li>
+                            </ul>
+                            <br>
+                            <br>
+
+                            <button type="submit" id="myBtn" class="button button-back">Registrar trayecto</button>
+                        </form>
+                    </div>
+                </div>
+            </form>
         </div>
     </section>
 
@@ -147,23 +143,20 @@
 </body>
 
 <footer class="footer-distributed">
-
     <div class="footer-right">
-    
         <a href="https://github.com/AlejoLovallo/UTN-DS-2022-TP-ANUAL"><img src="../images/logo_github.jpeg"
-        class="imagen_footer" alt="icon"></a>
-    
+                class="imagen_footer" alt="icon"></a>
     </div>
-    
+
     <div class="footer-left">
-    
+
         <p class="footer-links">
-    
-        <a href="#">Acerca de nosotros</a>
-    
-        <a href="#">Contacto</a>
+
+            <a href="#">Acerca de nosotros</a>
+
+            <a href="#">Contacto</a>
         </p>
-    
+
         <p>Diseño de Sistemas &copy; 2022</p>
     </div>
 
