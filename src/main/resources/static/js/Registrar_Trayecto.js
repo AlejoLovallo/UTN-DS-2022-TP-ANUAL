@@ -1,3 +1,76 @@
+const API_ENDPOINT = "http://127.0.0.1:9000";
+
+
+const validateRegistrarTrayecto = async () => {
+  const organizacion = document.getElementById("Organizacion").value;
+  const frecuenciaSemanal = document.getElementById("FrecuenciaSemanal").value;
+  const fechaInicio = document.getElementById("FechaInicio").value;
+  const fechaFin = document.getElementById("FechaFin").value;
+  const calleSalida = document.getElementById("CalleSalida").value;
+  const alturaSalida = document.getElementById("AlturaSalida").value;
+  const localidadSalida = document.getElementById("LocalidadSalida").value;
+  const municipioSalida = document.getElementById("MunicipioSalida").value;
+  const provinciaSalida = document.getElementById("ProvinciaSalida").value;
+  const paisSalida = document.getElementById("PaisSalida").value;
+  const calleLlegada = document.getElementById("CalleLlegada").value;
+  const alturaLlegada = document.getElementById("AlturaLlegada").value;
+  const localidadLlegada = document.getElementById("LocalidadLlegada").value;
+  const municipioLlegada = document.getElementById("MunicipioLlegada").value;
+  const provinciaLlegada = document.getElementById("ProvinciaLlegada").value;
+  const paisLlegada = document.getElementById("PaisLlegada").value;
+  const tipoVehiculo = document.getElementById("TipoVehiculo").value;
+  const tipoCombustible = document.getElementById("TipoCombustible").value;
+  const cantidadPasajeros = document.getElementById("CantidadPasajeros").value;
+  const tipoTransportePublico = document.getElementById("TipoTransportePublico").value;
+  const linea = document.getElementById("Linea").value;
+
+  await fetch(`${API_ENDPOINT}/agregar_trayecto`, {
+    method: "POST",
+    mode: "no-cors",
+
+    body: JSON.stringify({
+      organizacion,
+      frecuenciaSemanal,
+      fechaInicio,
+      fechaFin,
+      
+      calleSalida,
+      alturaSalida,
+      localidadSalida,
+      municipioSalida,
+      provinciaSalida,
+      paisSalida,
+    
+      calleLlegada,
+      alturaLlegada,
+      localidadLlegada,
+      municipioLlegada,
+      provinciaLlegada,
+      paisLlegada,
+
+      tipoVehiculo,
+      tipoCombustible,
+      cantidadPasajeros,
+      tipoTransportePublico,
+      linea
+    }),
+
+    headers: {
+      "Content-type": "application/json; charset=UTF-8",
+    },
+  })
+    .then((res) => {
+      console.log("OKKKK");
+      console.log(res);
+      alert(res);
+      window.location.href = "./Menu_miembro.html";
+    })
+    .catch((e) => {
+      console.log(e);
+    });
+};
+
+
 $('.form').find('input, textarea').on('keyup blur focus', function (e) {
 
     var $this = $(this),
