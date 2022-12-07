@@ -1,13 +1,42 @@
 package Controllers;
-
+import spark.ModelAndView;
 import spark.Request;
 import spark.Response;
+
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Scanner;
 
-
 public class LoginController {
+
+/*
+    Spark.get("/", loginController::inicio, Router.engine);
+
+    Spark.get("/menu_inicio", loginController::inicio, Router.engine);
+
+    //TODO hacer funcion de loginController(menu_login) para mandar el HTML
+    Spark.get("/menu_login", loginController::menu_login, Router.engine);*/
+
+  public ModelAndView index (Request request, Response response) {
+    Map<String, Object> parametros = new HashMap<>();
+    return new ModelAndView(parametros,"index.hbs");
+  }
+
+
+  public ModelAndView menu_login (Request request, Response response) {
+    Map<String, Object> parametros = new HashMap<>();
+    return new ModelAndView(parametros,"index.hbs");
+  }
+/*
+  @RequestMapping(value = "/error", method = RequestMethod.GET)
+  public ModelAndView error () {
+    ModelAndView modelAndView = new ModelAndView();
+    modelAndView.setViewName("index");
+    return modelAndView;
+  }*/
+
 
   public String htmlToString(String nombreArchivo)
   {
@@ -30,25 +59,6 @@ public class LoginController {
 
     return body;
   }
-/*
-  //GET
-  public ModelAndView menu_login(Request request, Response response) {
 
-    HashMap<String, Object> params = new HashMap<>();
-
-    return new ModelAndView(params,"index.html");
-  }
-  */
-
-  //GET
-  //TODO revisar esto
-  public Object menu_login(Request request, Response response)
-  {
-
-    response.type("text/html");
-
-    response.body(htmlToString("index.html"));
-    return response;
-  }
 
 }

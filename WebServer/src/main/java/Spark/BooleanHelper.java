@@ -5,8 +5,8 @@ import com.github.jknack.handlebars.Options;
 
 import java.io.IOException;
 
-
 public enum BooleanHelper implements Helper<Boolean> {
+
   isTrue{
     @Override
     public CharSequence apply(Boolean arg0, Options arg1) throws IOException {
@@ -16,4 +16,5 @@ public enum BooleanHelper implements Helper<Boolean> {
         return "notchecked";
     }
   }
+
 }

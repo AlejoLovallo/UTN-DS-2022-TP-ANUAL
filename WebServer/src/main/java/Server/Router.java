@@ -1,8 +1,5 @@
 package Server;
-/*
-import Controllers.LoginController;
-import Controllers.MiembroController;
-import Controllers.OrganizacionController;*/
+
 import Controllers.LoginController;
 import Controllers.MiembroController;
 import Controllers.OrganizacionController;
@@ -52,24 +49,20 @@ public class Router {
     MiembroController miembroController = new MiembroController();
 
     /*** LOGIN ROUTES ***/
-    Spark.get("/", loginController::menu_login);
-    Spark.get("/menu_login", loginController::menu_login);
+    Spark.get("/", loginController::menu_login,Router.engine);
+    Spark.get("/menu_login", loginController::menu_login,Router.engine);
 
     /*** ADMIN ROUTERS ***/
 
     /*** MIEMBROS ROUTES ***/
-    Spark.get("/menu_registrar_trayecto", miembroController::menuRegistrarTrayectos);
-    Spark.get("/miembro/:username/:organizacion", miembroController::getMiembro);
-    //Spark.post("/enviar_solicitud", miembroController::menuEnviarSolicitud);
-    //Spark.post("/menu_registrar_trayecto", miembroController::agregarTrayecto);
-    //Spark.post("/menu_calcular_hc", miembroController::respuestaCalcularHC);
+    Spark.get("/menu_registrar_trayecto", miembroController::menuRegistrarTrayectos,Router.engine);
+    Spark.get("/miembro/:username/:organizacion", miembroController::getMiembro,Router.engine);
 
     /*** ORGANIZACIONES ROUTES ***/
-    Spark.get("/organizacion/:nombre",organizacionController::getOrganizacion);
-    //Spark.post("/organizacion",organizacionController::crearOrganizacion);
-    //Spark.put("/organizacion/:nombre",organizacionController::modificarOrganizacion);
+    Spark.get("/organizacion/:nombre",organizacionController::getOrganizacion,Router.engine);
 
 
+    //Cliente Liviano
     //Spark.get("/recomendaciones", organizacionController::listarRecomendaciones, Router.engine);
     //Spark.get("/reportes", organizacionController::mostrarReportes, Router.engine);
   }

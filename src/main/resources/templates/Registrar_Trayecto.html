@@ -12,8 +12,6 @@
         href="https://startbootstrap.com/templates/agency/font-awesome-4.1.0/css/font-awesome.min.css">
     <link href='https://fonts.googleapis.com/css?family=Titillium+Web:400,300,600' rel='stylesheet' type='text/css'>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css">
-
-    <script src="../static/js/member.js"></script>
 </head>
 
 <body id="page-top" class="index" data-pinterest-extension-installed="cr1.3.4">
@@ -32,10 +30,10 @@
                         <a href="#page-top"></a>
                     </li>
                     <li class="">
-                        <a class="home" href="./Menu_Miembro.html">Volver al Inicio</a>
+                        <a class="home" href="./Menu_Miembro.html"> Home </a>
                     </li>
                     <li>
-                        <a class="page-scroll" href="./" onclick="closeMemberSesion()">Cerrar Sesión</a>
+                        <a class="page-scroll" href="./Login.html">Cerrar Sesión</a>
                     </li>
                 </ul>
             </div>
@@ -45,94 +43,302 @@
         <!-- /.container-fluid -->
     </nav>
 
+    <br>
+    <br>
+    <br>
+    
     <section id="team" class="bg-light-gray">
         <div class="form">
-            <form>
+            <form class="" style="">
+
                 <h2>Registrá tu trayecto</h2>
+
                 <br>
-
-                <div class="field-wrap">
-                    <label name="weekly_frequency_journey">
+                <div class="top-row">
+                    <div class="field-wrap">
+                        <label>
+                        Organizacion<span class="req">*</span>
+                        </label>
+                        <br>
+                        <br>
+                        <input type="text" required autocomplete="off" id="Organizacion">
+                    </div>
+        
+                    <div class="field-wrap">
+                        <label>
                         Frecuencia Semanal<span class="req">*</span>
-                    </label>
-                    <br>
-                    <br>
-                    <input type="text" required autocomplete="off">
+                        </label>
+                        <br>
+                        <br>
+                        <input type="text" required autocomplete="off" id="FrecuenciaSemanal">
+                    </div>
                 </div>
 
-                <div class="field-wrap">
-                    <label>
+                <div class="top-row">
+                    <div class="field-wrap">
+                        <label>
                         Fecha Inicio<span class="req">*</span>
-                    </label>
-                    <br>
-                    <br>
-                    <input type="date" required autocomplete="off">
-                </div>
-
-
-
-                <div class="field-wrap">
-                    <label>
+                        </label>
+                        <br>
+                        <br>
+                        <input type="text" placeholder="Formato DD MM AAAA" required autocomplete="off" id="FechaIncio">
+                    </div>
+                    
+                    <div class="field-wrap">
+                        <label>
                         Fecha Fin<span class="req">*</span>
-                    </label>
-                    <br>
-                    <br>
-                    <input type="date" required autocomplete="off" />
+                        </label>
+                        <br>
+                        <br>
+                        <input type="text" placeholder="Formato DD MM AAAA" required autocomplete="off" id="FechaFin">
+                    </div>
                 </div>
+
                 <br>
                 <ul class="tab-group">
-                    <li class="tab"><a href="#AgregarTramo"> + Agregar Tramo</a></li>
+                    <li class="tab"><a href="#AgregarTramo"> +  Agregar Tramo</a></li>
                 </ul>
-                <br>
                 <br>
 
                 <div class="tab-content">
+                    
+                <div id="AgregarTramo">
+            
+                    <form class="" style="">
+    
+                        <h3>Datos del tramo</h3>
+                        <br>
 
-                    <div id="AgregarTramo">
-
-                        <form class="" style="">
-
-                            <h2>Datos del tramo</h2>
-                            <br>
-
+                        <h4>Lugar de salida</h4>
+                        <br>
+                        <div class="top-row">
                             <div class="field-wrap">
                                 <label>
-                                    Lugar de salida<span class="req">*</span>
+                                    Calle<span class="req">*</span>
                                 </label>
                                 <br>
                                 <br>
-                                <input type="text" required autocomplete="off" />
+                                <input type="text" required autocomplete="off" id="CalleSalida"/>
+                            </div>
+                
+                            <div class="field-wrap">
+                                <label>
+                                    Altura<span class="req">*</span>
+                                </label>
+                                <br>
+                                <br>
+                                <input type="text" required autocomplete="off" id="AlturaSalida"/>
+                            </div>
+                        </div>
+                        <div class="top-row">
+                            <div class="field-wrap">
+                                <label>
+                                    Localidad<span class="req">*</span>
+                                </label>
+                                <br>
+                                <br>
+                                <input type="text" required autocomplete="off" id="LocalidadSalida"/>
                             </div>
 
                             <div class="field-wrap">
                                 <label>
-                                    Lugar de llegada<span class="req">*</span>
+                                    Municipio<span class="req">*</span>
                                 </label>
                                 <br>
                                 <br>
-                                <input type="text" required autocomplete="off" />
+                                <input type="text" required autocomplete="off" id="MunicipioSalida"/>
+                            </div>
+                        </div>
+                        <div class="top-row">
+                            <div class="field-wrap">
+                                <label>
+                                    Provincia<span class="req">*</span>
+                                </label>
+                                <br>
+                                <br>
+                                <input type="text" required autocomplete="off" id="ProvinciaSalida"/>
                             </div>
 
                             <div class="field-wrap">
                                 <label>
-                                    Medio de transporte<span class="req">*</span>
+                                    Pais<span class="req">*</span>
                                 </label>
                                 <br>
                                 <br>
-                                <input type="text" required autocomplete="off" />
+                                <input type="text" required autocomplete="off" id="PaisSalida"/>
+                            </div>
+                        </div>
+                        <h4>Lugar de llegada</h4>
+                        <br>
+                        <div class="top-row">
+                            <div class="field-wrap">
+                                <label>
+                                    Calle<span class="req">*</span>
+                                </label>
+                                <br>
+                                <br>
+                                <input type="text" required autocomplete="off" id="CalleLlegada"/>
+                            </div>
+                
+                            <div class="field-wrap">
+                                <label>
+                                    Altura<span class="req">*</span>
+                                </label>
+                                <br>
+                                <br>
+                                <input type="text" required autocomplete="off" id="AlturaLlegada"/>
+                            </div>
+                        </div>
+                        <div class="top-row">
+                            <div class="field-wrap">
+                                <label>
+                                    Localidad<span class="req">*</span>
+                                </label>
+                                <br>
+                                <br>
+                                <input type="text" required autocomplete="off" id="LocalidadLlegada"/>
                             </div>
 
-                            <br>
-                            <ul class="tab-group">
-                                <li class="tab"><a href="#AgregarTramo"> + Agregar Tramo</a></li>
-                                <li class="tab"><a href="#AgregarTramo"> - Eliminar Tramo</a></li>
-                            </ul>
-                            <br>
-                            <br>
+                            <div class="field-wrap">
+                                <label>
+                                    Municipio<span class="req">*</span>
+                                </label>
+                                <br>
+                                <br>
+                                <input type="text" required autocomplete="off" id="MunicipioLlegada"/>
+                            </div>
+                        </div>
+                        <div class="top-row">
+                            <div class="field-wrap">
+                                <label>
+                                    Provincia<span class="req">*</span>
+                                </label>
+                                <br>
+                                <br>
+                                <input type="text" required autocomplete="off" id="ProvinciaLlegada"/>
+                            </div>
 
-                            <button type="submit" id="myBtn" class="button button-back">Registrar trayecto</button>
-                        </form>
-                    </div>
+                            <div class="field-wrap">
+                                <label>
+                                    Pais<span class="req">*</span>
+                                </label>
+                                <br>
+                                <br>
+                                <input type="text" required autocomplete="off" id="PaisLlegada"/>
+                            </div>
+                        </div>
+                        <br>
+
+                        <h4>Medio de transporte</h4>
+                        <br>
+                        <br>
+                        <ul class="tab-group">
+                            <li class="tab"><a href="#AgregarVehiculoParticular">Vehículo Particular</a></li>
+                            <li class="tab"><a href="#AgregarTransportePublico">Transporte Publico</a></li>
+                        </ul>
+                        <br>
+
+                        <div id="AgregarVehiculoParticular">
+                            <form class="" style="">
+    
+                                <h5>Datos del vehículo</h5>
+                                <br>
+                                <div class="top-row">
+                                    <div class="field-wrap">
+                                        <label>
+                                            Tipo vehículo<span class="req">*</span>
+                                        </label>
+                                        <br>
+                                        <br>
+                                        <select class ="select-css" name="seleccionDeTipoVehiculo" id="TipoVehiculo" onChange=changetextbox()>
+                                            <option value="0">Seleccione el tipo de vehículo</option>
+                                            <option value="1">Moto</option>
+                                            <option value="2">Auto</option>
+                                            <option value="3">Camioneta</option>
+                                            <option value="3">Uber</option>
+                                            <option value="4">Cabify</option>
+                                            <option value="5">Remis</option>
+                                            <option value="6">Taxi</option>
+                                            <option value="7">BiciPie</option>
+                                        </select>
+                                    </div>
+
+                                    <div class="field-wrap">
+                                        <label>
+                                            Tipo combustible<span class="req">*</span>
+                                        </label>
+                                        <br>
+                                        <br>
+                                        <select class ="select-css" name="seleccionDeTipoCombustible" id="TipoCombustible" onChange=changetextbox()>
+                                            <option value="0">Seleccione el tipo de combustible</option>
+                                            <option value="1">GNC</option>
+                                            <option value="2">Nafta</option>
+                                            <option value="3">Electrico</option>
+                                            <option value="3">Gasoil</option>
+                                            <option value="4">NoConsume</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="top-row">
+                                    <div class="field-wrap">
+                                        <label>
+                                            Cantidad de pasajeros<span class="req">*</span>
+                                        </label>
+                                        <br>
+                                        <br>
+                                        <input type="text" required autocomplete="off" id="CantidadPasajeros"/>
+                                    </div>
+                                </div>
+    
+                            </form>
+                        </div>
+
+                        <br>
+                        <br>
+                        
+                        <div id="AgregarTransportePublico">
+                            <form class="" style="">
+    
+                                <h5>Datos del transporte</h5>
+                                <br>
+                                <div class="top-row">
+                                    <div class="field-wrap">
+                                        <label>
+                                            Tipo trasnsporte público<span class="req">*</span>
+                                        </label>
+                                        <br>
+                                        <br>
+                                        <select class ="select-css" name="seleccionDeTipoTransportePublico" id="TipoTransportePublico" onChange=changetextbox()>
+                                            <option value="0">Seleccione el tipo de transporte público</option>
+                                            <option value="1">Tren</option>
+                                            <option value="2">Colectivo</option>
+                                            <option value="3">Subte</option>
+                                        </select>
+                                    </div>
+                        
+                                    <div class="field-wrap">
+                                        <label>
+                                            Línea<span class="req">*</span>
+                                        </label>
+                                        <br>
+                                        <br>
+                                        <input type="text" required autocomplete="off" id="Linea"/>
+                                    </div>
+                                </div>
+    
+                            </form>
+                        </div>
+
+                        <br>
+                        <ul class="tab-group">
+                            <li class="tab"><a href="#AgregarTramo"> +  Agregar Tramo</a></li>
+                            <li class="tab"><a href="#AgregarTramo"> -  Eliminar Tramo</a></li>
+                        </ul>
+                        <br>
+                        <br>
+            
+                        <button type="submit" id="myBtn" class="button button-back" onclick="validateRegistrarTrayecto()">Registrar trayecto</button>
+                    </form>
                 </div>
             </form>
         </div>
@@ -143,20 +349,23 @@
 </body>
 
 <footer class="footer-distributed">
+
     <div class="footer-right">
+    
         <a href="https://github.com/AlejoLovallo/UTN-DS-2022-TP-ANUAL"><img src="../images/logo_github.jpeg"
-                class="imagen_footer" alt="icon"></a>
+        class="imagen_footer" alt="icon"></a>
+    
     </div>
-
+    
     <div class="footer-left">
-
+    
         <p class="footer-links">
-
-            <a href="#">Acerca de nosotros</a>
-
-            <a href="#">Contacto</a>
+    
+        <a href="#">Acerca de nosotros</a>
+    
+        <a href="#">Contacto</a>
         </p>
-
+    
         <p>Diseño de Sistemas &copy; 2022</p>
     </div>
 

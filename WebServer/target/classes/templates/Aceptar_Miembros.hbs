@@ -4,8 +4,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Registrar Trayecto</title>
-    <link rel="stylesheet" type="text/css" href="../static/css/Solicitar_Vinculacion.css">
+    <title>Aceptar Miembros</title>
+    <link rel="stylesheet" type="text/css" href="/css/Aceptar_Miembros.css">
     <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.2/themes/smoothness/jquery-ui.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
     <link rel="stylesheet"
@@ -30,7 +30,7 @@
                         <a href="#page-top"></a>
                     </li>
                     <li class="">
-                        <a class="home" href="./Menu_Miembro.html"> Home </a>
+                        <a class="home" href="./Menu_Organizacion.html"> Home </a>
                     </li>
                     <li>
                         <a class="page-scroll" href="./Login.html">Cerrar Sesión</a>
@@ -49,46 +49,48 @@
     
     <section id="team" class="bg-light-gray">
         <div class="form">
-            <form class="" style="">
+            <br>
 
-                <h4>Vinculate a una organización</h4>
+            <h2>Solicitudes de Vinculación</h2>
 
-                <br>
-    
-                <div class="field-wrap">
-                    <label>
-                    Selecciona la organización<span class="req">*</span>
-                    </label>
-                    <br>
-                    <br>
-                    <input type="text" required autocomplete="off">
-                </div>
+            <br>
+            <table>
 
-                <div class="field-wrap">
-                    <label>
-                    Selecciona el sector<span class="req">*</span>
-                    </label>
-                    <br>
-                    <br>
-                    <input type="text" required autocomplete="off">
-                </div>
-    
-                <br>
-                <button type="submit" id="myBtn" class="button button-back">Solicitar Vinculacion</button>
-                <br>
-                <br>
+                <thead>
 
-                
-            </form>
+                    <th>Id</th>
+                    <th>Nombre</th>
+                    <th>Apellido</th>
+                    <th>Tipo de Documento</th>
+                    <th>Numero de documento</th>
+
+                </thead>
+
+                <tbody>
+                {{#each solicitudes}}
+                    <tr>
+                        <td>{{id}}</td>
+                        <td>{{nombre}}</td>
+                        <td>{{apellido}}</td>
+                        <td>{tipoDocumento}}</td>
+                        <td>{nroDocumento}}</td>
+                        <td><button type="submit" class="button button-accept"> Aceptar </button></td>
+                        <td><button type="submit" class="button button-deny"> Rechazar </button></td>
+                    </tr>
+                {{/each}}
+                </tbody>
+
+            </table>
         </div>
     </section>
+    
 </body>
 
 <footer class="footer-distributed">
 
     <div class="footer-right">
     
-        <a href="https://github.com/AlejoLovallo/UTN-DS-2022-TP-ANUAL"><img src="../images/logo_github.jpeg"
+        <a href="https://github.com/AlejoLovallo/UTN-DS-2022-TP-ANUAL"><img src="/images/logo_github.jpeg"
         class="imagen_footer" alt="icon"></a>
     
     </div>
