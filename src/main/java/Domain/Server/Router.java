@@ -23,7 +23,7 @@ public class Router {
 
   public static void init() {
     Router.initEngine();
-    Spark.staticFileLocation("/public");
+    Spark.staticFileLocation("/static");
     Router.configure();
   }
 
@@ -41,7 +41,6 @@ public class Router {
 
 */
 
-
     //TODO este post recibe los datos del json
 
     /*** CONTROLLERS ***/
@@ -55,18 +54,26 @@ public class Router {
     /*** ADMIN ROUTERS ***/
 
     /*** MIEMBROS ROUTES ***/
-    Spark.get("/menu_registrar_trayecto", miembroController::menuRegistrarTrayectos);
+    Spark.get("/visualizar_trayectos", miembroController::visualizarTrayectos);
     Spark.get("/miembro/:username/:organizacion", miembroController::getMiembro);
     Spark.post("/enviar_solicitud", miembroController::menuEnviarSolicitud);
-    Spark.post("/menu_registrar_trayecto", miembroController::agregarTrayecto);
-    Spark.post("/menu_calcular_hc", miembroController::respuestaCalcularHC);
-    /** FALTA UN POST PARA CREAR EL MIEMBRO **/
-
+    Spark.post("/agregar_trayecto", miembroController::agregarTrayecto);
+    Spark.post("/calcularHC", miembroController::respuestaCalcularHC);
+    
 
     /*** ORGANIZACIONES ROUTES ***/
     Spark.get("/organizacion/:nombre",organizacionController::getOrganizacion);
+    Spark.get("/organizacion/solicitudes_miembro",organizacionController::respuestaListaMiembros);
     Spark.post("/organizacion",organizacionController::crearOrganizacion);
+    Spark.post("/organizacion/aceptar_miembro", organizacionController::respuestaAceptarMiembro);
+    Spark.post("/organizacion/rechazar_miembro", organizacionController::respuestaRechazarMiembro);
+    Spark.post("/organizacion/calcular_hc", organizacionController::respuestaCalcularHC);
+    Spark.post("/organizacion/cargar_mediciones", organizacionController::cargarMediciones);
     Spark.put("/organizacion/:nombre",organizacionController::modificarOrganizacion);
 
+
+
+    Spark.get("/recomendaciones", organizacionController::listarRecomendaciones, Router.engine);
+    Spark.get("/reportes", organizacionController::mostrarReportes, Router.engine);
   }
 }

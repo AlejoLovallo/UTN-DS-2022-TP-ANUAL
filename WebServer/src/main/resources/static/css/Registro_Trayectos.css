@@ -1,0 +1,299 @@
+﻿*, *:before, *:after {
+    box-sizing: border-box;
+}
+
+html {
+    overflow-y: scroll;
+}
+
+body {
+    background: rgb(210, 230, 195);
+    font-family: 'Titillium Web', sans-serif;
+}
+
+a {
+    text-decoration: none;
+    color: #618385;
+    -webkit-transition: .5s ease;
+    transition: .5s ease;
+}
+
+    a:hover {
+        color: #618385;
+    }
+
+.form {
+    background: #3c3c3c;
+    padding: 50px;
+    padding-top: 30px;
+    max-width: 600px;
+    margin: 40px auto;
+    border-radius: 4px;
+    box-shadow: 0 4px 10px 4px rgba(19, 35, 47, 0.3);
+}
+
+h1 {
+    text-align: center;
+    color: #ffffff;
+    font-weight: 300;
+    margin: 0 0 25px;
+}
+
+h2 {
+    text-align: left;
+    color: #000000;
+    font-weight: 300;
+    margin: 0 0 25px;
+}
+
+table {
+    width: 100%;
+}
+
+th {
+    height: 30px;
+    width: 40px;
+    background-color: #618385;
+    text-align: center;
+}
+
+td {
+    height: 50px;
+    width: 49px;
+    background-color: #ffffff;
+    font-weight: bold;
+    text-align: center;
+    background-color: rgb(217 243 198);
+}
+
+table, th, td {
+    padding: 5px;
+    border: 3px solid rgba(19, 35, 47, 0.3);
+    font-size: 13px;
+    border-collapse: collapse;
+    border-width: 3px;
+}
+
+input, textarea {
+    font-size: 22px;
+    display: inline;
+    width: 50%;
+    height: 100%;
+    padding: 5px 10px;
+    background: none;
+    background-image: none;
+    border: 1px solid #a0b3b0;
+    color: #ffffff;
+    border-radius: 0;
+    -webkit-transition: border-color .25s ease, box-shadow .25s ease;
+    transition: border-color .25s ease, box-shadow .25s ease;
+}
+
+    input:focus, textarea:focus {
+        outline: 0;
+        border-color: #85c3e5;
+    }
+
+textarea {
+    border: 2px solid #000000;
+    resize: vertical;
+}
+
+.field-wrap {
+    position: relative;
+    margin-bottom: 25px;
+    color: #222;
+    border-color: #000000;
+}
+
+.top-row:after {
+    content: "";
+    display: table;
+    clear: both;
+}
+
+.top-row > div {
+    float: left;
+    width: 48%;
+    margin-right: 4%;
+}
+
+    .top-row > div:last-child {
+        margin: 0;
+        color: #000000;
+    }
+
+.button {
+    border: 0;
+    outline: none;
+    border-radius: 0;
+    padding: 15px 0;
+    font-size: 2rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: .1em;
+    background: #8dbcbf;
+    color: #ffffff;
+    -webkit-transition: all 0.5s ease;
+    transition: all 0.5s ease;
+    -webkit-appearance: none;
+}
+
+    .button:hover, .button:focus {
+        background: #85c3e5;
+    }
+
+.button-block {
+    display: block;
+    font-size: larger;
+    width: 100%;
+}
+
+    .button-block:hover,
+    .button-block:focus,
+    .button-block:active,
+    .button-block.active,
+    .open .dropdown-toggle.button-block {
+        border-color: #85c3e5;
+        border-width: thick;
+        color: rgb(0, 0, 0);
+        background-color: #85c3e5;
+        cursor: pointer;
+    }
+
+.button-back {
+    margin-bottom: 10px;
+    display: block;
+    font-size: large;
+    width: 100%;
+    top: 20px;
+}
+
+    .button-back:hover,
+    .button-back:focus,
+    .button-back:active,
+    .button-back.active,
+    .open .dropdown-toggle.button-back {
+        border-color: #85c3e5;
+        border-width: thick;
+        color: #ffffff;
+        background-color: #85c3e5;
+        cursor: pointer;
+    }
+
+.navbar-default {
+    border-color: transparent;
+    background-color: #222;
+}
+
+    .navbar-default .navbar-brand {
+        font-family: 'Titillium Web', sans-serif;
+        color: #1ee2e7;
+    }
+
+        .navbar-default .navbar-brand:hover,
+        .navbar-default .navbar-brand:focus,
+        .navbar-default .navbar-brand:active,
+        .navbar-default .navbar-brand.active {
+            color: #fec503;
+        }
+
+    .navbar-default .navbar-collapse {
+        border-color: rgba(255,255,255,.02);
+    }
+
+    .navbar-default .navbar-toggle {
+        border-color: #1ee2e7;
+        background-color: #1ee2e7;
+    }
+
+        .navbar-default .navbar-toggle .icon-bar {
+            background-color: rgb(8, 8, 8);
+        }
+
+        .navbar-default .navbar-toggle:hover,
+        .navbar-default .navbar-toggle:focus {
+            background-color: #1ee2e7;
+        }
+
+#div1 {
+    overflow-y: scroll;
+    height: 200px;
+    width: 500px;
+}
+
+#div2 {
+    overflow-y: scroll;
+    height: 200px;
+    width: 500px;
+}
+
+.navbar-default .nav li a {
+    text-transform: uppercase;
+    font-family: 'Titillium Web', sans-serif;
+    font-weight: 400;
+    letter-spacing: 1px;
+    color: rgb(0, 0, 0);
+}
+
+    .navbar-default .nav li a:hover,
+    .navbar-default .nav li a:focus {
+        outline: 0;
+        color: #1ee2e7;
+    }
+
+.navbar-default .navbar-nav > .active > a {
+    border-radius: 0;
+    color: rgb(0, 0, 0);
+    background-color: #1ee2e7;
+}
+
+    .navbar-default .navbar-nav > .active > a:hover,
+    .navbar-default .navbar-nav > .active > a:focus {
+        color: rgb(3, 3, 3);
+        background-color: #17d0d5;
+    }
+
+@media(min-width:768px) {
+    .navbar-default {
+        padding: 25px 0;
+        border: 0;
+        width: 100%;
+        height: 70px;
+        background-color: transparent;
+        -webkit-transition: padding .3s;
+        -moz-transition: padding .3s;
+        transition: padding .3s;
+    }
+
+        .navbar-default .navbar-brand {
+            font-size: 2em;
+            -webkit-transition: all .3s;
+            -moz-transition: all .3s;
+            transition: all .3s;
+        }
+
+        .navbar-default .navbar-nav > .active > a {
+            border-radius: 3px;
+        }
+
+        .navbar-default.navbar-shrink {
+            padding: 10px 0;
+            background-color: #222;
+        }
+
+            .navbar-default.navbar-shrink .navbar-brand {
+                font-size: 1.5em;
+                color: rgb(206, 206, 206,63);
+                font-weight: 700;
+                font-size: 34px;
+                margin-left: 94px;
+            }
+}
+
+.button-add{
+    padding: 5px;
+    font-size: 12px;
+    border-radius: 5%;
+    background-color: #53c667;
+}

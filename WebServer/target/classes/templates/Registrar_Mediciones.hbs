@@ -4,8 +4,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Recomendaciones</title>
-    <link rel="stylesheet" type="text/css" href="../static/css/Recomendaciones.css">
+    <title>Registrar Trayecto</title>
+    <link rel="stylesheet" type="text/css" href="/css/Registrar_Mediciones.css">
     <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.2/themes/smoothness/jquery-ui.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
     <link rel="stylesheet"
@@ -49,28 +49,37 @@
     
     <section id="team" class="bg-light-gray">
         <div class="form">
-            <br>
+            <form class="" style="">
 
-            <h2 text>Recomendaciones</h2>
+                <h4>Cargá las mediciones</h4>
 
-            <br>
-            <ol>
-                <li> Recomendacion 1 </li>
-                <li> Recomendacion 2 </li>
-                <li> Recomendacion 3 </li>
-                <li> Recomendacion 4 </li>
-                <li> Recomendacion 5 </li>
-            </ol>
+                <br>
+    
+                <div class="field-wrap">
+                    <label>
+                    Path<span class="req">*</span>
+                    </label>
+                    <br>
+                    <br>
+                    <input type="file" name="archivo_mediciones" required autocomplete="off">
+                </div>
+    
+                <br>
+                <button type="submit" id="myBtn" class="button button-back">Subir Archivo</button>
+                <br>
+                <br>
+
+                
+            </form>
         </div>
     </section>
-    
 </body>
 
 <footer class="footer-distributed">
 
     <div class="footer-right">
     
-        <a href="https://github.com/AlejoLovallo/UTN-DS-2022-TP-ANUAL"><img src="../images/logo_github.jpeg"
+        <a href="https://github.com/AlejoLovallo/UTN-DS-2022-TP-ANUAL"><img src="/images/logo_github.jpeg"
         class="imagen_footer" alt="icon"></a>
     
     </div>

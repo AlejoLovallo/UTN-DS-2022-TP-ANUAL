@@ -22,7 +22,7 @@ public class Direccion extends Espacio {
 
   @Column(name = "tipo_espacio")
   @Enumerated(EnumType.STRING)
-  private TipoDireccion tipoDireccion;
+  private TipoDireccion tipo_espacio;
 
   @Column
   private String provincia;
@@ -44,7 +44,7 @@ public class Direccion extends Espacio {
     this.localidad = localidad.toUpperCase();
     this.calle = calle;
     this.altura = altura;
-    this.tipoDireccion = tipoDireccion;
+    this.tipo_espacio = tipoDireccion;
   }
 
   //////////////////////////////////  GETTERS
@@ -62,10 +62,10 @@ public class Direccion extends Espacio {
   }
   public String getCalle(){return this.calle;}
   public Integer getAltura(){return this.altura;}
-  public TipoDireccion getTipoDireccion(){return this.tipoDireccion;}
+  public TipoDireccion getTipoDireccion(){return this.tipo_espacio;}
   @Override
   public String toString(){
-    return this.tipoDireccion.toString() + ": " +  this.calle + " " + this.altura.toString();
+    return this.tipo_espacio.toString() + ": " +  this.calle + " " + this.altura.toString();
   }
 
   //////////////////////////////////  SETTERS
@@ -94,7 +94,7 @@ public class Direccion extends Espacio {
     //updateDireccion();
   }
   public void setTipoEspacio(TipoDireccion _tipoEspacio){
-    this.tipoDireccion = _tipoEspacio;
+    this.tipo_espacio = _tipoEspacio;
     //updateDireccion();
   }
 
