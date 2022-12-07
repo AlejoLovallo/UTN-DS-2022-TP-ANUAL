@@ -8,9 +8,11 @@ fetch(`${API_ENDPOINT}/menu_login`, {
 method: "GET",
 mode: "no-cors",
 
+});
 
-
-fetch('https://example.com?' + new URLSearchParams({
-    foo: 'value',
-    bar: 2,
+fetch(`${API_ENDPOINT}/menu_login` + new URLSearchParams({
+    mesDesde: 'value',
+    añoDesde: 'value',
+    mesHasta: 'value',
+    añoHasta: 'value',
 }))
