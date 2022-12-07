@@ -15,6 +15,13 @@ body {
     width: 100%;
 }
 
+.valorHC {
+    justify-content: center;
+    margin: 0 auto;
+    color: #da8617;
+    font-size: 50px;
+}
+
 .tab-group {
 list-style: none;
 padding: 0;
@@ -48,43 +55,6 @@ background: #222;
 color: #ffffff;
 }
 .tab-group .active a {
-background: #222;
-color: #ffffff;
-}
-
-.tab-veh {
-list-style: none;
-padding: 0;
-margin: 0 0 40px 0;
-}
-.tab-veh:after {
-content: "";
-display: table;
-clear: both;
-}
-.tab-veh li a {
-display: block;
-text-decoration: none;
-padding: 15px;
-background: rgba(12, 181, 155, 0.25);
-color: #9ca2a0;
-font-size: 20px;
-float: center;
-width: 33%;
-height: 33%;
-text-align: center;
-cursor: pointer;
--webkit-transition: .5s ease;
-transition: .5s ease;
-margin-right: 1px;
-}
-
-
-.tab-veh li a:hover {
-background: #222;
-color: #ffffff;
-}
-.tab-veh .active a {
 background: #222;
 color: #ffffff;
 }
@@ -170,9 +140,6 @@ textarea {
     color: rgb(3, 3, 3);
 }
 
-.text-primary {
-    color: #1ee2e7;
-}
 
 p {
     font-size: 14px;
@@ -198,6 +165,7 @@ p.large {
     transition: all 0.5s ease;
     -webkit-appearance: none;
   }
+
   .button:hover, .button:focus {
     background: #da8617;
   }
@@ -219,7 +187,7 @@ p.large {
       background-color: rgb(201, 119, 11);
       cursor: pointer;
   }
-  
+
   .button-back{
     margin-bottom: 10px;
     display: block;
@@ -239,7 +207,7 @@ p.large {
       background-color: rgb(201, 119, 11);
       cursor: pointer;
   }
-  
+/*  
 a,
 a:hover,
 a:focus,
@@ -258,7 +226,7 @@ a:active,
 a.active {
     color: #17d0d5;
 }
-
+*/
 h1,
 h2,
 h3,
@@ -391,9 +359,13 @@ a.page-scroll:hover {color:#fff !important}
     background-color: #fff;
 }
 
-
-.select-css {
-    font-size: 14px;
+.custom-select {
+    position: relative;
+    font-family: Arial;
+  }
+  
+  .select-css {
+    font-size: 18px;
     display: block;
     width: 100%;
     height: 100%;
@@ -406,57 +378,7 @@ a.page-scroll:hover {color:#fff !important}
     -webkit-transition: border-color .25s ease, box-shadow .25s ease;
     transition: border-color .25s ease, box-shadow .25s ease;
     line-height: 1.3;
-}
-
-.select-selected {
-    background-color: DodgerBlue;
-}
-
-/* Style the arrow inside the select element: */
-.select-selected:after {
-    position: absolute;
-    content: "";
-    top: 14px;
-    right: 10px;
-    width: 0;
-    height: 0;
-    border: 6px solid transparent;
-    border-color: rgb(133, 35, 35) transparent transparent transparent;
-}
-
-/* Point the arrow upwards when the select box is open (active): */
-.select-selected.select-arrow-active:after {
-    border-color: transparent transparent #fff transparent;
-    top: 7px;
-}
-
-/* style the items (options), including the selected item: */
-.select-items div,.select-selected {
-    color: #e64747;
-    padding: 8px 16px;
-    border: 1px solid transparent;
-    border-color: transparent transparent rgba(0, 0, 0, 0.1) transparent;
-    cursor: pointer;
-}
-
-/* Style items (options): */
-.select-items {
-    position: absolute;
-    background-color: rgb(51, 69, 87);
-    top: 100%;
-    left: 0;
-    right: 0;
-    z-index: 99;
-}
-
-/* Hide the items when the select box is closed: */
-.select-hide {
-    display: none;
-}
-
-.select-items div:hover, .same-as-selected {
-    background-color: rgba(0, 0, 0, 0.1);
-}
+  }
 
 .navbar-default {
     border-color: transparent;

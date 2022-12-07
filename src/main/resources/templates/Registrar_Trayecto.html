@@ -81,7 +81,7 @@
                         </label>
                         <br>
                         <br>
-                        <input type="text" placeholder="Formato DD MM AAAA" required autocomplete="off" id="FechaIncio">
+                        <input type="date" placeholder="Formato DD MM AAAA" required autocomplete="off" id="FechaIncio">
                     </div>
                     
                     <div class="field-wrap">
@@ -90,7 +90,7 @@
                         </label>
                         <br>
                         <br>
-                        <input type="text" placeholder="Formato DD MM AAAA" required autocomplete="off" id="FechaFin">
+                        <input type="date" placeholder="Formato DD MM AAAA" required autocomplete="off" id="FechaFin">
                     </div>
                 </div>
 
@@ -232,10 +232,13 @@
                         <h4>Medio de transporte</h4>
                         <br>
                         <br>
-                        <ul class="tab-group">
-                            <li class="tab"><a href="#AgregarVehiculoParticular">Vehículo Particular</a></li>
-                            <li class="tab"><a href="#AgregarTransportePublico">Transporte Publico</a></li>
-                        </ul>
+                        <select class ="select-css" name="seleccionDeTipoTransporte" id="TipoTransporte" onChange=changetextbox()>
+                            <option value="0">Seleccione el tipo de transporte</option>
+                            <option value="1">Vehículo particular</option>
+                            <option value="2">Transporte público</option>
+        
+                        </select>
+                        <br>
                         <br>
 
                         <div id="AgregarVehiculoParticular">
