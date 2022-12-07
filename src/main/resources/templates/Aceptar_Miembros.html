@@ -54,7 +54,7 @@
             <h2>Solicitudes de Vinculación</h2>
 
             <br>
-            <table>
+            <table id="listado_soli">
 
                 <thead>
 
@@ -69,13 +69,13 @@
                 <tbody>
                 {{#each solicitudes}}
                     <tr>
-                        <td>{{id}}</td>
-                        <td>{{nombre}}</td>
-                        <td>{{apellido}}</td>
-                        <td>{tipoDocumento}}</td>
-                        <td>{nroDocumento}}</td>
-                        <td><button type="submit" class="button button-accept"> Aceptar </button></td>
-                        <td><button type="submit" class="button button-deny"> Rechazar </button></td>
+                        <td id="ID">{{id}}</td>
+                        <td id="nombre">{{nombre}}</td>
+                        <td id="apellido">{{apellido}}</td>
+                        <td id="tipoDocumento">{tipoDocumento}}</td>
+                        <td id="nroDocumento">{nroDocumento}}</td>
+                        <td><button type="submit" class="button button-accept" onclick="aceptarMiembro()"> Aceptar </button></td>
+                        <td><button type="submit" class="button button-deny" onclick="rechazarMiembro()"> Rechazar </button></td>
                     </tr>
                 {{/each}}
                 </tbody>
