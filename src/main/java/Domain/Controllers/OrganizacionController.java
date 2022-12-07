@@ -125,6 +125,7 @@ public class OrganizacionController {
       {
           for(Miembro miembro : sector.getMiembros())
           {
+            if(!miembro.getActivo())
               listaMiembros.add(ParserJSONMiembro.miembroToJSON(miembro));
           }
       }
@@ -165,65 +166,38 @@ public class OrganizacionController {
         return "window.alert(\"Operacion ejecutada exitosamente\")";
     }
 
-  /*public void respuestaListaAceptarMiembro(Request request, Response response)
-  {
-      String username = request.cookie("username");
-      //TODO:buscar por nombre usuario
-      //Organizacion organizacion = RepositorioOrganizacion.buscarPorID(idOrg);
-      Organizacion organizacion;
-
-        //TODO: buscar solicitudes por organizacion
-        List<SolicitudPendiente> solMiembros = RepositorioSolicitudesDB.buscarSolicitudesOrganizacion(organizacion);
-        response.type("application/json");
-
-        JSONArray listaSolicitudes = new JSONArray();
-        for(SolicitudPendiente sol : solMiembros)
-        {
-            JSONObject solicitudJSON = new JSONObject();
-            solicitudJSON.put("persona", ParserJSONMiembro.personaAJSON(sol.getPersona()));
-            solicitudJSON.put("sector", ParserJSONMiembro.sectorAJSON(sol.getSector()));
-            listaSolicitudes.add(solicitudJSON);
-        }
-
-        response.body(listaSolicitudes.toString());
-        return;
-    }
-
-    public void respuestaAceptarMiembro(Request request, Response response)
+    public Object respuestaRechazarMiembro(Request request, Response response)
     {
         String username = request.cookie("username");
-        //TODO:buscar por nombre usuario
-        //Organizacion organizacion = RepositorioOrganizacion.buscarPorID(idOrg);
-        Organizacion organizacion = null;
+
+        RepositorioUsuariosDB repositorioUsuariosDB = new RepositorioUsuariosDB();
+        Usuario usuario = repositorioUsuariosDB.buscarUsuario(username);
+
+        RepositorioOrganizacionesDB repositorioOrganizacionesDB = new RepositorioOrganizacionesDB();
+        Organizacion organizacion = repositorioOrganizacionesDB.buscarOrganizacionPorUsuario(usuario);
+
         String idPersona = request.queryParams("Persona");
         String idSector = request.queryParams("Sector");
 
-        Sector sectorElegido = null;
-        for(Sector sector : organizacion.getSectores())
-        {
-            if(sector.getNombre().equals(idSector))
-            {
-                sectorElegido = sector;
-                break;
-            }
-        }
         RepositorioPersonasDB repositorioPersonasDB = new RepositorioPersonasDB();
         Persona persona = repositorioPersonasDB.buscarPersonaPorNroDocumento(idPersona);
 
-        Miembro miembro = new Miembro(persona.getNombre(), sectorElegido);
-        sectorElegido.getMiembros().add(miembro);
-        persona.getMiembros().add(miembro);
+        Optional<Sector> sector = organizacion.getSectores().stream().filter(
+                s -> s.getId_sector() == Integer.parseInt(idSector)
+        ).findAny();
 
-        //buscar solicitud
-        RepositorioSolicitudesDB repositorioSolicitudesDB = new RepositorioSolicitudesDB();
-        SolicitudPendiente solicitudAEliminar = repositorioSolicitudesDB.buscarSolicitudPendiente(persona, sectorElegido);
-        repositorioSolicitudesDB.eliminar(solicitudAEliminar);
-        //eliminar solicitud
+        Optional<Miembro> miembro = sector.get().getMiembros().stream().filter(
+                m -> m.getPersona().equals(persona)
+        ).findAny();
 
-        //RECALCULAR MIEMBROS PARA MOSTRAR LISTA ACTUALIZADA
-        respuestaListaAceptarMiembro(request, response);
-        return;
-    }*/
+        persona.getMiembros().remove(miembro);
+        repositorioPersonasDB.modificar(persona);
+
+        response.type("text/javascript");
+        response.status(200);
+
+        return "window.alert(\"Operacion ejecutada exitosamente\")";
+    }
 
     public Object respuestaCalcularHC(Request request, Response response) throws IOException {
         String username = request.cookie("username");
@@ -252,7 +226,8 @@ public class OrganizacionController {
         String username = request.cookie("username");
 
         Path pathArchivo = Paths.get("src/main/java/Domain/Utils/" + username + ".xls");
-        Files.delete(pathArchivo);
+        if(Files.exists(pathArchivo))
+            Files.delete(pathArchivo);
 
         request.attribute("org.eclipse.jetty.multipartConfig", new MultipartConfigElement("/temp"));
         InputStream is = request.raw().getPart("archivo_mediciones").getInputStream();

@@ -59,11 +59,14 @@ public class Router {
     Spark.post("/enviar_solicitud", miembroController::menuEnviarSolicitud);
     Spark.post("/agregar_trayecto", miembroController::agregarTrayecto);
     Spark.post("/calcularHC", miembroController::respuestaCalcularHC);
+    
 
     /*** ORGANIZACIONES ROUTES ***/
     Spark.get("/organizacion/:nombre",organizacionController::getOrganizacion);
+    Spark.get("/organizacion/solicitudes_miembro",organizacionController::respuestaListaMiembros);
     Spark.post("/organizacion",organizacionController::crearOrganizacion);
     Spark.post("/organizacion/aceptar_miembro", organizacionController::respuestaAceptarMiembro);
+    Spark.post("/organizacion/rechazar_miembro", organizacionController::respuestaRechazarMiembro);
     Spark.post("/organizacion/calcular_hc", organizacionController::respuestaCalcularHC);
     Spark.post("/organizacion/cargar_mediciones", organizacionController::cargarMediciones);
     Spark.put("/organizacion/:nombre",organizacionController::modificarOrganizacion);
