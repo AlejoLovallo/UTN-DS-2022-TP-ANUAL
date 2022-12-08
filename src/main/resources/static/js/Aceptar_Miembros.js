@@ -69,38 +69,12 @@ const rechazarMiembro = async () => {
       });
   };
 
-var listDiv = document.getElementById('listado_soli');
-var ul = document.createElement('ul');
-ul.appendChild(listDiv);
-for(var i = 0; i < data.list.length; ++i) {
-  var li = document.createElement('li');
-  li.innerHTML = <tr>
-  <td id='I'></td>
-  <td id="nombre"></td>
-  <td id="apellido"></td>
-  <td id="tipoDocumento"></td>
-  <td id="nroDocumento"></td>
-  <td><button type="submit" class="button button-accept" onclick="aceptarMiembro()"> Aceptar </button></td>
-  <td><button type="submit" class="button button-deny" onclick="rechazarMiembro()"> Rechazar </button></td>
-</tr>;
-  li.appendChild(data.list[i].puntata);
-  ul.appendChild(li); 
-                             
-}
 
-function addItem(){
-
-    var li = document.createElement("LI");
-    li.innerHTML = "<br>"
-
-    document.getElementById("formulario").appendChild(li);
-}
-
-function buscarIngreso() {
+function buscarSolicitudes() {
   var input, filter, table, tr, td, i, txtValue;
-  input = document.getElementById("unIngreso");
+  input = document.getElementById("unaSolicitud");
   filter = input.value.toUpperCase();
-  table = document.getElementById("tablaIngreso");
+  table = document.getElementById("listadoSolicitudes");
   tr = table.getElementsByTagName("tr");
   for (i = 0; i < tr.length; i++) {
     td = tr[i].getElementsByTagName("td")[1];
