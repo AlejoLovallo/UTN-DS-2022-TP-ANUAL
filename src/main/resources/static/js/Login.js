@@ -23,6 +23,7 @@ const validateSignIn = async () => {
       console.log("OKKKK");
       console.log(res);
       alert(res);
+      //TODO no redirigir a esta pagina siempre
       window.location.href = "./Menu_miembro.html";
     })
     .catch((e) => {
