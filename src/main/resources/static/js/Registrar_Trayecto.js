@@ -159,3 +159,25 @@ $('.form').find('input, textarea').on('keyup blur focus', function (e) {
     if (event.target == modal) {
     }
   } 
+
+  function AgregarTramoVehiculoParticular(){
+    //var bloque = '<div id="vehiculo"> <form class="" style=""> <h5>Datos del vehículo</h5> <br> <div class="top-row"> <div class="field-wrap"> <label> Tipo vehículo<span class="req">*</span></label><br><br><select class ="select-css" name="seleccionDeTipoVehiculo" id="TipoVehiculo" onChange=changetextbox()><option value="0">Seleccione el tipo de vehículo</option><option value="1">Moto</option><option value="2">Auto</option><option value="3">Camioneta</option><option value="3">Uber</option><option value="4">Cabify</option><option value="5">Remis</option><option value="6">Taxi</option><option value="7">BiciPie</option></select></div><div class="field-wrap"><label>Tipo combustible<span class="req">*</span></label><br><br><select class ="select-css" name="seleccionDeTipoCombustible" id="TipoCombustible" onChange=changetextbox()><option value="0">Seleccione el tipo de combustible</option><option value="1">GNC</option><option value="2">Nafta</option><option value="3">Electrico</option><option value="3">Gasoil</option><option value="4">NoConsume</option></select></div></div><div class="top-row"><div class="field-wrap"><label>Cantidad de pasajeros<span class="req">*</span></label><br><br></br><input type="text" required autocomplete="off" id="CantidadPasajeros"/></div></div></form> </div>';
+    var bloque = document.getElementById('#TramoVehiculoParticular')
+    $('#formulario').append(bloque);
+  }
+  function AgregarTramoTransportePublico(){
+    var bloque = '<div id="text"> hola </div>';
+    $('#append').append(bloque);
+  }
+
+
+  function AgregarTramo()
+  {
+  
+      //clone the first row
+      var newTramo =  $('#Tramo').clone();
+  
+      $('#Tramo').after(newRow);
+  
+      return false;
+  }
