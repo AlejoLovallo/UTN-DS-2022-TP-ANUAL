@@ -4,6 +4,7 @@ import Domain.Miembro.Excepciones.MiembroNoPerteneceAOrganizacionException;
 import Domain.Miembro.Excepciones.UnicoSectorPorOrganizacionException;
 import Domain.Organizacion.Organizacion;
 import Domain.Organizacion.Sector;
+import Domain.Repositorios.RepositorioPersonasDB;
 import Domain.Trayecto.Trayecto;
 
 import java.io.IOException;
@@ -34,6 +35,9 @@ public class Miembro {
   @OneToMany(cascade=CascadeType.ALL , mappedBy = "miembro")
   private List<Trayecto> trayectos;
 
+  @Column
+  private Boolean activo;
+
   @Transient
   private CalculadorHC calculadorHC = CalculadorHC.getInstance();
 
@@ -55,6 +59,10 @@ public class Miembro {
   //////////////////////////////////  GETTERS
 
 
+  public Boolean getActivo() {
+    return activo;
+  }
+
   public Persona getPersona() {
     return persona;
   }
@@ -66,6 +74,10 @@ public class Miembro {
   public Sector getSector() { return sector; }
   //////////////////////////////////  SETTERS
 
+
+  public void setActivo(Boolean activo) {
+    this.activo = activo;
+  }
 
   public void setPersona(Persona persona) {
     this.persona = persona;
@@ -115,6 +127,8 @@ public class Miembro {
 
   public void agregarTrayecto(Trayecto trayecto){
         trayectos.add(trayecto);
+    RepositorioPersonasDB repositorioPersonasDB = new RepositorioPersonasDB();
+    repositorioPersonasDB.modificar(this.getPersona());
   }
 
   public void desvincularTrayecto(Trayecto trayecto){

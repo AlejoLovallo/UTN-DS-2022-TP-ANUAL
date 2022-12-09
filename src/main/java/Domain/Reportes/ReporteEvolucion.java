@@ -29,6 +29,8 @@ public class ReporteEvolucion extends Reporte {
         this.consumos = _consumos;
     }
 
+    private ReporteEvolucion(){}
+
     // GETTERS
 
     public List<Consumo> getConsumos() {

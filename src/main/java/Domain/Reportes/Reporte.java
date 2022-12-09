@@ -48,7 +48,14 @@ public abstract class Reporte {
         this.fechaHasta = _fechaHasta;
     }
 
+    public Reporte(){}
+
     // GETTERS
+
+
+    public int getId_reporte() {
+        return id_reporte;
+    }
 
     public String getNombre(){
         return nombre;

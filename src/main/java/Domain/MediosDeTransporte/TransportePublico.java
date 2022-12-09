@@ -17,6 +17,8 @@ public class TransportePublico extends MedioDeTransporte {
   @Column
   private String linea;
 
+  //TODO: arreglar persistencia
+  //NOTA: double es distancia a la siguiente parada (en la ultima parada el valor es 0)
   @Transient
   Map<Estacion, Double> paradas = new HashMap<>();
 

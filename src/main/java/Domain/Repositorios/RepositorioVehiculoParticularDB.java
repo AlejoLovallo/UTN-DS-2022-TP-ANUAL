@@ -16,10 +16,13 @@ public class RepositorioVehiculoParticularDB extends Repositorio{
         super(new DBHibernate<VehiculoParticular>(VehiculoParticular.class));
     }
 
-    public VehiculoParticular crearVehiculoParticular(TipoVehiculo tipoVehiculo, TipoCombustible tipoCombustible, int cantidadPasajeros){
+    public VehiculoParticular crearVehiculoParticular(TipoVehiculo tipoVehiculo, TipoCombustible tipoCombustible, int cantidadPasajeros, double consumoPorKM){
         VehiculoParticular vehiculoParticular = new VehiculoParticular(tipoVehiculo, tipoCombustible, cantidadPasajeros);
 
         this.dbService.agregar(vehiculoParticular);
+        vehiculoParticular.setConsumoPorKm(consumoPorKM);
+        this.dbService.modificar(vehiculoParticular);
+
         return vehiculoParticular;
     }
 
@@ -37,8 +40,8 @@ public class RepositorioVehiculoParticularDB extends Repositorio{
 
         Root<VehiculoParticular> condicionRaiz = vehiculoQuery.from(VehiculoParticular.class);
 
-        Predicate condicionTipoVehiculo = criteriaBuilder.equal(condicionRaiz.get("tipoVehiculo"), tipoVehiculo);
-        Predicate condicionTipoCombustible = criteriaBuilder.equal(condicionRaiz.get("tipoCombustible"), tipoCombustible);
+        Predicate condicionTipoVehiculo = criteriaBuilder.equal(condicionRaiz.get("tipoVehiculo"), TipoVehiculo.valueOf(tipoVehiculo));
+        Predicate condicionTipoCombustible = criteriaBuilder.equal(condicionRaiz.get("tipoCombustible"),TipoCombustible.valueOf(tipoCombustible));
         Predicate condicionCantPersonas = criteriaBuilder.equal(condicionRaiz.get("cantPasajeros"), cantidadPasajeros);
 
         Predicate condicionExisteUsuario = criteriaBuilder.and(condicionTipoVehiculo, condicionTipoCombustible, condicionCantPersonas);

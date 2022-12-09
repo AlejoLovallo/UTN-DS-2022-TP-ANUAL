@@ -11,7 +11,7 @@ import java.util.ArrayList;
 import java.util.Date;
 
 public class Actividadtest {
-
+/*
     protected Actividad act;
 
     private void initializeActividad(){
@@ -140,5 +140,5 @@ public class Actividadtest {
 
         Assertions.assertEquals(30,this.act.encontrarConsumo(3,2022));
         Assertions.assertEquals(20,this.act.encontrarConsumo(4,2022));
-    }
+    }*/
 }

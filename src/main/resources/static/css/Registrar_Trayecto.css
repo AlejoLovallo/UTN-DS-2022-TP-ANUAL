@@ -52,6 +52,43 @@ background: #222;
 color: #ffffff;
 }
 
+.tab-veh {
+list-style: none;
+padding: 0;
+margin: 0 0 40px 0;
+}
+.tab-veh:after {
+content: "";
+display: table;
+clear: both;
+}
+.tab-veh li a {
+display: block;
+text-decoration: none;
+padding: 15px;
+background: rgba(12, 181, 155, 0.25);
+color: #9ca2a0;
+font-size: 20px;
+float: center;
+width: 33%;
+height: 33%;
+text-align: center;
+cursor: pointer;
+-webkit-transition: .5s ease;
+transition: .5s ease;
+margin-right: 1px;
+}
+
+
+.tab-veh li a:hover {
+background: #222;
+color: #ffffff;
+}
+.tab-veh .active a {
+background: #222;
+color: #ffffff;
+}
+
 .tab-content > div:last-child {
 display: none;
 }
@@ -66,7 +103,7 @@ label {
   transition: all 0.25s ease;
   -webkit-backface-visibility: hidden;
   pointer-events: none;
-  font-size: 22px;
+  font-size: 18px;
 }
 label .req {
   margin: 2px;

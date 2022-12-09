@@ -3,6 +3,7 @@ package Domain.Reportes;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 import Domain.Organizacion.Actividad;
 
@@ -15,7 +16,7 @@ import javax.persistence.*;
 public class ReporteComposicion extends Reporte {
 
 
-    @ManyToMany(cascade = { CascadeType.ALL })
+    @ManyToMany(cascade =  CascadeType.ALL  , fetch = FetchType.LAZY)
     @JoinTable(
         name = "reportecomposicion_actividad",
         joinColumns = { @JoinColumn(name = "id_reporte") },
@@ -24,11 +25,14 @@ public class ReporteComposicion extends Reporte {
     private List<Actividad> actividades;
 
     // CONSTRUCTOR
-    public ReporteComposicion(String _nombre, TipoDeReporte _tipoDeReporte, LocalDate _fechaDesde, LocalDate _fechaHasta, ArrayList <Actividad> _actividades) {
+    public ReporteComposicion(String _nombre, TipoDeReporte _tipoDeReporte, LocalDate _fechaDesde, LocalDate _fechaHasta, List <Actividad> _actividades) {
         super(_nombre, _tipoDeReporte, _fechaDesde, _fechaHasta);
         this.actividades = _actividades;
     }
 
+    private ReporteComposicion(){
+
+    }
 
     // GETTERS
 
@@ -38,7 +42,7 @@ public class ReporteComposicion extends Reporte {
 
     // SETTERS
 
-    public void setActividades(ArrayList<Actividad> actividades) {
+    public void setActividades(List<Actividad> actividades) {
         this.actividades = actividades;
     }
 

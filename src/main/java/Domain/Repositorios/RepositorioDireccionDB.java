@@ -19,7 +19,7 @@ public class RepositorioDireccionDB extends Repositorio {
         super(new DBHibernate<Direccion>(Direccion.class));
     }
 
-    public Direccion crearTransportePublico(String pais, String provincia, String municipio, String localidad, String calle, Integer altura, TipoDireccion tipoDireccion){
+    public Direccion crearDireccion(String pais, String provincia, String municipio, String localidad, String calle, Integer altura, TipoDireccion tipoDireccion){
         Direccion direccion = new Direccion(pais, provincia, municipio, localidad, calle, altura, tipoDireccion);
 
         this.dbService.agregar(direccion);
@@ -35,13 +35,13 @@ public class RepositorioDireccionDB extends Repositorio {
         CriteriaBuilder criteriaBuilder = criteriaBuilder();
         CriteriaQuery<Direccion> direccionQuery = criteriaBuilder.createQuery(Direccion.class);
 
-        Root<VehiculoParticular> condicionRaiz = direccionQuery.from(VehiculoParticular.class);
+        Root<Direccion> condicionRaiz = direccionQuery.from(Direccion.class);
 
         Predicate condicionPais = criteriaBuilder.equal(condicionRaiz.get("pais"), pais);
         Predicate condicionCalle = criteriaBuilder.equal(condicionRaiz.get("calle"), calle);
         Predicate condicionAltura = criteriaBuilder.equal(condicionRaiz.get("altura"), altura);
         //TODO: revisar 'condicionRaiz.get("tipo_espacio")'
-        Predicate condicionTipoDireccion = criteriaBuilder.equal(condicionRaiz.get("tipo_espacio"), tipoDireccion);
+        Predicate condicionTipoDireccion = criteriaBuilder.equal(condicionRaiz.get("tipo_espacio"), TipoDireccion.valueOf(tipoDireccion));
         Predicate condicionProvincia = criteriaBuilder.equal(condicionRaiz.get("provincia"), provincia);
         Predicate condicionMunicipio = criteriaBuilder.equal(condicionRaiz.get("municipio"), municipio);
         Predicate condicionLocalidad = criteriaBuilder.equal(condicionRaiz.get("localidad"), localidad);

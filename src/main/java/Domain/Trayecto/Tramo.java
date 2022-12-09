@@ -71,6 +71,11 @@ public class Tramo {
 
   //////////////////////////////////  SETTERS
 
+
+  public void setTrayecto(Trayecto trayecto) {
+    this.trayecto = trayecto;
+  }
+
   public void setPuntoPartida(Espacio puntoPartida) {
     this.puntoPartida = puntoPartida;
     //update();
@@ -90,6 +95,11 @@ public class Tramo {
   //////////////////////////////////  INTERFACE
 
   public Double determinarDistancia() throws IOException {
+    if (medio instanceof TransportePublico){
+      this.estrategia = new ServicioManual();
+    } else if(medio instanceof VehiculoParticular){
+      this.estrategia = ServicioAPI.getInstance();
+    }
     return estrategia.calcularDistancia(medio, puntoPartida, puntoLLegada);
   }
 
