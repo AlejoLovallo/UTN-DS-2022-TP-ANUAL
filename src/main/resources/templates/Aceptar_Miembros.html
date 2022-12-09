@@ -66,24 +66,15 @@
 
                 </thead>
 
-                <tbody>
-                {{#each solicitudes}}
-                    <tr>
-                        <td id="ID">{{id}}</td>
-                        <td id="nombre">{{nombre}}</td>
-                        <td id="apellido">{{apellido}}</td>
-                        <td id="tipoDocumento">{tipoDocumento}}</td>
-                        <td id="nroDocumento">{nroDocumento}}</td>
-                        <td><button type="submit" class="button button-accept" onclick="aceptarMiembro()"> Aceptar </button></td>
-                        <td><button type="submit" class="button button-deny" onclick="rechazarMiembro()"> Rechazar </button></td>
-                    </tr>
-                {{/each}}
+                <tbody id="ListaMiembrosBody">
+                    
                 </tbody>
 
             </table>
         </div>
     </section>
-    
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
+    <script src="../static/js/Aceptar_Miembros.js"></script>
 </body>
 
 <footer class="footer-distributed">
