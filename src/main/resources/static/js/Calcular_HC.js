@@ -1,5 +1,21 @@
 const API_ENDPOINT = "http://127.0.0.1:9000";
 
+<<<<<<< HEAD
+=======
+const formHC = '<h3>Tu huella de carbono para ese perÍodo es: </h3> <br> <p class="valorHC">XX</p> <br> <br> <button type="submit" id="myBtn" class="button button-back" onclick="volverAtras()">Volver atrás</button>'
+
+function calcularHC(){
+  $('#seb').css('display','flex');
+  $('#modal-container').append(formHC);
+  $('#CalcularHC').prop('disabled',true);
+}
+
+const volverAtras = async () => {
+  window.location.href = "./Calcular_HC.html";
+};
+
+/*
+>>>>>>> Front_2
 const calcularHC = async () => {
   const mesDesde = document.getElementById("MesDesde").value;
   const añoDesde = document.getElementById("AñoDesde").value;
@@ -31,4 +47,9 @@ const calcularHC = async () => {
     .catch((e) => {
       console.log(e);
     });
+<<<<<<< HEAD
 };
+=======
+};
+*/
+>>>>>>> Front_2

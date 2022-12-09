@@ -4,8 +4,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Aceptar Miembros</title>
-    <link rel="stylesheet" type="text/css" href="../static/css/Aceptar_Miembros.css">
+<<<<<<< HEAD:src/main/resources/templates/HC.html
+    <title>HC</title>
+    <link rel="stylesheet" type="text/css" href="../static/css/HC.css">
+=======
+    <title>Registrar Trayecto</title>
+    <link rel="stylesheet" type="text/css" href="../static/css/Registrar_Mediciones.css">
+>>>>>>> Front_2:WebServer/target/classes/templates/Registrar_Mediciones.html
     <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.2/themes/smoothness/jquery-ui.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
     <link rel="stylesheet"
@@ -30,10 +35,10 @@
                         <a href="#page-top"></a>
                     </li>
                     <li class="">
-                        <a class="home" href="./Menu_Organizacion.html">Volver al Inicio</a>
+                        <a class="home" href="./Menu_Organizacion.html"> Home </a>
                     </li>
                     <li>
-                        <a class="page-scroll" href="./">Cerrar Sesión</a>
+                        <a class="page-scroll" href="./Login.html">Cerrar Sesión</a>
                     </li>
                 </ul>
             </div>
@@ -46,55 +51,74 @@
     <br>
     <br>
     <br>
-
+    
     <section id="team" class="bg-light-gray">
         <div class="form">
+<<<<<<< HEAD:src/main/resources/templates/HC.html
+
+            <h3>Tu huella de carbono para ese perÍodo es: </h3>
+
             <br>
 
-            <h2>Solicitudes de Vinculación</h2>
-
+            <p class="valorHC">XX</p>
+        
             <br>
-            <table id="listadoSolicitudes">
+            <br>
+        
+            <button type="submit" id="myBtn" class="button button-back" onclick="volverAtras()">Volver atrás</button>
+=======
+            <form class="" style="">
 
-                <thead>
+                <h4>Cargá las mediciones</h4>
 
-                    <th>Id</th>
-                    <th>Nombre</th>
-                    <th>Apellido</th>
-                    <th>Tipo de Documento</th>
-                    <th>Numero de documento</th>
+                <br>
+    
+                <div class="field-wrap">
+                    <label>
+                    Path<span class="req">*</span>
+                    </label>
+                    <br>
+                    <br>
+                    <input type="file" name="archivo_mediciones" required autocomplete="off">
+                </div>
+    
+                <br>
+                <button type="submit" id="myBtn" class="button button-back">Subir Archivo</button>
+                <br>
+                <br>
 
-                </thead>
-
-                <tbody id="ListaMiembrosBody">
-
-                </tbody>
-
-            </table>
+                
+            </form>
+>>>>>>> Front_2:WebServer/target/classes/templates/Registrar_Mediciones.html
         </div>
+                
     </section>
+<<<<<<< HEAD:src/main/resources/templates/HC.html
+
     <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
-    <script src="../static/js/Aceptar_Miembros.js"></script>
+    <script src="../static/js/HC.js"></script>
+=======
+>>>>>>> Front_2:WebServer/target/classes/templates/Registrar_Mediciones.html
 </body>
 
 <footer class="footer-distributed">
 
     <div class="footer-right">
-
+    
         <a href="https://github.com/AlejoLovallo/UTN-DS-2022-TP-ANUAL"><img src="../images/logo_github.jpeg"
-                class="imagen_footer" alt="icon"></a>
-
+        class="imagen_footer" alt="icon"></a>
+    
     </div>
-
+    
     <div class="footer-left">
-
+    
         <p class="footer-links">
-
-            <a href="#">Acerca de nosotros</a>
-
-            <a href="#">Contacto</a>
+    
+        <a href="#">Acerca de nosotros</a>
+    
+        <a href="#">Contacto</a>
         </p>
-
+    
         <p>Diseño de Sistemas &copy; 2022</p>
     </div>
 
