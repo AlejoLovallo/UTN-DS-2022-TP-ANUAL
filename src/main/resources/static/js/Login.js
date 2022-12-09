@@ -6,7 +6,7 @@ const validateSignIn = async () => {
   const username = document.getElementById("NombreUsuarioSignIn").value;
   const password = document.getElementById("PasswordSignIn").value;
 
-  await fetch(`${API_ENDPOINT}/menu_login`, {
+ fetch(`${API_ENDPOINT}/menu_login`, {
     method: "POST",
     mode: "no-cors",
 
@@ -19,15 +19,17 @@ const validateSignIn = async () => {
       "Content-type": "application/json; charset=UTF-8",
     },
   })
-    .then((res) => {
+    //.then(response => response.json())
+    .then((response) => {
       console.log("OKKKK");
-      console.log(res);
-      alert(res);
+      console.log(JSON.stringify(response));
+      console.log(response);
+      alert(JSON.stringify(response));
       //TODO no redirigir a esta pagina siempre
-      window.location.href = "./Menu_miembro.html";
+      //window.location.href = "./Menu_miembro.html";
     })
-    .catch((e) => {
-      console.log(e);
+    .catch((error) => {
+      console.log(error)
     });
 };
 

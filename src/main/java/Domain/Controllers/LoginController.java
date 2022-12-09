@@ -24,7 +24,7 @@ import java.util.Optional;
 public class LoginController {
 
   //POST
-  public JSONObject loguear(Request request, Response response) throws ParseException {
+  public String loguear(Request request, Response response) throws ParseException {
     JSONParser parser = new JSONParser();
     JSONObject pedido = (JSONObject) parser.parse(request.body());
 
@@ -35,8 +35,9 @@ public class LoginController {
 
     if(!usuario.isPresent()){
       //response.body("error de JSON");
-      //response.status(404);
-      return new StandardResponse(StatusResponse.ERROR,"error de JSON").toJson();
+      response.status(200);
+      return new Gson()
+          .toJson(new StandardResponse(StatusResponse.ERROR,"error de JSON"));
     }
 
     RepositorioUsuariosDB repositorioUsuariosDB = new RepositorioUsuariosDB();
@@ -51,8 +52,9 @@ public class LoginController {
     }
     catch (ContraseniaEsInvalidaException c){
       //response.body(c.getMessage());
-      //response.status(404);
-      return new StandardResponse(StatusResponse.ERROR,c.getMessage()).toJson();
+      response.status(200);
+      return new Gson()
+          .toJson(new StandardResponse(StatusResponse.ERROR,c.getMessage()));
     }
 
 
@@ -60,8 +62,9 @@ public class LoginController {
     if(!usuario.isPresent()){
       //TODO marcar error
       //response.body("error de usuario");
-      //response.status(404);
-      return new StandardResponse(StatusResponse.ERROR,"error de usuario").toJson();
+      response.status(200);
+      return new Gson()
+          .toJson(new StandardResponse(StatusResponse.ERROR,"error de usuario"));
     }
 
     response.cookie("username",usuario.get().getUsername());
@@ -70,8 +73,9 @@ public class LoginController {
     if(usuario.get() instanceof Admin) {
       //TODO hacer que vaya a la vista de Admin
       //response.body("Pantalla Admin");
-      //response.status(200);
-      return new StandardResponse(StatusResponse.SUCCESS,"Pantalla Admin").toJson();
+      response.status(200);
+      return new Gson()
+          .toJson(new StandardResponse(StatusResponse.SUCCESS,"Pantalla Admin"));
     }
 
     RepositorioPersonasDB repositorioPersonasDB = new RepositorioPersonasDB();
@@ -86,19 +90,22 @@ public class LoginController {
       //TODO mandar a la vista de organizacion
       response.cookie("organizacion",organizacion.get().getRazonSocial());
       //.body("pantalla organizacion");
-      //response.status(200);
-      return new StandardResponse(StatusResponse.SUCCESS,"pantalla organizacion").toJson();
+      response.status(200);
+      return new Gson()
+          .toJson(new StandardResponse(StatusResponse.SUCCESS,"pantalla organizacion"));
     }
     if(persona.isPresent()){
       //TODO hacer que vaya a la vista de Persona
       response.cookie("persona",persona.get().getNroDocumento());
       //response.body("pantalla persona");
-      //response.status(200);
-      return new StandardResponse(StatusResponse.SUCCESS,"pantalla persona").toJson();
+      response.status(200);
+      return new Gson()
+          .toJson(new StandardResponse(StatusResponse.SUCCESS,"pantalla persona"));
     }
     //response.body("pantalla persona");
-    //response.status(200);
-    return new StandardResponse(StatusResponse.SUCCESS,"pantalla persona").toJson();
+    response.status(200);
+    return new Gson()
+        .toJson(new StandardResponse(StatusResponse.SUCCESS,"pantalla persona"));
   }
 
 
