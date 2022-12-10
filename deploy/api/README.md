@@ -1,5 +1,9 @@
 # Deployment
 
+Before: 
+
+``` mvn clean compile assembly:single ```
+
 ### Docker
 
 * Build image from source repository:
@@ -8,10 +12,7 @@
 
 * Run container:
 
-```docker run --name dstp-back -p 4567:4567 dstp-back-i```
-
-### Nginx
-
+```docker run --name dstp-back -p 9000:9000 dstp-back-i```
 
 *************************
 

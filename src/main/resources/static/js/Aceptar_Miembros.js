@@ -67,73 +67,35 @@ const rechazarMiembro = async () => {
       .catch((e) => {
         console.log(e);
       });
-  };
+};
 
-var listDiv = document.getElementById('listado_soli');
-var ul = document.createElement('ul');
-ul.appendChild(listDiv);
-for(var i = 0; i < data.list.length; ++i) {
-  var li = document.createElement('li');
-  li.innerHTML = <tr>
-  <td id='I'></td>
-  <td id="nombre"></td>
-  <td id="apellido"></td>
-  <td id="tipoDocumento"></td>
-  <td id="nroDocumento"></td>
-  <td><button type="submit" class="button button-accept" onclick="aceptarMiembro()"> Aceptar </button></td>
-  <td><button type="submit" class="button button-deny" onclick="rechazarMiembro()"> Rechazar </button></td>
-</tr>;
-  li.appendChild(data.list[i].puntata);
-  ul.appendChild(li); 
-                             
-}
+const buscarListaMiembros = async () => {
 
-function addItem(){
-
-    var li = document.createElement("LI");
-    li.innerHTML = "<br>"
-
-    document.getElementById("formulario").appendChild(li);
-}
-
-function buscarIngreso() {
-  var input, filter, table, tr, td, i, txtValue;
-  input = document.getElementById("unIngreso");
-  filter = input.value.toUpperCase();
-  table = document.getElementById("tablaIngreso");
-  tr = table.getElementsByTagName("tr");
-  for (i = 0; i < tr.length; i++) {
-    td = tr[i].getElementsByTagName("td")[1];
-    if (td) {
-      txtValue = td.textContent || td.innerText;
-      if (txtValue.toUpperCase().indexOf(filter) > -1) {
-        tr[i].style.display = "";
-      } else {
-        tr[i].style.display = "none";
+  return fetch(`${API_ENDPOINT}/solicitudes_miembro`, {
+    method: "GET",
+  })
+    .then((response) => response.json())
+    .then((data) => {
+      console.log(data);
+      for(let i = 0;i < data.length;i++){
+        const miembro = data[i];
+        const item = `<tr>
+          <td id="ID">${miembro.ID}</td>
+          <td id="nombre">${miembro.nombre}</td>
+          <td id="apellido">${miembro.apellido}</td>
+          <td id="tipoDeDocumento">${miembro.tipoDeDocumento}</td>
+          <td id="nroDeDocumento">${miembro.nroDeDocumento}</td>
+          <td><button type="submit" class="button button-accept" onclick="aceptarMiembro()"> Aceptar </button></td>
+          <td><button type="submit" class="button button-deny" onclick="rechazarMiembro()"> Rechazar </button></td>
+          </tr>`;
+          $('#ListaMiembrosBody').append(item);
       }
-    }
-  }
-}
-
-
-
-$(function() {
-    $('a.page-scroll').bind('click', function(event) {
-        var $anchor = $(this);
-        $('html, body').stop().animate({
-            scrollTop: $($anchor.attr('href')).offset().top
-        }, 1500, 'easeInOutExpo');
-        event.preventDefault();
+      console.log("OKKKK");
+    })
+    .catch((e) => {
+      console.log(e);
     });
-});
+};
 
-// Highlight the top nav as scrolling occurs
-$('body').scrollspy({
-    target: '.navbar-fixed-top'
-})
 
-// Closes the Responsive Menu on Menu Item Click
-$('.navbar-collapse ul li a').click(function() {
-    $('.navbar-toggle:visible').click();
-});
-
+buscarListaMiembros();

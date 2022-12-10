@@ -25,7 +25,6 @@ public class LoginController {
 
   //POST
   public String loguear(Request request, Response response) throws ParseException {
-
     JSONParser parser = new JSONParser();
     JSONObject pedido = (JSONObject) parser.parse(request.body());
 
@@ -121,8 +120,6 @@ public class LoginController {
     return new Gson()
         .toJson(new StandardResponse(StatusResponse.SUCCESS,"pantalla persona"));
   }
-
-
 
   //GET
   public ModelAndView loguearHtml (Request request, Response response) {

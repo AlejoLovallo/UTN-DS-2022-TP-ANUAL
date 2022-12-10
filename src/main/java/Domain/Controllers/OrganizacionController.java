@@ -44,6 +44,8 @@ import java.util.stream.Collectors;
 
 public class OrganizacionController {
 
+    private CalculadorHC calculadorHC = CalculadorHC.getInstance();
+
     public String htmlToString(String nombreArchivo)
     {
         //TODO: revisar si funciona
@@ -200,6 +202,8 @@ public class OrganizacionController {
     }
 
     public Object respuestaCalcularHC(Request request, Response response) throws IOException {
+        
+
         String username = request.cookie("username");
 
         RepositorioUsuariosDB repositorioUsuariosDB = new RepositorioUsuariosDB();
@@ -208,10 +212,20 @@ public class OrganizacionController {
         RepositorioOrganizacionesDB repositorioOrganizacionesDB = new RepositorioOrganizacionesDB();
         Organizacion organizacion = repositorioOrganizacionesDB.buscarOrganizacionPorUsuario(usuario);
 
-        String mes = request.queryParams("Mes");
-        String anio = request.queryParams("Anio");
+        String mesDesde = request.queryParams("MesDesde");
+        String añoDesde = request.queryParams("AñoDesde");
+        String mesHasta = request.queryParams("Mes");
+        String añoHasta = request.queryParams("Anio");
 
-        Double resultado = organizacion.calcularHC(Integer.parseInt(mes), Integer.parseInt(anio));
+        Integer MesDesde = Integer.parseInt(mesDesde);
+        Integer AñoDesde = Integer.parseInt(añoDesde);
+        Integer MesHasta = Integer.parseInt(mesHasta);
+        Integer AñoHasta = Integer.parseInt(añoHasta);
+
+        LocalDate fechaDesde = LocalDate.of(AñoDesde, MesDesde, 01);
+        LocalDate fechaHasta = LocalDate.of(AñoHasta, MesHasta, 01);
+
+        Double resultado = calculadorHC.calcularHcPeriodo(organizacion, fechaDesde, fechaHasta);
 
         response.type("application/json");
 

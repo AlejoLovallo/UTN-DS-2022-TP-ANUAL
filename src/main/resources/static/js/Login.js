@@ -31,7 +31,7 @@ console.log(password);
       console.log(res);
       alert(res.message);
       if(res.message ='pantalla organizacion'){
-        
+
       }
     })
     // .then((response) => {
