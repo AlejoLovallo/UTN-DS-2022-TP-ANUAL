@@ -1,7 +1,7 @@
 const API_ENDPOINT = "http://127.0.0.1:9000";
 
 
-const formHC = '<h3>Tu huella de carbono para ese perÍodo es: </h3> <br> <p class="valorHC">XX</p> <br> <br> <button type="submit" id="myBtn" class="button button-back" onclick="volverAtras()">Volver atrás</button>'
+const formHC = '<h3>Tu huella de carbono para ese perÍodo es: </h3> <br> <p class="valorHC" id="valorHC">XX</p> <br> <br> <button type="submit" id="myBtn" class="button button-back" onclick="volverAtras()">Volver atrás</button>'
 
 
 const volverAtras = async () => {
@@ -32,10 +32,10 @@ const calcularHC = async () => {
     .then((res) => {
       console.log("OKKKK");
       console.log(res);
-      $v1 = $_POST[res];
       $('#seb').css('display','flex');
       $('#modal-container').append(formHC);
       $('#CalcularHC').prop('disabled',true);
+      $('#valorHC').html(res.text());
     })
     .catch((e) => {
       console.log(e);
