@@ -20,7 +20,7 @@ const solicitar_vinculacion = async () => {
     .then((res) => {
       console.log("OKKKK");
       console.log(res);
-      alert(res);
+      alert("Solicitud enviada");
       window.location.href = "./Menu_miembro.html";
     })
     .catch((e) => {
