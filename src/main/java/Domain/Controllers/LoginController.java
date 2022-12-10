@@ -9,6 +9,7 @@ import Domain.Repositorios.RepositorioUsuariosDB;
 import Domain.Usuarios.Admin;
 import Domain.Usuarios.Excepciones.ContraseniaEsInvalidaException;
 import Domain.Usuarios.Usuario;
+import com.google.gson.Gson;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
@@ -16,6 +17,8 @@ import spark.ModelAndView;
 import spark.Request;
 import spark.Response;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Optional;
 
 public class LoginController {
@@ -25,10 +28,16 @@ public class LoginController {
     JSONParser parser = new JSONParser();
     JSONObject pedido = (JSONObject) parser.parse(request.body());
 
+    response.type("application/json");
+
+
     Optional<Usuario> usuario = Optional.ofNullable(ParserJSONUsuario.jsonToUsuarioPlano(pedido));
 
     if(!usuario.isPresent()){
-      response.status(404);
+      //response.body("error de JSON");
+      response.status(200);
+      return new Gson()
+          .toJson(new StandardResponse(StatusResponse.ERROR,"error de JSON"));
     }
 
     RepositorioUsuariosDB repositorioUsuariosDB = new RepositorioUsuariosDB();
@@ -42,15 +51,20 @@ public class LoginController {
       usuario = Optional.ofNullable(repositorioUsuariosDB.validarLogueoUsuario(usuario.get().getUsername(),usuario.get().getContraSinHash()));
     }
     catch (ContraseniaEsInvalidaException c){
-      return c.getMessage();
+      //response.body(c.getMessage());
+      response.status(200);
+      return new Gson()
+          .toJson(new StandardResponse(StatusResponse.ERROR,c.getMessage()));
     }
 
 
     //Lo vuelvo a ver porque lo lleno con el validador de usuario
     if(!usuario.isPresent()){
       //TODO marcar error
-      //response.redirect("/menu_login");
-      return "error de usuario";
+      //response.body("error de usuario");
+      response.status(200);
+      return new Gson()
+          .toJson(new StandardResponse(StatusResponse.ERROR,"error de usuario"));
     }
 
     response.cookie("username",usuario.get().getUsername());
@@ -58,8 +72,10 @@ public class LoginController {
 
     if(usuario.get() instanceof Admin) {
       //TODO hacer que vaya a la vista de Admin
-      //response.redirect("");
-      return "Pantalla Admin";
+      //response.body("Pantalla Admin");
+      response.status(200);
+      return new Gson()
+          .toJson(new StandardResponse(StatusResponse.SUCCESS,"Pantalla Admin"));
     }
 
     RepositorioPersonasDB repositorioPersonasDB = new RepositorioPersonasDB();
@@ -73,20 +89,36 @@ public class LoginController {
     if(organizacion.isPresent()){
       //TODO mandar a la vista de organizacion
       response.cookie("organizacion",organizacion.get().getRazonSocial());
-      //response.redirect("");
-      return "pantalla organizacion";
+      //.body("pantalla organizacion");
+      response.status(200);
+      return new Gson()
+          .toJson(new StandardResponse(StatusResponse.SUCCESS,"pantalla organizacion"));
     }
     if(persona.isPresent()){
       //TODO hacer que vaya a la vista de Persona
       response.cookie("persona",persona.get().getNroDocumento());
-      //response.redirect("");
-      return "pantalla persona";
+      //response.body("pantalla persona");
+      response.status(200);
+      return new Gson()
+          .toJson(new StandardResponse(StatusResponse.SUCCESS,"pantalla persona"));
     }
-    return "usuario default";
+    //response.body("pantalla persona");
+    response.status(200);
+    return new Gson()
+        .toJson(new StandardResponse(StatusResponse.SUCCESS,"pantalla persona"));
   }
 
-  //GET
-  public void menu_login(){
 
+
+  //GET
+  public ModelAndView loguearHtml (Request request, Response response) {
+    Map<String, Object> parametros = new HashMap<>();
+    return new ModelAndView(parametros,"index.hbs");
+  }
+
+
+  public ModelAndView menu_login (Request request, Response response) {
+    Map<String, Object> parametros = new HashMap<>();
+    return new ModelAndView(parametros,"index.hbs");
   }
 }

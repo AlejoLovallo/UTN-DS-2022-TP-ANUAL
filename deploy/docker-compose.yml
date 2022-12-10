@@ -1,0 +1,23 @@
+version: '3'
+services:
+
+  tp-db:
+    image: "mcr.microsoft.com/mssql/server:2019-latest"
+    container_name: tp-db
+    volumes:
+      - tpdb/sqlData/data:/var/opt/mssql/data
+      - tpdb/sqlData/log:/var/opt/mssql/log
+      - tpdb/sqlData/secrets:/var/opt/mssql/secrets
+    ports:
+      - "3306:1433"
+    environment:
+      - ACCEPT_EULA=Y
+      - MSSQL_SA_PASSWORD=1234
+
+  tp-app:
+    build: ./api
+    container_name: tp-app
+    ports:
+      - "9000:9000"
+    links:
+      - tp-db

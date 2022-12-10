@@ -67,35 +67,35 @@ const rechazarMiembro = async () => {
       .catch((e) => {
         console.log(e);
       });
-  };
+};
 
-  const buscarListaMiembros = async () => {
-  
-    return fetch(`${API_ENDPOINT}/solicitudes_miembro`, {
-      method: "GET",
+const buscarListaMiembros = async () => {
+
+  return fetch(`${API_ENDPOINT}/solicitudes_miembro`, {
+    method: "GET",
+  })
+    .then((response) => response.json())
+    .then((data) => {
+      console.log(data);
+      for(let i = 0;i < data.length;i++){
+        const miembro = data[i];
+        const item = `<tr>
+          <td id="ID">${miembro.ID}</td>
+          <td id="nombre">${miembro.nombre}</td>
+          <td id="apellido">${miembro.apellido}</td>
+          <td id="tipoDeDocumento">${miembro.tipoDeDocumento}</td>
+          <td id="nroDeDocumento">${miembro.nroDeDocumento}</td>
+          <td><button type="submit" class="button button-accept" onclick="aceptarMiembro()"> Aceptar </button></td>
+          <td><button type="submit" class="button button-deny" onclick="rechazarMiembro()"> Rechazar </button></td>
+          </tr>`;
+          $('#ListaMiembrosBody').append(item);
+      }
+      console.log("OKKKK");
     })
-      .then((response) => response.json())
-      .then((data) => {
-        console.log(data);
-        for(let i = 0;i < data.length;i++){
-          const miembro = data[i];
-          const item = `<tr>
-            <td id="ID">${miembro.ID}</td>
-            <td id="nombre">${miembro.nombre}</td>
-            <td id="apellido">${miembro.apellido}</td>
-            <td id="tipoDeDocumento">${miembro.tipoDeDocumento}</td>
-            <td id="nroDeDocumento">${miembro.nroDeDocumento}</td>
-            <td><button type="submit" class="button button-accept" onclick="aceptarMiembro()"> Aceptar </button></td>
-            <td><button type="submit" class="button button-deny" onclick="rechazarMiembro()"> Rechazar </button></td>
-            </tr>`;
-            $('#ListaMiembrosBody').append(item);
-        }
-        console.log("OKKKK");
-      })
-      .catch((e) => {
-        console.log(e);
-      });
-  };
+    .catch((e) => {
+      console.log(e);
+    });
+};
 
 
 buscarListaMiembros();

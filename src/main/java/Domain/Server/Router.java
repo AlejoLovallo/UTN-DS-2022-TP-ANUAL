@@ -4,6 +4,7 @@ import Domain.Controllers.LoginController;
 import Domain.Middleware.AuthMiddleware;
 import Domain.Spark.BooleanHelper;
 import Domain.Spark.HandlebarsTemplateEngineBuilder;
+import spark.ResponseTransformer;
 import spark.template.handlebars.HandlebarsTemplateEngine;
 import Domain.Controllers.MiembroController;
 import Domain.Controllers.OrganizacionController;
@@ -49,6 +50,8 @@ public class Router {
     MiembroController miembroController = new MiembroController();
 
     /*** LOGIN ROUTES ***/
+    Spark.get("/menu_login", loginController::loguearHtml,Router.engine);
+    Spark.get("/", loginController::loguearHtml,Router.engine);
     Spark.post("/menu_login", loginController::loguear);
 
     /*** ADMIN ROUTERS ***/
