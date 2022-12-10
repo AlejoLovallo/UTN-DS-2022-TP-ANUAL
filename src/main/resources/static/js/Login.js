@@ -6,9 +6,12 @@ const validateSignIn = async () => {
   const username = document.getElementById("NombreUsuarioSignIn").value;
   const password = document.getElementById("PasswordSignIn").value;
 
+
+console.log(username);
+console.log(password);
+
  fetch(`${API_ENDPOINT}/menu_login`, {
     method: "POST",
-    mode: "no-cors",
 
     body: JSON.stringify({
       username,
@@ -19,15 +22,26 @@ const validateSignIn = async () => {
       "Content-type": "application/json; charset=UTF-8",
     },
   })
-    //.then(response => response.json())
-    .then((response) => {
-      console.log("OKKKK");
-      console.log(JSON.stringify(response));
-      console.log(response);
-      alert(JSON.stringify(response));
-      //TODO no redirigir a esta pagina siempre
-      //window.location.href = "./Menu_miembro.html";
+    // .then( (res) => {
+    //   console.log(res)
+    //   //return res.json()
+    // } )
+    .then(res => res.json())
+    .then(res => {
+      console.log(res);
+      alert(res.message);
+      if(res.message ='pantalla organizacion'){
+        
+      }
     })
+    // .then((response) => {
+    //   console.log("OKKKK");
+    //   console.log(response);
+    //   console.log(JSON.stringify(response));
+    //   alert(JSON.stringify(response));
+    //   //TODO no redirigir a esta pagina siempre
+    //   //window.location.href = "./Menu_miembro.html";
+    // })
     .catch((error) => {
       console.log(error)
     });

@@ -21,7 +21,7 @@ public class OrganizacionController {
 
     public ModelAndView getOrganizacion (Request request, Response response) {
         Map<String, Object> parametros = new HashMap<>();
-        return new ModelAndView(parametros,"index.hbs");
+        return new ModelAndView(parametros,"index.html");
     }
 
 }

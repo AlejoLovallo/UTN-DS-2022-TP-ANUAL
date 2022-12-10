@@ -23,6 +23,11 @@ public class StandardResponse {
     this.status = status;
     this.data = data;
   }
+  public StandardResponse(StatusResponse status, String message, JsonElement data) {
+    this.status = status;
+    this.message = message;
+    this.data = data;
+  }
 
   public JSONObject toJson(){
     Map mapADevolver = new HashMap();

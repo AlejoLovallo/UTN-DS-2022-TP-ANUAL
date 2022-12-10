@@ -21,13 +21,13 @@ public class LoginController {
 
   public ModelAndView index (Request request, Response response) {
     Map<String, Object> parametros = new HashMap<>();
-    return new ModelAndView(parametros,"index.hbs");
+    return new ModelAndView(parametros,"index.html");
   }
 
 
   public ModelAndView menu_login (Request request, Response response) {
     Map<String, Object> parametros = new HashMap<>();
-    return new ModelAndView(parametros,"index.hbs");
+    return new ModelAndView(parametros,"index.html");
   }
 /*
   @RequestMapping(value = "/error", method = RequestMethod.GET)

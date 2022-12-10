@@ -25,6 +25,7 @@ public class LoginController {
 
   //POST
   public String loguear(Request request, Response response) throws ParseException {
+
     JSONParser parser = new JSONParser();
     JSONObject pedido = (JSONObject) parser.parse(request.body());
 
@@ -34,46 +35,50 @@ public class LoginController {
     Optional<Usuario> usuario = Optional.ofNullable(ParserJSONUsuario.jsonToUsuarioPlano(pedido));
 
     if(!usuario.isPresent()){
-      //response.body("error de JSON");
+      response.body(new Gson()
+          .toJson(new StandardResponse(StatusResponse.ERROR,"error de JSON")));
       response.status(200);
       return new Gson()
           .toJson(new StandardResponse(StatusResponse.ERROR,"error de JSON"));
     }
 
     RepositorioUsuariosDB repositorioUsuariosDB = new RepositorioUsuariosDB();
-    /*if(!repositorioUsuariosDB.existe(usuario.get().getUsername())){
-      //TODO marcar error
-      response.redirect("/menu_login");
-      return "no existe un usuario con ese username";
-    }*/
 
     try{
       usuario = Optional.ofNullable(repositorioUsuariosDB.validarLogueoUsuario(usuario.get().getUsername(),usuario.get().getContraSinHash()));
     }
     catch (ContraseniaEsInvalidaException c){
-      //response.body(c.getMessage());
+      response.body(new Gson()
+          .toJson(new StandardResponse(StatusResponse.ERROR,c.getMessage())));
       response.status(200);
       return new Gson()
-          .toJson(new StandardResponse(StatusResponse.ERROR,c.getMessage()));
+         .toJson(new StandardResponse(StatusResponse.ERROR,c.getMessage()));
     }
 
 
     //Lo vuelvo a ver porque lo lleno con el validador de usuario
     if(!usuario.isPresent()){
       //TODO marcar error
-      //response.body("error de usuario");
       response.status(200);
+      response.body(new Gson()
+          .toJson(new StandardResponse(StatusResponse.ERROR,"error de usuario")));
+
       return new Gson()
           .toJson(new StandardResponse(StatusResponse.ERROR,"error de usuario"));
     }
 
+    //Cambio esto por el session manager
     response.cookie("username",usuario.get().getUsername());
+    //SesionManager sesionManager = SesionManager.get();
+    //String idSesion = sesionManager.crearSesion("username", usuario.get().getUsername());
+
 
 
     if(usuario.get() instanceof Admin) {
-      //TODO hacer que vaya a la vista de Admin
-      //response.body("Pantalla Admin");
+
+      response.body(new Gson().toJson(new StandardResponse(StatusResponse.SUCCESS,"Pantalla Admin")));
       response.status(200);
+
       return new Gson()
           .toJson(new StandardResponse(StatusResponse.SUCCESS,"Pantalla Admin"));
     }
@@ -89,21 +94,30 @@ public class LoginController {
     if(organizacion.isPresent()){
       //TODO mandar a la vista de organizacion
       response.cookie("organizacion",organizacion.get().getRazonSocial());
-      //.body("pantalla organizacion");
-      response.status(200);
+
+
+      response.status(210);
+      response.body(new Gson()
+          .toJson(new StandardResponse(StatusResponse.SUCCESS,"pantalla organizacion")));
+
+
       return new Gson()
           .toJson(new StandardResponse(StatusResponse.SUCCESS,"pantalla organizacion"));
     }
     if(persona.isPresent()){
       //TODO hacer que vaya a la vista de Persona
       response.cookie("persona",persona.get().getNroDocumento());
-      //response.body("pantalla persona");
+      response.body(new Gson()
+          .toJson(new StandardResponse(StatusResponse.SUCCESS,"pantalla persona")));
       response.status(200);
+
       return new Gson()
           .toJson(new StandardResponse(StatusResponse.SUCCESS,"pantalla persona"));
     }
-    //response.body("pantalla persona");
+    response.body(new Gson()
+        .toJson(new StandardResponse(StatusResponse.SUCCESS,"pantalla persona")));
     response.status(200);
+
     return new Gson()
         .toJson(new StandardResponse(StatusResponse.SUCCESS,"pantalla persona"));
   }
@@ -113,12 +127,12 @@ public class LoginController {
   //GET
   public ModelAndView loguearHtml (Request request, Response response) {
     Map<String, Object> parametros = new HashMap<>();
-    return new ModelAndView(parametros,"index.hbs");
+    return new ModelAndView(parametros,"index.html");
   }
 
 
   public ModelAndView menu_login (Request request, Response response) {
     Map<String, Object> parametros = new HashMap<>();
-    return new ModelAndView(parametros,"index.hbs");
+    return new ModelAndView(parametros,"index.html");
   }
 }

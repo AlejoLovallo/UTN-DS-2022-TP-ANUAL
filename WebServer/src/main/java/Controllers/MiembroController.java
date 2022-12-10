@@ -20,11 +20,11 @@ public class MiembroController {
 
     public ModelAndView getMiembro (Request request, Response response) {
         Map<String, Object> parametros = new HashMap<>();
-        return new ModelAndView(parametros,"index.hbs");
+        return new ModelAndView(parametros,"index.html");
     }
 
     public ModelAndView menuRegistrarTrayectos (Request request, Response response) {
         Map<String, Object> parametros = new HashMap<>();
-        return new ModelAndView(parametros,"index.hbs");
+        return new ModelAndView(parametros,"index.html");
     }
 }
