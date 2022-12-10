@@ -9,64 +9,64 @@
     <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.2/themes/smoothness/jquery-ui.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
     <link rel="stylesheet"
-        href="https://startbootstrap.com/templates/agency/font-awesome-4.1.0/css/font-awesome.min.css">
+          href="https://startbootstrap.com/templates/agency/font-awesome-4.1.0/css/font-awesome.min.css">
     <link href='https://fonts.googleapis.com/css?family=Titillium+Web:400,300,600' rel='stylesheet' type='text/css'>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css">
 </head>
 
 <body id="page-top" class="index" data-pinterest-extension-installed="cr1.3.4">
 
-    <!-- Navigation -->
-    <nav class="navbar navbar-default navbar-fixed-top navbar-shrink">
-        <div class="container">
-            <!-- Brand and toggle get grouped for better mobile display -->
-            <div class="navbar-header">
-                <p class="navbar-brand" href="#page-top">Mi impacto ambiental</p>
+<!-- Navigation -->
+<nav class="navbar navbar-default navbar-fixed-top navbar-shrink">
+    <div class="container">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header">
+            <p class="navbar-brand" href="#page-top">Mi impacto ambiental</p>
+        </div>
+
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav navbar-right">
+                <li class="hidden active">
+                    <a href="#page-top"></a>
+                </li>
+                <li class="">
+                    <a class="home" href="./Menu_Organizacion.html">Home</a>
+                </li>
+                <li>
+                    <a class="page-scroll" href="./Login.html">Cerrar Sesión</a>
+                </li>
+            </ul>
+        </div>
+
+        <!-- /.navbar-collapse -->
+    </div>
+    <!-- /.container-fluid -->
+</nav>
+
+<section id="team" class="bg-light-gray">
+    <div class="form">
+        <form>
+            <h4>Cargá las mediciones</h4>
+            <br>
+
+            <div class="field-wrap">
+                <label>
+                    Path<span class="req">*</span>
+                </label>
+                <br>
+                <br>
+                <input type="file" required autocomplete="off" id="Path">
             </div>
 
-            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-                <ul class="nav navbar-nav navbar-right">
-                    <li class="hidden active">
-                        <a href="#page-top"></a>
-                    </li>
-                    <li class="">
-                        <a class="home" href="./Menu_Organizacion.html">Home</a>
-                    </li>
-                    <li>
-                        <a class="page-scroll" href="./Login.html">Cerrar Sesión</a>
-                    </li>
-                </ul>
-            </div>
-
-            <!-- /.navbar-collapse -->
-        </div>
-        <!-- /.container-fluid -->
-    </nav>
-
-    <section id="team" class="bg-light-gray">
-        <div class="form">
-            <form>
-                <h4>Cargá las mediciones</h4>
-                <br>
-
-                <div class="field-wrap">
-                    <label>
-                        Path<span class="req">*</span>
-                    </label>
-                    <br>
-                    <br>
-                    <input type="file" required autocomplete="off" id="Path">
-                </div>
-
-                <br>
-                <button type="submit" id="myBtn" class="button button-back" onclick="registrarMediciones()">Subir Archivo</button>
-                <br>
-                <br>
+            <br>
+            <button type="submit" id="myBtn" class="button button-back" onclick="registrarMediciones()">Subir Archivo</button>
+            <br>
+            <br>
 
 
-            </form>
-        </div>
-    </section>
+        </form>
+    </div>
+</section>
 </body>
 
 <footer class="footer-distributed">
@@ -74,7 +74,7 @@
     <div class="footer-right">
 
         <a href="https://github.com/AlejoLovallo/UTN-DS-2022-TP-ANUAL"><img src="../images/logo_github.jpeg"
-                class="imagen_footer" alt="icon"></a>
+                                                                            class="imagen_footer" alt="icon"></a>
 
     </div>
 
