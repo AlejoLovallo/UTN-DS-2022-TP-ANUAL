@@ -5,16 +5,21 @@ import Domain.JSON.ParserJSONMiembro;
 import Domain.JSON.ParserJSONOrganizacion;
 import Domain.Miembro.Miembro;
 import Domain.Miembro.Persona;
+import Domain.Organizacion.ClasificacionOrganizacion;
 import Domain.Organizacion.Organizacion;
 import Domain.Organizacion.Sector;
+import Domain.Organizacion.TipoOrganizacion;
 import Domain.Reportes.ReporteComposicion;
 import Domain.Reportes.ReporteEvolucion;
 import Domain.Reportes.ReporteTotal;
 import Domain.Repositorios.*;
 import Domain.Usuarios.Usuario;
+import com.google.gson.Gson;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
+import org.springframework.boot.json.GsonJsonParser;
 import spark.ModelAndView;
 import spark.Request;
 import spark.Response;
@@ -91,7 +96,32 @@ public class OrganizacionController {
   }
 
  public Object crearOrganizacion(Request req, Response res) throws ParseException{
-    return null;
+     RepositorioOrganizacionesDB repositorioOrganizacionesDB = new RepositorioOrganizacionesDB();
+
+     String organizacionString = req.body();
+     JSONParser jsonParser = new JSONParser();
+     JSONObject org = (JSONObject) jsonParser.parse(organizacionString);
+
+     Usuario usuario = new Usuario(
+             (String)org.get("username"),
+             (String)org.get("mail"),
+             (String)org.get("password"),
+             true
+     );
+
+        repositorioOrganizacionesDB.crearOrganizacion(
+                (String)org.get("razon_social"),
+                ClasificacionOrganizacion.valueOf((String)org.get("clasificacion")),
+                TipoOrganizacion.valueOf((String)org.get("tipo")),
+                null,
+                usuario
+        );
+
+        res.cookie("username", usuario.getUsername());
+        res.cookie("organizacion", (String) org.get("razon_social"));
+
+     return new Gson()
+             .toJson(new StandardResponse(StatusResponse.SUCCESS,"pantalla organizacion"));
  }
 
   public Object modificarOrganizacion(Request req, Response res) throws ParseException{

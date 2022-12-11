@@ -74,6 +74,8 @@ public class Router {
     Spark.get("/menu_login", loginController::loguearHtml,Router.engine);
     Spark.get("/", loginController::loguearHtml,Router.engine);
     Spark.post("/menu_login", loginController::loguear);
+    Spark.post("/registrar_org", organizacionController::crearOrganizacion);
+    Spark.post("/registrar_persona", miembroController::crearPersona);
 
 
     /*** ADMIN ROUTERS ***/

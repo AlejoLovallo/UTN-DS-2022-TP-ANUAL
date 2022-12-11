@@ -3,14 +3,18 @@ package Domain.Controllers;
 import Domain.JSON.ParserJSONMiembro;
 import Domain.Miembro.Miembro;
 import Domain.Miembro.Persona;
+import Domain.Miembro.TipoDocumento;
+import Domain.Organizacion.ClasificacionOrganizacion;
 import Domain.Organizacion.Organizacion;
 import Domain.Organizacion.Sector;
+import Domain.Organizacion.TipoOrganizacion;
 import Domain.Repositorios.RepositorioOrganizacionesDB;
 import Domain.Repositorios.RepositorioPersonasDB;
 import Domain.Repositorios.RepositorioUsuariosDB;
 import Domain.Trayecto.Tramo;
 import Domain.Trayecto.Trayecto;
 import Domain.Usuarios.Usuario;
+import com.google.gson.Gson;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
@@ -34,6 +38,35 @@ public class MiembroController {
         // TODO: revisar si funciona
         File archivoHTML = new File("src/main/resources/templates/Registrar_Mediciones.html");
         return archivoHTML.toString();
+    }
+
+
+    public Object crearPersona(Request req, Response res) throws ParseException{
+        RepositorioPersonasDB repositorioPersonasDB = new RepositorioPersonasDB();
+
+        String personaString = req.body();
+        JSONParser jsonParser = new JSONParser();
+        JSONObject persona = (JSONObject) jsonParser.parse(personaString);
+
+        Usuario usuario = new Usuario(
+                (String)persona.get("username"),
+                (String)persona.get("mail"),
+                (String)persona.get("password"),
+                true
+        );
+
+        repositorioPersonasDB.crearPersona(
+                (String)persona.get("nombre"),
+                (String)persona.get("apellido"),
+                TipoDocumento.valueOf((String)(String)persona.get("tipoDocumento")),
+                (String)persona.get("documento"),
+                usuario
+        );
+        res.cookie("username", usuario.getUsername());
+        res.cookie("organizacion", (String) persona.get("nombre"));
+
+        return new Gson()
+                .toJson(new StandardResponse(StatusResponse.SUCCESS,"pantalla miembro"));
     }
 
     // GET

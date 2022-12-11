@@ -59,7 +59,116 @@ console.log(password);
     });
 };
 
+const singUpOrganizacion = async () => {
+  const username = document.getElementById("NombreUsuarioOrg").value;
+  const password = document.getElementById("PasswordUserOrg").value;
+  const password_copia = document.getElementById("PasswordRepeatUserOrg").value
+  const razon_social = document.getElementById("RazonSocial").value;
+  const cuit = document.getElementById("Cuit").value;
+  const clasificacion = document.getElementById("ClasificacionOrg").value;
+  const tipo = document.getElementById("TipoOrg").value;
+  const localidad = document.getElementById("LocalidadOrg").value;
+  const mail = document.getElementById("EmailUserOrg").value;
+
+  if(password != password_copia){
+    alert("Las contraseñas deben ser iguales");
+    return;
+  }
+
+console.log(username);
+console.log(password);
+
+ fetch(`${API_ENDPOINT}/registrar_org`, {
+    method: "POST",
+
+    body: JSON.stringify({
+      username,
+      password,
+      mail,
+      razon_social,
+      cuit,
+      clasificacion,
+      tipo,
+      localidad,
+    }),
+
+    headers: {
+      "Content-type": "application/json; charset=UTF-8",
+    },
+  })
+    // .then( (res) => {
+    //   console.log(res)
+    //   //return res.json()
+    // } )
+    .then(res => res.json())
+    .then(res => {
+      console.log(res);
+      console.log(res.message);
+      if(res.message =='pantalla organizacion'){
+        window.location.replace(`${API_ENDPOINT}/menu_organizacion`);
+      }
+     })
+    .catch((error) => {
+      console.log(error)
+    });
+};
+
+const singUpPersona = async () => {
+  const username = document.getElementById("UsernameMember").value;
+  const password = document.getElementById("PasswordMember").value;
+  const password_copia = document.getElementById("PasswordRepeatMember").value
+  const nombre = document.getElementById("NombreMember").value;
+  const apellido = document.getElementById("ApellidoMember").value;
+  const fechaNac = document.getElementById("NacimientoMember").value;
+  const sexo = document.getElementById("SexoMember").value;
+  const ciudad = document.getElementById("CiudadMember").value;
+  const localidad = document.getElementById("LocalidadMember").value;
+  const mail = document.getElementById("EmailMember").value;
+
+  if(password != password_copia){
+    alert("Las contraseñas deben ser iguales");
+    return;
+  }
+
+console.log(username);
+console.log(password);
+
+ fetch(`${API_ENDPOINT}/registrar_org`, {
+    method: "POST",
+
+    body: JSON.stringify({
+      username,
+      password,
+      mail,
+      nombre,
+      apellido,
+    }),
+
+    headers: {
+      "Content-type": "application/json; charset=UTF-8",
+    },
+  })
+    // .then( (res) => {
+    //   console.log(res)
+    //   //return res.json()
+    // } )
+    .then(res => res.json())
+    .then(res => {
+      console.log(res);
+      console.log(res.message);
+      if(res.message =='pantalla miembro'){
+        window.location.replace(`${API_ENDPOINT}/menu_miembro`);
+      }
+     })
+    .catch((error) => {
+      console.log(error)
+    });
+};
+
+
+
 const verifyOrgFields = () => {
+//TODO: falta documento y tipo de documento
   const socialReason = document.getElementById("RazonSocial").value;
   const cuit = document.getElementById("Cuit").value;
   const clasification = document.getElementById("ClasificacionOrg").value;
