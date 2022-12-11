@@ -53,9 +53,6 @@ console.log(password);
       if(res.message =='pantalla usuario default'){
         alert("usuario default");
       }
-      else{
-        alert("no redirigi");
-      }
      })
     .catch((error) => {
       console.log(error)
