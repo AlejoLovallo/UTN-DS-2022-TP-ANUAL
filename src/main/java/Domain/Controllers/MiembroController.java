@@ -15,6 +15,7 @@ import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
+import spark.ModelAndView;
 import spark.Request;
 import spark.Response;
 
@@ -23,7 +24,9 @@ import java.io.IOException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class MiembroController {
 
@@ -265,6 +268,11 @@ public class MiembroController {
         res.type("text/javascript");
         res.status(404);
         return "window.alert(\"Miembro no encontrado\")";
+    }
+
+    public ModelAndView menu_miembro(Request request, Response response){
+        Map<String, Object> parametros = new HashMap<>();
+        return new ModelAndView(parametros,"Menu_Miembro.html");
     }
 
 }

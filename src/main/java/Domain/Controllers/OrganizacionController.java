@@ -5,23 +5,15 @@ import Domain.JSON.ParserJSONMiembro;
 import Domain.JSON.ParserJSONOrganizacion;
 import Domain.Miembro.Miembro;
 import Domain.Miembro.Persona;
-import Domain.Organizacion.AgenteSectorial;
 import Domain.Organizacion.Organizacion;
 import Domain.Organizacion.Sector;
-import Domain.Organizacion.SolicitudPendiente;
-import Domain.Reportes.Reporte;
 import Domain.Reportes.ReporteComposicion;
 import Domain.Reportes.ReporteEvolucion;
 import Domain.Reportes.ReporteTotal;
 import Domain.Repositorios.*;
-import Domain.Trayecto.Tramo;
-import Domain.Trayecto.Trayecto;
 import Domain.Usuarios.Usuario;
-import com.mchange.v2.io.FileUtils;
-import org.eclipse.jetty.util.ajax.JSON;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
-import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 import spark.ModelAndView;
 import spark.Request;
@@ -35,10 +27,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 import java.util.stream.Collectors;
 
 
@@ -324,5 +313,11 @@ public class OrganizacionController {
         params.put("recomendaciones", listaRecomendaciones);
 
         return new ModelAndView(params, "Recomendaciones.hbs");
+    }
+
+    public ModelAndView menuOrganizacion(Request request, Response response) {
+        Map<String, Object> parametros = new HashMap<>();
+        response.cookie("username",request.cookie("username"));
+        return new ModelAndView(parametros,"Menu_Organizacion.html");
     }
 }

@@ -29,19 +29,34 @@ console.log(password);
     .then(res => res.json())
     .then(res => {
       console.log(res);
-      alert(res.message);
-      if(res.message ='pantalla organizacion'){
-
+      console.log(res.message);
+      if(res.message == 'error de JSON'){
+        alert(res.message);
       }
-    })
-    // .then((response) => {
-    //   console.log("OKKKK");
-    //   console.log(response);
-    //   console.log(JSON.stringify(response));
-    //   alert(JSON.stringify(response));
-    //   //TODO no redirigir a esta pagina siempre
-    //   //window.location.href = "./Menu_miembro.html";
-    // })
+      if(res.message =='error de contra'){
+        console.log(res.data);
+        alert(res.data);
+      }
+      if(res.message =='error de usuario'){
+        alert(res.message);
+      }
+      if(res.message =='pantalla organizacion'){
+        window.location.replace(`${API_ENDPOINT}/menu_organizacion`);
+      }
+      if(res.message =='Pantalla Admin'){
+        //TODO ver la pantalla del admin
+        window.location.replace(`${API_ENDPOINT}/menu_organizacion`);
+      }
+      if(res.message =='pantalla persona'){
+        window.location.replace(`${API_ENDPOINT}/menu_miembro`);
+      }
+      if(res.message =='pantalla usuario default'){
+        alert("usuario default");
+      }
+      else{
+        alert("no redirigi");
+      }
+     })
     .catch((error) => {
       console.log(error)
     });

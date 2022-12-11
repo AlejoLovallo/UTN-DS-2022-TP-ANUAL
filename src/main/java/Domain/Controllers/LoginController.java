@@ -48,10 +48,12 @@ public class LoginController {
     }
     catch (ContraseniaEsInvalidaException c){
       response.body(new Gson()
-          .toJson(new StandardResponse(StatusResponse.ERROR,c.getMessage())));
+          .toJson(new StandardResponse(StatusResponse.ERROR,"error de contra",new Gson()
+              .toJsonTree(c.getMessage()))));
       response.status(200);
       return new Gson()
-         .toJson(new StandardResponse(StatusResponse.ERROR,c.getMessage()));
+         .toJson(new StandardResponse(StatusResponse.ERROR,"error de contra",new Gson()
+             .toJsonTree(c.getMessage())));
     }
 
 
@@ -114,11 +116,11 @@ public class LoginController {
           .toJson(new StandardResponse(StatusResponse.SUCCESS,"pantalla persona"));
     }
     response.body(new Gson()
-        .toJson(new StandardResponse(StatusResponse.SUCCESS,"pantalla persona")));
+        .toJson(new StandardResponse(StatusResponse.SUCCESS,"pantalla usuario default")));
     response.status(200);
 
     return new Gson()
-        .toJson(new StandardResponse(StatusResponse.SUCCESS,"pantalla persona"));
+        .toJson(new StandardResponse(StatusResponse.SUCCESS,"pantalla usuario default"));
   }
 
   //GET
