@@ -19,7 +19,11 @@ public class TransportePublico extends MedioDeTransporte {
 
   //TODO: arreglar persistencia
   //NOTA: double es distancia a la siguiente parada (en la ultima parada el valor es 0)
-  @Transient
+  @OneToMany(cascade = CascadeType.ALL)
+  @JoinTable(name = "paradas_mapping",
+      joinColumns = {@JoinColumn(name = "tranportePublico_id", referencedColumnName = "id_transporte")},
+      inverseJoinColumns = {@JoinColumn(name = "Estacion_id", referencedColumnName = "id_espacio")})
+  @MapKey(name = "distaciaProxParada")
   Map<Estacion, Double> paradas = new HashMap<>();
 
 
