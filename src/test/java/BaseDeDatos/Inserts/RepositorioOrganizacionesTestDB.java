@@ -17,7 +17,7 @@ public class RepositorioOrganizacionesTestDB {
 
     Contacto contacto = new Contacto("contactoPrueba2", "ContactoPrueba2", 515151541, "otromail@gmail.com");
 
-    Organizacion organizacion = new Organizacion( "OrganizacionPrueba2", TipoOrganizacion.Empresa, ClasificacionOrganizacion.Ministerio, contacto);
+    Organizacion organizacion = new Organizacion( "OrganizacionPrueba2", TipoOrganizacion.Empresa, ClasificacionOrganizacion.Ministerio, contacto, 1);
 
     Usuario userOrg = repositorioUsuariosDB.crearUsuario("usuarioOrg2","usuarioOrg2@gmail.com","usuarioOrg12",true);
 

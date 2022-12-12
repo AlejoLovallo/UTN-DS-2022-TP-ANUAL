@@ -92,12 +92,12 @@ public class Organizacion {
 
   }
 
-  public Organizacion(String _razonSocial, TipoOrganizacion _tipo, ClasificacionOrganizacion _clasificacion, Contacto contacto){
+  public Organizacion(String _razonSocial, TipoOrganizacion _tipo, ClasificacionOrganizacion _clasificacion, Contacto contacto, Integer _numDiasSemana){
     this.razonSocial = _razonSocial;
     this.tipo = _tipo;
     this.clasificacion = _clasificacion;
     this.contacto = contacto;
-    //this.numDiasPorSemana = numDiasPorSemana;
+    this.numDiasPorSemana = _numDiasSemana;
     /*if(contacto != null)
       contacto.setOrganizacion(this);*/
   }

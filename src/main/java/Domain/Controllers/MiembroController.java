@@ -1,6 +1,7 @@
 package Domain.Controllers;
 
 import Domain.JSON.ParserJSONMiembro;
+import Domain.Miembro.Excepciones.PersonaException;
 import Domain.Miembro.Miembro;
 import Domain.Miembro.Persona;
 import Domain.Miembro.TipoDocumento;
@@ -44,29 +45,30 @@ public class MiembroController {
     public Object crearPersona(Request req, Response res) throws ParseException{
         RepositorioPersonasDB repositorioPersonasDB = new RepositorioPersonasDB();
 
-        String personaString = req.body();
-        JSONParser jsonParser = new JSONParser();
-        JSONObject persona = (JSONObject) jsonParser.parse(personaString);
+            String personaString = req.body();
+            JSONParser jsonParser = new JSONParser();
+            JSONObject persona = (JSONObject) jsonParser.parse(personaString);
 
-        Usuario usuario = new Usuario(
-                (String)persona.get("username"),
-                (String)persona.get("mail"),
-                (String)persona.get("password"),
-                true
-        );
+            Usuario usuario = new Usuario(
+                    persona.get("username").toString(),
+                    persona.get("email").toString(),
+                    persona.get("password").toString(),
+                    true
+            );
 
-        repositorioPersonasDB.crearPersona(
-                (String)persona.get("nombre"),
-                (String)persona.get("apellido"),
-                TipoDocumento.valueOf((String)(String)persona.get("tipoDocumento")),
-                (String)persona.get("documento"),
-                usuario
-        );
-        res.cookie("username", usuario.getUsername());
-        res.cookie("organizacion", (String) persona.get("nombre"));
+            repositorioPersonasDB.crearPersona(
+                    persona.get("name").toString(),
+                    persona.get("surname").toString(),
+                    TipoDocumento.values()[(Integer.parseInt(persona.get("tipoDocumento").toString())) -1],
+                    persona.get("documento").toString(),
+                    usuario
+            );
+            res.cookie("username", usuario.getUsername());
+            res.cookie("organizacion",  persona.get("name").toString());
 
-        return new Gson()
-                .toJson(new StandardResponse(StatusResponse.SUCCESS,"pantalla miembro"));
+            return new Gson()
+                    .toJson(new StandardResponse(StatusResponse.SUCCESS,"pantalla miembro"));
+
     }
 
     // GET

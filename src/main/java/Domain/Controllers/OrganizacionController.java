@@ -6,6 +6,7 @@ import Domain.JSON.ParserJSONOrganizacion;
 import Domain.Miembro.Miembro;
 import Domain.Miembro.Persona;
 import Domain.Organizacion.ClasificacionOrganizacion;
+import Domain.Organizacion.Excepciones.OrganizacionException;
 import Domain.Organizacion.Organizacion;
 import Domain.Organizacion.Sector;
 import Domain.Organizacion.TipoOrganizacion;
@@ -96,32 +97,45 @@ public class OrganizacionController {
   }
 
  public Object crearOrganizacion(Request req, Response res) throws ParseException{
-     RepositorioOrganizacionesDB repositorioOrganizacionesDB = new RepositorioOrganizacionesDB();
 
-     String organizacionString = req.body();
-     JSONParser jsonParser = new JSONParser();
-     JSONObject org = (JSONObject) jsonParser.parse(organizacionString);
+        try{
+            RepositorioOrganizacionesDB repositorioOrganizacionesDB = new RepositorioOrganizacionesDB();
 
-     Usuario usuario = new Usuario(
-             (String)org.get("username"),
-             (String)org.get("mail"),
-             (String)org.get("password"),
-             true
-     );
+            String organizacionString = req.body();
+            JSONParser jsonParser = new JSONParser();
+            JSONObject org = (JSONObject) jsonParser.parse(organizacionString);
+            JSONObject user = (JSONObject) jsonParser.parse(org.get("user").toString());
 
-        repositorioOrganizacionesDB.crearOrganizacion(
-                (String)org.get("razon_social"),
-                ClasificacionOrganizacion.valueOf((String)org.get("clasificacion")),
-                TipoOrganizacion.valueOf((String)org.get("tipo")),
-                null,
-                usuario
-        );
+            Usuario usuario = new Usuario(
+                    user.get("name").toString(),
+                    user.get("mail").toString(),
+                    user.get("password").toString(),
+                    true
+            );
 
-        res.cookie("username", usuario.getUsername());
-        res.cookie("organizacion", (String) org.get("razon_social"));
+            Organizacion organizacion = repositorioOrganizacionesDB.crearOrganizacion(
+                    org.get("socialReason").toString(),
+                    ClasificacionOrganizacion.values()[Integer.parseInt(org.get("clasification").toString()) -1],
+                    TipoOrganizacion.values()[(Integer.parseInt(org.get("type").toString())) -1],
+                    Integer.parseInt(org.get("diasSemana").toString()),
+                    null,
+                    usuario
+            );
 
-     return new Gson()
-             .toJson(new StandardResponse(StatusResponse.SUCCESS,"pantalla organizacion"));
+            res.status(200);
+
+            res.body(new Gson()
+                    .toJson(new StandardResponse(StatusResponse.SUCCESS,"pantalla organizacion").toString()));
+
+            res.cookie("username", usuario.getUsername());
+            res.cookie("organizacion", organizacion.getRazonSocial());
+
+            return new Gson()
+                    .toJson(new StandardResponse(StatusResponse.SUCCESS,"pantalla organizacion"));
+        }
+        catch(OrganizacionException e){
+            return null;
+        }
  }
 
   public Object modificarOrganizacion(Request req, Response res) throws ParseException{

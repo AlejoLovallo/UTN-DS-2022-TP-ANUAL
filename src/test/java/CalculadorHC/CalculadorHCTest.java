@@ -26,7 +26,7 @@ import java.util.ArrayList;
 public class CalculadorHCTest {
     protected Contacto contacto = new Contacto("Organizacion", "ApellidoEmpresa", 987654321, "org@gmail.com");
 
-    protected Organizacion organizacion = new Organizacion("A", TipoOrganizacion.Empresa, ClasificacionOrganizacion.EmpresaSectorPrimario, contacto);
+    protected Organizacion organizacion = new Organizacion("A", TipoOrganizacion.Empresa, ClasificacionOrganizacion.EmpresaSectorPrimario, contacto ,1);
     protected Espacio espacio1 = new Direccion("Argentina", "Buenos Aires", "GENERAL LAVALLE", "GENERAL LAVALLE","Cordoba",3000, TipoDireccion.Trabajo);
     protected Espacio espacio2 = new Direccion("Argentina", "Buenos Aires", "GENERAL LAVALLE", "PAVON","O'Higgins",3000, TipoDireccion.Trabajo);
     protected Sector sector = new Sector("RRHH", espacio1, organizacion,new ArrayList<Miembro>());
