@@ -18,13 +18,13 @@ public class TransportePublico extends MedioDeTransporte {
   private String linea;
 
   //TODO: arreglar persistencia
-  //NOTA: double es distancia a la siguiente parada (en la ultima parada el valor es 0)
   @OneToMany(cascade = CascadeType.ALL)
   @JoinTable(name = "paradas_mapping",
       joinColumns = {@JoinColumn(name = "tranportePublico_id", referencedColumnName = "id_transporte")},
-      inverseJoinColumns = {@JoinColumn(name = "Estacion_id", referencedColumnName = "id_espacio")})
-  @MapKey(name = "distaciaProxParada")
-  Map<Estacion, Double> paradas = new HashMap<>();
+      inverseJoinColumns = {@JoinColumn(name = "id_distancia", referencedColumnName = "id_distancia")})
+  @MapKeyJoinColumn(name = "espacio_id")
+  //NOTA: double es distancia a la siguiente parada (en la ultima parada el valor es 0)
+  private Map<Estacion, DistanciaDouble> paradas = new HashMap<>();
 
 
   //////////////////////////////////  CONSTRUCTOR
@@ -33,7 +33,7 @@ public class TransportePublico extends MedioDeTransporte {
 
   }
 
-  public TransportePublico(TipoTransportePublico tipoTransportePublico, String linea, Map<Estacion, Double> paradas) {
+  public TransportePublico(TipoTransportePublico tipoTransportePublico, String linea, Map<Estacion, DistanciaDouble> paradas) {
     this.tipoTransportePublico = tipoTransportePublico;
     this.linea = linea;
     this.paradas = paradas;
@@ -49,7 +49,7 @@ public class TransportePublico extends MedioDeTransporte {
     return this.linea;
   }
 
-  public Map<Estacion, Double> getParadas() {
+  public Map<Estacion, DistanciaDouble> getParadas() {
     return this.paradas;
   }
 
@@ -66,7 +66,7 @@ public class TransportePublico extends MedioDeTransporte {
     //updateTransportePublico();
   }
 
-  public void setParadas(Map<Estacion, Double> paradas) {
+  public void setParadas(Map<Estacion, DistanciaDouble> paradas) {
     this.paradas = paradas;
     //updateTransportePublico();
   }
@@ -74,7 +74,8 @@ public class TransportePublico extends MedioDeTransporte {
   //////////////////////////////////  INTERFACE
 
   public void darDeAltaParada(Estacion estacion, Double distanciaProx){
-    this.paradas.put(estacion, distanciaProx);
+    DistanciaDouble distanciaDouble = new DistanciaDouble(distanciaProx);
+    this.paradas.put(estacion, distanciaDouble);
     //updateTransportePublico();
   }
 

@@ -7,10 +7,12 @@
     <persistence-unit name="ds" transaction-type="RESOURCE_LOCAL">
         <provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
 
+
         <class>ds.tp</class>
         <class>Domain.MediosDeTransporte.TransportePublico</class>
         <class>Domain.MediosDeTransporte.VehiculoParticular</class>
         <class>Domain.MediosDeTransporte.MedioDeTransporte</class>
+        <class>Domain.MediosDeTransporte.DistanciaDouble</class>
 
         <class>Domain.Espacios.Espacio</class>
         <class>Domain.Espacios.Estacion</class>
