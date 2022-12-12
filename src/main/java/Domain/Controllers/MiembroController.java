@@ -178,10 +178,13 @@ public class MiembroController {
         return listaMiembrosJSON;
     }
 
-    public Object respuestaCalcularHC(Request request, Response response) throws IOException {
+    public Object respuestaCalcularHC(Request request, Response response) throws IOException, ParseException {
         String username = request.cookie("username");
-        String mes = request.queryParams("Mes");
-        String anio = request.queryParams("Anio");
+
+        JSONParser jsonParser = new JSONParser();
+        JSONObject pedido = (JSONObject) jsonParser.parse(request.body());
+        String mes = (String) pedido.get("mes");
+        String anio = (String) pedido.get("anio");
 
         RepositorioPersonasDB repositorioPersonasDB = new RepositorioPersonasDB();
         Persona persona = repositorioPersonasDB.buscarPersonaPorUsername(username);
@@ -198,14 +201,16 @@ public class MiembroController {
         return cantidadHC;
     }
 
-    public Object menuEnviarSolicitud(Request request, Response response) {
+    public Object menuEnviarSolicitud(Request request, Response response) throws ParseException {
         String username = request.cookie("username");
 
         RepositorioPersonasDB repositorioPersonasDB = new RepositorioPersonasDB();
         Persona persona = repositorioPersonasDB.buscarPersonaPorUsername(username);
 
-        String nombreOrganizacion = request.queryParams("organizacion");
-        String nombreSector = request.queryParams("sector");
+        JSONParser jsonParser = new JSONParser();
+        JSONObject pedido = (JSONObject) jsonParser.parse(request.body());
+        String nombreOrganizacion = (String) pedido.get("organizacion");
+        String nombreSector = (String) pedido.get("sector");
 
         RepositorioOrganizacionesDB repositorioOrganizacionesDB = new RepositorioOrganizacionesDB();
         Organizacion organizacion = repositorioOrganizacionesDB.buscarOrganizacionPorNombre(nombreOrganizacion);

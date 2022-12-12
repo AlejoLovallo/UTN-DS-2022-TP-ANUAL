@@ -153,8 +153,7 @@ public class OrganizacionController {
       return listaMiembros;
   }
 
-    public Object respuestaAceptarMiembro(Request request, Response response)
-    {
+    public Object respuestaAceptarMiembro(Request request, Response response) throws ParseException {
         String username = request.cookie("username");
 
         RepositorioUsuariosDB repositorioUsuariosDB = new RepositorioUsuariosDB();
@@ -163,8 +162,10 @@ public class OrganizacionController {
         RepositorioOrganizacionesDB repositorioOrganizacionesDB = new RepositorioOrganizacionesDB();
         Organizacion organizacion = repositorioOrganizacionesDB.buscarOrganizacionPorUsuario(usuario);
 
-        String idPersona = request.queryParams("Persona");
-        String idSector = request.queryParams("Sector");
+        JSONParser jsonParser = new JSONParser();
+        JSONObject jsonObject = (JSONObject) jsonParser.parse(request.body());
+        String idPersona = (String) jsonObject.get("Persona");
+        String idSector = (String) jsonObject.get("Sector");
 
         RepositorioPersonasDB repositorioPersonasDB = new RepositorioPersonasDB();
         Persona persona = repositorioPersonasDB.buscarPersonaPorNroDocumento(idPersona);
@@ -186,8 +187,7 @@ public class OrganizacionController {
         return "window.alert(\"Operacion ejecutada exitosamente\")";
     }
 
-    public Object respuestaRechazarMiembro(Request request, Response response)
-    {
+    public Object respuestaRechazarMiembro(Request request, Response response) throws ParseException {
         String username = request.cookie("username");
 
         RepositorioUsuariosDB repositorioUsuariosDB = new RepositorioUsuariosDB();
@@ -196,8 +196,10 @@ public class OrganizacionController {
         RepositorioOrganizacionesDB repositorioOrganizacionesDB = new RepositorioOrganizacionesDB();
         Organizacion organizacion = repositorioOrganizacionesDB.buscarOrganizacionPorUsuario(usuario);
 
-        String idPersona = request.queryParams("Persona");
-        String idSector = request.queryParams("Sector");
+        JSONParser jsonParser = new JSONParser();
+        JSONObject jsonObject = (JSONObject) jsonParser.parse(request.body());
+        String idPersona = (String) jsonObject.get("Persona");
+        String idSector = (String) jsonObject.get("Sector");
 
         RepositorioPersonasDB repositorioPersonasDB = new RepositorioPersonasDB();
         Persona persona = repositorioPersonasDB.buscarPersonaPorNroDocumento(idPersona);
@@ -219,7 +221,7 @@ public class OrganizacionController {
         return "window.alert(\"Operacion ejecutada exitosamente\")";
     }
 
-    public Object respuestaCalcularHC(Request request, Response response) throws IOException {
+    public Object respuestaCalcularHC(Request request, Response response) throws IOException, ParseException {
         
 
         String username = request.cookie("username");
@@ -230,10 +232,12 @@ public class OrganizacionController {
         RepositorioOrganizacionesDB repositorioOrganizacionesDB = new RepositorioOrganizacionesDB();
         Organizacion organizacion = repositorioOrganizacionesDB.buscarOrganizacionPorUsuario(usuario);
 
-        String mesDesde = request.queryParams("MesDesde");
-        String añoDesde = request.queryParams("AñoDesde");
-        String mesHasta = request.queryParams("Mes");
-        String añoHasta = request.queryParams("Anio");
+        JSONParser jsonParser = new JSONParser();
+        JSONObject jsonObject = (JSONObject) jsonParser.parse(request.body());
+        String mesDesde = (String) jsonObject.get("MesDesde");
+        String añoDesde = (String) jsonObject.get("AñoDesde");
+        String mesHasta = (String) jsonObject.get("Mes");
+        String añoHasta = (String) jsonObject.get("Anio");
 
         Integer MesDesde = Integer.parseInt(mesDesde);
         Integer AñoDesde = Integer.parseInt(añoDesde);
