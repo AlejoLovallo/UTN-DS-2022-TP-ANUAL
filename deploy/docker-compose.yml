@@ -1,23 +1,34 @@
-version: '3'
+version: '3.1'
+
 services:
 
-  tp-db:
-    image: "mcr.microsoft.com/mssql/server:2019-latest"
-    container_name: tp-db
-    volumes:
-      - tpdb/sqlData/data:/var/opt/mssql/data
-      - tpdb/sqlData/log:/var/opt/mssql/log
-      - tpdb/sqlData/secrets:/var/opt/mssql/secrets
+  db:
+    image: mysql
+    container_name: db
+    restart: always
     ports:
-      - "3306:1433"
+      - 33306:3306
     environment:
-      - ACCEPT_EULA=Y
-      - MSSQL_SA_PASSWORD=1234
+      MYSQL_ROOT_PASSWORD: dike2361
+    volumes:
+      - ~/Desktop/GDD/DSTP:/var/lib/mysql
+
+  phpmyadmin:
+    depends_on: [db]
+    image: phpmyadmin/phpmyadmin
+    container_name: phpadmin
+    restart: always
+    ports:
+      - 8080:80
+    environment:
+      - PMA_ARBITRARY=1
 
   tp-app:
-    build: ./api
+    depends_on: [db]
+    image: dstp-back-i
     container_name: tp-app
+    restart: always
     ports:
       - "9000:9000"
     links:
-      - tp-db
+      - db
