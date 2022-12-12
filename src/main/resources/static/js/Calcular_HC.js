@@ -14,32 +14,68 @@ const calcularHC = async () => {
   const mesHasta = document.getElementById("MesHasta").value;
   const añoHasta = document.getElementById("AñoHasta").value;
 
-  await fetch(`${API_ENDPOINT}/menu_login`, {
-    method: "POST",
-    mode: "no-cors",
+  var valuesCookies = document.cookies.split(';');
+  for(var i = 0; i < valuesCookies.length; i++){
+    var cookieInfo = valuesCookies[i].split('=');
+    if(cookieInfo[0] == 'organizacion')
+    {
+          await fetch(`${API_ENDPOINT}/organizacion/calcularHC`, {
+            method: "POST",
+            //mode: "no-cors",
 
-    body: JSON.stringify({
-        mesDesde,
-        añoDesde,
-        mesHasta,
-        añoHasta
-    }),
+            body: JSON.stringify({
+                mesDesde,
+                añoDesde,
+                mesHasta,
+                añoHasta
+            }),
 
-    headers: {
-      "Content-type": "application/json; charset=UTF-8",
-    },
-  })
-    .then((res) => {
-      console.log("OKKKK");
-      console.log(res);
-      $('#seb').css('display','flex');
-      $('#modal-container').append(formHC);
-      $('#CalcularHC').prop('disabled',true);
-      $('#valorHC').html(res.text());
-    })
-    .catch((e) => {
-      console.log(e);
-    });
+            headers: {
+              "Content-type": "application/json; charset=UTF-8",
+            },
+          })
+            .then((res) => {
+              console.log("OKKKK");
+              console.log(res);
+              $('#seb').css('display','flex');
+              $('#modal-container').append(formHC);
+              $('#CalcularHC').prop('disabled',true);
+              $('#valorHC').html(res.text());
+            })
+            .catch((e) => {
+              console.log(e);
+            });
+    }
+    else if(cookieInfo[0] == 'persona')
+    {
+            await fetch(`${API_ENDPOINT}/miembro/calcularHC`, {
+            method: "POST",
+            //mode: "no-cors",
+
+            body: JSON.stringify({
+               mesDesde,
+               añoDesde,
+               mesHasta,
+               añoHasta
+            }),
+
+            headers: {
+               "Content-type": "application/json; charset=UTF-8",
+            },
+            })
+            .then((res) => {
+                console.log("OKKKK");
+                console.log(res);
+                $('#seb').css('display','flex');
+                $('#modal-container').append(formHC);
+                $('#CalcularHC').prop('disabled',true);
+                $('#valorHC').html(res.text());
+            })
+            .catch((e) => {
+                console.log(e);
+            });
+    }
+  }
 
 };
 

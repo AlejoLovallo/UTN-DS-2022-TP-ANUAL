@@ -86,7 +86,7 @@ public class Router {
     Spark.get("/miembro/:username/:organizacion", miembroController::getMiembro);
     Spark.post("/enviar_solicitud", miembroController::menuEnviarSolicitud);
     Spark.post("/agregar_trayecto", miembroController::agregarTrayecto);
-    Spark.post("/calcularHC", miembroController::respuestaCalcularHC);
+    Spark.post("/miembro/calcularHC", miembroController::respuestaCalcularHC);
     
 
     /*** ORGANIZACIONES ROUTES ***/

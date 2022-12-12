@@ -253,6 +253,8 @@ const validateRegisterMember = async () => {
   const username = document.getElementById("UsernameMember").value;
   const password = document.getElementById("PasswordMember").value;
   const repeatPassword = document.getElementById("PasswordRepeatMember").value;
+  const tipoDocumento = document.getElementById("TipoDocumento").value;
+  const documento = document.getElementById("Documento").value
 
   if (password != repeatPassword) {
     alert("Las contraseñas no coinciden");
@@ -272,6 +274,8 @@ const validateRegisterMember = async () => {
       email,
       username,
       password,
+      tipoDocumento,
+      documento,
     }),
 
     headers: {
