@@ -26,7 +26,8 @@ console.log(password);
     .then(res => {
       console.log(res);
       console.log(res.message);
-      if(res.message == 'error de JSON'){
+      console.log(document.cookie);
+      /*if(res.message == 'error de JSON'){
         alert(res.message);
       }
       if(res.message =='error de contra'){
@@ -48,7 +49,7 @@ console.log(password);
       }
       if(res.message =='pantalla usuario default'){
         alert("usuario default");
-      }
+      }*/
      })
     .catch((error) => {
       console.log(error)

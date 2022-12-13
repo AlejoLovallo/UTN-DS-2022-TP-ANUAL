@@ -1,21 +1,21 @@
 const API_ENDPOINT = "http://127.0.0.1:9000";
 
 const aceptarMiembro = async () => {
-  const nombre = document.getElementById("nombre").value;
-  const apellido = document.getElementById("apellido").value;
-  const tipoDeDocumento = document.getElementById("tipoDeDocumento").value;
-  const dni = document.getElementById("dni").value;
-  const sector = document.getElementById("nombreSector").value;
-  const id_sector = document.getElementById("idSector").value;
-  
+  const name = document.getElementById("nombre").innerText;
+  const surname = document.getElementById("apellido").innerText;
+  const typeDoc = document.getElementById("tipoDeDocumento").innerText;
+  const dni = document.getElementById("dni").innerText;
+  const sector = document.getElementById("nombreSector").innerText;
+  const id_sector = document.getElementById("idSector").innerText;
+
 
   await fetch(`${API_ENDPOINT}/aceptar_miembro`, {
     method: "POST",
 
     body: JSON.stringify({
-      nombre,
-      apellido,
-      tipoDeDocumento,
+      name,
+      surname,
+      typeDoc,
       dni,
       sector,
       id_sector,
@@ -37,13 +37,13 @@ const aceptarMiembro = async () => {
 };
 
 const rechazarMiembro = async () => {
-    const nombre = document.getElementById("nombre").value;
-    const apellido = document.getElementById("apellido").value;
-    const tipoDeDocumento = document.getElementById("tipoDeDocumento").value;
-    const dni = document.getElementById("dni").value;
-    const sector = document.getElementById("nombreSector").value;
-    const id_sector = document.getElementById("idSector").value;
-  
+    const nombre = document.getElementById("nombre").innerText;
+    const apellido = document.getElementById("apellido").innerText;
+    const tipoDeDocumento = document.getElementById("tipoDeDocumento").innerText;
+    const dni = document.getElementById("dni").innerText;
+    const sector = document.getElementById("nombreSector").innerText;
+    const id_sector = document.getElementById("idSector").innerText;
+
     await fetch(`${API_ENDPOINT}/aceptar_miembro`, {
       method: "POST",
 
