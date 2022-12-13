@@ -57,8 +57,8 @@ public class CalculadorHCTest {
         organizacion.getSectores().add(sector);
         sector.getMiembros().add(miembro);
 
-        repositorioFactoresEmisionDB.agregarFactorDeEmision(new FactorEmision(TipoDeActividad.COMBUSTION_MOVIL, 0.5, Unidad.lt));
-        repositorioFactoresEmisionDB.agregarFactorDeEmision(new FactorEmision(TipoDeActividad.COMBUSTION_FIJA, 2.0, Unidad.lt));
+        repositorioFactoresEmisionDB.agregarFactorDeEmision(new FactorEmision(TipoDeActividad.COMBUSTION_MOVIL, 0.5, UnidadDeConsumo.lts));
+        repositorioFactoresEmisionDB.agregarFactorDeEmision(new FactorEmision(TipoDeActividad.COMBUSTION_FIJA, 2.0, UnidadDeConsumo.lts));
 
         agenteSectorial.getOrganizaciones().add(organizacion);
     }

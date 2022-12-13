@@ -13,8 +13,6 @@ public class Estacion extends Espacio {
   //private int id_estacion	;
   @Column
   private String nombre;
-  @Column
-  public Integer numeroDeEstacion;
 
   //////////////////////////////////  CONSTRUCTOR
   private Estacion(){
@@ -22,9 +20,8 @@ public class Estacion extends Espacio {
   }
 
 
-  public Estacion(String nombre, Integer numeroDeEstacion) {
+  public Estacion(String nombre) {
     this.nombre = nombre;
-    this.numeroDeEstacion = numeroDeEstacion;
   }
 
 
@@ -34,9 +31,6 @@ public class Estacion extends Espacio {
     return this.nombre;
   }
 
-  public Integer getNumeroDeEstacion() {
-    return this.numeroDeEstacion;
-  }
 
 
   //////////////////////////////////  SETTERS
@@ -46,10 +40,6 @@ public class Estacion extends Espacio {
     //updateEstacion();
   }
 
-  public void setNumeroDeEstacion(Integer numeroDeEstacion) {
-    this.numeroDeEstacion = numeroDeEstacion;
-    //updateEstacion();
-  }
 
 
   //////////////////////////////////  INTERFACE
