@@ -160,7 +160,7 @@ public class OrganizacionController {
           for(Miembro miembro : sector.getMiembros())
           {
             if(!miembro.getActivo())
-              listaMiembros.add(ParserJSONMiembro.miembroToJSON(miembro));
+              listaMiembros.add(ParserJSONMiembro.miembroSolicitudToJSON(miembro));
           }
       }
       response.status(200);
@@ -178,14 +178,14 @@ public class OrganizacionController {
 
         JSONParser jsonParser = new JSONParser();
         JSONObject jsonObject = (JSONObject) jsonParser.parse(request.body());
-        String idPersona = (String) jsonObject.get("Persona");
-        String idSector = (String) jsonObject.get("Sector");
+        String dniPersona =  jsonObject.get("dni").toString();
+        String id_sector =  jsonObject.get("id_sector").toString();
 
         RepositorioPersonasDB repositorioPersonasDB = new RepositorioPersonasDB();
-        Persona persona = repositorioPersonasDB.buscarPersonaPorNroDocumento(idPersona);
+        Persona persona = repositorioPersonasDB.buscarPersonaPorNroDocumento(dniPersona);
 
         Optional<Sector> sector = organizacion.getSectores().stream().filter(
-                s -> s.getId_sector() == Integer.parseInt(idSector)
+                s -> s.getId_sector() == Integer.parseInt(id_sector)
         ).findAny();
 
         Optional<Miembro> miembro = sector.get().getMiembros().stream().filter(
@@ -365,6 +365,14 @@ public class OrganizacionController {
     public ModelAndView menuOrganizacion(Request request, Response response) {
         Map<String, Object> parametros = new HashMap<>();
         response.cookie("username",request.cookie("username"));
+        response.cookie("organizacion",request.cookie("organizacion"));
         return new ModelAndView(parametros,"Menu_Organizacion.html");
+    }
+
+    public ModelAndView solicitudesHTML (Request request, Response response) {
+        Map<String, Object> parametros = new HashMap<>();
+        response.cookie("username",request.cookie("username"));
+        response.cookie("organizacion",request.cookie("organizacion"));
+        return new ModelAndView(parametros,"Aceptar_Miembros.html");
     }
 }

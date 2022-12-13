@@ -1,23 +1,24 @@
 const API_ENDPOINT = "http://127.0.0.1:9000";
 
 const aceptarMiembro = async () => {
-  const id = document.getElementById("ID").value;
   const nombre = document.getElementById("nombre").value;
   const apellido = document.getElementById("apellido").value;
   const tipoDeDocumento = document.getElementById("tipoDeDocumento").value;
-  const nroDeDocumento = document.getElementById("nroDeDocumento").value;
+  const dni = document.getElementById("dni").value;
+  const sector = document.getElementById("nombreSector").value;
+  const id_sector = document.getElementById("idSector").value;
   
 
   await fetch(`${API_ENDPOINT}/aceptar_miembro`, {
     method: "POST",
-    mode: "no-cors",
 
     body: JSON.stringify({
-      id,
       nombre,
       apellido,
       tipoDeDocumento,
-      nroDeDocumento
+      dni,
+      sector,
+      id_sector,
     }),
 
     headers: {
@@ -27,8 +28,8 @@ const aceptarMiembro = async () => {
     .then((res) => {
       console.log("OKKKK");
       console.log(res);
-      alert(res);
-      window.location.href = "./Aceptar_Miembros.html";
+      alert("Miembro aceptado");
+      window.location.href = "/sol_miembros";
     })
     .catch((e) => {
       console.log(e);
@@ -36,22 +37,23 @@ const aceptarMiembro = async () => {
 };
 
 const rechazarMiembro = async () => {
-    const id = document.getElementById("ID").value;
     const nombre = document.getElementById("nombre").value;
     const apellido = document.getElementById("apellido").value;
     const tipoDeDocumento = document.getElementById("tipoDeDocumento").value;
-    const nroDeDocumento = document.getElementById("nroDeDocumento").value;
+    const dni = document.getElementById("dni").value;
+    const sector = document.getElementById("nombreSector").value;
+    const id_sector = document.getElementById("idSector").value;
   
     await fetch(`${API_ENDPOINT}/aceptar_miembro`, {
       method: "POST",
-      mode: "no-cors",
-  
+
       body: JSON.stringify({
-        id,
         nombre,
         apellido,
         tipoDeDocumento,
-        nroDeDocumento
+        dni,
+        sector,
+        id_sector
       }),
   
       headers: {
@@ -62,7 +64,7 @@ const rechazarMiembro = async () => {
         console.log("OKKKK");
         console.log(res);
         alert(res);
-        window.location.href = "./Aceptar_Miembros.html";
+        window.location.href = "/sol_miembros";
       })
       .catch((e) => {
         console.log(e);
@@ -80,11 +82,12 @@ const buscarListaMiembros = async () => {
       for(let i = 0;i < data.length;i++){
         const miembro = data[i];
         const item = `<tr>
-          <td id="ID">${miembro.ID}</td>
-          <td id="nombre">${miembro.nombre}</td>
-          <td id="apellido">${miembro.apellido}</td>
-          <td id="tipoDeDocumento">${miembro.tipoDeDocumento}</td>
-          <td id="nroDeDocumento">${miembro.nroDeDocumento}</td>
+          <td id="nombre">${miembro.persona.nombre}</td>
+          <td id="apellido">${miembro.persona.apellido}</td>
+          <td id="tipoDeDocumento">${miembro.persona.tipoDeDocumento}</td>
+          <td id="dni">${miembro.persona.dni}</td>
+          <td id="idSector">${miembro.sector.id}</td>
+          <td id="nombreSector">${miembro.sector.nombreSector}</td>
           <td><button type="submit" class="button button-accept" onclick="aceptarMiembro()"> Aceptar </button></td>
           <td><button type="submit" class="button button-deny" onclick="rechazarMiembro()"> Rechazar </button></td>
           </tr>`;
