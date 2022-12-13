@@ -21,8 +21,8 @@ public class TransportePublicoTest {
     protected String linea = "LineaDeEjemplo";
     protected Map<Estacion,DistanciaDouble> paradas = new HashMap<>();
 
-    protected Estacion estacion1Test = new Estacion("Estacion1",1);
-    protected Estacion estacion2Test = new Estacion("Estacion2",2);
+    protected Estacion estacion1Test = new Estacion("Estacion1");
+    protected Estacion estacion2Test = new Estacion("Estacion2");
 
 
     private void initializeTransportePublico(){
@@ -80,8 +80,8 @@ public class TransportePublicoTest {
         Map<Estacion,DistanciaDouble> paradasActual = this.transportePublicoTest.getParadas();
         Map<Estacion,DistanciaDouble> nuevasParadas = new HashMap<>();
 
-        Estacion estacion1 = new Estacion("Estacion1",1);
-        Estacion estacion2 = new Estacion("Estacion2",2);
+        Estacion estacion1 = new Estacion("Estacion1");
+        Estacion estacion2 = new Estacion("Estacion2");
 
         this.transportePublicoTest.darDeAltaParada(estacion1,1.0);
         this.transportePublicoTest.darDeAltaParada(estacion2,1.0);

@@ -26,6 +26,7 @@ console.log(password);
     .then(res => {
       console.log(res);
       console.log(res.message);
+      console.log(document.cookie);
       if(res.message == 'error de JSON'){
         alert(res.message);
       }
@@ -174,6 +175,7 @@ const verifyOrgFields = () => {
   const clasification = document.getElementById("ClasificacionOrg").value;
   const type = document.getElementById("TipoOrg").value;
   const location = document.getElementById("LocalidadOrg").value;
+  const diasSemana = document.getElementById("dias_semana").value
 
   return {
     socialReason,
@@ -181,6 +183,7 @@ const verifyOrgFields = () => {
     clasification,
     type,
     location,
+    diasSemana,
   };
 
   return true;
@@ -207,8 +210,8 @@ const verifyUserOrgFields = () => {
 const validateOrganizationCreation = async () => {
   const org = verifyOrgFields();
   const user = verifyUserOrgFields();
-  if (org && user != {}) {
-    const res = await fetch(`${API_ENDPOINT}/organizacion`, {
+  if (org && JSON.stringify(user) != '{}') {
+    const res = await fetch(`${API_ENDPOINT}/registrar_org`, {
       method: "POST",
 
       body: JSON.stringify({
@@ -217,8 +220,9 @@ const validateOrganizationCreation = async () => {
         clasification: org.clasification,
         type: org.type,
         location: org.location,
+        diasSemana: org.diasSemana,
         user: {
-          mail: user.mail,
+          mail: user.email,
           name: user.name,
           password: user.password,
         },
@@ -235,9 +239,13 @@ const validateOrganizationCreation = async () => {
       alert("Ha ocurrido un error. Vuelve a intentarlo");
       return false;
     } else {
-      alert(
-        "Organizacion creada con exito. Un administrador dará de alta su pedido a la brevedad."
-      );
+      alert("Organizacion creada con exito.");
+
+        /*document.cookies.set({
+          name: "username",
+          value: Request.Cookies[username]
+        });*/
+       window.location.replace(`${API_ENDPOINT}/menu_organizacion`);
     }
   }
 };
@@ -261,7 +269,7 @@ const validateRegisterMember = async () => {
     return;
   }
 
-  await fetch(`${API_ENDPOINT}/miembro`, {
+  await fetch(`${API_ENDPOINT}/registrar_persona`, {
     method: "POST",
 
     body: JSON.stringify({
@@ -282,9 +290,12 @@ const validateRegisterMember = async () => {
       "Content-type": "application/json; charset=UTF-8",
     },
   })
-    .then((res) => {})
+    .then((res) => {
+        alert("Persona registrada con exito");
+        window.location.replace(`${API_ENDPOINT}/menu_miembro`);
+    })
     .catch((error) => {
       console.log("ERROR");
-      console.loog(error);
+      console.log(error);
     });
 };

@@ -6,6 +6,7 @@ import Domain.JSON.ParserJSONOrganizacion;
 import Domain.Miembro.Miembro;
 import Domain.Miembro.Persona;
 import Domain.Organizacion.ClasificacionOrganizacion;
+import Domain.Organizacion.Excepciones.OrganizacionException;
 import Domain.Organizacion.Organizacion;
 import Domain.Organizacion.Sector;
 import Domain.Organizacion.TipoOrganizacion;
@@ -95,32 +96,45 @@ public class OrganizacionController {
   }
 
  public Object crearOrganizacion(Request req, Response res) throws ParseException{
-     RepositorioOrganizacionesDB repositorioOrganizacionesDB = new RepositorioOrganizacionesDB();
 
-     String organizacionString = req.body();
-     JSONParser jsonParser = new JSONParser();
-     JSONObject org = (JSONObject) jsonParser.parse(organizacionString);
+        try{
+            RepositorioOrganizacionesDB repositorioOrganizacionesDB = new RepositorioOrganizacionesDB();
 
-     Usuario usuario = new Usuario(
-             (String)org.get("username"),
-             (String)org.get("mail"),
-             (String)org.get("password"),
-             true
-     );
+            String organizacionString = req.body();
+            JSONParser jsonParser = new JSONParser();
+            JSONObject org = (JSONObject) jsonParser.parse(organizacionString);
+            JSONObject user = (JSONObject) jsonParser.parse(org.get("user").toString());
 
-        repositorioOrganizacionesDB.crearOrganizacion(
-                (String)org.get("razon_social"),
-                ClasificacionOrganizacion.valueOf((String)org.get("clasificacion")),
-                TipoOrganizacion.valueOf((String)org.get("tipo")),
-                null,
-                usuario
-        );
+            Usuario usuario = new Usuario(
+                    user.get("name").toString(),
+                    user.get("mail").toString(),
+                    user.get("password").toString(),
+                    true
+            );
 
-        res.cookie("username", usuario.getUsername());
-        res.cookie("organizacion", (String) org.get("razon_social"));
+            Organizacion organizacion = repositorioOrganizacionesDB.crearOrganizacion(
+                    org.get("socialReason").toString(),
+                    ClasificacionOrganizacion.values()[Integer.parseInt(org.get("clasification").toString()) -1],
+                    TipoOrganizacion.values()[(Integer.parseInt(org.get("type").toString())) -1],
+                    Integer.parseInt(org.get("diasSemana").toString()),
+                    null,
+                    usuario
+            );
 
-     return new Gson()
-             .toJson(new StandardResponse(StatusResponse.SUCCESS,"pantalla organizacion"));
+            res.status(200);
+
+            res.body(new Gson()
+                    .toJson(new StandardResponse(StatusResponse.SUCCESS,"pantalla organizacion").toString()));
+
+            res.cookie("username", usuario.getUsername());
+            res.cookie("organizacion", organizacion.getRazonSocial());
+
+            return new Gson()
+                    .toJson(new StandardResponse(StatusResponse.SUCCESS,"pantalla organizacion"));
+        }
+        catch(OrganizacionException e){
+            return null;
+        }
  }
 
   public Object modificarOrganizacion(Request req, Response res) throws ParseException{
@@ -145,7 +159,7 @@ public class OrganizacionController {
           for(Miembro miembro : sector.getMiembros())
           {
             if(!miembro.getActivo())
-              listaMiembros.add(ParserJSONMiembro.miembroToJSON(miembro));
+              listaMiembros.add(ParserJSONMiembro.miembroSolicitudToJSON(miembro));
           }
       }
       response.status(200);
@@ -163,14 +177,14 @@ public class OrganizacionController {
 
         JSONParser jsonParser = new JSONParser();
         JSONObject jsonObject = (JSONObject) jsonParser.parse(request.body());
-        String idPersona = (String) jsonObject.get("Persona");
-        String idSector = (String) jsonObject.get("Sector");
+        String dniPersona =  jsonObject.get("dni").toString();
+        String id_sector =  jsonObject.get("id_sector").toString();
 
         RepositorioPersonasDB repositorioPersonasDB = new RepositorioPersonasDB();
-        Persona persona = repositorioPersonasDB.buscarPersonaPorNroDocumento(idPersona);
+        Persona persona = repositorioPersonasDB.buscarPersonaPorNroDocumento(dniPersona);
 
         Optional<Sector> sector = organizacion.getSectores().stream().filter(
-                s -> s.getId_sector() == Integer.parseInt(idSector)
+                s -> s.getId_sector() == Integer.parseInt(id_sector)
         ).findAny();
 
         Optional<Miembro> miembro = sector.get().getMiembros().stream().filter(
@@ -233,10 +247,10 @@ public class OrganizacionController {
 
         JSONParser jsonParser = new JSONParser();
         JSONObject jsonObject = (JSONObject) jsonParser.parse(request.body());
-        String mesDesde = (String) jsonObject.get("MesDesde");
-        String añoDesde = (String) jsonObject.get("AñoDesde");
-        String mesHasta = (String) jsonObject.get("Mes");
-        String añoHasta = (String) jsonObject.get("Anio");
+        String mesDesde = jsonObject.get("mesDesde").toString();
+        String añoDesde = jsonObject.get("añoDesde").toString();
+        String mesHasta = jsonObject.get("mesHasta").toString();
+        String añoHasta = jsonObject.get("añoHasta").toString();
 
         Integer MesDesde = Integer.parseInt(mesDesde);
         Integer AñoDesde = Integer.parseInt(añoDesde);
@@ -251,9 +265,10 @@ public class OrganizacionController {
         response.type("application/json");
 
         JSONObject calculo = new JSONObject();
-        calculo.put("resultado", resultado);
+        calculo.put("resultado", resultado.toString());
 
         response.status(200);
+        response.body(calculo.toString());
         return calculo;
     }
 
@@ -362,5 +377,26 @@ public class OrganizacionController {
 
 
         return new ModelAndView(parametros,"Menu_Organizacion.html");
+    }
+
+    public ModelAndView solicitudesHTML (Request request, Response response) {
+        Map<String, Object> parametros = new HashMap<>();
+        response.cookie("username",request.cookie("username"));
+        response.cookie("organizacion",request.cookie("organizacion"));
+        return new ModelAndView(parametros,"Aceptar_Miembros.html");
+    }
+
+    public ModelAndView calcularHCorg (Request request, Response response) {
+        Map<String, Object> parametros = new HashMap<>();
+        response.cookie("username",request.cookie("username"));
+        response.cookie("organizacion",request.cookie("organizacion"));
+        return new ModelAndView(parametros,"Calcular_HC.html");
+    }
+
+    public ModelAndView registrarMedicionesHTML (Request request, Response response) {
+        Map<String, Object> parametros = new HashMap<>();
+        response.cookie("username",request.cookie("username"));
+        response.cookie("organizacion",request.cookie("organizacion"));
+        return new ModelAndView(parametros,"Registrar_Mediciones.html");
     }
 }

@@ -11,7 +11,7 @@ public class EstacionTest {
     protected Estacion unaEst;
 
     private void initializeEstacion(){
-        this.unaEst=new Estacion("Gerli",4);
+        this.unaEst=new Estacion("Gerli");
     }
 
     @BeforeEach
@@ -31,15 +31,5 @@ public class EstacionTest {
         Assertions.assertEquals(nuevo,this.unaEst.getNombre());
     }
 
-    @Test
-    public void setnumeroEstacion(){
-        Integer actual=this.unaEst.getNumeroDeEstacion();
-        Integer nuevo=7;
-
-        this.unaEst.setNumeroDeEstacion(nuevo);
-
-        Assertions.assertEquals(4,actual);
-        Assertions.assertEquals(nuevo,this.unaEst.getNumeroDeEstacion());
-    }
 }
 

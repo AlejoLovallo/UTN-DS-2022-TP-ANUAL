@@ -26,7 +26,7 @@ import java.util.ArrayList;
 public class CalculadorHCTest {
     protected Contacto contacto = new Contacto("Organizacion", "ApellidoEmpresa", 987654321, "org@gmail.com");
 
-    protected Organizacion organizacion = new Organizacion("A", TipoOrganizacion.Empresa, ClasificacionOrganizacion.EmpresaSectorPrimario, contacto);
+    protected Organizacion organizacion = new Organizacion("A", TipoOrganizacion.Empresa, ClasificacionOrganizacion.EmpresaSectorPrimario, contacto ,1);
     protected Espacio espacio1 = new Direccion("Argentina", "Buenos Aires", "GENERAL LAVALLE", "GENERAL LAVALLE","Cordoba",3000, TipoDireccion.Trabajo);
     protected Espacio espacio2 = new Direccion("Argentina", "Buenos Aires", "GENERAL LAVALLE", "PAVON","O'Higgins",3000, TipoDireccion.Trabajo);
     protected Sector sector = new Sector("RRHH", espacio1, organizacion,new ArrayList<Miembro>());
@@ -57,8 +57,8 @@ public class CalculadorHCTest {
         organizacion.getSectores().add(sector);
         sector.getMiembros().add(miembro);
 
-        repositorioFactoresEmisionDB.agregarFactorDeEmision(new FactorEmision(TipoDeActividad.COMBUSTION_MOVIL, 0.5, Unidad.lt));
-        repositorioFactoresEmisionDB.agregarFactorDeEmision(new FactorEmision(TipoDeActividad.COMBUSTION_FIJA, 2.0, Unidad.lt));
+        repositorioFactoresEmisionDB.agregarFactorDeEmision(new FactorEmision(TipoDeActividad.COMBUSTION_MOVIL, 0.5, UnidadDeConsumo.lts));
+        repositorioFactoresEmisionDB.agregarFactorDeEmision(new FactorEmision(TipoDeActividad.COMBUSTION_FIJA, 2.0, UnidadDeConsumo.lts));
 
         agenteSectorial.getOrganizaciones().add(organizacion);
     }

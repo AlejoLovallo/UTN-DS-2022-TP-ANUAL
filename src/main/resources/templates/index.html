@@ -153,6 +153,15 @@
               <input type="text" required autocomplete="off" id="LocalidadOrg" name="localidad_org"
                 class="input-datos" />
             </div>
+
+            <div class="field-wrap">
+              <label name="dias_org">
+                Dias laborables por semana<span class="req">*</span>
+              </label>
+              <br>
+              <br>
+              <input type="number" required autocomplete="off" id="dias_semana" name="Dias por semana">
+            </div>
           </div>
           <br>
 
@@ -200,6 +209,7 @@
 
           <button type="button" id="btnRegistroOrg" class="button button-back"
             onclick="validateOrganizationCreation()">Registrarme</button>
+        </form>
       </div>
     </div>
 
@@ -277,6 +287,8 @@
               <input type="text" required autocomplete="off" id="LocalidadMember" name="member_location"
                 class="input-datos" />
             </div>
+          </div>
+          <div class="top-row">
             <div class="field-wrap">
               <label name="member_tipo_doc">
                 Tipo documento<span class="req">*</span>
@@ -300,7 +312,6 @@
                      class="input-datos" />
             </div>
           </div>
-
           <h2>Datos de usuario</h2>
 
           <div class="field-wrap">
@@ -345,7 +356,7 @@
 
           <button type="button" id="myBtn" class="button button-back"
             onclick="validateRegisterMember()">Registrarme</button>
-
+        </form>
       </div>
     </div>
 

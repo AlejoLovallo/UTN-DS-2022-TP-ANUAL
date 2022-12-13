@@ -1,7 +1,7 @@
 package Utils;
 
 import Domain.CalculadorHC.FactorEmision;
-import Domain.CalculadorHC.Unidad;
+import Domain.Organizacion.UnidadDeConsumo;
 import Domain.Espacios.Direccion;
 import Domain.Espacios.Espacio;
 import Domain.Espacios.TipoDireccion;
@@ -23,19 +23,19 @@ import java.util.ArrayList;
 
 public class Common {
   public static Organizacion getOrganizacionMinisterio() {
-    return new Organizacion("Ministerio test", TipoOrganizacion.Gubernamental, ClasificacionOrganizacion.Ministerio, null);
+    return new Organizacion("Ministerio test", TipoOrganizacion.Gubernamental, ClasificacionOrganizacion.Ministerio, null,1);
   }
 
   public static Organizacion getOrganizacionUniversidad() {
-    return new Organizacion("Universidad test", TipoOrganizacion.Institucion, ClasificacionOrganizacion.Universidad, null);
+    return new Organizacion("Universidad test", TipoOrganizacion.Institucion, ClasificacionOrganizacion.Universidad, null,1);
   }
 
   public static Organizacion getOrganizacionEscuela() {
-    return new Organizacion("Escuela test", TipoOrganizacion.Institucion, ClasificacionOrganizacion.Escuela, null);
+    return new Organizacion("Escuela test", TipoOrganizacion.Institucion, ClasificacionOrganizacion.Escuela, null,1);
   }
 
   public static Organizacion getOrganizacionConUnMiembro() {
-    Organizacion organizacion = new Organizacion("Escuela test", TipoOrganizacion.Institucion, ClasificacionOrganizacion.Escuela, null);
+    Organizacion organizacion = new Organizacion("Escuela test", TipoOrganizacion.Institucion, ClasificacionOrganizacion.Escuela, null,1);
     ArrayList<Sector> sectores = new ArrayList<>();
     Sector sector = Common.getMiembro().getSector();
     sector.getMiembros().add(Common.getMiembro());
@@ -46,11 +46,11 @@ public class Common {
 
 
   public static Organizacion getOrganizacionEmpresaPrimaria() {
-    return new Organizacion("Empresa primaria test", TipoOrganizacion.Empresa, ClasificacionOrganizacion.EmpresaSectorPrimario, null);
+    return new Organizacion("Empresa primaria test", TipoOrganizacion.Empresa, ClasificacionOrganizacion.EmpresaSectorPrimario, null,1);
   }
 
   public static Organizacion getOrganizacionEmpresaSecundaria() {
-    return new Organizacion("Empresa secundaria test", TipoOrganizacion.Empresa, ClasificacionOrganizacion.EmpresaSectorSecundario, null);
+    return new Organizacion("Empresa secundaria test", TipoOrganizacion.Empresa, ClasificacionOrganizacion.EmpresaSectorSecundario, null,1);
   }
 
   public static Sector getSectorTrabajo(){
@@ -124,11 +124,11 @@ public class Common {
   }
 
   public static FactorEmision getFactorDeEmision() {
-    return new FactorEmision(TipoDeActividad.COMBUSTION_FIJA, 2.0, Unidad.m3);
+    return new FactorEmision(TipoDeActividad.COMBUSTION_FIJA, 2.0, UnidadDeConsumo.m3);
   }
 
     public static FactorEmision getFactorDeEmisionCOMBUSTION_MOVIL() {
-      return new FactorEmision(TipoDeActividad.COMBUSTION_MOVIL, 2.0, Unidad.m3);
+      return new FactorEmision(TipoDeActividad.COMBUSTION_MOVIL, 2.0, UnidadDeConsumo.m3);
     }
 }
 

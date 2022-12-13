@@ -33,9 +33,9 @@ public class ServicioManualTest {
     @Test
     public void calcularDist(){
         Map<Estacion, DistanciaDouble> paradas = new HashMap<>();
-        Estacion estacion1Test = new Estacion("Estacion1",1);
-        Estacion estacion2Test = new Estacion("Estacion2",2);
-        Estacion estacion3Test = new Estacion("Estacion2",3);
+        Estacion estacion1Test = new Estacion("Estacion1");
+        Estacion estacion2Test = new Estacion("Estacion2");
+        Estacion estacion3Test = new Estacion("Estacion2");
         paradas.put(estacion1Test,new DistanciaDouble(1.0));
         paradas.put(estacion2Test,new DistanciaDouble(1.0));
         paradas.put(estacion3Test,new DistanciaDouble(1.0));

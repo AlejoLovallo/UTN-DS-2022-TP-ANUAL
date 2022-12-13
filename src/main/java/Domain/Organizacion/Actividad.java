@@ -22,8 +22,6 @@ public class Actividad {
   @Enumerated(EnumType.STRING)
   private TipoDeConsumo tipoConsumo;
   @Enumerated(EnumType.STRING)
-  private FrecuenciaServicio frecuenciaServicio;
-  @Enumerated(EnumType.STRING)
   private UnidadDeConsumo unidad_Consumo;
 
   @OneToOne(cascade = CascadeType.ALL)

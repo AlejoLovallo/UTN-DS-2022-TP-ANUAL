@@ -118,7 +118,7 @@ public class RepositorioOrganizacionesDB extends Repositorio<Organizacion>{
     this.dbService.agregar(organizacion);
   }
 
-  public Organizacion crearOrganizacion(String nombre,ClasificacionOrganizacion _clasificacion,TipoOrganizacion _tipo,Contacto contacto, Usuario user){
+  public Organizacion crearOrganizacion(String nombre,ClasificacionOrganizacion _clasificacion,TipoOrganizacion _tipo, Integer _diasSemana,Contacto contacto, Usuario user){
     RepositorioUsuariosDB repositorioUsuariosDB = new RepositorioUsuariosDB();
 
     if(user == null) throw new UsuarioException("El usuario es nulo");
@@ -128,7 +128,7 @@ public class RepositorioOrganizacionesDB extends Repositorio<Organizacion>{
     if(this.buscarOrganizacionPorNombre(nombre) != null) throw new OrganizacionException("Ya hay una organizacion con el mismo nombre");
 
 
-    Organizacion organizacionNueva = new Organizacion(nombre, _tipo,  _clasificacion,  contacto);
+    Organizacion organizacionNueva = new Organizacion(nombre, _tipo,  _clasificacion,  contacto, _diasSemana);
 
     //TODO revisar
     repositorioUsuariosDB.agregarUsuarioUser(user);
