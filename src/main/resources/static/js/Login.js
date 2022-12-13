@@ -37,16 +37,20 @@ console.log(password);
         alert(res.message);
       }
       if(res.message =='pantalla organizacion'){
+        document.cookie = `idSesion=${res.message}`;
         window.location.replace(`${API_ENDPOINT}/menu_organizacion`);
       }
       if(res.message =='Pantalla Admin'){
         //TODO ver la pantalla del admin
+        document.cookie = `idSesion=${res.message}`;
         window.location.replace(`${API_ENDPOINT}/menu_organizacion`);
       }
       if(res.message =='pantalla persona'){
+        document.cookie = `idSesion=${res.message}`;
         window.location.replace(`${API_ENDPOINT}/menu_miembro`);
       }
       if(res.message =='pantalla usuario default'){
+        document.cookie = `idSesion=${res.message}`;
         alert("usuario default");
       }
      })

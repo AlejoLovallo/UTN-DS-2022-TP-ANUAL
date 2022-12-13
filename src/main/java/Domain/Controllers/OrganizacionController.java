@@ -19,7 +19,6 @@ import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
-import org.springframework.boot.json.GsonJsonParser;
 import spark.ModelAndView;
 import spark.Request;
 import spark.Response;
@@ -350,7 +349,18 @@ public class OrganizacionController {
 
     public ModelAndView menuOrganizacion(Request request, Response response) {
         Map<String, Object> parametros = new HashMap<>();
+        response.cookie("idSesion",request.cookie("idSesion"));
         response.cookie("username",request.cookie("username"));
+        response.cookie("organizacion",request.cookie("organizacion"));
+
+
+        String idSesion = request.cookie("idSesion");
+        SesionManager sesionManager = SesionManager.get();
+        Map<String,Object> atributos = sesionManager.obtenerAtributos(idSesion);
+
+        //System.out.println(atributos.toString());
+
+
         return new ModelAndView(parametros,"Menu_Organizacion.html");
     }
 }
