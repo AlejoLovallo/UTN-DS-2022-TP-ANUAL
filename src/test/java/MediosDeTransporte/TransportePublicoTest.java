@@ -1,6 +1,7 @@
 package MediosDeTransporte;
 
 import Domain.Espacios.Estacion;
+import Domain.MediosDeTransporte.DistanciaDouble;
 import Domain.MediosDeTransporte.TipoTransportePublico;
 import Domain.MediosDeTransporte.TransportePublico;
 import org.junit.jupiter.api.AfterEach;
@@ -18,15 +19,15 @@ public class TransportePublicoTest {
     protected TransportePublico transportePublicoTest;
     protected TipoTransportePublico tipoTransportePublico = TipoTransportePublico.Colectivo;
     protected String linea = "LineaDeEjemplo";
-    protected Map<Estacion,Double> paradas = new HashMap<>();
+    protected Map<Estacion,DistanciaDouble> paradas = new HashMap<>();
 
-    protected Estacion estacion1Test = new Estacion("Estacion1",1);
-    protected Estacion estacion2Test = new Estacion("Estacion2",2);
+    protected Estacion estacion1Test = new Estacion("Estacion1");
+    protected Estacion estacion2Test = new Estacion("Estacion2");
 
 
     private void initializeTransportePublico(){
-        paradas.put(estacion1Test,1.0);
-        paradas.put(estacion2Test,1.0);
+        paradas.put(estacion1Test,new DistanciaDouble(1.0));
+        paradas.put(estacion2Test,new DistanciaDouble(1.0));
         this.transportePublicoTest = new TransportePublico(tipoTransportePublico, linea, paradas);
     }
 
@@ -76,11 +77,11 @@ public class TransportePublicoTest {
     @Test
     public void setParadas(){
         //GIVEN DADO
-        Map<Estacion,Double> paradasActual = this.transportePublicoTest.getParadas();
-        Map<Estacion,Double> nuevasParadas = new HashMap<>();
+        Map<Estacion,DistanciaDouble> paradasActual = this.transportePublicoTest.getParadas();
+        Map<Estacion,DistanciaDouble> nuevasParadas = new HashMap<>();
 
-        Estacion estacion1 = new Estacion("Estacion1",1);
-        Estacion estacion2 = new Estacion("Estacion2",2);
+        Estacion estacion1 = new Estacion("Estacion1");
+        Estacion estacion2 = new Estacion("Estacion2");
 
         this.transportePublicoTest.darDeAltaParada(estacion1,1.0);
         this.transportePublicoTest.darDeAltaParada(estacion2,1.0);

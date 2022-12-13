@@ -159,6 +159,7 @@ public class ParserJSONMiembro {
 
         ret.put("organizacion", sector.getOrganizacion().getRazonSocial());
         ret.put("nombreSector", sector.getNombre());
+        ret.put("id",sector.getId_sector());
 
         return ret;
     }
@@ -170,6 +171,7 @@ public class ParserJSONMiembro {
         ret.put("nombre", persona.getNombre());
         ret.put("apellido", persona.getApellido());
         ret.put("dni", persona.getNroDocumento());
+        ret.put("tipoDeDocumento", persona.getTipoDocumento().toString());
 
         return ret;
     }
@@ -205,6 +207,15 @@ public class ParserJSONMiembro {
         obj.put("persona", ParserJSONMiembro.personaAJSON(miembro.getPersona()));
         obj.put("sector", ParserJSONMiembro.sectorAJSON(miembro.getSector()));
         obj.put("trayectos", trayectosToJSON(miembro.getTrayectos()));
+
+        return obj;
+    }
+    public static JSONObject miembroSolicitudToJSON(Miembro miembro)
+    {
+        JSONObject obj = new JSONObject();
+
+        obj.put("persona", ParserJSONMiembro.personaAJSON(miembro.getPersona()));
+        obj.put("sector", ParserJSONMiembro.sectorAJSON(miembro.getSector()));
 
         return obj;
     }

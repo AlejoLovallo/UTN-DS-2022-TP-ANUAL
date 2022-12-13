@@ -74,6 +74,8 @@ public class Router {
     Spark.get("/menu_login", loginController::loguearHtml,Router.engine);
     Spark.get("/", loginController::loguearHtml,Router.engine);
     Spark.post("/menu_login", loginController::loguear);
+    Spark.post("/registrar_org", organizacionController::crearOrganizacion);
+    Spark.post("/registrar_persona", miembroController::crearPersona);
 
 
     /*** ADMIN ROUTERS ***/
@@ -84,16 +86,17 @@ public class Router {
     Spark.get("/miembro/:username/:organizacion", miembroController::getMiembro);
     Spark.post("/enviar_solicitud", miembroController::menuEnviarSolicitud);
     Spark.post("/agregar_trayecto", miembroController::agregarTrayecto);
-    Spark.post("/calcularHC", miembroController::respuestaCalcularHC);
+    Spark.post("/miembro/calcularHC", miembroController::respuestaCalcularHC);
     
 
     /*** ORGANIZACIONES ROUTES ***/
     Spark.get("/menu_organizacion",organizacionController::menuOrganizacion,Router.engine);
     Spark.get("/organizacion/:nombre",organizacionController::getOrganizacion);
-    Spark.get("/organizacion/solicitudes_miembro",organizacionController::respuestaListaMiembros);
+    Spark.get("/sol_miembros", organizacionController::solicitudesHTML, Router.engine);
+    Spark.get("/solicitudes_miembro",organizacionController::respuestaListaMiembros);
     Spark.post("/organizacion",organizacionController::crearOrganizacion);
-    Spark.post("/organizacion/aceptar_miembro", organizacionController::respuestaAceptarMiembro);
-    Spark.post("/organizacion/rechazar_miembro", organizacionController::respuestaRechazarMiembro);
+    Spark.post("/aceptar_miembro", organizacionController::respuestaAceptarMiembro);
+    Spark.post("/rechazar_miembro", organizacionController::respuestaRechazarMiembro);
     Spark.post("/organizacion/calcular_hc", organizacionController::respuestaCalcularHC);
     Spark.post("/organizacion/cargar_mediciones", organizacionController::cargarMediciones);
     Spark.put("/organizacion/:nombre",organizacionController::modificarOrganizacion);

@@ -126,12 +126,12 @@ public class NotificacionesTest {
 
     public static Organizacion getOrganizacion1() {
         Contacto contacto = new Contacto("Juan", "Perez", 123456789, "Oteroerik52@gmail.com");
-        return new Organizacion(null, null, null, contacto);
+        return new Organizacion(null, null, null, contacto,1);
     }
 
     public static Organizacion getOrganizacion2() {
         Contacto contacto = new Contacto("Juan", "Perez", 123456789, "Oteroerik15@gmail.com");
-        return new Organizacion(null, null, null, contacto);
+        return new Organizacion(null, null, null, contacto,1);
     }
 
 }

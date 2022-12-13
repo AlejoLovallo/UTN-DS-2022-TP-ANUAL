@@ -1,16 +1,21 @@
 package Domain.Controllers;
 
 import Domain.JSON.ParserJSONMiembro;
+import Domain.Miembro.Excepciones.PersonaException;
 import Domain.Miembro.Miembro;
 import Domain.Miembro.Persona;
+import Domain.Miembro.TipoDocumento;
+import Domain.Organizacion.ClasificacionOrganizacion;
 import Domain.Organizacion.Organizacion;
 import Domain.Organizacion.Sector;
+import Domain.Organizacion.TipoOrganizacion;
 import Domain.Repositorios.RepositorioOrganizacionesDB;
 import Domain.Repositorios.RepositorioPersonasDB;
 import Domain.Repositorios.RepositorioUsuariosDB;
 import Domain.Trayecto.Tramo;
 import Domain.Trayecto.Trayecto;
 import Domain.Usuarios.Usuario;
+import com.google.gson.Gson;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
@@ -34,6 +39,36 @@ public class MiembroController {
         // TODO: revisar si funciona
         File archivoHTML = new File("src/main/resources/templates/Registrar_Mediciones.html");
         return archivoHTML.toString();
+    }
+
+
+    public Object crearPersona(Request req, Response res) throws ParseException{
+        RepositorioPersonasDB repositorioPersonasDB = new RepositorioPersonasDB();
+
+            String personaString = req.body();
+            JSONParser jsonParser = new JSONParser();
+            JSONObject persona = (JSONObject) jsonParser.parse(personaString);
+
+            Usuario usuario = new Usuario(
+                    persona.get("username").toString(),
+                    persona.get("email").toString(),
+                    persona.get("password").toString(),
+                    true
+            );
+
+            repositorioPersonasDB.crearPersona(
+                    persona.get("name").toString(),
+                    persona.get("surname").toString(),
+                    TipoDocumento.values()[(Integer.parseInt(persona.get("tipoDocumento").toString())) -1],
+                    persona.get("documento").toString(),
+                    usuario
+            );
+            res.cookie("username", usuario.getUsername());
+            res.cookie("organizacion",  persona.get("name").toString());
+
+            return new Gson()
+                    .toJson(new StandardResponse(StatusResponse.SUCCESS,"pantalla miembro"));
+
     }
 
     // GET
@@ -145,10 +180,13 @@ public class MiembroController {
         return listaMiembrosJSON;
     }
 
-    public Object respuestaCalcularHC(Request request, Response response) throws IOException {
+    public Object respuestaCalcularHC(Request request, Response response) throws IOException, ParseException {
         String username = request.cookie("username");
-        String mes = request.queryParams("Mes");
-        String anio = request.queryParams("Anio");
+
+        JSONParser jsonParser = new JSONParser();
+        JSONObject pedido = (JSONObject) jsonParser.parse(request.body());
+        String mes = (String) pedido.get("mes");
+        String anio = (String) pedido.get("anio");
 
         RepositorioPersonasDB repositorioPersonasDB = new RepositorioPersonasDB();
         Persona persona = repositorioPersonasDB.buscarPersonaPorUsername(username);
@@ -165,14 +203,16 @@ public class MiembroController {
         return cantidadHC;
     }
 
-    public Object menuEnviarSolicitud(Request request, Response response) {
+    public Object menuEnviarSolicitud(Request request, Response response) throws ParseException {
         String username = request.cookie("username");
 
         RepositorioPersonasDB repositorioPersonasDB = new RepositorioPersonasDB();
         Persona persona = repositorioPersonasDB.buscarPersonaPorUsername(username);
 
-        String nombreOrganizacion = request.queryParams("organizacion");
-        String nombreSector = request.queryParams("sector");
+        JSONParser jsonParser = new JSONParser();
+        JSONObject pedido = (JSONObject) jsonParser.parse(request.body());
+        String nombreOrganizacion = (String) pedido.get("organizacion");
+        String nombreSector = (String) pedido.get("sector");
 
         RepositorioOrganizacionesDB repositorioOrganizacionesDB = new RepositorioOrganizacionesDB();
         Organizacion organizacion = repositorioOrganizacionesDB.buscarOrganizacionPorNombre(nombreOrganizacion);

@@ -3,6 +3,7 @@ package CalculadorDistanciaTest;
 import Domain.CalculadorDistancia.ServicioManual;
 import Domain.Espacios.Espacio;
 import Domain.Espacios.Estacion;
+import Domain.MediosDeTransporte.DistanciaDouble;
 import Domain.MediosDeTransporte.MedioDeTransporte;
 import Domain.MediosDeTransporte.TipoTransportePublico;
 import Domain.MediosDeTransporte.TransportePublico;
@@ -31,13 +32,13 @@ public class ServicioManualTest {
 
     @Test
     public void calcularDist(){
-        Map<Estacion, Double> paradas = new HashMap<>();
-        Estacion estacion1Test = new Estacion("Estacion1",1);
-        Estacion estacion2Test = new Estacion("Estacion2",2);
-        Estacion estacion3Test = new Estacion("Estacion2",3);
-        paradas.put(estacion1Test,1.0);
-        paradas.put(estacion2Test,1.0);
-        paradas.put(estacion3Test,1.0);
+        Map<Estacion, DistanciaDouble> paradas = new HashMap<>();
+        Estacion estacion1Test = new Estacion("Estacion1");
+        Estacion estacion2Test = new Estacion("Estacion2");
+        Estacion estacion3Test = new Estacion("Estacion2");
+        paradas.put(estacion1Test,new DistanciaDouble(1.0));
+        paradas.put(estacion2Test,new DistanciaDouble(1.0));
+        paradas.put(estacion3Test,new DistanciaDouble(1.0));
         MedioDeTransporte untransporte= new TransportePublico(TipoTransportePublico.Colectivo,"2",paradas);
 
         Assertions.assertEquals(2.0,this.servManual.calcularDistancia(untransporte,estacion1Test,estacion3Test));

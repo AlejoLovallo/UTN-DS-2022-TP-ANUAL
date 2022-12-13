@@ -18,7 +18,7 @@ import Domain.Usuarios.Usuario;
 
 public class AgregarMiembrosTestDB {
   public static void main(String[] args) {
-    RepositorioPersonasDB repositorioPersonas = new RepositorioPersonasDB();
+    /*RepositorioPersonasDB repositorioPersonas = new RepositorioPersonasDB();
     RepositorioOrganizacionesDB repositorioOrganizacionesDB = new RepositorioOrganizacionesDB();
     RepositorioSectoresDB repositorioSectoresDB = new RepositorioSectoresDB();
 
@@ -50,7 +50,7 @@ public class AgregarMiembrosTestDB {
 
 
     repositorioPersonas.agregarPersona(persona);
-
+*/
 
   }
 }

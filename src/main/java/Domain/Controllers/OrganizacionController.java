@@ -5,16 +5,22 @@ import Domain.JSON.ParserJSONMiembro;
 import Domain.JSON.ParserJSONOrganizacion;
 import Domain.Miembro.Miembro;
 import Domain.Miembro.Persona;
+import Domain.Organizacion.ClasificacionOrganizacion;
+import Domain.Organizacion.Excepciones.OrganizacionException;
 import Domain.Organizacion.Organizacion;
 import Domain.Organizacion.Sector;
+import Domain.Organizacion.TipoOrganizacion;
 import Domain.Reportes.ReporteComposicion;
 import Domain.Reportes.ReporteEvolucion;
 import Domain.Reportes.ReporteTotal;
 import Domain.Repositorios.*;
 import Domain.Usuarios.Usuario;
+import com.google.gson.Gson;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
+import org.springframework.boot.json.GsonJsonParser;
 import spark.ModelAndView;
 import spark.Request;
 import spark.Response;
@@ -26,7 +32,6 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -92,7 +97,45 @@ public class OrganizacionController {
   }
 
  public Object crearOrganizacion(Request req, Response res) throws ParseException{
-  return null;
+
+        try{
+            RepositorioOrganizacionesDB repositorioOrganizacionesDB = new RepositorioOrganizacionesDB();
+
+            String organizacionString = req.body();
+            JSONParser jsonParser = new JSONParser();
+            JSONObject org = (JSONObject) jsonParser.parse(organizacionString);
+            JSONObject user = (JSONObject) jsonParser.parse(org.get("user").toString());
+
+            Usuario usuario = new Usuario(
+                    user.get("name").toString(),
+                    user.get("mail").toString(),
+                    user.get("password").toString(),
+                    true
+            );
+
+            Organizacion organizacion = repositorioOrganizacionesDB.crearOrganizacion(
+                    org.get("socialReason").toString(),
+                    ClasificacionOrganizacion.values()[Integer.parseInt(org.get("clasification").toString()) -1],
+                    TipoOrganizacion.values()[(Integer.parseInt(org.get("type").toString())) -1],
+                    Integer.parseInt(org.get("diasSemana").toString()),
+                    null,
+                    usuario
+            );
+
+            res.status(200);
+
+            res.body(new Gson()
+                    .toJson(new StandardResponse(StatusResponse.SUCCESS,"pantalla organizacion").toString()));
+
+            res.cookie("username", usuario.getUsername());
+            res.cookie("organizacion", organizacion.getRazonSocial());
+
+            return new Gson()
+                    .toJson(new StandardResponse(StatusResponse.SUCCESS,"pantalla organizacion"));
+        }
+        catch(OrganizacionException e){
+            return null;
+        }
  }
 
   public Object modificarOrganizacion(Request req, Response res) throws ParseException{
@@ -117,15 +160,14 @@ public class OrganizacionController {
           for(Miembro miembro : sector.getMiembros())
           {
             if(!miembro.getActivo())
-              listaMiembros.add(ParserJSONMiembro.miembroToJSON(miembro));
+              listaMiembros.add(ParserJSONMiembro.miembroSolicitudToJSON(miembro));
           }
       }
       response.status(200);
       return listaMiembros;
   }
 
-    public Object respuestaAceptarMiembro(Request request, Response response)
-    {
+    public Object respuestaAceptarMiembro(Request request, Response response) throws ParseException {
         String username = request.cookie("username");
 
         RepositorioUsuariosDB repositorioUsuariosDB = new RepositorioUsuariosDB();
@@ -134,14 +176,16 @@ public class OrganizacionController {
         RepositorioOrganizacionesDB repositorioOrganizacionesDB = new RepositorioOrganizacionesDB();
         Organizacion organizacion = repositorioOrganizacionesDB.buscarOrganizacionPorUsuario(usuario);
 
-        String idPersona = request.queryParams("Persona");
-        String idSector = request.queryParams("Sector");
+        JSONParser jsonParser = new JSONParser();
+        JSONObject jsonObject = (JSONObject) jsonParser.parse(request.body());
+        String dniPersona =  jsonObject.get("dni").toString();
+        String id_sector =  jsonObject.get("id_sector").toString();
 
         RepositorioPersonasDB repositorioPersonasDB = new RepositorioPersonasDB();
-        Persona persona = repositorioPersonasDB.buscarPersonaPorNroDocumento(idPersona);
+        Persona persona = repositorioPersonasDB.buscarPersonaPorNroDocumento(dniPersona);
 
         Optional<Sector> sector = organizacion.getSectores().stream().filter(
-                s -> s.getId_sector() == Integer.parseInt(idSector)
+                s -> s.getId_sector() == Integer.parseInt(id_sector)
         ).findAny();
 
         Optional<Miembro> miembro = sector.get().getMiembros().stream().filter(
@@ -157,8 +201,7 @@ public class OrganizacionController {
         return "window.alert(\"Operacion ejecutada exitosamente\")";
     }
 
-    public Object respuestaRechazarMiembro(Request request, Response response)
-    {
+    public Object respuestaRechazarMiembro(Request request, Response response) throws ParseException {
         String username = request.cookie("username");
 
         RepositorioUsuariosDB repositorioUsuariosDB = new RepositorioUsuariosDB();
@@ -167,8 +210,10 @@ public class OrganizacionController {
         RepositorioOrganizacionesDB repositorioOrganizacionesDB = new RepositorioOrganizacionesDB();
         Organizacion organizacion = repositorioOrganizacionesDB.buscarOrganizacionPorUsuario(usuario);
 
-        String idPersona = request.queryParams("Persona");
-        String idSector = request.queryParams("Sector");
+        JSONParser jsonParser = new JSONParser();
+        JSONObject jsonObject = (JSONObject) jsonParser.parse(request.body());
+        String idPersona = (String) jsonObject.get("Persona");
+        String idSector = (String) jsonObject.get("Sector");
 
         RepositorioPersonasDB repositorioPersonasDB = new RepositorioPersonasDB();
         Persona persona = repositorioPersonasDB.buscarPersonaPorNroDocumento(idPersona);
@@ -190,7 +235,7 @@ public class OrganizacionController {
         return "window.alert(\"Operacion ejecutada exitosamente\")";
     }
 
-    public Object respuestaCalcularHC(Request request, Response response) throws IOException {
+    public Object respuestaCalcularHC(Request request, Response response) throws IOException, ParseException {
         
 
         String username = request.cookie("username");
@@ -201,10 +246,12 @@ public class OrganizacionController {
         RepositorioOrganizacionesDB repositorioOrganizacionesDB = new RepositorioOrganizacionesDB();
         Organizacion organizacion = repositorioOrganizacionesDB.buscarOrganizacionPorUsuario(usuario);
 
-        String mesDesde = request.queryParams("MesDesde");
-        String añoDesde = request.queryParams("AñoDesde");
-        String mesHasta = request.queryParams("Mes");
-        String añoHasta = request.queryParams("Anio");
+        JSONParser jsonParser = new JSONParser();
+        JSONObject jsonObject = (JSONObject) jsonParser.parse(request.body());
+        String mesDesde = (String) jsonObject.get("MesDesde");
+        String añoDesde = (String) jsonObject.get("AñoDesde");
+        String mesHasta = (String) jsonObject.get("Mes");
+        String añoHasta = (String) jsonObject.get("Anio");
 
         Integer MesDesde = Integer.parseInt(mesDesde);
         Integer AñoDesde = Integer.parseInt(añoDesde);
@@ -318,6 +365,14 @@ public class OrganizacionController {
     public ModelAndView menuOrganizacion(Request request, Response response) {
         Map<String, Object> parametros = new HashMap<>();
         response.cookie("username",request.cookie("username"));
+        response.cookie("organizacion",request.cookie("organizacion"));
         return new ModelAndView(parametros,"Menu_Organizacion.html");
+    }
+
+    public ModelAndView solicitudesHTML (Request request, Response response) {
+        Map<String, Object> parametros = new HashMap<>();
+        response.cookie("username",request.cookie("username"));
+        response.cookie("organizacion",request.cookie("organizacion"));
+        return new ModelAndView(parametros,"Aceptar_Miembros.html");
     }
 }

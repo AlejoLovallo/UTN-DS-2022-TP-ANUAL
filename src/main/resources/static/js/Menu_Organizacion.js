@@ -17,3 +17,7 @@ $('body').scrollspy({
 $('.navbar-collapse ul li a').click(function() {
     $('.navbar-toggle:visible').click();
 });
+
+const pantallaSolicitudes() = async () => {
+        window.location.href = "./Aceptar_Miembros.html";
+  };
