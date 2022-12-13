@@ -375,4 +375,18 @@ public class OrganizacionController {
         response.cookie("organizacion",request.cookie("organizacion"));
         return new ModelAndView(parametros,"Aceptar_Miembros.html");
     }
+
+    public ModelAndView calcularHCorg (Request request, Response response) {
+        Map<String, Object> parametros = new HashMap<>();
+        response.cookie("username",request.cookie("username"));
+        response.cookie("organizacion",request.cookie("organizacion"));
+        return new ModelAndView(parametros,"Calcular_HC.html");
+    }
+
+    public ModelAndView registrarMedicionesHTML (Request request, Response response) {
+        Map<String, Object> parametros = new HashMap<>();
+        response.cookie("username",request.cookie("username"));
+        response.cookie("organizacion",request.cookie("organizacion"));
+        return new ModelAndView(parametros,"Registrar_Mediciones.html");
+    }
 }

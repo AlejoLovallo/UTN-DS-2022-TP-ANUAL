@@ -312,7 +312,16 @@ public class MiembroController {
 
     public ModelAndView menu_miembro(Request request, Response response){
         Map<String, Object> parametros = new HashMap<>();
+        response.cookie("username", request.cookie("username"));
+        response.cookie("persona", request.cookie("persona"));
         return new ModelAndView(parametros,"Menu_Miembro.html");
+    }
+
+    public ModelAndView calcularHTMLmiembro(Request request, Response response){
+        Map<String, Object> parametros = new HashMap<>();
+        response.cookie("username", request.cookie("username"));
+        response.cookie("persona", request.cookie("persona"));
+        return new ModelAndView(parametros,"Calcular_HC.html");
     }
 
 }
