@@ -248,10 +248,10 @@ public class OrganizacionController {
 
         JSONParser jsonParser = new JSONParser();
         JSONObject jsonObject = (JSONObject) jsonParser.parse(request.body());
-        String mesDesde = (String) jsonObject.get("MesDesde");
-        String añoDesde = (String) jsonObject.get("AñoDesde");
-        String mesHasta = (String) jsonObject.get("Mes");
-        String añoHasta = (String) jsonObject.get("Anio");
+        String mesDesde = jsonObject.get("mesDesde").toString();
+        String añoDesde = jsonObject.get("añoDesde").toString();
+        String mesHasta = jsonObject.get("mesHasta").toString();
+        String añoHasta = jsonObject.get("añoHasta").toString();
 
         Integer MesDesde = Integer.parseInt(mesDesde);
         Integer AñoDesde = Integer.parseInt(añoDesde);
@@ -266,9 +266,10 @@ public class OrganizacionController {
         response.type("application/json");
 
         JSONObject calculo = new JSONObject();
-        calculo.put("resultado", resultado);
+        calculo.put("resultado", resultado.toString());
 
         response.status(200);
+        response.body(calculo.toString());
         return calculo;
     }
 
