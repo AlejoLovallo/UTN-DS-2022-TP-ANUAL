@@ -281,7 +281,7 @@ public class OrganizacionController {
             Files.delete(pathArchivo);
 
         request.attribute("org.eclipse.jetty.multipartConfig", new MultipartConfigElement("/temp"));
-        InputStream is = request.raw().getPart("archivo_mediciones").getInputStream();
+        InputStream is = request.raw().getPart("file").getInputStream();
         Files.copy(is, pathArchivo);
 
         RepositorioUsuariosDB repositorioUsuariosDB = new RepositorioUsuariosDB();
@@ -296,7 +296,9 @@ public class OrganizacionController {
 
         response.type("text/javascript");
         response.status(200);
-        return "window.alert(\"Operacion realizada exitosamente\")";
+        response.body("window.alert(\"Operacion realizada exitosamente\")");
+        return new Gson()
+                .toJson(new StandardResponse(StatusResponse.SUCCESS,"carga existosa"));
     }
 
 
@@ -308,10 +310,10 @@ public class OrganizacionController {
         Optional<String> username = Optional.ofNullable(request.cookie("username"));
 
         //TODO para hacer pruebas
-        username = Optional.of("usuarioNormal");
+        //username = Optional.of("usuarioNormal");
 
         //TODO podemos mostrar otra parte sino en vez de Recomendaciones
-        if ( !username.isPresent() ) return new ModelAndView(params, "Recomendaciones.hbs");
+        if ( !username.isPresent() || username.get().equals("") ) response.redirect("/recomendaciones");//return new ModelAndView(params, "Recomendaciones.hbs");
 
 
         //buscar si es agente

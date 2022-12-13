@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Registrar Trayecto</title>
     <link rel="stylesheet" type="text/css" href="/css/Registrar_Mediciones.css">
+    <script src="/js/Registrar_Mediciones.js"></script>
     <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.2/themes/smoothness/jquery-ui.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
     <link rel="stylesheet"
@@ -30,7 +31,7 @@
                     <a href="#page-top"></a>
                 </li>
                 <li class="">
-                    <a class="home" href="./Menu_Organizacion.html">Home</a>
+                    <a class="home" href="/menu_organizacion">Home</a>
                 </li>
                 <li>
                     <a class="page-scroll" href="./Login.html">Cerrar Sesión</a>
@@ -55,11 +56,11 @@
                 </label>
                 <br>
                 <br>
-                <input type="file" required autocomplete="off" id="Path">
+                <input type="file" required autocomplete="off" id="Path" name="archivo_mediciones">
             </div>
 
             <br>
-            <button type="submit" id="myBtn" class="button button-back" onclick="registrarMediciones()">Subir Archivo</button>
+            <button type="button" id="myBtn" class="button button-back" onclick="registrarMediciones()">Subir Archivo</button>
             <br>
             <br>
 
