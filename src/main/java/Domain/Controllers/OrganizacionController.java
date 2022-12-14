@@ -210,8 +210,8 @@ public class OrganizacionController {
 
         JSONParser jsonParser = new JSONParser();
         JSONObject jsonObject = (JSONObject) jsonParser.parse(request.body());
-        String idPersona = (String) jsonObject.get("Persona");
-        String idSector = (String) jsonObject.get("Sector");
+        String idPersona = jsonObject.get("dni").toString();
+        String idSector = jsonObject.get("id_sector").toString();
 
         RepositorioPersonasDB repositorioPersonasDB = new RepositorioPersonasDB();
         Persona persona = repositorioPersonasDB.buscarPersonaPorNroDocumento(idPersona);
@@ -224,8 +224,9 @@ public class OrganizacionController {
                 m -> m.getPersona().equals(persona)
         ).findAny();
 
-        persona.getMiembros().remove(miembro);
-        repositorioPersonasDB.modificar(persona);
+        //TODO: probar
+        RepositorioMiembrosDB repositorioMiembrosDB = new RepositorioMiembrosDB();
+        repositorioMiembrosDB.eliminar(miembro.get());
 
         response.type("text/javascript");
         response.status(200);

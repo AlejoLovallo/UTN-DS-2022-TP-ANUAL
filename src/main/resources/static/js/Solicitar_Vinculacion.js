@@ -4,9 +4,8 @@ const solicitar_vinculacion = async () => {
   const organizacion = document.getElementById("Organizacion").value;
   const sector = document.getElementById("Sector").value;
 
-  await fetch(`${API_ENDPOINT}/menuEnviarSolicitud`, {
+  fetch(`${API_ENDPOINT}/enviar_solicitud`, {
     method: "POST",
-    mode: "no-cors",
 
     body: JSON.stringify({
       organizacion,
@@ -21,7 +20,7 @@ const solicitar_vinculacion = async () => {
       console.log("OKKKK");
       console.log(res);
       alert("Solicitud enviada");
-      window.location.href = "./Menu_miembro.html";
+      window.location.href = "/menu_miembro";
     })
     .catch((e) => {
       console.log(e);
