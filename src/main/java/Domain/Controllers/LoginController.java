@@ -149,4 +149,12 @@ public class LoginController {
     Map<String, Object> parametros = new HashMap<>();
     return new ModelAndView(parametros,"index.html");
   }
+
+  public String logout(Request request, Response response){
+
+    response.removeCookie("idSesion");
+    response.redirect("/menu_login");
+
+    return "";
+  }
 }
