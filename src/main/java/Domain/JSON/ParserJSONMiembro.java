@@ -3,6 +3,7 @@ package Domain.JSON;
 import Domain.Espacios.Direccion;
 import Domain.Espacios.Espacio;
 import Domain.Espacios.Estacion;
+import Domain.Espacios.TipoDireccion;
 import Domain.MediosDeTransporte.*;
 
 import Domain.Miembro.Miembro;
@@ -25,24 +26,24 @@ public class ParserJSONMiembro {
     //----------Desde JSON-------------//
     public static MedioDeTransporte JSONAMedioTransporte(JSONObject obj)
     {
-        if(obj.get("tipo").equals("vehiculoParticular"))
+        if(obj.get("tipo").toString().equals("vehiculoParticular"))
         {
             //TODO: revisar que pasa si hay 2 vehiculos con los mismos atributos excepto por 'consumoPorKm'
             RepositorioVehiculoParticularDB repositorioVehiculoParticularDB = new RepositorioVehiculoParticularDB();
-            VehiculoParticular aux = repositorioVehiculoParticularDB.buscarVehiculoParticular((String)obj.get("vehiculo"), (String)obj.get("combustible"), ((Long)obj.get("cantidadPasajeros")).intValue());
+            VehiculoParticular aux = repositorioVehiculoParticularDB.buscarVehiculoParticular(obj.get("TipoVehiculo").toString(), obj.get("TipoCombustible").toString(), Integer.parseInt(obj.get("CantidadPasajeros").toString()));
             if(aux != null)
                 return aux;
             else{
                 repositorioVehiculoParticularDB.crearVehiculoParticular(
-                        TipoVehiculo.valueOf((String)obj.get("vehiculo")),
-                        TipoCombustible.valueOf((String)obj.get("combustible")),
-                        ((Long) obj.get("cantidadPasajeros")).intValue(),
-                        ((Double) obj.get("consumoPorKm"))
+                        TipoVehiculo.valueOf((String)obj.get("TipoVehiculo")),
+                        TipoCombustible.valueOf((String)obj.get("TipoCombustible")),
+                         Integer.parseInt(obj.get("CantidadPasajeros").toString()),
+                        4//((Double) obj.get("consumoPorKm"))
                 );
                 return repositorioVehiculoParticularDB.buscarVehiculoParticular((String)obj.get("vehiculo"), (String)obj.get("combustible"), ((Long)obj.get("cantidadPasajeros")).intValue());
             }
         }
-        else if(obj.get("tipo").equals("transportePublico"))
+        else if(obj.get("tipo").toString().equals("transportePublico"))
         {
             RepositorioTransportePublicoDB repositorioTransportePublicoDB = new RepositorioTransportePublicoDB();
             TransportePublico transportePublico = repositorioTransportePublicoDB.buscarTransportePublico((Integer)obj.get("id_transporte"));
@@ -59,27 +60,27 @@ public class ParserJSONMiembro {
     {
         RepositorioDireccionDB repositorioDireccionDB = new RepositorioDireccionDB();
 
-        JSONObject jsonDirSalida = (JSONObject) obj.get("puntoSalida");
-        JSONObject jsonDirLlegada = (JSONObject) obj.get("puntoLlegada");
 
         Direccion direccionSalida = repositorioDireccionDB.buscarDireccion(
-                (String)jsonDirSalida.get("pais"),
-                (String)jsonDirSalida.get("provincia"),
-                (String)jsonDirSalida.get("municipio"),
-                (String)jsonDirSalida.get("localidad"),
-                (String)jsonDirSalida.get("calle"),
-                ((Long)jsonDirSalida.get("altura")).intValue(),
-                (String)jsonDirSalida.get("tipoDireccion")
+                obj.get("PaisSalida").toString(),
+                obj.get("ProvinciaSalida").toString(),
+                obj.get("MunicipioSalida").toString(),
+                obj.get("LocalidadSalida").toString(),
+                obj.get("CalleSalida").toString(),
+                Integer.parseInt(obj.get("AlturaSalida").toString()),
+                TipoDireccion.Trabajo.toString()
+                //jsonDirSalida.get("tipoDireccion").toString()
         );
 
         Direccion direccionLlegada = repositorioDireccionDB.buscarDireccion(
-                (String)jsonDirLlegada.get("pais"),
-                (String)jsonDirLlegada.get("provincia"),
-                (String)jsonDirLlegada.get("municipio"),
-                (String)jsonDirLlegada.get("localidad"),
-                (String)jsonDirLlegada.get("calle"),
-                ((Long)jsonDirLlegada.get("altura")).intValue(),
-                (String)jsonDirLlegada.get("tipoDireccion")
+                obj.get("PaisLlegada").toString(),
+                obj.get("ProvinciaLlegada").toString(),
+                obj.get("MunicipioLlegada").toString(),
+                obj.get("LocalidadLlegada").toString(),
+                obj.get("CalleLlegada").toString(),
+                Integer.parseInt(obj.get("AlturaLlegada").toString()),
+                TipoDireccion.Trabajo.toString()
+                //jsonDirSalida.get("tipoDireccion").toString()
         );
 
 
@@ -87,7 +88,7 @@ public class ParserJSONMiembro {
         Tramo tramo = new Tramo(
                 direccionSalida,
                 direccionLlegada,
-                JSONAMedioTransporte((JSONObject) obj.get("medioTransporte"))
+                JSONAMedioTransporte(obj)
         );
 
         return tramo;

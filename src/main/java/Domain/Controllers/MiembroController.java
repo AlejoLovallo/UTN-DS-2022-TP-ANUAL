@@ -97,7 +97,8 @@ public class MiembroController {
 
     public Object agregarTrayecto(Request request, Response response) throws ParseException {
 
-        String username = request.cookie("username");
+        String id = request.cookie("idSesion");
+        String username = (String) SesionManager.get().obtenerAtributos(id).get("username");
 
         RepositorioPersonasDB repositorioPersonasDB = new RepositorioPersonasDB();
         Persona persona = repositorioPersonasDB.buscarPersonaPorUsername(username);
@@ -112,16 +113,17 @@ public class MiembroController {
                 Trayecto trayecto = new Trayecto();
 
                 trayecto.setMiembro(miembro);
-                DateTimeFormatter formato = DateTimeFormatter.ofPattern("dd MM yyyy");
+                DateTimeFormatter formato = DateTimeFormatter.ofPattern("yyyy-MM-dd");
                 trayecto.setFrecuenciaSemanal(
-                        ((Long) pedido.get("frecuenciaSemanal")).intValue());
+                        Integer.parseInt(pedido.get("frecuenciaSemanal").toString()));
                 trayecto.setFechaInicio(LocalDate.parse((CharSequence) pedido.get("fechaInicio"), formato));
                 trayecto.setFechaFin(LocalDate.parse((CharSequence) pedido.get("fechaFin"), formato));
 
                 List<Tramo> tramos = new ArrayList<>();
                 ParserJSONMiembro parserJSONMiembro = new ParserJSONMiembro();
+                JSONParser jsonParser = new JSONParser();
                 for (Object tramo : (JSONArray) pedido.get("tramos")) {
-                    Tramo tramoObj = parserJSONMiembro.JSONATramo((JSONObject) tramo);
+                    Tramo tramoObj = parserJSONMiembro.JSONATramo((JSONObject) jsonParser.parse(tramo.toString()));
                     tramoObj.setTrayecto(trayecto);
                     tramos.add(tramoObj);
                 }
