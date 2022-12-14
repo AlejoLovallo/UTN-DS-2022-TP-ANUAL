@@ -1,4 +1,4 @@
-const API_ENDPOINT = "http://127.0.0.1:9000";
+const API_ENDPOINT = "http://127.0.0.1:3020";
 
 
 const formHC = '<h3>Tu huella de carbono para ese perÍodo es: </h3> <br> <p class="valorHC" id="valorHC">${XX}</p> <br> <br> <button type="button" id="myBtn" class="button button-back" onclick="volverAtras()">Volver atrás</button>'

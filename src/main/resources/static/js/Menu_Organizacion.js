@@ -1,5 +1,5 @@
 
-const API_ENDPOINT = "http://localhost:9000";
+const API_ENDPOINT = "http://localhost:3020";
 
 
 $(function() {
