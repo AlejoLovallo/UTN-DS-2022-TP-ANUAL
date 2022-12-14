@@ -7,7 +7,7 @@ services:
     container_name: db
     restart: always
     ports:
-      - 33306:3306
+      - 33308:3306
     environment:
       MYSQL_ROOT_PASSWORD: dike2361!
     volumes:
