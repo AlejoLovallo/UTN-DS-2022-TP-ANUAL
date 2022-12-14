@@ -9,7 +9,7 @@ services:
     ports:
       - 33306:3306
     environment:
-      MYSQL_ROOT_PASSWORD: dike2361
+      MYSQL_ROOT_PASSWORD: dike2361!
     volumes:
       - /home/wallaby/DBTP:/var/lib/mysql
 
