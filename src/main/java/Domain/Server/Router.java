@@ -82,6 +82,8 @@ public class Router {
 
     /*** MIEMBROS ROUTES ***/
     Spark.get("/menu_miembro", miembroController::menu_miembro, Router.engine);
+    Spark.get("/registrarTrayectoHTML", miembroController::registrarTrayectoHTML,Router.engine);
+    Spark.get("/solicitarVinculacionHTML", miembroController::solicitarVinculacionHTML, Router.engine);
     Spark.get("/visualizar_trayectos", miembroController::visualizarTrayectos);
     Spark.get("/calcularHTMLmiembro", miembroController::calcularHTMLmiembro, Router.engine);
     Spark.get("/miembro/:username/:organizacion", miembroController::getMiembro);

@@ -125,6 +125,24 @@ public class Miembro {
     return calculadorHC.calcularHC(this, mes, anio);
   }
 
+  public Double calcularHCPeriodo(Integer mesDesde, Integer anioDesde, Integer mesHasta, Integer anioHasta) throws IOException {
+    Double cantidadHC = 0.0;
+    if(anioDesde == anioHasta){
+      for (int mes = mesDesde; mes <= mesHasta; mes++)
+        cantidadHC += calcularHC(mes, anioDesde);
+    }
+    else{
+      for (int mes = mesDesde; mes <= 12; mes++)
+        cantidadHC += calcularHC(mes, anioHasta);
+      for (int mes = 1; mes <= mesHasta; mes++)
+        cantidadHC += calcularHC(mes, anioHasta);
+      for (int anio = anioDesde + 1; anio < anioHasta; anio++)
+        for (int mes = 1; mes <= 12; mes++)
+          cantidadHC += calcularHC(mes, anio);
+    }
+    return cantidadHC;
+  }
+
   public void agregarTrayecto(Trayecto trayecto){
         trayectos.add(trayecto);
     RepositorioPersonasDB repositorioPersonasDB = new RepositorioPersonasDB();

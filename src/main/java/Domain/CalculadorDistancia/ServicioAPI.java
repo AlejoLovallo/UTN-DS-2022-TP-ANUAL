@@ -5,6 +5,7 @@ import Domain.Espacios.Direccion;
 import Domain.Espacios.Espacio;
 import Domain.Espacios.TipoDireccion;
 import Domain.MediosDeTransporte.*;
+import okhttp3.OkHttpClient;
 import retrofit2.Call;
 import retrofit2.Response;
 import retrofit2.Retrofit;
@@ -12,6 +13,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 public class ServicioAPI extends ServicioDistancia{
 
@@ -21,10 +23,21 @@ public class ServicioAPI extends ServicioDistancia{
   private Retrofit retrofit;
 
   private ServicioAPI() {
+
+    OkHttpClient okHttpClient = new OkHttpClient.Builder()
+            .connectTimeout(1, TimeUnit.MINUTES)
+            .readTimeout(30, TimeUnit.SECONDS)
+            .writeTimeout(15, TimeUnit.SECONDS)
+            .build();
     this.retrofit = new Retrofit.Builder()
+            .baseUrl(APP_URL)
+            .client(okHttpClient)
+            .addConverterFactory(GsonConverterFactory.create()).build();
+
+    /*this.retrofit = new Retrofit.Builder()
         .baseUrl(APP_URL)
         .addConverterFactory(GsonConverterFactory.create())
-        .build();
+        .build();*/
   }
 
   public static void setAuthToken(String _authToken) {

@@ -8,17 +8,31 @@ const volverAtras = async () => {
   var valuesCookies = document.cookie.split(';');
   for(var i = 0; i < valuesCookies.length; i++){
     var cookieInfo = valuesCookies[i].split('=');
-    if(cookieInfo[0] == 'organizacion')
+    if(cookieInfo[0].trim() == 'organizacion')
     {
           window.location.href = "/calcularHTMLorg";
     }
-    else if(cookieInfo[0] == 'persona')
+    else if(cookieInfo[0].trim() == 'persona')
     {
           window.location.href = "/calcularHTMLmiembro";
     }
     }
   };
 
+const volverMenu = async () => {
+  var valuesCookies = document.cookie.split(';');
+  for(var i = 0; i < valuesCookies.length; i++){
+    var cookieInfo = valuesCookies[i].split('=');
+    if(cookieInfo[0].trim() == 'organizacion')
+    {
+          window.location.href = "/menu_organizacion";
+    }
+    else if(cookieInfo[0].trim() == 'persona')
+    {
+          window.location.href = "/menu_miembro";
+    }
+    }
+  };
 
 const calcularHC = async () => {
   const mesDesde = document.getElementById("MesDesde").value;
@@ -35,7 +49,8 @@ const calcularHC = async () => {
   var valuesCookies = document.cookie.split(';');
   for(var i = 0; i < valuesCookies.length; i++){
     var cookieInfo = valuesCookies[i].split('=');
-    if(cookieInfo[0] == 'organizacion')
+    console.log(cookieInfo[0]);
+    if(cookieInfo[0].trim() == 'organizacion')
     {
           await fetch(`${API_ENDPOINT}/organizacion/calcularHC`, {
             method: "POST",
@@ -67,7 +82,7 @@ const calcularHC = async () => {
               console.log(e);
             });
     }
-    else if(cookieInfo[0] == 'persona')
+    else if(cookieInfo[0].trim() == 'persona')
     {
             await fetch(`${API_ENDPOINT}/miembro/calcularHC`, {
             method: "POST",
@@ -83,13 +98,14 @@ const calcularHC = async () => {
                "Content-type": "application/json; charset=UTF-8",
             },
             })
-            .then((res) => {
+            .then((response) => response.json())
+            .then((data) => {
                 console.log("OKKKK");
-                console.log(res);
+                console.log(data);
                 $('#seb').css('display','flex');
                 $('#modal-container').append(formHC);
                 $('#CalcularHC').prop('disabled',true);
-                $('#valorHC').html(res.text());
+                $('#valorHC').html(data.resultado);
             })
             .catch((e) => {
                 console.log(e);
