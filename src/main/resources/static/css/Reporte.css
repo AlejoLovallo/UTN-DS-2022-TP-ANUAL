@@ -785,3 +785,13 @@ p.navbar-brand:hover{
   .imagen_footer{
     width: 110%;
   }
+
+  .orange-text{
+    font-size: 30px;
+    color: #da8617;
+  }
+
+  .data{
+    font-size: 30px;
+    color: #bfbcbc;
+  }

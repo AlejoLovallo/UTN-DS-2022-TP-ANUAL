@@ -1,6 +1,6 @@
 let attemptSignIn = 3;
 
-const API_ENDPOINT = "http://127.0.0.1:9000";
+const API_ENDPOINT = "http://localhost:9000";
 
 const validateSignIn = async () => {
   const username = document.getElementById("NombreUsuarioSignIn").value;
@@ -27,7 +27,7 @@ console.log(password);
       console.log(res);
       console.log(res.message);
       console.log(document.cookie);
-      /*if(res.message == 'error de JSON'){
+      if(res.message == 'error de JSON'){
         alert(res.message);
       }
       if(res.message =='error de contra'){
@@ -38,18 +38,27 @@ console.log(password);
         alert(res.message);
       }
       if(res.message =='pantalla organizacion'){
-        window.location.replace(`${API_ENDPOINT}/menu_organizacion`);
+        document.cookie = `idSesion=${res.data}; expires=`+new Date(9999,0,1).toUTCString()+`; path=/`;
+        //window.localStorage.setItem('idSesion', res.data);
+        //window.sessionStorage.setItem('idSesion', res.data);
+        location.replace(`${API_ENDPOINT}/menu_organizacion`);
       }
       if(res.message =='Pantalla Admin'){
-        //TODO ver la pantalla del admin
+        document.cookie = `idSesion=${res.data}; expires=`+new Date(9999,0,1).toUTCString()+`; path=/`;
+        //window.localStorage.setItem('idSesion', res.data);
         window.location.replace(`${API_ENDPOINT}/menu_organizacion`);
       }
       if(res.message =='pantalla persona'){
+        document.cookie = `idSesion=${res.data}; expires=`+new Date(9999,0,1).toUTCString()+`; path=/`;
+        //window.localStorage.setItem('idSesion', res.data);
         window.location.replace(`${API_ENDPOINT}/menu_miembro`);
       }
       if(res.message =='pantalla usuario default'){
+        document.cookie = `idSesion=${res.data}; expires=`+new Date(9999,0,1).toUTCString()+`; path=/`;
+        //document.cookie = `idSesion=${res.message}`;
+        window.localStorage.setItem('idSesion', res.data);
         alert("usuario default");
-      }*/
+      }
      })
     .catch((error) => {
       console.log(error)

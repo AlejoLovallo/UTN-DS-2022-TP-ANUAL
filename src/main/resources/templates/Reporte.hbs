@@ -64,46 +64,72 @@
         <div class="form">
             <br>
 
-            <h2>Reporte</h2>
-            <h1>Composicion</h1>
+            <h1>Reporte</h1>
+            <h2>Composicion</h2>
             {{#each composicion}}
                 {{#with this}}
-                <h3>Id: {{id_reporte}}</h3>
-                <h4>Desde {{fechaDesde.dayOfMonth}}/{{fechaDesde.month}}/{{this.fechaDesde.year}}</h4>
-                <h4>Hasta {{fechaHasta.dayOfMonth}}/{{fechaHasta.month}}/{{fechaHasta.year}}</h4>
+                <p class="orange-text">Id: {{id_reporte}}<p>
+                <p class="orange-text">Desde<p>
+                   <p class="data"> {{fechaDesde.dayOfMonth}}/{{fechaDesde.month}}/{{this.fechaDesde.year}}</p>
+                <p class="orange-text">Hasta</p>
+                    <p class="data">{{fechaHasta.dayOfMonth}}/{{fechaHasta.month}}/{{fechaHasta.year}}</p>
 
                 {{#each actividades}}
-                    <h4>Tipo Actividad {{this.tipoActividad}}</h4>
-                    <h4>Tipo Consumo {{this.tipoConsumo}}</h4>
+                    <p class="orange-text">Tipo Actividad</p>
+                        <p class="data">{{this.tipoActividad}}</p>
+                    <p class="orange-text">Tipo Consumo</p>
+                        <p class="data">{{this.tipoConsumo}}</p>
                     {{#each this.consumos}}
-                        <h4>Año {{this.anio}}</h4>
-                        <h4>Mes {{this.mes}}</h4>
-                        <h4>Consumo {{this.consumo}}</h4>
+                        <p class="orange-text">Consumo </p>
+                            <p class="data">{{this.consumo}}</p>
                     {{/each}}
                 {{/each}}
                     {{/with}}
+            <br>
             {{/each}}
             <br>
-            <h1>Evolucion</h1>
+            <h2>Evolucion</h2>
             {{#each evolucion}}
-                <h3>Id: {{this.id_reporte}}</h3>
-                <h4>Desde {{this.fechaDesde.dayOfMonth}}/{{this.fechaDesde.month}}/{{this.fechaDesde.year}}</h4>
-                <h4>Hasta {{this.fechaHasta.dayOfMonth}}/{{this.fechaHasta.month}}/{{this.fechaHasta.year}}</h4>
+                <p class="orange-text">Id: {{this.id_reporte}}</p>
+                <p class="orange-text">Desde</p>
+                    <p class="data">{{this.fechaDesde.dayOfMonth}}/{{this.fechaDesde.month}}/{{this.fechaDesde.year}}</p>
+                <p class="orange-text">Hasta</p>
+                    <p class="data">{{this.fechaHasta.dayOfMonth}}/{{this.fechaHasta.month}}/{{this.fechaHasta.year}}</p>
 
-                {{#each this.consumos}}
-                    <h4>Año {{this.anio}}</h4>
-                    <h4>Mes {{this.mes}}</h4>
-                    <h4>Consumo {{this.consumo}}</h4>
-                {{/each}}
+                <div>
+
+                    <table class="scroll" id="tablaEvolucion" style="overflow-y:auto;">
+
+                        <thead>
+                            <th class="orange-text">Año</th>
+                            <th class="orange-text">Mes</th>
+                            <th class="orange-text">Consumo</th>
+                        </thead>
+
+                        <tbody>
+                            {{#each this.consumos}}
+                            <tr>
+                                <td class="data">{{this.anio}}</td>
+                                <td class="data">{{this.mes}}</td>
+                                <td class="data">{{this.consumo}}</td>
+                            </tr>
+                            {{/each}}
+                        </tbody>
+
+                    </table>
+                </div>
             {{/each}}
             <br>
-            <h1>Total</h1>
+            <h2>Total</h2>
             {{#each total}}
-                <h3>Id: {{this.id_reporte}}</h3>
-                <h4>Desde: {{this.fechaDesde.dayOfMonth}}/{{this.fechaDesde.month}}/{{this.fechaDesde.year}}</h4>
-                <h4>Hasta: {{this.fechaHasta.dayOfMonth}}/{{this.fechaHasta.month}}/{{this.fechaHasta.year}}</h4>
+                <p class="orange-text">Id: {{this.id_reporte}}</p>
+                <p class="orange-text">Desde:</p>
+                    <p class="data">{{this.fechaDesde.dayOfMonth}}/{{this.fechaDesde.month}}/{{this.fechaDesde.year}}</p>
+                <p class="orange-text">Hasta:</p>
+                    <p class="data">{{this.fechaHasta.dayOfMonth}}/{{this.fechaHasta.month}}/{{this.fechaHasta.year}}</p>
 
-                <h4>Cantidad HC {{this.cantidadHC}}</h4>
+                <p class="orange-text">Cantidad HC</p>
+                    <p class="data">{{this.cantidadHC}}</p>
             {{/each}}
             <br>
 

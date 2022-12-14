@@ -10,6 +10,8 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
     <link href='https://fonts.googleapis.com/css?family=Titillium+Web:400,300,600' rel='stylesheet' type='text/css'>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css">
+
+    <script src="/js/Menu_Organizacion.js"></script>
 </head>
 
 <body id="page-top" class="index" data-pinterest-extension-installed="cr1.3.4">
@@ -29,7 +31,10 @@
                     </li>
 
                     <li class="">
-                        <a class="page-scroll" href="./">Cerrar Sesión</a>
+                        <a type="button" class="page-scroll">
+                          <button type="button" onclick="logout()">Cerrar Sesion</button>
+                        </a>
+
                     </li>
                 </ul>
             </div>
@@ -62,7 +67,7 @@
                             class="img-responsive img-circle" alt=""><br>
                         <h4>Registrar Mediciones</h4><br>
                         <ul class="list-inline social-buttons">
-                            <li><a href="Registrar_Mediciones.html"><img src="/images/logo_medi.jpeg"
+                            <li><a href="/registrarMedicionesHTML"><img src="/images/logo_medi.jpeg"
                                         class="img-responsive" alt="icon"><i class="fa fa-twitter"></i></a></li>
                         </ul><br>
                     </div>
@@ -85,7 +90,7 @@
                             class="img-responsive img-circle" alt=""><br>
                         <h4>Guía de recomendaciones</h4><br>
                         <ul class="list-inline social-buttons">
-                            <li><a href="Recomendaciones.html"><img src="/images/logo_recomendaciones.png"
+                            <li><a href="/recomendaciones"><img src="/images/logo_recomendaciones.png"
                                         class="img-responsive" alt="icon"><i class="fa fa-twitter"></i></a>
                             </li>
                         </ul><br>
@@ -99,7 +104,7 @@
                             class="img-responsive img-circle" alt=""><br>
                         <h4>Calculadora HC</h4><br>
                         <ul class="list-inline social-buttons">
-                            <li><a href="Calcular_HC.html"><img src="/images/logo_calc.jpeg" class="img-responsive"
+                            <li><a href="/calcularHTMLorg"><img src="/images/logo_calc.jpeg" class="img-responsive"
                                         alt="icon"><i class="fa fa-twitter"></i></a>
                             </li>
                         </ul><br><br>
@@ -113,12 +118,27 @@
                             class="img-responsive img-circle" alt=""><br>
                         <h4>Reportes</h4><br>
                         <ul class="list-inline social-buttons">
-                            <li><a href="Visualizar_Reporte.html"><img src="/images/logo_repor.png"
+                            <li><a href="/reportes"><img src="/images/logo_repor.png"
                                         class="img-responsive" alt="icon"><i class="fa fa-twitter"></i></a>
                             </li>
                         </ul><br><br>
                         <img src="http://www.mycatspace.com/wp-content/uploads/2013/08/adopting-a-cat.jpg"
                             class="img-responsive img-circle" alt="">
+
+                    </div>
+                </div>
+                <div class="col-sm-4">
+                    <div class="team-member">
+                        <img src="http://www.mycatspace.com/wp-content/uploads/2013/08/adopting-a-cat.jpg"
+                             class="img-responsive img-circle" alt=""><br>
+                        <h4>Generar Reporte</h4><br>
+                        <ul class="list-inline social-buttons">
+                            <li><a href="/generarReporteHTML"><img src="/images/logo_repor.png"
+                                                         class="img-responsive" alt="icon"><i class="fa fa-twitter"></i></a>
+                            </li>
+                        </ul><br><br>
+                        <img src="http://www.mycatspace.com/wp-content/uploads/2013/08/adopting-a-cat.jpg"
+                             class="img-responsive img-circle" alt="">
 
                     </div>
                 </div>

@@ -10,6 +10,9 @@ import Domain.Usuarios.Admin;
 import Domain.Usuarios.Excepciones.ContraseniaEsInvalidaException;
 import Domain.Usuarios.Usuario;
 import com.google.gson.Gson;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
@@ -69,19 +72,23 @@ public class LoginController {
     }
 
     //Cambio esto por el session manager
-    response.cookie("username",usuario.get().getUsername());
-    //SesionManager sesionManager = SesionManager.get();
-    //String idSesion = sesionManager.crearSesion("username", usuario.get().getUsername());
+    //response.cookie("username",usuario.get().getUsername());
+    SesionManager sesionManager = SesionManager.get();
+    String idSesion = sesionManager.crearSesion("username", usuario.get().getUsername());
 
+    JsonElement sesionJson = new Gson().toJsonTree(idSesion);
 
 
     if(usuario.get() instanceof Admin) {
 
-      response.body(new Gson().toJson(new StandardResponse(StatusResponse.SUCCESS,"Pantalla Admin")));
+      sesionManager.agregarAtributo(idSesion,"rol","admin");
+      //response.cookie("idSesion",idSesion);
+
+      response.body(new Gson().toJson(new StandardResponse(StatusResponse.SUCCESS,"Pantalla Admin",sesionJson)));
       response.status(200);
 
       return new Gson()
-          .toJson(new StandardResponse(StatusResponse.SUCCESS,"Pantalla Admin"));
+          .toJson(new StandardResponse(StatusResponse.SUCCESS,"Pantalla Admin",sesionJson));
     }
 
     RepositorioPersonasDB repositorioPersonasDB = new RepositorioPersonasDB();
@@ -93,34 +100,42 @@ public class LoginController {
 
 
     if(organizacion.isPresent()){
-      //TODO mandar a la vista de organizacion
-      response.cookie("organizacion",organizacion.get().getRazonSocial());
-
+      //Envia a la vista de organizacion
+      //response.cookie("organizacion",organizacion.get().getRazonSocial());
+      sesionManager.agregarAtributo(idSesion, "rol","organizacion");
+      sesionManager.agregarAtributo(idSesion,"RazonSocial",organizacion.get().getRazonSocial());
+      //response.cookie("idSesion",idSesion);
 
       response.status(210);
       response.body(new Gson()
-          .toJson(new StandardResponse(StatusResponse.SUCCESS,"pantalla organizacion")));
-
-
+          .toJson(new StandardResponse(StatusResponse.SUCCESS,"pantalla organizacion",sesionJson)));
       return new Gson()
-          .toJson(new StandardResponse(StatusResponse.SUCCESS,"pantalla organizacion"));
+          .toJson(new StandardResponse(StatusResponse.SUCCESS,"pantalla organizacion",sesionJson));
     }
+
     if(persona.isPresent()){
-      //TODO hacer que vaya a la vista de Persona
-      response.cookie("persona",persona.get().getNroDocumento());
+      //Envia a la vista de Persona
+      //response.cookie("persona",persona.get().getNroDocumento());
+      sesionManager.agregarAtributo(idSesion, "rol","persona");
+      sesionManager.agregarAtributo(idSesion,"documento",persona.get().getNroDocumento());
+      //response.cookie("idSesion",idSesion);
+
       response.body(new Gson()
-          .toJson(new StandardResponse(StatusResponse.SUCCESS,"pantalla persona")));
+          .toJson(new StandardResponse(StatusResponse.SUCCESS,"pantalla persona",sesionJson)));
       response.status(200);
 
       return new Gson()
-          .toJson(new StandardResponse(StatusResponse.SUCCESS,"pantalla persona"));
+          .toJson(new StandardResponse(StatusResponse.SUCCESS,"pantalla persona",sesionJson));
     }
+    //Envia a la un mensaje de usuario default
     response.body(new Gson()
-        .toJson(new StandardResponse(StatusResponse.SUCCESS,"pantalla usuario default")));
+        .toJson(new StandardResponse(StatusResponse.SUCCESS,"pantalla usuario default",sesionJson)));
     response.status(200);
+    sesionManager.agregarAtributo(idSesion, "rol","usuarioDefault");
+    //response.cookie("idSesion",idSesion);
 
     return new Gson()
-        .toJson(new StandardResponse(StatusResponse.SUCCESS,"pantalla usuario default"));
+        .toJson(new StandardResponse(StatusResponse.SUCCESS,"pantalla usuario default",sesionJson));
   }
 
   //GET
@@ -133,5 +148,13 @@ public class LoginController {
   public ModelAndView menu_login (Request request, Response response) {
     Map<String, Object> parametros = new HashMap<>();
     return new ModelAndView(parametros,"index.html");
+  }
+
+  public String logout(Request request, Response response){
+
+    response.removeCookie("idSesion");
+    response.redirect("/menu_login");
+
+    return "";
   }
 }

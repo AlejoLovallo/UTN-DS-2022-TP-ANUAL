@@ -44,7 +44,7 @@ const rechazarMiembro = async () => {
     const sector = document.getElementById("nombreSector").innerText;
     const id_sector = document.getElementById("idSector").innerText;
 
-    await fetch(`${API_ENDPOINT}/aceptar_miembro`, {
+    await fetch(`${API_ENDPOINT}/rechazar_miembro`, {
       method: "POST",
 
       body: JSON.stringify({

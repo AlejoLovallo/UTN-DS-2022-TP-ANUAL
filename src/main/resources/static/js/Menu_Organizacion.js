@@ -1,3 +1,7 @@
+
+const API_ENDPOINT = "http://localhost:9000";
+
+
 $(function() {
     $('a.page-scroll').bind('click', function(event) {
         var $anchor = $(this);
@@ -21,3 +25,16 @@ $('.navbar-collapse ul li a').click(function() {
 const pantallaSolicitudes() = async () => {
         window.location.href = "./Aceptar_Miembros.html";
   };
+
+const logout() = async () => {
+   await fetch(`${API_ENDPOINT}/cerrar_sesion`, {
+      method: "POST",
+
+      headers: {
+        "Content-type": "application/json; charset=UTF-8",
+      },
+    })
+    .catch((error) => {
+      console.log(error)
+    });
+};
