@@ -16,7 +16,6 @@ const validateRegistrarTrayecto = async () => {
 
   await fetch(`${API_ENDPOINT}/agregar_trayecto`, {
     method: "POST",
-    mode: "no-cors",
 
     body: JSON.stringify({
       organizacion,
@@ -34,7 +33,7 @@ const validateRegistrarTrayecto = async () => {
       console.log("OKKKK");
       console.log(res);
       alert(res);
-      window.location.href = "./Menu_miembro.html";
+      window.location.href = "/menu_miembro";
     })
     .catch((e) => {
       console.log(e);

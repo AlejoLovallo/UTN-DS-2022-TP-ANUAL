@@ -1,23 +1,22 @@
+const API_ENDPOINT = "http://127.0.0.1:9000";
 
+//TODO: revisar esta funcion
 const registrarMediciones = async () => {
-    const path = document.getElementById("Path").value;
+    const path = document.getElementById("Path");
+    const file_upload = new FormData();
+    file_upload.append("file", path.files[0]);
 
-    await fetch(`${API_ENDPOINT}/cargarMediciones`, {
+    await fetch(`${API_ENDPOINT}/organizacion/cargar_mediciones`, {
         method: "POST",
-        mode: "no-cors",
     
-        body: JSON.stringify({
-            path,
-        }),
-    
-        headers: {
-          "Content-type": "application/json; charset=UTF-8",
-        },
+        body: file_upload,
+
       })
         .then((res) => {
           console.log("OKKKK");
           console.log(res);
-          window.location.href = "./Menu_organizacion.html";
+          alert("carga exitosa");
+          window.location.href = "/menu_organizacion";
         })
         .catch((e) => {
           console.log(e);

@@ -73,6 +73,7 @@ public class Actividad {
 
   //getters
 
+  public TipoDeActividad getTipoActividad(){return tipoActividad;}
   public TipoDeActividad getNombre() {return tipoActividad;}
 
   public TipoDeConsumo getTipoConsumo() {return tipoConsumo;}

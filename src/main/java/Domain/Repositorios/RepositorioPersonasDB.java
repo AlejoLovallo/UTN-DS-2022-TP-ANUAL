@@ -2,6 +2,7 @@ package Domain.Repositorios;
 
 import Domain.BaseDeDatos.EntityManagerHelper;
 import Domain.Miembro.Excepciones.PersonaException;
+import Domain.Miembro.Miembro;
 import Domain.Miembro.Persona;
 import Domain.Miembro.TipoDocumento;
 import Domain.Usuarios.Usuario;

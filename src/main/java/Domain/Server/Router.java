@@ -74,6 +74,8 @@ public class Router {
 
     /*** MIEMBROS ROUTES ***/
     Spark.get("/menu_miembro", miembroController::menu_miembro, Router.engine);
+    Spark.get("/registrarTrayectoHTML", miembroController::registrarTrayectoHTML,Router.engine);
+    Spark.get("/solicitarVinculacionHTML", miembroController::solicitarVinculacionHTML, Router.engine);
     Spark.get("/visualizar_trayectos", miembroController::visualizarTrayectos);
     Spark.get("/calcularHTMLmiembro", miembroController::calcularHTMLmiembro, Router.engine);
     Spark.get("/miembro/:username/:organizacion", miembroController::getMiembro);
@@ -89,11 +91,13 @@ public class Router {
     Spark.get("/calcularHTMLorg", organizacionController::calcularHCorg, Router.engine);
     Spark.get("/solicitudes_miembro",organizacionController::respuestaListaMiembros);
     Spark.get("/registrarMedicionesHTML", organizacionController::registrarMedicionesHTML,Router.engine);
+    Spark.get("/generarReporteHTML", organizacionController::generarReporteHTML, Router.engine);
     Spark.post("/organizacion",organizacionController::crearOrganizacion);
     Spark.post("/aceptar_miembro", organizacionController::respuestaAceptarMiembro);
     Spark.post("/rechazar_miembro", organizacionController::respuestaRechazarMiembro);
     Spark.post("/organizacion/calcularHC", organizacionController::respuestaCalcularHC);
     Spark.post("/organizacion/cargar_mediciones", organizacionController::cargarMediciones);
+    Spark.post("/generar_reporte", organizacionController::respuestaGenerarReporte);
     Spark.put("/organizacion/:nombre",organizacionController::modificarOrganizacion);
 
 

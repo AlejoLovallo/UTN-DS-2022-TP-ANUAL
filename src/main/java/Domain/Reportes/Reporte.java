@@ -76,6 +76,11 @@ public abstract class Reporte {
 
     // SETTERS
 
+
+    public void setOrganizacion(Organizacion organizacion) {
+        this.organizacion = organizacion;
+    }
+
     public void setNombre(String nombre){
         this.nombre = nombre;
     }

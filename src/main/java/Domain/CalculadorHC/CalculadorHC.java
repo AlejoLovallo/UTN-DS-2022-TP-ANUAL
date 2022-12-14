@@ -72,13 +72,20 @@ public class CalculadorHC {
         Double factorDeEmision = this.factoresDeEmision.getFactorDeEmisionSegunActividad(TipoDeActividad.COMBUSTION_MOVIL).getNumero();
 
         for(Trayecto trayecto : miembro.getTrayectos()){
-            for(Tramo tramo : trayecto.getTramos()){
-                if(tramo.getMedioTransporte() instanceof VehiculoParticular){
-                    Double unidadesConsumidas = tramo.determinarDistancia() * tramo.getMedioTransporte().getConsumoPorKm();
-                    cantidadHC += unidadesConsumidas * factorDeEmision / ((VehiculoParticular) tramo.getMedioTransporte()).getCantPasajeros();
-                }else{
-                    Double unidadesConsumidas = tramo.determinarDistancia() * tramo.getMedioTransporte().getConsumoPorKm();
-                    cantidadHC += unidadesConsumidas * factorDeEmision;
+            if(
+                    trayecto.getFechaInicio().getYear() <= anio
+                    && trayecto.getFechaInicio().getMonthValue() <= mes
+                    && trayecto.getFechaFin().getYear() >= anio
+                    && trayecto.getFechaFin().getMonthValue() >= mes
+            ){
+                for(Tramo tramo : trayecto.getTramos()){
+                    if(tramo.getMedioTransporte() instanceof VehiculoParticular){
+                        Double unidadesConsumidas = tramo.determinarDistancia() * tramo.getMedioTransporte().getConsumoPorKm();
+                        cantidadHC += unidadesConsumidas * factorDeEmision / ((VehiculoParticular) tramo.getMedioTransporte()).getCantPasajeros();
+                    }else{
+                        Double unidadesConsumidas = tramo.determinarDistancia() * tramo.getMedioTransporte().getConsumoPorKm();
+                        cantidadHC += unidadesConsumidas * factorDeEmision;
+                    }
                 }
             }
             cantidadHC *= ((trayecto.diasDelMesActivo(mes, anio)/7.0) * (trayecto.getFrecuenciaSemanal()) * (miembro.getSector().getOrganizacion().getNumDiasPorSemana()));
