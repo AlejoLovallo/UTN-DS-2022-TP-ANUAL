@@ -52,16 +52,8 @@ public class Router {
         });
 
     Spark.before((request, response) -> response.header("Access-Control-Allow-Origin", "*"));
-    //Spark.before("/", AuthMiddleware::verificarSesion);
-/*
-    Spark.get("/", loginController::inicio, Router.engine);
-
-    Spark.get("/menu_inicio", loginController::inicio, Router.engine);
-
-    //TODO hacer funcion de loginController(menu_login) para mandar el HTML
-    Spark.get("/menu_login", loginController::menu_login, Router.engine);
-
-*/
+    Spark.before("/", AuthMiddleware::verificarSesion);
+    Spark.before("/menu_login", AuthMiddleware::verificarSesion);
 
     //TODO este post recibe los datos del json
 

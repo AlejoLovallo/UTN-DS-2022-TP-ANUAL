@@ -38,20 +38,25 @@ console.log(password);
         alert(res.message);
       }
       if(res.message =='pantalla organizacion'){
-        document.cookie = `idSesion=${res.message}`;
-        window.location.replace(`${API_ENDPOINT}/menu_organizacion`);
+        document.cookie = `idSesion=${res.data}; expires=`+new Date(9999,0,1).toUTCString()+`; path=/`;
+        window.localStorage.setItem('idSesion', res.data);
+        window.sessionStorage.setItem('idSesion', res.data);
+        location.replace(`${API_ENDPOINT}/menu_organizacion`);
       }
       if(res.message =='Pantalla Admin'){
         //TODO ver la pantalla del admin
-        document.cookie = `idSesion=${res.message}`;
+        //document.cookie = `idSesion=${res.message}`;
+        window.localStorage.setItem('idSesion', res.data);
         window.location.replace(`${API_ENDPOINT}/menu_organizacion`);
       }
       if(res.message =='pantalla persona'){
-        document.cookie = `idSesion=${res.message}`;
+        //document.cookie = `idSesion=${res.message}`;
+        window.localStorage.setItem('idSesion', res.data);
         window.location.replace(`${API_ENDPOINT}/menu_miembro`);
       }
       if(res.message =='pantalla usuario default'){
-        document.cookie = `idSesion=${res.message}`;
+        //document.cookie = `idSesion=${res.message}`;
+        window.localStorage.setItem('idSesion', res.data);
         alert("usuario default");
       }
      })
