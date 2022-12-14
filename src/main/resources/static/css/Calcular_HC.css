@@ -817,3 +817,10 @@ p.navbar-brand:hover{
     border-radius: 4px;
     overflow: scroll;
   }
+
+  .valorHC {
+    justify-content: center;
+    margin: 0 auto;
+    color: #da8617;
+    font-size: 50px;
+}
