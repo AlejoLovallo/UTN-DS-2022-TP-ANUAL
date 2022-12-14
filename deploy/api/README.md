@@ -12,7 +12,7 @@ Before:
 
 * Run container:
 
-```docker run --name dstp-back -p 9000:9000 dstp-back-i```
+```docker run --name dstp-back -p 3020:9000 dstp-back-i```
 
 *************************
 

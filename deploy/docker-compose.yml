@@ -29,6 +29,6 @@ services:
     container_name: tp-app
     restart: always
     ports:
-      - "9000:9000"
+      - "3020:9000"
     links:
       - db
