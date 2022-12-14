@@ -30,17 +30,17 @@ public class ParserJSONMiembro {
         {
             //TODO: revisar que pasa si hay 2 vehiculos con los mismos atributos excepto por 'consumoPorKm'
             RepositorioVehiculoParticularDB repositorioVehiculoParticularDB = new RepositorioVehiculoParticularDB();
-            VehiculoParticular aux = repositorioVehiculoParticularDB.buscarVehiculoParticular(obj.get("TipoVehiculo").toString(), obj.get("TipoCombustible").toString(), Integer.parseInt(obj.get("CantidadPasajeros").toString()));
+            VehiculoParticular aux = repositorioVehiculoParticularDB.buscarVehiculoParticular(obj.get("TipoVehiculo").toString(), obj.get("TipoCombustible").toString(), Integer.parseInt(obj.get("CantidadPasajeros").toString()), Double.parseDouble(obj.get("ConsumoPorKm").toString()));
             if(aux != null)
                 return aux;
             else{
                 repositorioVehiculoParticularDB.crearVehiculoParticular(
                         TipoVehiculo.valueOf((String)obj.get("TipoVehiculo")),
                         TipoCombustible.valueOf((String)obj.get("TipoCombustible")),
-                         Integer.parseInt(obj.get("CantidadPasajeros").toString()),
-                        4//((Double) obj.get("consumoPorKm"))
+                        Integer.parseInt(obj.get("CantidadPasajeros").toString()),
+                        Integer.parseInt(obj.get("ConsumoPorKm").toString())
                 );
-                return repositorioVehiculoParticularDB.buscarVehiculoParticular((String)obj.get("vehiculo"), (String)obj.get("combustible"), ((Long)obj.get("cantidadPasajeros")).intValue());
+                return repositorioVehiculoParticularDB.buscarVehiculoParticular((String)obj.get("vehiculo"), (String)obj.get("combustible"), ((Long)obj.get("cantidadPasajeros")).intValue(), Double.parseDouble(obj.get("ConsumoPorKm").toString()) );
             }
         }
         else if(obj.get("tipo").toString().equals("transportePublico"))
@@ -68,8 +68,8 @@ public class ParserJSONMiembro {
                 obj.get("LocalidadSalida").toString(),
                 obj.get("CalleSalida").toString(),
                 Integer.parseInt(obj.get("AlturaSalida").toString()),
-                TipoDireccion.Trabajo.toString()
-                //jsonDirSalida.get("tipoDireccion").toString()
+                obj.get("TipoDireccionSalida").toString()
+                
         );
 
         Direccion direccionLlegada = repositorioDireccionDB.buscarDireccion(
@@ -79,8 +79,7 @@ public class ParserJSONMiembro {
                 obj.get("LocalidadLlegada").toString(),
                 obj.get("CalleLlegada").toString(),
                 Integer.parseInt(obj.get("AlturaLlegada").toString()),
-                TipoDireccion.Trabajo.toString()
-                //jsonDirSalida.get("tipoDireccion").toString()
+                obj.get("TipoDireccionLlegada").toString()
         );
 
 
