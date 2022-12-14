@@ -3,13 +3,17 @@ const API_ENDPOINT = "http://127.0.0.1:9000";
 const solicitar_vinculacion = async () => {
   const organizacion = document.getElementById("Organizacion").value;
   const sector = document.getElementById("Sector").value;
+  const idSesion = getCookie("idSesion");
+
+    console.log(idSesion);
 
   fetch(`${API_ENDPOINT}/enviar_solicitud`, {
     method: "POST",
 
     body: JSON.stringify({
       organizacion,
-      sector
+      sector,
+      idSesion,
     }),
 
     headers: {
@@ -26,3 +30,10 @@ const solicitar_vinculacion = async () => {
       console.log(e);
     });
 };
+
+
+function getCookie(name) {
+  const value = `; ${document.cookie}`;
+  const parts = value.split(`; ${name}=`);
+  if (parts.length === 2) return parts.pop().split(';').shift();
+}

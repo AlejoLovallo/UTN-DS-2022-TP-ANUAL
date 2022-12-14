@@ -211,15 +211,18 @@ public class MiembroController {
     }
 
     public Object menuEnviarSolicitud(Request request, Response response) throws ParseException {
-        String username = request.cookie("username");
-
-        RepositorioPersonasDB repositorioPersonasDB = new RepositorioPersonasDB();
-        Persona persona = repositorioPersonasDB.buscarPersonaPorUsername(username);
+        //String username = request.cookie("username");
 
         JSONParser jsonParser = new JSONParser();
         JSONObject pedido = (JSONObject) jsonParser.parse(request.body());
         String nombreOrganizacion = (String) pedido.get("organizacion");
         String nombreSector = (String) pedido.get("sector");
+        String idSesion = (String) pedido.get("idSesion");
+
+        String username = SesionManager.get().obtenerAtributos(idSesion).get("username").toString();
+
+        RepositorioPersonasDB repositorioPersonasDB = new RepositorioPersonasDB();
+        Persona persona = repositorioPersonasDB.buscarPersonaPorUsername(username);
 
         RepositorioOrganizacionesDB repositorioOrganizacionesDB = new RepositorioOrganizacionesDB();
         Organizacion organizacion = repositorioOrganizacionesDB.buscarOrganizacionPorNombre(nombreOrganizacion);
@@ -319,29 +322,29 @@ public class MiembroController {
 
     public ModelAndView menu_miembro(Request request, Response response){
         Map<String, Object> parametros = new HashMap<>();
-        response.cookie("username", request.cookie("username"));
-        response.cookie("persona", request.cookie("persona"));
+        //response.cookie("username", request.cookie("username"));
+        //response.cookie("persona", request.cookie("persona"));
         return new ModelAndView(parametros,"Menu_Miembro.html");
     }
 
     public ModelAndView calcularHTMLmiembro(Request request, Response response){
         Map<String, Object> parametros = new HashMap<>();
-        response.cookie("username", request.cookie("username"));
-        response.cookie("persona", request.cookie("persona"));
+        //response.cookie("username", request.cookie("username"));
+        //response.cookie("persona", request.cookie("persona"));
         return new ModelAndView(parametros,"Calcular_HC.html");
     }
 
     public ModelAndView registrarTrayectoHTML(Request request, Response response){
         Map<String, Object> parametros = new HashMap<>();
-        response.cookie("username", request.cookie("username"));
-        response.cookie("persona", request.cookie("persona"));
+        //response.cookie("username", request.cookie("username"));
+        //response.cookie("persona", request.cookie("persona"));
         return new ModelAndView(parametros,"Registrar_Trayecto.html");
     }
 
     public ModelAndView solicitarVinculacionHTML(Request request, Response response){
         Map<String, Object> parametros = new HashMap<>();
-        response.cookie("username", request.cookie("username"));
-        response.cookie("persona", request.cookie("persona"));
+        //response.cookie("username", request.cookie("username"));
+        //response.cookie("persona", request.cookie("persona"));
         return new ModelAndView(parametros,"Solicitar_Vinculacion.html");
     }
 

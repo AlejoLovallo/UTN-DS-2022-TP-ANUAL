@@ -1,4 +1,11 @@
-const API_ENDPOINT = "http://127.0.0.1:9000";
+const API_ENDPOINT = "http://localhost:9000";
+
+
+function getCookie(name) {
+  const value = `; ${document.cookie}`;
+  const parts = value.split(`; ${name}=`);
+  if (parts.length === 2) return parts.pop().split(';').shift();
+}
 
 const aceptarMiembro = async () => {
   const name = document.getElementById("nombre").innerText;
@@ -7,6 +14,7 @@ const aceptarMiembro = async () => {
   const dni = document.getElementById("dni").innerText;
   const sector = document.getElementById("nombreSector").innerText;
   const id_sector = document.getElementById("idSector").innerText;
+  const idSesion = getCookie("idSesion");
 
 
   await fetch(`${API_ENDPOINT}/aceptar_miembro`, {
@@ -19,6 +27,7 @@ const aceptarMiembro = async () => {
       dni,
       sector,
       id_sector,
+      idSesion,
     }),
 
     headers: {
@@ -43,6 +52,7 @@ const rechazarMiembro = async () => {
     const dni = document.getElementById("dni").innerText;
     const sector = document.getElementById("nombreSector").innerText;
     const id_sector = document.getElementById("idSector").innerText;
+      const idSesion = getCookie("idSesion");
 
     await fetch(`${API_ENDPOINT}/rechazar_miembro`, {
       method: "POST",
@@ -53,7 +63,8 @@ const rechazarMiembro = async () => {
         tipoDeDocumento,
         dni,
         sector,
-        id_sector
+        id_sector,
+        idSesion
       }),
   
       headers: {

@@ -34,6 +34,12 @@ const volverMenu = async () => {
     }
   };
 
+function getCookie(name) {
+  const value = `; ${document.cookie}`;
+  const parts = value.split(`; ${name}=`);
+  if (parts.length === 2) return parts.pop().split(';').shift();
+}
+
 const calcularHC = async () => {
   const mesDesde = document.getElementById("MesDesde").value;
   const añoDesde = document.getElementById("AñoDesde").value;

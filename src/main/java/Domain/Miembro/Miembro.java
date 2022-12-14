@@ -75,6 +75,10 @@ public class Miembro {
   //////////////////////////////////  SETTERS
 
 
+  public void setSector(Sector sector) {
+    this.sector = sector;
+  }
+
   public void setActivo(Boolean activo) {
     this.activo = activo;
   }

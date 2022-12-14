@@ -141,7 +141,9 @@ public class OrganizacionController {
 
   public Object respuestaListaMiembros(Request request, Response response)
   {
-      String username = request.cookie("username");
+      String idSesion = request.cookie("idSesion");
+
+      String username = SesionManager.get().obtenerAtributos(idSesion).get("username").toString();
 
       RepositorioUsuariosDB repositorioUsuariosDB = new RepositorioUsuariosDB();
       Usuario usuario = repositorioUsuariosDB.buscarUsuario(username);
@@ -165,18 +167,20 @@ public class OrganizacionController {
   }
 
     public Object respuestaAceptarMiembro(Request request, Response response) throws ParseException {
-        String username = request.cookie("username");
+
+        JSONParser jsonParser = new JSONParser();
+        JSONObject jsonObject = (JSONObject) jsonParser.parse(request.body());
+        String dniPersona =  jsonObject.get("dni").toString();
+        String id_sector =  jsonObject.get("id_sector").toString();
+        String idSesion = jsonObject.get("idSesion").toString();
+
+        String username = SesionManager.get().obtenerAtributos(idSesion).get("username").toString();
 
         RepositorioUsuariosDB repositorioUsuariosDB = new RepositorioUsuariosDB();
         Usuario usuario = repositorioUsuariosDB.buscarUsuario(username);
 
         RepositorioOrganizacionesDB repositorioOrganizacionesDB = new RepositorioOrganizacionesDB();
         Organizacion organizacion = repositorioOrganizacionesDB.buscarOrganizacionPorUsuario(usuario);
-
-        JSONParser jsonParser = new JSONParser();
-        JSONObject jsonObject = (JSONObject) jsonParser.parse(request.body());
-        String dniPersona =  jsonObject.get("dni").toString();
-        String id_sector =  jsonObject.get("id_sector").toString();
 
         RepositorioPersonasDB repositorioPersonasDB = new RepositorioPersonasDB();
         Persona persona = repositorioPersonasDB.buscarPersonaPorNroDocumento(dniPersona);
@@ -199,18 +203,21 @@ public class OrganizacionController {
     }
 
     public Object respuestaRechazarMiembro(Request request, Response response) throws ParseException {
-        String username = request.cookie("username");
+        //String username = request.cookie("username");
+
+        JSONParser jsonParser = new JSONParser();
+        JSONObject jsonObject = (JSONObject) jsonParser.parse(request.body());
+        String idPersona = jsonObject.get("dni").toString();
+        String idSector = jsonObject.get("id_sector").toString();
+        String idSesion = jsonObject.get("idSesion").toString();
+
+        String username = SesionManager.get().obtenerAtributos(idSesion).get("username").toString();
 
         RepositorioUsuariosDB repositorioUsuariosDB = new RepositorioUsuariosDB();
         Usuario usuario = repositorioUsuariosDB.buscarUsuario(username);
 
         RepositorioOrganizacionesDB repositorioOrganizacionesDB = new RepositorioOrganizacionesDB();
         Organizacion organizacion = repositorioOrganizacionesDB.buscarOrganizacionPorUsuario(usuario);
-
-        JSONParser jsonParser = new JSONParser();
-        JSONObject jsonObject = (JSONObject) jsonParser.parse(request.body());
-        String idPersona = jsonObject.get("dni").toString();
-        String idSector = jsonObject.get("id_sector").toString();
 
         RepositorioPersonasDB repositorioPersonasDB = new RepositorioPersonasDB();
         Persona persona = repositorioPersonasDB.buscarPersonaPorNroDocumento(idPersona);
@@ -224,8 +231,17 @@ public class OrganizacionController {
         ).findAny();
 
         //TODO: probar
-        RepositorioMiembrosDB repositorioMiembrosDB = new RepositorioMiembrosDB();
-        repositorioMiembrosDB.eliminar(miembro.get());
+        persona.getMiembros().remove(miembro.get());
+        sector.get().getMiembros().remove(miembro.get());
+
+        Miembro miembro1 = miembro.get();
+
+        miembro1.setPersona(null);
+        miembro1.setSector(null);
+        miembro1 = null;
+
+        repositorioOrganizacionesDB.modificar(organizacion);
+        repositorioPersonasDB.modificar(persona);
 
         response.type("text/javascript");
         response.status(200);
