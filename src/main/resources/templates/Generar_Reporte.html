@@ -5,7 +5,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Calculadora HC</title>
-    <link rel="stylesheet" type="text/css" href="../static/css/Visualizar_Reporte.css">
+    <link rel="stylesheet" type="text/css" href="/css/Generar_Reporte.css">
+    <script src="/js/Generar_Reporte.js"></script>
     <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.2/themes/smoothness/jquery-ui.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
     <link rel="stylesheet"
@@ -30,7 +31,7 @@
                         <a href="#page-top"></a>
                     </li>
                     <li class="">
-                        <a class="home" href="./Menu_Organizacion.html"> Home </a>
+                        <a class="home" href="/menu_organizacion"> Home </a>
                     </li>
                     <li>
                         <a class="page-scroll" href="./Login.html">Cerrar Sesión</a>
@@ -63,11 +64,10 @@
                     </label>
                     <br>
                     <br>
-                      <select class ="select-css" name="seleccionDeSexo" id="Sexo" onChange=changetextbox()>
+                      <select class ="select-css" id="tipo">
                         <option value="0">Seleccione el tipo</option>
-                        <option value="1">Total</option>
-                        <option value="2">Composición</option>
-                        <option value="2">Evolción</option>
+                        <option value="COMPOSICION">Composición</option>
+                        <option value="EVOLUCION">Evolción</option>
                         
                       </select>
                   </div>
@@ -80,7 +80,7 @@
                     </label>
                     <br>
                     <br>
-                    <select class ="select-css" name="seleccionDeSexo" id="Sexo" onChange=changetextbox()>
+                    <select class ="select-css" id="mesDesde">
                         <option value="0">Seleccione el mes</option>
                         <option value="1">1</option>
                         <option value="2">2</option>
@@ -104,11 +104,11 @@
                     </label>
                     <br>
                     <br>
-                    <select class ="select-css" name="seleccionDeSexo" id="Sexo" onChange=changetextbox()>
+                    <select class ="select-css" id="añoDesde">
                         <option value="0">Seleccione el año</option>
-                        <option value="1">2020</option>
-                        <option value="2">2021</option>
-                        <option value="3">2022</option>
+                        <option value="2020">2020</option>
+                        <option value="2021">2021</option>
+                        <option value="2022">2022</option>
     
                     </select>
                 </div>
@@ -125,7 +125,7 @@
                     </label>
                     <br>
                     <br>
-                    <select class ="select-css" name="seleccionDeSexo" id="Sexo" onChange=changetextbox()>
+                    <select class ="select-css" id="mesHasta">
                         <option value="0">Seleccione el mes</option>
                         <option value="1">1</option>
                         <option value="2">2</option>
@@ -149,11 +149,11 @@
                     </label>
                     <br>
                     <br>
-                    <select class ="select-css" name="seleccionDeSexo" id="Sexo" onChange=changetextbox()>
+                    <select class ="select-css" id="añoHasta">
                         <option value="0">Seleccione el año</option>
-                        <option value="1">2020</option>
-                        <option value="2">2021</option>
-                        <option value="3">2022</option>
+                        <option value="2020">2020</option>
+                        <option value="2021">2021</option>
+                        <option value="2022">2022</option>
     
                     </select>
                 </div>
@@ -161,7 +161,7 @@
                 </div>
                 <br>
         
-                    <button type="submit" id="myBtn" class="button button-back">Visualizar/Generar Reporte</button>
+                    <button type="button" id="myBtn" onclick="generarReporte()" class="button button-back">Generar Reporte</button>
                  </form>
             </div>
             </div>
@@ -170,14 +170,13 @@
     </section>
 
     <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
-    <script src="../static/js/Calcular_HC.js"></script>
 </body>
 
 <footer class="footer-distributed">
 
     <div class="footer-right">
     
-        <a href="https://github.com/AlejoLovallo/UTN-DS-2022-TP-ANUAL"><img src="../images/logo_github.jpeg"
+        <a href="https://github.com/AlejoLovallo/UTN-DS-2022-TP-ANUAL"><img src="/images/logo_github.jpeg"
         class="imagen_footer" alt="icon"></a>
     
     </div>

@@ -16,7 +16,7 @@ const registrarMediciones = async () => {
           console.log("OKKKK");
           console.log(res);
           alert("carga exitosa");
-          //window.location.href = "/menu_organizacion";
+          window.location.href = "/menu_organizacion";
         })
         .catch((e) => {
           console.log(e);

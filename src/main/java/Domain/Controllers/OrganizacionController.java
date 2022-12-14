@@ -10,9 +10,7 @@ import Domain.Organizacion.Excepciones.OrganizacionException;
 import Domain.Organizacion.Organizacion;
 import Domain.Organizacion.Sector;
 import Domain.Organizacion.TipoOrganizacion;
-import Domain.Reportes.ReporteComposicion;
-import Domain.Reportes.ReporteEvolucion;
-import Domain.Reportes.ReporteTotal;
+import Domain.Reportes.*;
 import Domain.Repositorios.*;
 import Domain.Usuarios.Usuario;
 import com.google.gson.Gson;
@@ -70,7 +68,7 @@ public class OrganizacionController {
     {
         response.type("text/html");
 
-        response.body(htmlToString("Visualizar_Reporte.html"));
+        response.body(htmlToString("Generar_Reporte.html"));
         return null;
     }
 
@@ -273,6 +271,47 @@ public class OrganizacionController {
         return calculo;
     }
 
+    public Object respuestaGenerarReporte(Request request, Response response) throws IOException, ParseException {
+
+
+        String username = request.cookie("username");
+
+        RepositorioUsuariosDB repositorioUsuariosDB = new RepositorioUsuariosDB();
+        Usuario usuario = repositorioUsuariosDB.buscarUsuario(username);
+
+        RepositorioOrganizacionesDB repositorioOrganizacionesDB = new RepositorioOrganizacionesDB();
+        Organizacion organizacion = repositorioOrganizacionesDB.buscarOrganizacionPorUsuario(usuario);
+
+        JSONParser jsonParser = new JSONParser();
+        JSONObject jsonObject = (JSONObject) jsonParser.parse(request.body());
+        String mesDesde = jsonObject.get("mesDesde").toString();
+        String añoDesde = jsonObject.get("añoDesde").toString();
+        String mesHasta = jsonObject.get("mesHasta").toString();
+        String añoHasta = jsonObject.get("añoHasta").toString();
+        TipoDeReporte tipo = TipoDeReporte.valueOf(jsonObject.get("tipo").toString());
+
+        Integer MesDesde = Integer.parseInt(mesDesde);
+        Integer AñoDesde = Integer.parseInt(añoDesde);
+        Integer MesHasta = Integer.parseInt(mesHasta);
+        Integer AñoHasta = Integer.parseInt(añoHasta);
+
+        LocalDate fechaDesde = LocalDate.of(AñoDesde, MesDesde, 01);
+        LocalDate fechaHasta = LocalDate.of(AñoHasta, MesHasta, 01);
+
+        Reporte reporte = null;
+        if(tipo.equals(TipoDeReporte.COMPOSICION)){
+            reporte = GeneradorReportes.getInstance().reporteCompHC_Org(organizacion, fechaDesde, fechaHasta);
+        }
+        else{
+            reporte = GeneradorReportes.getInstance().reporteEvolucionHC_Org(organizacion, fechaDesde, fechaHasta);
+        }
+
+        response.status(200);
+
+        return new Gson()
+                .toJson(new StandardResponse(StatusResponse.SUCCESS,"generacion existosa"));
+    }
+
     public Object cargarMediciones(Request request, Response response) throws ServletException, IOException {
         String username = request.cookie("username");
 
@@ -391,5 +430,12 @@ public class OrganizacionController {
         response.cookie("username",request.cookie("username"));
         response.cookie("organizacion",request.cookie("organizacion"));
         return new ModelAndView(parametros,"Registrar_Mediciones.html");
+    }
+
+    public ModelAndView generarReporteHTML (Request request, Response response) {
+        Map<String, Object> parametros = new HashMap<>();
+        response.cookie("username",request.cookie("username"));
+        response.cookie("organizacion",request.cookie("organizacion"));
+        return new ModelAndView(parametros,"Generar_Reporte.html");
     }
 }

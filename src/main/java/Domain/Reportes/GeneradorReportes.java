@@ -96,8 +96,11 @@ public class GeneradorReportes {
 
                 reporte.getActividades().add(act);
             }
+            reporte.setOrganizacion(organizacion);
+            organizacion.getReportes().add(reporte);
 
-            repositorioReportes.getReportes().add(reporte);
+            //repositorioReportes.getReportes().add(reporte);
+            repositorioReportes.agregarReporte(reporte);
 
             return reporte;
         }
@@ -132,7 +135,7 @@ public class GeneradorReportes {
                 }
             }
             ReporteComposicion reporte = new ReporteComposicion(agenteSectorial.getNombre(), TipoDeReporte.COMPOSICION, fechaDesde, fechaHasta, listaActividades);
-            repositorioReportes.getReportes().add(reporte);
+            //repositorioReportes.getReportes().add(reporte);
 
             repositorioReportes.agregarReporte(reporte);
 
@@ -222,9 +225,12 @@ public class GeneradorReportes {
             }
         }
         ReporteEvolucion reporte = new ReporteEvolucion(organizacion.getRazonSocial(), TipoDeReporte.EVOLUCION, fechaDesde, fechaHasta, evolucionHC);
-        repositorioReportes.getReportes().add(reporte);
+        reporte.setOrganizacion(organizacion);
+        organizacion.getReportes().add(reporte);
 
+        //repositorioReportes.getReportes().add(reporte);
         repositorioReportes.agregarReporte(reporte);
+        repositorioOrganizaciones.modificar(organizacion);
 
         return reporte;
     }

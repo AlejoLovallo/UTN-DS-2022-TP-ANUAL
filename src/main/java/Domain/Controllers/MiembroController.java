@@ -91,7 +91,7 @@ public class MiembroController {
     public Object visualizadoReportes(Request request, Response response) {
         response.type("text/html");
 
-        response.body(htmlToString("Visualizar_Reporte.html"));
+        response.body(htmlToString("Generar_Reporte.html"));
         return null;
     }
 
