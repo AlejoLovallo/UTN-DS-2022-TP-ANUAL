@@ -1,37 +1,15 @@
-const API_ENDPOINT = "http://127.0.0.1:9000";
+const API_ENDPOINT = "http://localhost:9000";
 
 
 const formHC = '<h3>Tu huella de carbono para ese perÍodo es: </h3> <br> <p class="valorHC" id="valorHC">${XX}</p> <br> <br> <button type="button" id="myBtn" class="button button-back" onclick="volverAtras()">Volver atrás</button>'
 
 
 const volverAtras = async () => {
-  var valuesCookies = document.cookie.split(';');
-  for(var i = 0; i < valuesCookies.length; i++){
-    var cookieInfo = valuesCookies[i].split('=');
-    if(cookieInfo[0].trim() == 'organizacion')
-    {
-          window.location.href = "/calcularHTMLorg";
-    }
-    else if(cookieInfo[0].trim() == 'persona')
-    {
-          window.location.href = "/calcularHTMLmiembro";
-    }
-    }
+     window.location.href = "./";
   };
 
 const volverMenu = async () => {
-  var valuesCookies = document.cookie.split(';');
-  for(var i = 0; i < valuesCookies.length; i++){
-    var cookieInfo = valuesCookies[i].split('=');
-    if(cookieInfo[0].trim() == 'organizacion')
-    {
-          window.location.href = "/menu_organizacion";
-    }
-    else if(cookieInfo[0].trim() == 'persona')
-    {
-          window.location.href = "/menu_miembro";
-    }
-    }
+    window.location.href = "./";
   };
 
 function getCookie(name) {
@@ -52,6 +30,73 @@ const calcularHC = async () => {
     console.log(añoHasta);
     console.log(document.cookie);
 
+    await fetch(`./pedidoMenuCalcularHC`, {
+        method: "GET",
+    }).then((response) => response.json())
+    .then((response) => {
+        console.log(response);
+        console.log(response.tipoUsuario);
+        if(response.tipoUsuario == "organizacion"){
+                  fetch(`${API_ENDPOINT}/organizacion/calcularHC`, {
+                    method: "POST",
+
+                    body: JSON.stringify({
+                        mesDesde,
+                        añoDesde,
+                        mesHasta,
+                        añoHasta
+                    }),
+
+                    headers: {
+                      "Content-type": "application/json; charset=UTF-8",
+                    },
+                  }).then((response) => response.json())
+                      .then((data) => {
+                      //console.log("OKKKK");
+                      //console.log(data);
+                      //console.log(data.resultado);
+                      //console.log(data.text());
+                      //console.log(response.message);
+                      console.log(data);
+                      $('#seb').css('display','flex');
+                      $('#modal-container').append(formHC);
+                      $('#CalcularHC').prop('disabled',true);
+                      $('#valorHC').html(data.resultado);
+                    })
+                    .catch((e) => {
+                      console.log(e);
+                    });
+        }
+        else if(response.tipoUsuario == "persona"){
+                        fetch(`${API_ENDPOINT}/miembro/calcularHC`, {
+                        method: "POST",
+
+                        body: JSON.stringify({
+                           mesDesde,
+                           añoDesde,
+                           mesHasta,
+                           añoHasta
+                        }),
+
+                        headers: {
+                           "Content-type": "application/json; charset=UTF-8",
+                        },
+                        })
+                        .then((response) => response.json())
+                        .then((data) => {
+                            console.log("OKKKK");
+                            console.log(data);
+                            $('#seb').css('display','flex');
+                            $('#modal-container').append(formHC);
+                            $('#CalcularHC').prop('disabled',true);
+                            $('#valorHC').html(data.resultado);
+                        })
+                        .catch((e) => {
+                            console.log(e);
+                        });
+        }
+    })
+/*
   var valuesCookies = document.cookie.split(';');
   for(var i = 0; i < valuesCookies.length; i++){
     var cookieInfo = valuesCookies[i].split('=');
@@ -116,9 +161,8 @@ const calcularHC = async () => {
             .catch((e) => {
                 console.log(e);
             });
-    }
+    }*/
   }
 
-};
 
 

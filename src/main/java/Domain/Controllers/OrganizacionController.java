@@ -15,6 +15,7 @@ import Domain.Repositorios.*;
 import Domain.Usuarios.Usuario;
 import com.google.gson.Gson;
 import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
@@ -43,6 +44,27 @@ public class OrganizacionController {
         //TODO: revisar si funciona
         File archivoHTML = new File("src/main/resources/templates/Registrar_Mediciones.html");
         return archivoHTML.toString();
+    }
+
+    public Object pedidoMenuCalcularHC(Request request, Response response){
+
+        JSONObject tipo = new JSONObject();
+
+        String idSesion = request.cookie("idSesion");
+
+        if(SesionManager.get().obtenerAtributos(idSesion).get("rol").equals("persona")){
+            tipo.put("tipoUsuario", "persona");
+        }
+        else if(SesionManager.get().obtenerAtributos(idSesion).get("rol").equals("organizacion")){
+            tipo.put("tipoUsuario", "organizacion");
+        }
+
+        response.type("application/json");
+        response.body(tipo.toString());
+
+
+        return tipo;
+        //return new Gson().toJson(new StandardResponse(StatusResponse.SUCCESS,"identificado", tipo));
     }
 
     //GET
@@ -173,7 +195,7 @@ public class OrganizacionController {
         JSONObject jsonObject = (JSONObject) jsonParser.parse(request.body());
         String dniPersona =  jsonObject.get("dni").toString();
         String id_sector =  jsonObject.get("id_sector").toString();
-        String idSesion = jsonObject.get("idSesion").toString();
+        String idSesion = request.cookie("idSesion");
 
         String username = SesionManager.get().obtenerAtributos(idSesion).get("username").toString();
 
@@ -210,7 +232,7 @@ public class OrganizacionController {
         JSONObject jsonObject = (JSONObject) jsonParser.parse(request.body());
         String idPersona = jsonObject.get("dni").toString();
         String idSector = jsonObject.get("id_sector").toString();
-        String idSesion = jsonObject.get("idSesion").toString();
+        String idSesion = request.cookie("idSesion");
 
         String username = SesionManager.get().obtenerAtributos(idSesion).get("username").toString();
 
@@ -251,10 +273,11 @@ public class OrganizacionController {
     }
 
     public Object respuestaCalcularHC(Request request, Response response) throws IOException, ParseException {
-        
 
-        String username = request.cookie("username");
 
+        String idSesion = request.cookie("idSesion");
+
+        String username = SesionManager.get().obtenerAtributos(idSesion).get("username").toString();
         RepositorioUsuariosDB repositorioUsuariosDB = new RepositorioUsuariosDB();
         Usuario usuario = repositorioUsuariosDB.buscarUsuario(username);
 
@@ -291,7 +314,9 @@ public class OrganizacionController {
     public Object respuestaGenerarReporte(Request request, Response response) throws IOException, ParseException {
 
 
-        String username = request.cookie("username");
+        String idSesion = request.cookie("idSesion");
+
+        String username = SesionManager.get().obtenerAtributos(idSesion).get("username").toString();
 
         RepositorioUsuariosDB repositorioUsuariosDB = new RepositorioUsuariosDB();
         Usuario usuario = repositorioUsuariosDB.buscarUsuario(username);
@@ -330,7 +355,9 @@ public class OrganizacionController {
     }
 
     public Object cargarMediciones(Request request, Response response) throws ServletException, IOException {
-        String username = request.cookie("username");
+        String idSesion = request.cookie("idSesion");
+
+        String username = SesionManager.get().obtenerAtributos(idSesion).get("username").toString();
 
         Path pathArchivo = Paths.get("src/main/java/Domain/Utils/" + username + ".xls");
         if(Files.exists(pathArchivo))
@@ -363,7 +390,11 @@ public class OrganizacionController {
         HashMap<String, Object> params = new HashMap<>();
 
         JSONArray listaReportes = new JSONArray();
-        Optional<String> username = Optional.ofNullable(request.cookie("username"));
+
+        String idSesion = request.cookie("idSesion");
+
+
+        Optional<String> username = Optional.ofNullable(SesionManager.get().obtenerAtributos(idSesion).get("username").toString());
 
         //TODO para hacer pruebas
         //username = Optional.of("usuarioNormal");
