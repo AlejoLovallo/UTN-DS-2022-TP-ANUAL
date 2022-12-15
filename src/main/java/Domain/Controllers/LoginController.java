@@ -150,11 +150,11 @@ public class LoginController {
     return new ModelAndView(parametros,"index.html");
   }
 
-  public String logout(Request request, Response response){
-
-    response.removeCookie("idSesion");
-    response.redirect("/menu_login");
-
-    return "";
-  }
+//  public String logout(Request request, Response response){
+//
+//    //response.removeCookie("idSesion");
+//    response.redirect("/menu_login");
+//
+//    return "";
+//  }
 }

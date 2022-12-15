@@ -37,3 +37,37 @@ function getCookie(name) {
   const parts = value.split(`; ${name}=`);
   if (parts.length === 2) return parts.pop().split(';').shift();
 }
+
+-------------------------------------------------------
+const sliderOrganizacion = new Vue({
+        el: "#appVue",
+        data: {
+            username: "",
+            mascotaSeleccionada: "",
+            mascotas: [],
+        },
+        methods: {
+            login: function () {
+                //Armar objeto request
+                var request = {
+                    username: this.username,
+                    password: 123,
+                    mascotaSeleccionada: this.mascotaSeleccionada
+                }
+                console.log(request)
+                if (request.mascotaSeleccionada == "") {
+                    alert("Debes seleccionar una mascota")
+                    return;
+                }
+                //POST al API REST
+                //luego puede ser una redirección o mostrar un mensaje
+            }
+        },
+        created() {
+            fetch('./organizacionesGet')
+                .then(response => response.json())
+                .then(response => {
+                    this.mascotas = response.data
+                })
+        }
+    })

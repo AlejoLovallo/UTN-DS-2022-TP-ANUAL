@@ -5,7 +5,12 @@ import Domain.Organizacion.ClasificacionOrganizacion;
 import Domain.Organizacion.Organizacion;
 import Domain.Usuarios.Admin;
 import Domain.Usuarios.Contacto;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
 import org.json.simple.JSONObject;
+
+import java.util.List;
 
 public class ParserJSONOrganizacion {
 
@@ -33,6 +38,28 @@ public class ParserJSONOrganizacion {
      organizacionJSON.put("actividades",organizacion.getActividades());
 
       return organizacionJSON;
+    }
+
+    public static JsonElement organizacionesJsonElement(List<Organizacion> organizaciones){
+
+     JsonArray organizacionesJson = new JsonArray();
+
+     JsonObject organizacionJson = new JsonObject();
+
+     JsonArray sectoresJson = new JsonArray();
+
+     JsonObject sectorJson = new JsonObject();
+
+     for(Organizacion organizacion : organizaciones){
+       organizacionJson.addProperty("nombre",organizacion.getRazonSocial());
+       organizacionJson.addProperty("id",organizacion.getId());
+
+     }
+
+
+
+     return organizacionesJson;
+
     }
 
 }

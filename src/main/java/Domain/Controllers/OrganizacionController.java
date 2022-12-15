@@ -14,6 +14,7 @@ import Domain.Reportes.*;
 import Domain.Repositorios.*;
 import Domain.Usuarios.Usuario;
 import com.google.gson.Gson;
+import com.google.gson.JsonElement;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
@@ -124,8 +125,8 @@ public class OrganizacionController {
             res.body(new Gson()
                     .toJson(new StandardResponse(StatusResponse.SUCCESS,"pantalla organizacion").toString()));
 
-            res.cookie("username", usuario.getUsername());
-            res.cookie("organizacion", organizacion.getRazonSocial());
+//            res.cookie("username", usuario.getUsername());
+//            res.cookie("organizacion", organizacion.getRazonSocial());
 
             return new Gson()
                     .toJson(new StandardResponse(StatusResponse.SUCCESS,"pantalla organizacion"));
@@ -422,9 +423,9 @@ public class OrganizacionController {
 
     public ModelAndView menuOrganizacion(Request request, Response response) {
         Map<String, Object> parametros = new HashMap<>();
-        response.cookie("idSesion",request.cookie("idSesion"));
-        response.cookie("username",request.cookie("username"));
-        response.cookie("organizacion",request.cookie("organizacion"));
+//        response.cookie("idSesion",request.cookie("idSesion"));
+//        response.cookie("username",request.cookie("username"));
+//        response.cookie("organizacion",request.cookie("organizacion"));
 
 
         String idSesion = request.cookie("idSesion");
@@ -439,29 +440,53 @@ public class OrganizacionController {
 
     public ModelAndView solicitudesHTML (Request request, Response response) {
         Map<String, Object> parametros = new HashMap<>();
-        response.cookie("username",request.cookie("username"));
-        response.cookie("organizacion",request.cookie("organizacion"));
+//        response.cookie("username",request.cookie("username"));
+//        response.cookie("organizacion",request.cookie("organizacion"));
         return new ModelAndView(parametros,"Aceptar_Miembros.html");
     }
 
     public ModelAndView calcularHCorg (Request request, Response response) {
         Map<String, Object> parametros = new HashMap<>();
-        response.cookie("username",request.cookie("username"));
-        response.cookie("organizacion",request.cookie("organizacion"));
+//        response.cookie("username",request.cookie("username"));
+//        response.cookie("organizacion",request.cookie("organizacion"));
         return new ModelAndView(parametros,"Calcular_HC.html");
     }
 
     public ModelAndView registrarMedicionesHTML (Request request, Response response) {
         Map<String, Object> parametros = new HashMap<>();
-        response.cookie("username",request.cookie("username"));
-        response.cookie("organizacion",request.cookie("organizacion"));
+//        response.cookie("username",request.cookie("username"));
+//        response.cookie("organizacion",request.cookie("organizacion"));
         return new ModelAndView(parametros,"Registrar_Mediciones.html");
     }
 
     public ModelAndView generarReporteHTML (Request request, Response response) {
         Map<String, Object> parametros = new HashMap<>();
-        response.cookie("username",request.cookie("username"));
-        response.cookie("organizacion",request.cookie("organizacion"));
+//        response.cookie("username",request.cookie("username"));
+//        response.cookie("organizacion",request.cookie("organizacion"));
         return new ModelAndView(parametros,"Generar_Reporte.html");
+    }
+
+    public String getAllOrganizaciones(Request request, Response response) {
+        response.type("application/json");
+
+        RepositorioOrganizacionesDB repositorioOrganizacionesDB = new RepositorioOrganizacionesDB();
+
+        Optional<Collection<Organizacion>> organizaciones = Optional.ofNullable(repositorioOrganizacionesDB.getOrganizaciones());
+
+
+        if(organizaciones.isPresent()){
+            JsonElement organizacionesJson = new Gson().toJsonTree(organizaciones);
+
+            response.body(new Gson().toJson(new StandardResponse(StatusResponse.SUCCESS,"envio organizaciones",organizacionesJson )));
+            response.status(200);
+
+            return new Gson().toJson(new StandardResponse(StatusResponse.SUCCESS,"envio organizaciones",organizacionesJson ));
+        }
+
+
+        response.body(new Gson().toJson(new StandardResponse(StatusResponse.SUCCESS,"no hay ninguna organizacion",null)));
+        response.status(200);
+
+        return new Gson().toJson(new StandardResponse(StatusResponse.SUCCESS,"no hay ninguna organizacion",null));
     }
 }

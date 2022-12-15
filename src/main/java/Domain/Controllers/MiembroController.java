@@ -63,8 +63,8 @@ public class MiembroController {
                     persona.get("documento").toString(),
                     usuario
             );
-            res.cookie("username", usuario.getUsername());
-            res.cookie("organizacion",  persona.get("name").toString());
+//            res.cookie("username", usuario.getUsername());
+//            res.cookie("organizacion",  persona.get("name").toString());
 
             return new Gson()
                     .toJson(new StandardResponse(StatusResponse.SUCCESS,"pantalla miembro"));

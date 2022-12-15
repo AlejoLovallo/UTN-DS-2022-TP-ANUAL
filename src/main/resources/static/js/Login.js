@@ -10,7 +10,7 @@ const validateSignIn = async () => {
 console.log(username);
 console.log(password);
 
- await fetch(`${API_ENDPOINT}/menu_login`, {
+ await fetch(`./menu_login`, {
     method: "POST",
 
     body: JSON.stringify({
