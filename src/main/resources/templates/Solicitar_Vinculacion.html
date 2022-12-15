@@ -79,7 +79,8 @@
                     <br>
                     <select v-model="sectorSeleccionado"  class="select-css">
                         <option disabled value="">Seleccione un elemento</option>
-                        <option v-bind:value="sec" v-for="sec in organizacionSeleccionada.sectores"  v-bind:style="{ color: activeColor, fontSize: fontSize + 'px' }" >{{sec}}</option>
+                        <option v-bind:value="sec" v-for="sec in organizacionSeleccionada.sectores"  v-bind:style="{ color: activeColor, fontSize: fontSize + 'px' }" >
+                          {{sec.nombreSector}}</option>
                     </select>
                 </div>
                 <br>
