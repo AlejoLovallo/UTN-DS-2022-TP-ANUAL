@@ -482,16 +482,17 @@ a.page-scroll:hover, a.page-scroll:focus {
     background-color: #da1717af !important;
 }
 
-button.page-scroll:hover {color:#fff !important}
+.page-scroll:hover {color:#fff !important}
 
-button.page-scroll{
+.page-scroll{
     border: 21px #fe0303 !important;
-    font-size: 14px;
+    font-size: 16px;
     background: #da171770;
     border-radius: 5%;
+    margin-top: 17px;
 }
 
-button.page-scroll:hover, a.page-scroll:focus {
+.page-scroll:hover, a.page-scroll:focus {
     color:rgb(226, 226, 226) !important;
     background-color: #da1717af !important;
 }
