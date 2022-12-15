@@ -5,9 +5,9 @@ services:
     image: "mcr.microsoft.com/mssql/server:2019-latest"
     container_name: tp-db
     volumes:
-      - tpdb/sqlData/data:/var/opt/mssql/data
-      - tpdb/sqlData/log:/var/opt/mssql/log
-      - tpdb/sqlData/secrets:/var/opt/mssql/secrets
+      - data:/var/opt/mssql/data
+      - log:/var/opt/mssql/log
+      - secret:/var/opt/mssql/secrets
     ports:
       - "3306:1433"
     environment:
@@ -21,3 +21,8 @@ services:
       - "9000:9000"
     links:
       - tp-db
+
+volumes:
+  data:
+  log:
+  secret:
