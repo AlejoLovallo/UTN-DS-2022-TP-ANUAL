@@ -26,6 +26,13 @@ public class VehiculoParticular extends MedioDeTransporte{
     this.cantPasajeros = cantPasajeros;
   }
 
+  public VehiculoParticular(TipoVehiculo tipoVehiculo, TipoCombustible tipoCombustible, Integer cantPasajeros, Double _consumoPorKm) {
+    this.tipoVehiculo = tipoVehiculo;
+    this.tipoCombustible = tipoCombustible;
+    this.cantPasajeros = cantPasajeros;
+    this.setConsumoPorKm(_consumoPorKm);
+  }
+
 
   //////////////////////////////////  GETTERS
 

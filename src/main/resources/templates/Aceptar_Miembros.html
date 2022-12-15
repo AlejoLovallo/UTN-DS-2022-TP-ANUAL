@@ -6,12 +6,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Aceptar Miembros</title>
     <link rel="stylesheet" type="text/css" href="/css/Aceptar_Miembros.css">
-    <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.2/themes/smoothness/jquery-ui.css">
+    <!--<link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.2/themes/smoothness/jquery-ui.css">-->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
-    <link rel="stylesheet"
-        href="https://startbootstrap.com/templates/agency/font-awesome-4.1.0/css/font-awesome.min.css">
     <link href='https://fonts.googleapis.com/css?family=Titillium+Web:400,300,600' rel='stylesheet' type='text/css'>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css">
+    <!--<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css">-->
 </head>
 
 <body id="page-top" class="index" data-pinterest-extension-installed="cr1.3.4">
@@ -29,11 +27,11 @@
                     <li class="hidden active">
                         <a href="#page-top"></a>
                     </li>
-                    <li class="">
-                        <a class="home" href="./Menu_Organizacion.html">Volver al Inicio</a>
+                    <li>
+                        <button type="button" class="home" onclick="volverAlInicio()">Volver al Inicio</button>
                     </li>
                     <li>
-                        <a class="page-scroll" href="./">Cerrar Sesión</a>
+                        <button type="button" class="page-scroll" onclick="logout()">Cerrar Sesion</button>
                     </li>
                 </ul>
             </div>

@@ -1,4 +1,11 @@
-const API_ENDPOINT = "http://127.0.0.1:9000";
+const API_ENDPOINT = "http://localhost:9000";
+
+
+function getCookie(name) {
+  const value = `; ${document.cookie}`;
+  const parts = value.split(`; ${name}=`);
+  if (parts.length === 2) return parts.pop().split(';').shift();
+}
 
 const aceptarMiembro = async () => {
   const name = document.getElementById("nombre").innerText;
@@ -7,9 +14,10 @@ const aceptarMiembro = async () => {
   const dni = document.getElementById("dni").innerText;
   const sector = document.getElementById("nombreSector").innerText;
   const id_sector = document.getElementById("idSector").innerText;
+  const idSesion = getCookie("idSesion");
 
 
-  await fetch(`${API_ENDPOINT}/aceptar_miembro`, {
+  await fetch(`./aceptar_miembro`, {
     method: "POST",
 
     body: JSON.stringify({
@@ -19,6 +27,7 @@ const aceptarMiembro = async () => {
       dni,
       sector,
       id_sector,
+      idSesion,
     }),
 
     headers: {
@@ -29,7 +38,7 @@ const aceptarMiembro = async () => {
       console.log("OKKKK");
       console.log(res);
       alert("Miembro aceptado");
-      window.location.href = "/sol_miembros";
+      window.location.href = "./sol_miembros";
     })
     .catch((e) => {
       console.log(e);
@@ -43,8 +52,9 @@ const rechazarMiembro = async () => {
     const dni = document.getElementById("dni").innerText;
     const sector = document.getElementById("nombreSector").innerText;
     const id_sector = document.getElementById("idSector").innerText;
+      const idSesion = getCookie("idSesion");
 
-    await fetch(`${API_ENDPOINT}/rechazar_miembro`, {
+    await fetch(`./rechazar_miembro`, {
       method: "POST",
 
       body: JSON.stringify({
@@ -53,9 +63,10 @@ const rechazarMiembro = async () => {
         tipoDeDocumento,
         dni,
         sector,
-        id_sector
+        id_sector,
+        idSesion
       }),
-  
+
       headers: {
         "Content-type": "application/json; charset=UTF-8",
       },
@@ -73,7 +84,7 @@ const rechazarMiembro = async () => {
 
 const buscarListaMiembros = async () => {
 
-  return fetch(`${API_ENDPOINT}/solicitudes_miembro`, {
+  return fetch(`./solicitudes_miembro`, {
     method: "GET",
   })
     .then((response) => response.json())
@@ -100,5 +111,31 @@ const buscarListaMiembros = async () => {
     });
 };
 
+const logout = async () => {
+
+  delete_cookie("idSesion")
+
+  window.location.replace("./")
+   // await fetch(`./cerrar_sesion`, {
+   //    method: "GET",
+   //
+   //    headers: {
+   //      "Content-type": "application/json; charset=UTF-8",
+   //    },
+   //  })
+   //  .catch((error) => {
+   //    console.log(error)
+   //  });
+};
+
+var delete_cookie = function(name) {
+  document.cookie = name + '=;expires=Thu, 01 Jan 1970 00:00:01 GMT;';
+};
+
+const volverAlInicio = async () => {
+
+  window.location.replace("./")
+
+};
 
 buscarListaMiembros();

@@ -56,15 +56,20 @@ public class MiembroController {
                     true
             );
 
-            repositorioPersonasDB.crearPersona(
+            Persona persona1 = repositorioPersonasDB.crearPersona(
                     persona.get("name").toString(),
                     persona.get("surname").toString(),
                     TipoDocumento.values()[(Integer.parseInt(persona.get("tipoDocumento").toString())) -1],
                     persona.get("documento").toString(),
                     usuario
             );
-            res.cookie("username", usuario.getUsername());
-            res.cookie("organizacion",  persona.get("name").toString());
+//            res.cookie("username", usuario.getUsername());
+//            res.cookie("organizacion",  persona.get("name").toString());
+        SesionManager sesionManager = SesionManager.get();
+        String idSesion = sesionManager.crearSesion("username", usuario.getUsername());
+        sesionManager.agregarAtributo(idSesion, "rol","persona");
+        sesionManager.agregarAtributo(idSesion,"documento",persona1.getNroDocumento());
+        res.cookie("idSesion",idSesion);
 
             return new Gson()
                     .toJson(new StandardResponse(StatusResponse.SUCCESS,"pantalla miembro"));
@@ -97,7 +102,8 @@ public class MiembroController {
 
     public Object agregarTrayecto(Request request, Response response) throws ParseException {
 
-        String username = request.cookie("username");
+        String id = request.cookie("idSesion");
+        String username = (String) SesionManager.get().obtenerAtributos(id).get("username");
 
         RepositorioPersonasDB repositorioPersonasDB = new RepositorioPersonasDB();
         Persona persona = repositorioPersonasDB.buscarPersonaPorUsername(username);
@@ -112,16 +118,17 @@ public class MiembroController {
                 Trayecto trayecto = new Trayecto();
 
                 trayecto.setMiembro(miembro);
-                DateTimeFormatter formato = DateTimeFormatter.ofPattern("dd MM yyyy");
+                DateTimeFormatter formato = DateTimeFormatter.ofPattern("yyyy-MM-dd");
                 trayecto.setFrecuenciaSemanal(
-                        ((Long) pedido.get("frecuenciaSemanal")).intValue());
+                        Integer.parseInt(pedido.get("frecuenciaSemanal").toString()));
                 trayecto.setFechaInicio(LocalDate.parse((CharSequence) pedido.get("fechaInicio"), formato));
                 trayecto.setFechaFin(LocalDate.parse((CharSequence) pedido.get("fechaFin"), formato));
 
                 List<Tramo> tramos = new ArrayList<>();
                 ParserJSONMiembro parserJSONMiembro = new ParserJSONMiembro();
+                JSONParser jsonParser = new JSONParser();
                 for (Object tramo : (JSONArray) pedido.get("tramos")) {
-                    Tramo tramoObj = parserJSONMiembro.JSONATramo((JSONObject) tramo);
+                    Tramo tramoObj = parserJSONMiembro.JSONATramo((JSONObject) jsonParser.parse(tramo.toString()));
                     tramoObj.setTrayecto(trayecto);
                     tramos.add(tramoObj);
                 }
@@ -140,7 +147,8 @@ public class MiembroController {
     }
 
     public Object visualizarTrayectos(Request request, Response response) {
-        String username = request.cookie("username");
+        String id = request.cookie("idSesion");
+        String username = (String) SesionManager.get().obtenerAtributos(id).get("username");
 
         RepositorioPersonasDB repositorioPersonasDB = new RepositorioPersonasDB();
         Persona persona = repositorioPersonasDB.buscarPersonaPorUsername(username);
@@ -181,7 +189,8 @@ public class MiembroController {
     }
 
     public Object respuestaCalcularHC(Request request, Response response) throws IOException, ParseException {
-        String username = request.cookie("username");
+        String id = request.cookie("idSesion");
+        String username = (String) SesionManager.get().obtenerAtributos(id).get("username");
 
         JSONParser jsonParser = new JSONParser();
         JSONObject pedido = (JSONObject) jsonParser.parse(request.body());
@@ -211,15 +220,18 @@ public class MiembroController {
     }
 
     public Object menuEnviarSolicitud(Request request, Response response) throws ParseException {
-        String username = request.cookie("username");
-
-        RepositorioPersonasDB repositorioPersonasDB = new RepositorioPersonasDB();
-        Persona persona = repositorioPersonasDB.buscarPersonaPorUsername(username);
+        //String username = request.cookie("username");
 
         JSONParser jsonParser = new JSONParser();
         JSONObject pedido = (JSONObject) jsonParser.parse(request.body());
         String nombreOrganizacion = (String) pedido.get("organizacion");
         String nombreSector = (String) pedido.get("sector");
+        String idSesion = (String) pedido.get("idSesion");
+
+        String username = SesionManager.get().obtenerAtributos(idSesion).get("username").toString();
+
+        RepositorioPersonasDB repositorioPersonasDB = new RepositorioPersonasDB();
+        Persona persona = repositorioPersonasDB.buscarPersonaPorUsername(username);
 
         RepositorioOrganizacionesDB repositorioOrganizacionesDB = new RepositorioOrganizacionesDB();
         Organizacion organizacion = repositorioOrganizacionesDB.buscarOrganizacionPorNombre(nombreOrganizacion);
@@ -319,30 +331,57 @@ public class MiembroController {
 
     public ModelAndView menu_miembro(Request request, Response response){
         Map<String, Object> parametros = new HashMap<>();
-        response.cookie("username", request.cookie("username"));
-        response.cookie("persona", request.cookie("persona"));
+        if (!chequearCookie(request,response)){
+            return new ModelAndView(parametros,"index.html");
+        }
+        //response.cookie("username", request.cookie("username"));
+        //response.cookie("persona", request.cookie("persona"));
         return new ModelAndView(parametros,"Menu_Miembro.html");
     }
 
     public ModelAndView calcularHTMLmiembro(Request request, Response response){
         Map<String, Object> parametros = new HashMap<>();
-        response.cookie("username", request.cookie("username"));
-        response.cookie("persona", request.cookie("persona"));
+        if (!chequearCookie(request,response)){
+            return new ModelAndView(parametros,"index.html");
+        }
+        //response.cookie("username", request.cookie("username"));
+        //response.cookie("persona", request.cookie("persona"));
         return new ModelAndView(parametros,"Calcular_HC.html");
     }
 
     public ModelAndView registrarTrayectoHTML(Request request, Response response){
         Map<String, Object> parametros = new HashMap<>();
-        response.cookie("username", request.cookie("username"));
-        response.cookie("persona", request.cookie("persona"));
+        if (!chequearCookie(request,response)){
+            return new ModelAndView(parametros,"index.html");
+        }
+        //response.cookie("username", request.cookie("username"));
+        //response.cookie("persona", request.cookie("persona"));
         return new ModelAndView(parametros,"Registrar_Trayecto.html");
     }
 
     public ModelAndView solicitarVinculacionHTML(Request request, Response response){
         Map<String, Object> parametros = new HashMap<>();
-        response.cookie("username", request.cookie("username"));
-        response.cookie("persona", request.cookie("persona"));
+        if (!chequearCookie(request,response)){
+            return new ModelAndView(parametros,"index.html");
+        }
+        //response.cookie("username", request.cookie("username"));
+        //response.cookie("persona", request.cookie("persona"));
         return new ModelAndView(parametros,"Solicitar_Vinculacion.html");
+    }
+
+
+
+    private boolean chequearCookie(Request request,Response response){
+        String idSesion = request.cookie("idSesion");
+        SesionManager sesionManager = SesionManager.get();
+
+        Map<String,Object> atributos = sesionManager.obtenerAtributos(idSesion);
+
+        if (atributos == null){
+            response.redirect("/");
+            return false;
+        }
+        return true;
     }
 
 }

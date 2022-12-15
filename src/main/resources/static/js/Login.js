@@ -10,7 +10,7 @@ const validateSignIn = async () => {
 console.log(username);
 console.log(password);
 
- await fetch(`${API_ENDPOINT}/menu_login`, {
+ await fetch(`./menu_login`, {
     method: "POST",
 
     body: JSON.stringify({
@@ -41,17 +41,17 @@ console.log(password);
         document.cookie = `idSesion=${res.data}; expires=`+new Date(9999,0,1).toUTCString()+`; path=/`;
         //window.localStorage.setItem('idSesion', res.data);
         //window.sessionStorage.setItem('idSesion', res.data);
-        location.replace(`${API_ENDPOINT}/menu_organizacion`);
+        location.replace(`./menu_organizacion`);
       }
       if(res.message =='Pantalla Admin'){
         document.cookie = `idSesion=${res.data}; expires=`+new Date(9999,0,1).toUTCString()+`; path=/`;
         //window.localStorage.setItem('idSesion', res.data);
-        window.location.replace(`${API_ENDPOINT}/menu_organizacion`);
+        window.location.replace(`./menu_organizacion`);
       }
       if(res.message =='pantalla persona'){
         document.cookie = `idSesion=${res.data}; expires=`+new Date(9999,0,1).toUTCString()+`; path=/`;
         //window.localStorage.setItem('idSesion', res.data);
-        window.location.replace(`${API_ENDPOINT}/menu_miembro`);
+        window.location.replace(`./menu_miembro`);
       }
       if(res.message =='pantalla usuario default'){
         document.cookie = `idSesion=${res.data}; expires=`+new Date(9999,0,1).toUTCString()+`; path=/`;
@@ -84,7 +84,7 @@ const singUpOrganizacion = async () => {
 console.log(username);
 console.log(password);
 
- fetch(`${API_ENDPOINT}/registrar_org`, {
+ fetch(`./registrar_org`, {
     method: "POST",
 
     body: JSON.stringify({
@@ -111,7 +111,7 @@ console.log(password);
       console.log(res);
       console.log(res.message);
       if(res.message =='pantalla organizacion'){
-        window.location.replace(`${API_ENDPOINT}/menu_organizacion`);
+        window.location.replace(`./menu_organizacion`);
       }
      })
     .catch((error) => {
@@ -139,7 +139,7 @@ const singUpPersona = async () => {
 console.log(username);
 console.log(password);
 
- fetch(`${API_ENDPOINT}/registrar_org`, {
+ fetch(`./registrar_org`, {
     method: "POST",
 
     body: JSON.stringify({
@@ -163,7 +163,7 @@ console.log(password);
       console.log(res);
       console.log(res.message);
       if(res.message =='pantalla miembro'){
-        window.location.replace(`${API_ENDPOINT}/menu_miembro`);
+        window.location.replace(`./menu_miembro`);
       }
      })
     .catch((error) => {
@@ -216,7 +216,7 @@ const validateOrganizationCreation = async () => {
   const org = verifyOrgFields();
   const user = verifyUserOrgFields();
   if (org && JSON.stringify(user) != '{}') {
-    const res = await fetch(`${API_ENDPOINT}/registrar_org`, {
+    const res = await fetch(`./registrar_org`, {
       method: "POST",
 
       body: JSON.stringify({
@@ -250,7 +250,7 @@ const validateOrganizationCreation = async () => {
           name: "username",
           value: Request.Cookies[username]
         });*/
-       window.location.replace(`${API_ENDPOINT}/menu_organizacion`);
+       window.location.replace(`./menu_organizacion`);
     }
   }
 };
@@ -274,7 +274,7 @@ const validateRegisterMember = async () => {
     return;
   }
 
-  await fetch(`${API_ENDPOINT}/registrar_persona`, {
+  await fetch(`./registrar_persona`, {
     method: "POST",
 
     body: JSON.stringify({
@@ -297,7 +297,7 @@ const validateRegisterMember = async () => {
   })
     .then((res) => {
         alert("Persona registrada con exito");
-        window.location.replace(`${API_ENDPOINT}/menu_miembro`);
+        window.location.replace(`./menu_miembro`);
     })
     .catch((error) => {
       console.log("ERROR");

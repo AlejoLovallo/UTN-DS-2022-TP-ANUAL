@@ -8,7 +8,7 @@ const generarReporte = async =>{
     const añoHasta = document.getElementById("añoHasta").value;
     const tipo = document.getElementById("tipo").value;
 
-    fetch(`${API_ENDPOINT}/generar_reporte`, {
+    fetch(`./generar_reporte`, {
      method: "POST",
 
         body: JSON.stringify({
@@ -27,10 +27,37 @@ const generarReporte = async =>{
             console.log(res);
             console.log(res.message);
             alert("reporte generado");
-            window.location.replace(`${API_ENDPOINT}/reportes`);
+            window.location.replace(`./reportes`);
            })
           .catch((error) => {
             console.log(error)
           });
 
 }
+
+const logout = async () => {
+
+  delete_cookie("idSesion")
+
+  window.location.replace("./")
+   // await fetch(`./cerrar_sesion`, {
+   //    method: "GET",
+   //
+   //    headers: {
+   //      "Content-type": "application/json; charset=UTF-8",
+   //    },
+   //  })
+   //  .catch((error) => {
+   //    console.log(error)
+   //  });
+};
+
+var delete_cookie = function(name) {
+  document.cookie = name + '=;expires=Thu, 01 Jan 1970 00:00:01 GMT;';
+};
+
+const volverAlInicio = async () => {
+
+  window.location.replace("./")
+
+};

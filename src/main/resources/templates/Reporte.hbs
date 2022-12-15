@@ -24,6 +24,7 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
             integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
             crossorigin="anonymous"></script>
+    <script src="/js/Reporte.js"></script>
 
 </head>
 
@@ -42,11 +43,11 @@
                     <li class="hidden active">
                         <a href="#page-top"></a>
                     </li>
-                    <li class="">
-                        <a class="home" href="./Menu_Organizacion.html"> Home </a>
+                    <li>
+                        <button type="button" class="home" onclick="volverAlInicio()">Volver al Inicio</button>
                     </li>
                     <li>
-                        <a class="page-scroll" href="./Login.html">Cerrar Sesión</a>
+                        <button type="button" class="page-scroll" onclick="logout()">Cerrar Sesion</button>
                     </li>
                 </ul>
             </div>
@@ -64,8 +65,8 @@
         <div class="form">
             <br>
 
-            <h1>Reporte</h1>
-            <h2>Composicion</h2>
+            <h1 class="reporte-title">Reporte</h1>
+            <h2 class="reporte-subtitle">Composicion</h2>
             {{#each composicion}}
                 {{#with this}}
                 <p class="orange-text">Id: {{id_reporte}}<p>
@@ -88,7 +89,7 @@
             <br>
             {{/each}}
             <br>
-            <h2>Evolucion</h2>
+            <h2 class="reporte-subtitle">Evolucion</h2>
             {{#each evolucion}}
                 <p class="orange-text">Id: {{this.id_reporte}}</p>
                 <p class="orange-text">Desde</p>
@@ -101,16 +102,16 @@
                     <table class="scroll" id="tablaEvolucion" style="overflow-y:auto;">
 
                         <thead>
-                            <th class="orange-text">Año</th>
-                            <th class="orange-text">Mes</th>
-                            <th class="orange-text">Consumo</th>
+                            <th class="orange-text">Año  </th>
+                            <th class="orange-text">  Mes  </th>
+                            <th class="orange-text">  Consumo</th>
                         </thead>
 
                         <tbody>
                             {{#each this.consumos}}
                             <tr>
-                                <td class="data">{{this.anio}}</td>
-                                <td class="data">{{this.mes}}</td>
+                                <td class="data">{{this.anio}}  </td>
+                                <td class="data">{{this.mes}}  </td>
                                 <td class="data">{{this.consumo}}</td>
                             </tr>
                             {{/each}}
@@ -120,7 +121,7 @@
                 </div>
             {{/each}}
             <br>
-            <h2>Total</h2>
+            <h2 class="reporte-subtitle">Total</h2>
             {{#each total}}
                 <p class="orange-text">Id: {{this.id_reporte}}</p>
                 <p class="orange-text">Desde:</p>

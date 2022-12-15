@@ -6,9 +6,9 @@ const registrarMediciones = async () => {
     const file_upload = new FormData();
     file_upload.append("file", path.files[0]);
 
-    await fetch(`${API_ENDPOINT}/organizacion/cargar_mediciones`, {
+    await fetch(`./organizacion/cargar_mediciones`, {
         method: "POST",
-    
+
         body: file_upload,
 
       })
@@ -22,3 +22,30 @@ const registrarMediciones = async () => {
           console.log(e);
         });
 }
+
+const logout = async () => {
+
+  delete_cookie("idSesion")
+
+  window.location.replace("./")
+   // await fetch(`./cerrar_sesion`, {
+   //    method: "GET",
+   //
+   //    headers: {
+   //      "Content-type": "application/json; charset=UTF-8",
+   //    },
+   //  })
+   //  .catch((error) => {
+   //    console.log(error)
+   //  });
+};
+
+var delete_cookie = function(name) {
+  document.cookie = name + '=;expires=Thu, 01 Jan 1970 00:00:01 GMT;';
+};
+
+const volverAlInicio = async () => {
+
+  window.location.replace("./")
+
+};

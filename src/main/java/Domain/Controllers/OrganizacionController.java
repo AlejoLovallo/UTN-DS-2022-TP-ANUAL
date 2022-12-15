@@ -5,15 +5,14 @@ import Domain.JSON.ParserJSONMiembro;
 import Domain.JSON.ParserJSONOrganizacion;
 import Domain.Miembro.Miembro;
 import Domain.Miembro.Persona;
-import Domain.Organizacion.ClasificacionOrganizacion;
+import Domain.Organizacion.*;
 import Domain.Organizacion.Excepciones.OrganizacionException;
-import Domain.Organizacion.Organizacion;
-import Domain.Organizacion.Sector;
-import Domain.Organizacion.TipoOrganizacion;
 import Domain.Reportes.*;
 import Domain.Repositorios.*;
 import Domain.Usuarios.Usuario;
 import com.google.gson.Gson;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
@@ -42,6 +41,27 @@ public class OrganizacionController {
         //TODO: revisar si funciona
         File archivoHTML = new File("src/main/resources/templates/Registrar_Mediciones.html");
         return archivoHTML.toString();
+    }
+
+    public Object pedidoMenuCalcularHC(Request request, Response response){
+
+        JSONObject tipo = new JSONObject();
+
+        String idSesion = request.cookie("idSesion");
+
+        if(SesionManager.get().obtenerAtributos(idSesion).get("rol").equals("persona")){
+            tipo.put("tipoUsuario", "persona");
+        }
+        else if(SesionManager.get().obtenerAtributos(idSesion).get("rol").equals("organizacion")){
+            tipo.put("tipoUsuario", "organizacion");
+        }
+
+        response.type("application/json");
+        response.body(tipo.toString());
+
+
+        return tipo;
+        //return new Gson().toJson(new StandardResponse(StatusResponse.SUCCESS,"identificado", tipo));
     }
 
     //GET
@@ -124,8 +144,8 @@ public class OrganizacionController {
             res.body(new Gson()
                     .toJson(new StandardResponse(StatusResponse.SUCCESS,"pantalla organizacion").toString()));
 
-            res.cookie("username", usuario.getUsername());
-            res.cookie("organizacion", organizacion.getRazonSocial());
+//            res.cookie("username", usuario.getUsername());
+//            res.cookie("organizacion", organizacion.getRazonSocial());
 
             return new Gson()
                     .toJson(new StandardResponse(StatusResponse.SUCCESS,"pantalla organizacion"));
@@ -141,7 +161,9 @@ public class OrganizacionController {
 
   public Object respuestaListaMiembros(Request request, Response response)
   {
-      String username = request.cookie("username");
+      String idSesion = request.cookie("idSesion");
+
+      String username = SesionManager.get().obtenerAtributos(idSesion).get("username").toString();
 
       RepositorioUsuariosDB repositorioUsuariosDB = new RepositorioUsuariosDB();
       Usuario usuario = repositorioUsuariosDB.buscarUsuario(username);
@@ -165,18 +187,20 @@ public class OrganizacionController {
   }
 
     public Object respuestaAceptarMiembro(Request request, Response response) throws ParseException {
-        String username = request.cookie("username");
+
+        JSONParser jsonParser = new JSONParser();
+        JSONObject jsonObject = (JSONObject) jsonParser.parse(request.body());
+        String dniPersona =  jsonObject.get("dni").toString();
+        String id_sector =  jsonObject.get("id_sector").toString();
+        String idSesion = request.cookie("idSesion");
+
+        String username = SesionManager.get().obtenerAtributos(idSesion).get("username").toString();
 
         RepositorioUsuariosDB repositorioUsuariosDB = new RepositorioUsuariosDB();
         Usuario usuario = repositorioUsuariosDB.buscarUsuario(username);
 
         RepositorioOrganizacionesDB repositorioOrganizacionesDB = new RepositorioOrganizacionesDB();
         Organizacion organizacion = repositorioOrganizacionesDB.buscarOrganizacionPorUsuario(usuario);
-
-        JSONParser jsonParser = new JSONParser();
-        JSONObject jsonObject = (JSONObject) jsonParser.parse(request.body());
-        String dniPersona =  jsonObject.get("dni").toString();
-        String id_sector =  jsonObject.get("id_sector").toString();
 
         RepositorioPersonasDB repositorioPersonasDB = new RepositorioPersonasDB();
         Persona persona = repositorioPersonasDB.buscarPersonaPorNroDocumento(dniPersona);
@@ -199,18 +223,21 @@ public class OrganizacionController {
     }
 
     public Object respuestaRechazarMiembro(Request request, Response response) throws ParseException {
-        String username = request.cookie("username");
+        //String username = request.cookie("username");
+
+        JSONParser jsonParser = new JSONParser();
+        JSONObject jsonObject = (JSONObject) jsonParser.parse(request.body());
+        String idPersona = jsonObject.get("dni").toString();
+        String idSector = jsonObject.get("id_sector").toString();
+        String idSesion = request.cookie("idSesion");
+
+        String username = SesionManager.get().obtenerAtributos(idSesion).get("username").toString();
 
         RepositorioUsuariosDB repositorioUsuariosDB = new RepositorioUsuariosDB();
         Usuario usuario = repositorioUsuariosDB.buscarUsuario(username);
 
         RepositorioOrganizacionesDB repositorioOrganizacionesDB = new RepositorioOrganizacionesDB();
         Organizacion organizacion = repositorioOrganizacionesDB.buscarOrganizacionPorUsuario(usuario);
-
-        JSONParser jsonParser = new JSONParser();
-        JSONObject jsonObject = (JSONObject) jsonParser.parse(request.body());
-        String idPersona = jsonObject.get("dni").toString();
-        String idSector = jsonObject.get("id_sector").toString();
 
         RepositorioPersonasDB repositorioPersonasDB = new RepositorioPersonasDB();
         Persona persona = repositorioPersonasDB.buscarPersonaPorNroDocumento(idPersona);
@@ -224,8 +251,17 @@ public class OrganizacionController {
         ).findAny();
 
         //TODO: probar
-        RepositorioMiembrosDB repositorioMiembrosDB = new RepositorioMiembrosDB();
-        repositorioMiembrosDB.eliminar(miembro.get());
+        persona.getMiembros().remove(miembro.get());
+        sector.get().getMiembros().remove(miembro.get());
+
+        Miembro miembro1 = miembro.get();
+
+        miembro1.setPersona(null);
+        miembro1.setSector(null);
+        miembro1 = null;
+
+        repositorioOrganizacionesDB.modificar(organizacion);
+        repositorioPersonasDB.modificar(persona);
 
         response.type("text/javascript");
         response.status(200);
@@ -234,10 +270,11 @@ public class OrganizacionController {
     }
 
     public Object respuestaCalcularHC(Request request, Response response) throws IOException, ParseException {
-        
 
-        String username = request.cookie("username");
 
+        String idSesion = request.cookie("idSesion");
+
+        String username = SesionManager.get().obtenerAtributos(idSesion).get("username").toString();
         RepositorioUsuariosDB repositorioUsuariosDB = new RepositorioUsuariosDB();
         Usuario usuario = repositorioUsuariosDB.buscarUsuario(username);
 
@@ -274,7 +311,9 @@ public class OrganizacionController {
     public Object respuestaGenerarReporte(Request request, Response response) throws IOException, ParseException {
 
 
-        String username = request.cookie("username");
+        String idSesion = request.cookie("idSesion");
+
+        String username = SesionManager.get().obtenerAtributos(idSesion).get("username").toString();
 
         RepositorioUsuariosDB repositorioUsuariosDB = new RepositorioUsuariosDB();
         Usuario usuario = repositorioUsuariosDB.buscarUsuario(username);
@@ -313,7 +352,9 @@ public class OrganizacionController {
     }
 
     public Object cargarMediciones(Request request, Response response) throws ServletException, IOException {
-        String username = request.cookie("username");
+        String idSesion = request.cookie("idSesion");
+
+        String username = SesionManager.get().obtenerAtributos(idSesion).get("username").toString();
 
         Path pathArchivo = Paths.get("src/main/java/Domain/Utils/" + username + ".xls");
         if(Files.exists(pathArchivo))
@@ -344,9 +385,16 @@ public class OrganizacionController {
     public ModelAndView mostrarReportes(Request request, Response response)
     {
         HashMap<String, Object> params = new HashMap<>();
+        if (!chequearCookie(request,response)){
+            return new ModelAndView(params,"index.html");
+        }
 
         JSONArray listaReportes = new JSONArray();
-        Optional<String> username = Optional.ofNullable(request.cookie("username"));
+
+        String idSesion = request.cookie("idSesion");
+
+
+        Optional<String> username = Optional.ofNullable(SesionManager.get().obtenerAtributos(idSesion).get("username").toString());
 
         //TODO para hacer pruebas
         //username = Optional.of("usuarioNormal");
@@ -389,7 +437,40 @@ public class OrganizacionController {
         return new ModelAndView(params, "Reporte.hbs");
     }
 
+    public ModelAndView listarRecomendaciones(Request request, Response response){
 
+
+
+        HashMap<String, Object> params = new HashMap<>();
+
+        if (!chequearCookie(request,response)){
+            return new ModelAndView(params,"index.html");
+        }
+
+        String idSesion = request.cookie("idSesion");
+
+        Optional<String> username = Optional.ofNullable(SesionManager.get().obtenerAtributos(idSesion).get("username").toString());
+
+        RepositorioOrganizacionesDB repositorioOrganizacionesDB = new RepositorioOrganizacionesDB();
+
+        RepositorioUsuariosDB repositorioUsuariosDB = new RepositorioUsuariosDB();
+
+        Usuario usuario = repositorioUsuariosDB.buscarUsuario(username.get());
+
+        Organizacion organizacion = repositorioOrganizacionesDB.buscarOrganizacionPorUsuario(usuario);
+
+        ArrayList<String> listaRecomendaciones = new ArrayList<>();
+
+        for(Recomendacion recomendacion : organizacion.getRecomendaciones()){
+            listaRecomendaciones.add(recomendacion.getRecomendacion());
+        }
+
+        params.put("recomendaciones", listaRecomendaciones);
+
+        return new ModelAndView(params, "Recomendaciones.hbs");
+    }
+
+/*
     public ModelAndView listarRecomendaciones(Request request, Response response){
         HashMap<String, Object> params = new HashMap<>();
 
@@ -404,17 +485,17 @@ public class OrganizacionController {
         return new ModelAndView(params, "Recomendaciones.hbs");
     }
 
+ */
+
     public ModelAndView menuOrganizacion(Request request, Response response) {
         Map<String, Object> parametros = new HashMap<>();
-        response.cookie("idSesion",request.cookie("idSesion"));
-        response.cookie("username",request.cookie("username"));
-        response.cookie("organizacion",request.cookie("organizacion"));
+//        response.cookie("idSesion",request.cookie("idSesion"));
+//        response.cookie("username",request.cookie("username"));
+//        response.cookie("organizacion",request.cookie("organizacion"));
 
-
-        String idSesion = request.cookie("idSesion");
-        SesionManager sesionManager = SesionManager.get();
-        Map<String,Object> atributos = sesionManager.obtenerAtributos(idSesion);
-
+        if (!chequearCookie(request,response)){
+            return new ModelAndView(parametros,"index.html");
+        }
         //System.out.println(atributos.toString());
 
 
@@ -423,29 +504,81 @@ public class OrganizacionController {
 
     public ModelAndView solicitudesHTML (Request request, Response response) {
         Map<String, Object> parametros = new HashMap<>();
-        response.cookie("username",request.cookie("username"));
-        response.cookie("organizacion",request.cookie("organizacion"));
+
+        if (!chequearCookie(request,response)){
+            return new ModelAndView(parametros,"index.html");
+        }
+
+//        response.cookie("username",request.cookie("username"));
+//        response.cookie("organizacion",request.cookie("organizacion"));
         return new ModelAndView(parametros,"Aceptar_Miembros.html");
     }
 
     public ModelAndView calcularHCorg (Request request, Response response) {
         Map<String, Object> parametros = new HashMap<>();
-        response.cookie("username",request.cookie("username"));
-        response.cookie("organizacion",request.cookie("organizacion"));
+        if (!chequearCookie(request,response)){
+            return new ModelAndView(parametros,"index.html");
+        }
+//        response.cookie("username",request.cookie("username"));
+//        response.cookie("organizacion",request.cookie("organizacion"));
         return new ModelAndView(parametros,"Calcular_HC.html");
     }
 
     public ModelAndView registrarMedicionesHTML (Request request, Response response) {
         Map<String, Object> parametros = new HashMap<>();
-        response.cookie("username",request.cookie("username"));
-        response.cookie("organizacion",request.cookie("organizacion"));
+        if (!chequearCookie(request,response)){
+            return new ModelAndView(parametros,"index.html");
+        }
+//        response.cookie("username",request.cookie("username"));
+//        response.cookie("organizacion",request.cookie("organizacion"));
         return new ModelAndView(parametros,"Registrar_Mediciones.html");
     }
 
     public ModelAndView generarReporteHTML (Request request, Response response) {
         Map<String, Object> parametros = new HashMap<>();
-        response.cookie("username",request.cookie("username"));
-        response.cookie("organizacion",request.cookie("organizacion"));
+        if (!chequearCookie(request,response)){
+            return new ModelAndView(parametros,"index.html");
+        }
+//        response.cookie("username",request.cookie("username"));
+//        response.cookie("organizacion",request.cookie("organizacion"));
         return new ModelAndView(parametros,"Generar_Reporte.html");
     }
+
+    public String getAllOrganizaciones(Request request, Response response) {
+        response.type("application/json");
+
+        RepositorioOrganizacionesDB repositorioOrganizacionesDB = new RepositorioOrganizacionesDB();
+
+        Optional<List<Organizacion>> organizaciones = Optional.ofNullable(repositorioOrganizacionesDB.getOrganizaciones());
+
+
+        if(organizaciones.isPresent()){
+            JsonElement organizacionesJson = ParserJSONOrganizacion.organizacionesJsonElement(organizaciones.get());
+
+            response.body(new Gson().toJson(new StandardResponse(StatusResponse.SUCCESS,"envio organizaciones",organizacionesJson )));
+            response.status(200);
+
+            return new Gson().toJson(new StandardResponse(StatusResponse.SUCCESS,"envio organizaciones",organizacionesJson ));
+        }
+
+
+        response.body(new Gson().toJson(new StandardResponse(StatusResponse.SUCCESS,"no hay ninguna organizacion",null)));
+        response.status(200);
+
+        return new Gson().toJson(new StandardResponse(StatusResponse.SUCCESS,"no hay ninguna organizacion",null));
+    }
+
+    private boolean chequearCookie(Request request,Response response){
+        String idSesion = request.cookie("idSesion");
+        SesionManager sesionManager = SesionManager.get();
+
+        Map<String,Object> atributos = sesionManager.obtenerAtributos(idSesion);
+
+        if (atributos == null){
+            response.redirect("/");
+            return false;
+        }
+        return true;
+    }
+
 }

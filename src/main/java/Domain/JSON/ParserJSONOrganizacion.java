@@ -3,9 +3,15 @@ package Domain.JSON;
 import Domain.Organizacion.AgenteSectorial;
 import Domain.Organizacion.ClasificacionOrganizacion;
 import Domain.Organizacion.Organizacion;
+import Domain.Organizacion.Sector;
 import Domain.Usuarios.Admin;
 import Domain.Usuarios.Contacto;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
 import org.json.simple.JSONObject;
+
+import java.util.List;
 
 public class ParserJSONOrganizacion {
 
@@ -33,6 +39,50 @@ public class ParserJSONOrganizacion {
      organizacionJSON.put("actividades",organizacion.getActividades());
 
       return organizacionJSON;
+    }
+
+    public static JsonElement organizacionesJsonElement(List<Organizacion> organizaciones){
+
+     if (organizaciones.isEmpty()) return null;
+
+     JsonObject organizacionesJson = new JsonObject();
+
+     JsonArray organizacionesJsonArray = new JsonArray();
+
+     JsonObject organizacionJson ;
+
+     JsonArray sectoresJson ;
+
+     JsonObject sectorJson;
+
+     for(Organizacion organizacion : organizaciones){
+       organizacionJson = new JsonObject();
+       sectoresJson = new JsonArray();
+
+       organizacionJson.addProperty("nombre",organizacion.getRazonSocial());
+       organizacionJson.addProperty("id",organizacion.getId());
+
+
+       if(!organizacion.getSectores().isEmpty()){
+         for(Sector sector: organizacion.getSectores()){
+           sectorJson = new JsonObject();
+           sectorJson.addProperty("nombreSector",sector.getNombre());
+           sectorJson.addProperty("idSector",sector.getId_sector());
+           sectoresJson.add(sectorJson);
+         }
+       }
+       else
+         sectoresJson = null;
+
+
+       organizacionJson.add("sectores",sectoresJson);
+       organizacionesJsonArray.add(organizacionJson);
+     }
+
+     organizacionesJson.add("organizaciones",organizacionesJsonArray);
+
+     return organizacionesJson;
+
     }
 
 }

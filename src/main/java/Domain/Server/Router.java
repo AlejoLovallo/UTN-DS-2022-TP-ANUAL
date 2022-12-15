@@ -100,11 +100,13 @@ public class Router {
     Spark.post("/generar_reporte", organizacionController::respuestaGenerarReporte);
     Spark.put("/organizacion/:nombre",organizacionController::modificarOrganizacion);
 
+    Spark.get("/organizacionesGet",organizacionController::getAllOrganizaciones);
+
 
     Spark.get("/recomendaciones", organizacionController::listarRecomendaciones, Router.engine);
     Spark.get("/reportes", organizacionController::mostrarReportes, Router.engine);
-
-    Spark.post("/cerrar_sesion",loginController::logout);
+    Spark.get("/pedidoMenuCalcularHC", organizacionController::pedidoMenuCalcularHC);
+    //Spark.get("/cerrar_sesion",loginController::logout);
 
   }
 }

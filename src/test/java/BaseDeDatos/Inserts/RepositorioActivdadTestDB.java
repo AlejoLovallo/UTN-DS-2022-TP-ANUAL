@@ -51,7 +51,7 @@ public class RepositorioActivdadTestDB {
 
         System.exit(0);*/
         RepositorioVehiculoParticularDB repositorioVehiculoParticularDB = new RepositorioVehiculoParticularDB();
-        VehiculoParticular v = repositorioVehiculoParticularDB.buscarVehiculoParticular( "Moto", "GNC",1);
+        VehiculoParticular v = repositorioVehiculoParticularDB.buscarVehiculoParticular( "Moto", "GNC",1, 2.0);
 
         RepositorioDireccionDB repositorioDireccionDB = new RepositorioDireccionDB();
         Direccion d1 = repositorioDireccionDB.buscarDireccion(
