@@ -29,7 +29,7 @@ public class Tramo {
   @JoinColumn(name="puntoLlegada",referencedColumnName = "id_espacio")
   private Espacio puntoLLegada;
 
-  @ManyToOne
+  @ManyToOne(cascade = CascadeType.ALL)//TODO: revisar
   @JoinColumn(name="id_transporte",referencedColumnName = "id_transporte")
   private MedioDeTransporte medio;
 

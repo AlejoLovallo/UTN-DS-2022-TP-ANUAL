@@ -8,7 +8,7 @@ const generarReporte = async =>{
     const añoHasta = document.getElementById("añoHasta").value;
     const tipo = document.getElementById("tipo").value;
 
-    fetch(`${API_ENDPOINT}/generar_reporte`, {
+    fetch(`./generar_reporte`, {
      method: "POST",
 
         body: JSON.stringify({
@@ -27,7 +27,7 @@ const generarReporte = async =>{
             console.log(res);
             console.log(res.message);
             alert("reporte generado");
-            window.location.replace(`${API_ENDPOINT}/reportes`);
+            window.location.replace(`./reportes`);
            })
           .catch((error) => {
             console.log(error)

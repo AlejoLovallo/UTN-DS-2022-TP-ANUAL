@@ -6,7 +6,7 @@ const registrarMediciones = async () => {
     const file_upload = new FormData();
     file_upload.append("file", path.files[0]);
 
-    await fetch(`${API_ENDPOINT}/organizacion/cargar_mediciones`, {
+    await fetch(`./organizacion/cargar_mediciones`, {
         method: "POST",
     
         body: file_upload,
