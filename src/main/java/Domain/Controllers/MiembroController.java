@@ -331,6 +331,9 @@ public class MiembroController {
 
     public ModelAndView menu_miembro(Request request, Response response){
         Map<String, Object> parametros = new HashMap<>();
+        if (!chequearCookie(request,response)){
+            return new ModelAndView(parametros,"index.html");
+        }
         //response.cookie("username", request.cookie("username"));
         //response.cookie("persona", request.cookie("persona"));
         return new ModelAndView(parametros,"Menu_Miembro.html");
@@ -338,6 +341,9 @@ public class MiembroController {
 
     public ModelAndView calcularHTMLmiembro(Request request, Response response){
         Map<String, Object> parametros = new HashMap<>();
+        if (!chequearCookie(request,response)){
+            return new ModelAndView(parametros,"index.html");
+        }
         //response.cookie("username", request.cookie("username"));
         //response.cookie("persona", request.cookie("persona"));
         return new ModelAndView(parametros,"Calcular_HC.html");
@@ -345,6 +351,9 @@ public class MiembroController {
 
     public ModelAndView registrarTrayectoHTML(Request request, Response response){
         Map<String, Object> parametros = new HashMap<>();
+        if (!chequearCookie(request,response)){
+            return new ModelAndView(parametros,"index.html");
+        }
         //response.cookie("username", request.cookie("username"));
         //response.cookie("persona", request.cookie("persona"));
         return new ModelAndView(parametros,"Registrar_Trayecto.html");
@@ -352,9 +361,27 @@ public class MiembroController {
 
     public ModelAndView solicitarVinculacionHTML(Request request, Response response){
         Map<String, Object> parametros = new HashMap<>();
+        if (!chequearCookie(request,response)){
+            return new ModelAndView(parametros,"index.html");
+        }
         //response.cookie("username", request.cookie("username"));
         //response.cookie("persona", request.cookie("persona"));
         return new ModelAndView(parametros,"Solicitar_Vinculacion.html");
+    }
+
+
+
+    private boolean chequearCookie(Request request,Response response){
+        String idSesion = request.cookie("idSesion");
+        SesionManager sesionManager = SesionManager.get();
+
+        Map<String,Object> atributos = sesionManager.obtenerAtributos(idSesion);
+
+        if (atributos == null){
+            response.redirect("/");
+            return false;
+        }
+        return true;
     }
 
 }

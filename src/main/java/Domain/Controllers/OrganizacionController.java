@@ -385,6 +385,9 @@ public class OrganizacionController {
     public ModelAndView mostrarReportes(Request request, Response response)
     {
         HashMap<String, Object> params = new HashMap<>();
+        if (!chequearCookie(request,response)){
+            return new ModelAndView(params,"index.html");
+        }
 
         JSONArray listaReportes = new JSONArray();
 
@@ -436,7 +439,13 @@ public class OrganizacionController {
 
     public ModelAndView listarRecomendaciones(Request request, Response response){
 
+
+
         HashMap<String, Object> params = new HashMap<>();
+
+        if (!chequearCookie(request,response)){
+            return new ModelAndView(params,"index.html");
+        }
 
         String idSesion = request.cookie("idSesion");
 
@@ -484,11 +493,9 @@ public class OrganizacionController {
 //        response.cookie("username",request.cookie("username"));
 //        response.cookie("organizacion",request.cookie("organizacion"));
 
-
-        String idSesion = request.cookie("idSesion");
-        SesionManager sesionManager = SesionManager.get();
-        Map<String,Object> atributos = sesionManager.obtenerAtributos(idSesion);
-
+        if (!chequearCookie(request,response)){
+            return new ModelAndView(parametros,"index.html");
+        }
         //System.out.println(atributos.toString());
 
 
@@ -497,6 +504,11 @@ public class OrganizacionController {
 
     public ModelAndView solicitudesHTML (Request request, Response response) {
         Map<String, Object> parametros = new HashMap<>();
+
+        if (!chequearCookie(request,response)){
+            return new ModelAndView(parametros,"index.html");
+        }
+
 //        response.cookie("username",request.cookie("username"));
 //        response.cookie("organizacion",request.cookie("organizacion"));
         return new ModelAndView(parametros,"Aceptar_Miembros.html");
@@ -504,6 +516,9 @@ public class OrganizacionController {
 
     public ModelAndView calcularHCorg (Request request, Response response) {
         Map<String, Object> parametros = new HashMap<>();
+        if (!chequearCookie(request,response)){
+            return new ModelAndView(parametros,"index.html");
+        }
 //        response.cookie("username",request.cookie("username"));
 //        response.cookie("organizacion",request.cookie("organizacion"));
         return new ModelAndView(parametros,"Calcular_HC.html");
@@ -511,6 +526,9 @@ public class OrganizacionController {
 
     public ModelAndView registrarMedicionesHTML (Request request, Response response) {
         Map<String, Object> parametros = new HashMap<>();
+        if (!chequearCookie(request,response)){
+            return new ModelAndView(parametros,"index.html");
+        }
 //        response.cookie("username",request.cookie("username"));
 //        response.cookie("organizacion",request.cookie("organizacion"));
         return new ModelAndView(parametros,"Registrar_Mediciones.html");
@@ -518,6 +536,9 @@ public class OrganizacionController {
 
     public ModelAndView generarReporteHTML (Request request, Response response) {
         Map<String, Object> parametros = new HashMap<>();
+        if (!chequearCookie(request,response)){
+            return new ModelAndView(parametros,"index.html");
+        }
 //        response.cookie("username",request.cookie("username"));
 //        response.cookie("organizacion",request.cookie("organizacion"));
         return new ModelAndView(parametros,"Generar_Reporte.html");
@@ -546,4 +567,18 @@ public class OrganizacionController {
 
         return new Gson().toJson(new StandardResponse(StatusResponse.SUCCESS,"no hay ninguna organizacion",null));
     }
+
+    private boolean chequearCookie(Request request,Response response){
+        String idSesion = request.cookie("idSesion");
+        SesionManager sesionManager = SesionManager.get();
+
+        Map<String,Object> atributos = sesionManager.obtenerAtributos(idSesion);
+
+        if (atributos == null){
+            response.redirect("/");
+            return false;
+        }
+        return true;
+    }
+
 }
