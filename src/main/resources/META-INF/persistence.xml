@@ -32,6 +32,7 @@
         <class>Domain.Organizacion.Organizacion</class>
         <class>Domain.Organizacion.AgenteSectorial</class>
         <class>Domain.Organizacion.Sector</class>
+        <class>Domain.Organizacion.Recomendacion</class>
 
         <class>Domain.Reportes.Reporte</class>
         <class>Domain.Reportes.ReporteEvolucion</class>
@@ -55,7 +56,7 @@
             <!-- CONNECTION SETTINGS -->
             <property name="hibernate.connection.driver_class" value="com.mysql.cj.jdbc.Driver" />
             <property name="hibernate.connection.url" value="jdbc:mysql://localhost:3308/impactoambiental" />
-            <property name="hibernate.connection.username" value="tpuser" />
+            <property name="hibernate.connection.username" value="sa" />
             <property name="hibernate.connection.password" value="dike2361!"/>
             <!-- HIBERNATE CONFIG SETTINGS -->
             <property name="hibernate.show_sql" value="true"/>
