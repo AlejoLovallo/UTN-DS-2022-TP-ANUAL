@@ -502,11 +502,11 @@ public class OrganizacionController {
 
         RepositorioOrganizacionesDB repositorioOrganizacionesDB = new RepositorioOrganizacionesDB();
 
-        Optional<Collection<Organizacion>> organizaciones = Optional.ofNullable(repositorioOrganizacionesDB.getOrganizaciones());
+        Optional<List<Organizacion>> organizaciones = Optional.ofNullable(repositorioOrganizacionesDB.getOrganizaciones());
 
 
         if(organizaciones.isPresent()){
-            JsonElement organizacionesJson = new Gson().toJsonTree(organizaciones);
+            JsonElement organizacionesJson = ParserJSONOrganizacion.organizacionesJsonElement(organizaciones.get());
 
             response.body(new Gson().toJson(new StandardResponse(StatusResponse.SUCCESS,"envio organizaciones",organizacionesJson )));
             response.status(200);

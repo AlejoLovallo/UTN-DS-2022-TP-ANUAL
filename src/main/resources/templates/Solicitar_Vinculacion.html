@@ -16,6 +16,8 @@
 
     <script src="/js/member.js"></script>
     <script src="/js/organization.js"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
 </head>
 
 <body id="page-top" class="index" data-pinterest-extension-installed="cr1.3.4">
@@ -61,6 +63,12 @@
                     </label>
                     <br>
                     <br>
+                    <select v-model="organizacionSeleccionada" class="select-css">
+                        <option disabled value="">Seleccione un elemento</option>
+                        <option v-bind:value="org" v-for="org in organizaciones"  v-bind:style="{ color: activeColor, fontSize: fontSize + 'px' }" >{{org.nombre}}</option>
+                    </select>
+                    <br>
+                    <br>
                     <input type="text" required autocomplete="off" id="Organizacion">
                 </div>
 
@@ -68,6 +76,12 @@
                     <label>
                         Selecciona el sector<span class="req">*</span>
                     </label>
+                    <br>
+                    <br>
+                    <select v-model="sectorSeleccionado"  class="select-css">
+                        <option disabled value="">Seleccione un elemento</option>
+                        <option v-bind:value="sec" v-for="sec in organizacionSeleccionada.sectores"  v-bind:style="{ color: activeColor, fontSize: fontSize + 'px' }" >{{sec.nombre}}</option>
+                    </select>
                     <br>
                     <br>
                     <input type="text" required autocomplete="off" id="Sector">
@@ -78,10 +92,123 @@
                 <br>
                 <br>
 
+                <button type="button" id="myBtn2" v-on:click="solicitar_vinculacionSlider" class="button button-back">Solicitar Vinculacion</button>
+                <br>
+                <br>
 
             </form>
         </div>
     </section>
+
+    <script>
+
+      var team = new Vue({
+              el: "#team",
+              data: {
+                  organizacionSeleccionada: "",
+                  sectorSeleccionado:"",
+                  organizaciones: [],
+                  activeColor: "black" ,
+                  fontSize: 20
+
+              },
+              methods: {
+
+
+                  solicitar_vinculacionSlider: function () {
+                      //Armar objeto request
+                      var request = {
+                          organizacionSeleccionada: this.organizacionSeleccionada.nombre,
+                          sectorSeleccionado: this.sectorSeleccionado.nombre,
+
+                      }
+
+                      console.log(request.organizacionSeleccionada)
+                      console.log(request.sectorSeleccionado)
+                      //POST al API REST
+                      //luego puede ser una redirección o mostrar un mensaje
+
+
+                  }
+              },
+              created() {
+                  fetch('./organizacionesGet')
+                      .then(response => response.json())
+                      .then(response => {
+                        this.organizaciones = response.data
+                      })
+              }
+          })
+    </script>
+
+    <style>
+
+        .select-css {
+          font-size: 14px;
+          display: block;
+          width: 100%;
+          height: 100%;
+          padding: 5px 10px;
+          background: none;
+          background-image: none;
+          border: 1px solid #a0b3b0;
+          color: #bfbcbc;
+          border-radius: 0;
+          -webkit-transition: border-color .25s ease, box-shadow .25s ease;
+          transition: border-color .25s ease, box-shadow .25s ease;
+          line-height: 1.3;
+      }
+
+      .select-selected {
+          background-color: DodgerBlue;
+      }
+
+      /* Style the arrow inside the select element: */
+      .select-selected:after {
+          position: absolute;
+          content: "";
+          top: 14px;
+          right: 10px;
+          width: 0;
+          height: 0;
+          border: 6px solid transparent;
+          border-color: rgb(133, 35, 35) transparent transparent transparent;
+      }
+
+      /* Point the arrow upwards when the select box is open (active): */
+      .select-selected.select-arrow-active:after {
+          border-color: transparent transparent #fff transparent;
+          top: 7px;
+      }
+
+      /* style the items (options), including the selected item: */
+      .select-items div,.select-selected {
+          color: #e64747;
+          padding: 8px 16px;
+          border: 1px solid transparent;
+          border-color: transparent transparent rgba(0, 0, 0, 0.1) transparent;
+          cursor: pointer;
+      }
+
+      /* Style items (options): */
+      .select-items {
+          position: absolute;
+          background-color:  rgb(255, 255, 255);
+          top: 100%;
+          left: 0;
+          right: 0;
+          z-index: 99;
+      }
+
+      /* Hide the items when the select box is closed: */
+      .select-hide {
+          display: none;
+      }
+
+      .select-items div:hover, .same-as-selected {
+          background-color: rgba(0, 0, 0, 0.1);
+      }
+    </style>
 </body>
 
 <footer class="footer-distributed">
