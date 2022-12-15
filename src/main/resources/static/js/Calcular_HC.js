@@ -37,7 +37,7 @@ const calcularHC = async () => {
         console.log(response);
         console.log(response.tipoUsuario);
         if(response.tipoUsuario == "organizacion"){
-                  fetch(`${API_ENDPOINT}/organizacion/calcularHC`, {
+                  fetch(`$./organizacion/calcularHC`, {
                     method: "POST",
 
                     body: JSON.stringify({
@@ -68,7 +68,7 @@ const calcularHC = async () => {
                     });
         }
         else if(response.tipoUsuario == "persona"){
-                        fetch(`${API_ENDPOINT}/miembro/calcularHC`, {
+                        fetch(`./miembro/calcularHC`, {
                         method: "POST",
 
                         body: JSON.stringify({
@@ -103,7 +103,7 @@ const calcularHC = async () => {
     console.log(cookieInfo[0]);
     if(cookieInfo[0].trim() == 'organizacion')
     {
-          await fetch(`${API_ENDPOINT}/organizacion/calcularHC`, {
+          await fetch(`./organizacion/calcularHC`, {
             method: "POST",
 
             body: JSON.stringify({
@@ -135,7 +135,7 @@ const calcularHC = async () => {
     }
     else if(cookieInfo[0].trim() == 'persona')
     {
-            await fetch(`${API_ENDPOINT}/miembro/calcularHC`, {
+            await fetch(`./miembro/calcularHC`, {
             method: "POST",
 
             body: JSON.stringify({
@@ -169,7 +169,7 @@ const logout = async () => {
   delete_cookie("idSesion")
 
   window.location.replace("./")
-   // await fetch(`${API_ENDPOINT}/cerrar_sesion`, {
+   // await fetch(`./cerrar_sesion`, {
    //    method: "GET",
    //
    //    headers: {
@@ -190,5 +190,3 @@ const volverAlInicio = async () => {
   window.location.replace("./")
 
 };
-
-

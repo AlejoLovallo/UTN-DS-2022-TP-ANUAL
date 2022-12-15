@@ -32,6 +32,7 @@
         <class>Domain.Organizacion.Organizacion</class>
         <class>Domain.Organizacion.AgenteSectorial</class>
         <class>Domain.Organizacion.Sector</class>
+        <class>Domain.Organizacion.Recomendacion</class>
 
         <class>Domain.Reportes.Reporte</class>
         <class>Domain.Reportes.ReporteEvolucion</class>

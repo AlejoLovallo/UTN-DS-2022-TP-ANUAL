@@ -45,7 +45,9 @@ public class ParserJSONOrganizacion {
 
      if (organizaciones.isEmpty()) return null;
 
-     JsonArray organizacionesJson = new JsonArray();
+     JsonObject organizacionesJson = new JsonObject();
+
+     JsonArray organizacionesJsonArray = new JsonArray();
 
      JsonObject organizacionJson ;
 
@@ -64,7 +66,7 @@ public class ParserJSONOrganizacion {
        if(!organizacion.getSectores().isEmpty()){
          for(Sector sector: organizacion.getSectores()){
            sectorJson = new JsonObject();
-           sectorJson.addProperty("nombre",sector.getNombre());
+           sectorJson.addProperty("nombreSector",sector.getNombre());
            sectorJson.addProperty("idSector",sector.getId_sector());
            sectoresJson.add(sectorJson);
          }
@@ -74,10 +76,10 @@ public class ParserJSONOrganizacion {
 
 
        organizacionJson.add("sectores",sectoresJson);
-       organizacionesJson.add(organizacionJson);
+       organizacionesJsonArray.add(organizacionJson);
      }
 
-
+     organizacionesJson.add("organizaciones",organizacionesJsonArray);
 
      return organizacionesJson;
 

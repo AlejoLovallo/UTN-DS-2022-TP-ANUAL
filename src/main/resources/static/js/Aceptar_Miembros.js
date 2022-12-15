@@ -17,7 +17,7 @@ const aceptarMiembro = async () => {
   const idSesion = getCookie("idSesion");
 
 
-  await fetch(`${API_ENDPOINT}/aceptar_miembro`, {
+  await fetch(`./aceptar_miembro`, {
     method: "POST",
 
     body: JSON.stringify({
@@ -38,7 +38,7 @@ const aceptarMiembro = async () => {
       console.log("OKKKK");
       console.log(res);
       alert("Miembro aceptado");
-      window.location.href = "/sol_miembros";
+      window.location.href = "./sol_miembros";
     })
     .catch((e) => {
       console.log(e);
@@ -54,7 +54,7 @@ const rechazarMiembro = async () => {
     const id_sector = document.getElementById("idSector").innerText;
       const idSesion = getCookie("idSesion");
 
-    await fetch(`${API_ENDPOINT}/rechazar_miembro`, {
+    await fetch(`./rechazar_miembro`, {
       method: "POST",
 
       body: JSON.stringify({
@@ -66,7 +66,7 @@ const rechazarMiembro = async () => {
         id_sector,
         idSesion
       }),
-  
+
       headers: {
         "Content-type": "application/json; charset=UTF-8",
       },
@@ -84,7 +84,7 @@ const rechazarMiembro = async () => {
 
 const buscarListaMiembros = async () => {
 
-  return fetch(`${API_ENDPOINT}/solicitudes_miembro`, {
+  return fetch(`./solicitudes_miembro`, {
     method: "GET",
   })
     .then((response) => response.json())
@@ -116,7 +116,7 @@ const logout = async () => {
   delete_cookie("idSesion")
 
   window.location.replace("./")
-   // await fetch(`${API_ENDPOINT}/cerrar_sesion`, {
+   // await fetch(`./cerrar_sesion`, {
    //    method: "GET",
    //
    //    headers: {

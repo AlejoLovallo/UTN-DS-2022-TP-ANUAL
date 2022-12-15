@@ -15,13 +15,13 @@ const volverAtras = async () => {
     }
   };
 
-fetch(`${API_ENDPOINT}/menu_login`, {
+fetch(`./menu_login`, {
 method: "GET",
 mode: "no-cors",
 
 });
 
-fetch(`${API_ENDPOINT}/menu_login` + new URLSearchParams({
+fetch(`./menu_login` + new URLSearchParams({
     mesDesde: 'value',
     añoDesde: 'value',
     mesHasta: 'value',

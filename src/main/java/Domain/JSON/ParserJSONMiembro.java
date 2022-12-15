@@ -10,6 +10,7 @@ import Domain.Miembro.Miembro;
 import Domain.Miembro.Persona;
 import Domain.Organizacion.Sector;
 import Domain.Repositorios.RepositorioDireccionDB;
+import Domain.Repositorios.RepositorioEstacionDB;
 import Domain.Repositorios.RepositorioTransportePublicoDB;
 import Domain.Repositorios.RepositorioVehiculoParticularDB;
 import Domain.Trayecto.Tramo;
@@ -51,7 +52,7 @@ public class ParserJSONMiembro {
         else if(obj.get("tipo").toString().equals("transportePublico"))
         {
             RepositorioTransportePublicoDB repositorioTransportePublicoDB = new RepositorioTransportePublicoDB();
-            TransportePublico transportePublico = repositorioTransportePublicoDB.buscarTransportePublico((Integer)obj.get("id_transporte"));
+            TransportePublico transportePublico = repositorioTransportePublicoDB.buscarTransportePublicoPorLinea(obj.get("Linea").toString());
             return transportePublico;
         }
         else
@@ -65,37 +66,49 @@ public class ParserJSONMiembro {
     {
         RepositorioDireccionDB repositorioDireccionDB = new RepositorioDireccionDB();
 
+        MedioDeTransporte medioDeTransporte = JSONAMedioTransporte(obj);
 
-        Direccion direccionSalida = repositorioDireccionDB.buscarDireccion(
-                obj.get("PaisSalida").toString(),
-                obj.get("ProvinciaSalida").toString(),
-                obj.get("MunicipioSalida").toString(),
-                obj.get("LocalidadSalida").toString(),
-                obj.get("CalleSalida").toString(),
-                Integer.parseInt(obj.get("AlturaSalida").toString()),
-                obj.get("TipoDireccionSalida").toString()
-                
-        );
+        if(medioDeTransporte instanceof VehiculoParticular){
+            Direccion direccionSalida = repositorioDireccionDB.buscarDireccion(
+                    obj.get("PaisSalida").toString(),
+                    obj.get("ProvinciaSalida").toString(),
+                    obj.get("MunicipioSalida").toString(),
+                    obj.get("LocalidadSalida").toString(),
+                    obj.get("CalleSalida").toString(),
+                    Integer.parseInt(obj.get("AlturaSalida").toString()),
+                    obj.get("TipoDireccionSalida").toString()
 
-        Direccion direccionLlegada = repositorioDireccionDB.buscarDireccion(
-                obj.get("PaisLlegada").toString(),
-                obj.get("ProvinciaLlegada").toString(),
-                obj.get("MunicipioLlegada").toString(),
-                obj.get("LocalidadLlegada").toString(),
-                obj.get("CalleLlegada").toString(),
-                Integer.parseInt(obj.get("AlturaLlegada").toString()),
-                obj.get("TipoDireccionLlegada").toString()
-        );
+            );
 
+            Direccion direccionLlegada = repositorioDireccionDB.buscarDireccion(
+                    obj.get("PaisLlegada").toString(),
+                    obj.get("ProvinciaLlegada").toString(),
+                    obj.get("MunicipioLlegada").toString(),
+                    obj.get("LocalidadLlegada").toString(),
+                    obj.get("CalleLlegada").toString(),
+                    Integer.parseInt(obj.get("AlturaLlegada").toString()),
+                    obj.get("TipoDireccionLlegada").toString()
+            );
 
+            return new Tramo(
+                    direccionSalida,
+                    direccionLlegada,
+                    medioDeTransporte
+            );
 
-        Tramo tramo = new Tramo(
-                direccionSalida,
-                direccionLlegada,
-                JSONAMedioTransporte(obj)
-        );
+        }
+        else if(medioDeTransporte instanceof TransportePublico){
+            RepositorioEstacionDB repositorioEstacionDB = new RepositorioEstacionDB();
+            Estacion estacionSalida = repositorioEstacionDB.buscarEstacionPorNombre(obj.get("NombreSalida").toString());
+            Estacion estacionLlegada = repositorioEstacionDB.buscarEstacionPorNombre(obj.get("NombreLlegada").toString());
 
-        return tramo;
+            return new Tramo(
+                    estacionSalida,
+                    estacionLlegada,
+                    medioDeTransporte
+            );
+        }
+        return null;
     }
 
     //---------------hacia JSON-------------------//

@@ -50,40 +50,42 @@
     </nav>
 
     <section id="team" class="bg-light-gray">
-        <div id="form" class="form">
+        <div class="form">
 
               <h4>Vinculate a una organización</h4>
 
               <br>
 
-              <div class="field-wrap">
-                  <label>
-                      Selecciona la organización<span class="req">*</span>
-                  </label>
-                  <br>
-                  <br>
-                  <select v-model="organizacionSeleccionada" class="select-css">
-                      <option disabled value="">Seleccione un elemento</option>
-                      <option  v-for="org in organizaciones" v-bind:value="org" v-bind:style="{ color: activeColor, fontSize: fontSize + 'px' }" >
-                        {{org.nombre}}</option>
-                  </select>
-              </div>
+              <div id="form">
+                <div class="field-wrap">
+                    <label>
+                        Selecciona la organización<span class="req">*</span>
+                    </label>
+                    <br>
+                    <br>
+                    <select v-model="organizacionSeleccionada" class="select-css">
+                        <option disabled value="">Seleccione un elemento</option>
+                        <option  v-for="org in organizacionesJSON" v-bind:value="org" v-bind:style="{ color: activeColor, fontSize: fontSize + 'px' }" >
+                          {{org.nombre}}
+                        </option>
+                    </select>
+                </div>
 
-              <div class="field-wrap">
-                  <label>
-                      Selecciona el sector<span class="req">*</span>
-                  </label>
-                  <br>
-                  <br>
-                  <select v-model="sectorSeleccionado"  class="select-css">
-                      <option disabled value="">Seleccione un elemento</option>
-                      <option v-bind:value="sec" v-for="sec in organizacionSeleccionada.sectores"  v-bind:style="{ color: activeColor, fontSize: fontSize + 'px' }" >{{sec.nombre}}</option>
-                  </select>
+                <div class="field-wrap">
+                    <label>
+                        Selecciona el sector<span class="req">*</span>
+                    </label>
+                    <br>
+                    <br>
+                    <select v-model="sectorSeleccionado"  class="select-css">
+                        <option disabled value="">Seleccione un elemento</option>
+                        <option v-bind:value="sec" v-for="sec in organizacionSeleccionada.sectores"  v-bind:style="{ color: activeColor, fontSize: fontSize + 'px' }" >{{sec}}</option>
+                    </select>
+                </div>
+                <br>
+                <br>
+                <button class="btn btn-primary" v-on:click="solicitar_vinculacionSlider" >Solicitar Vinculacion</button>
               </div>
-
-              <br>
-              <br>
-              <button type="button" id="myBtn2" v-on:click="solicitar_vinculacionSlider" class="button button-back">Solicitar Vinculacion</button>
 
 
         </div>
@@ -96,36 +98,63 @@
               data: {
                   organizacionSeleccionada: "",
                   sectorSeleccionado:"",
-                  organizaciones: [],
+                  organizacionesJSON: [],
                   activeColor: "black" ,
                   fontSize: 20
-
               },
               methods: {
-
-
                   solicitar_vinculacionSlider: function () {
+
                       //Armar objeto request
                       var request = {
-                          organizacionSeleccionada: this.organizacionSeleccionada.nombre,
-                          sectorSeleccionado: this.sectorSeleccionado.nombre,
+                          organizacionSeleccionada: this.organizacionSeleccionada,
+                          sectorSeleccionado: this.sectorSeleccionado,
 
                       }
 
-                      if (request.organizacionSeleccionada.nombre == "") {
+                      if (request.organizacionSeleccionada == "") {
                           alert("Debes seleccionar una organizacion")
                           return;
                       }
-                      if (request.sectorSeleccionado.nombre == "") {
+                      if (request.sectorSeleccionado == "") {
                           alert("Debes seleccionar un sector")
                           return;
                       }
 
-                      console.log(request.organizacionSeleccionada)
-                      console.log(request.sectorSeleccionado)
+
+                      const organizacion = request.organizacionSeleccionada.nombre;
+                      const sector = request.sectorSeleccionado.nombreSector;
+                      const idSesion = getCookie("idSesion");
                       //POST al API REST
                       //luego puede ser una redirección o mostrar un mensaje
 
+                      console.log("fetch");
+                      console.log(organizacion);
+                      console.log(sector);
+                      console.log(idSesion);
+
+                      fetch(`./enviar_solicitud`, {
+                        method: "POST",
+
+                        body: JSON.stringify({
+                          organizacion,
+                          sector,
+                          idSesion,
+                        }),
+
+                        headers: {
+                          "Content-type": "application/json; charset=UTF-8",
+                        },
+                      })
+                        .then((res) => {
+                          console.log("OKKKK");
+                          console.log(res);
+                          alert("Solicitud enviada");
+                          window.location.href = "/menu_miembro";
+                        })
+                        .catch((e) => {
+                          console.log(e);
+                        });
 
                   }
               },
@@ -138,8 +167,9 @@
                   })
                       .then(response => response.json())
                       .then(response => {
-                        this.organizaciones = response.data
-                        console.log(this.organizaciones);
+                        this.organizacionesJSON = response.data.organizaciones
+                        console.log(this.organizacionesJSON);
+                        console.log(JSON.stringify(this.organizacionesJSON));
                       })
               }
           })
