@@ -1,5 +1,7 @@
 const API_ENDPOINT = "http://127.0.0.1:9000";
 
+src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"
+
 const solicitar_vinculacion = async () => {
   const organizacion = document.getElementById("Organizacion").value;
   const sector = document.getElementById("Sector").value;
@@ -36,38 +38,4 @@ function getCookie(name) {
   const value = `; ${document.cookie}`;
   const parts = value.split(`; ${name}=`);
   if (parts.length === 2) return parts.pop().split(';').shift();
-}
-
--------------------------------------------------------
-const sliderOrganizacion = new Vue({
-        el: "#appVue",
-        data: {
-            username: "",
-            mascotaSeleccionada: "",
-            mascotas: [],
-        },
-        methods: {
-            login: function () {
-                //Armar objeto request
-                var request = {
-                    username: this.username,
-                    password: 123,
-                    mascotaSeleccionada: this.mascotaSeleccionada
-                }
-                console.log(request)
-                if (request.mascotaSeleccionada == "") {
-                    alert("Debes seleccionar una mascota")
-                    return;
-                }
-                //POST al API REST
-                //luego puede ser una redirección o mostrar un mensaje
-            }
-        },
-        created() {
-            fetch('./organizacionesGet')
-                .then(response => response.json())
-                .then(response => {
-                    this.mascotas = response.data
-                })
-        }
-    })
+};

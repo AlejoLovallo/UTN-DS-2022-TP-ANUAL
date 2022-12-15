@@ -164,13 +164,13 @@ p.large {
   .button:hover, .button:focus {
     background: #da8617;
   }
-  
+
   .button-block {
     display: block;
     font-size: larger;
     width: 100%;
   }
-  
+
   .button-block:hover,
   .button-block:focus,
   .button-block:active,
@@ -182,7 +182,7 @@ p.large {
       background-color: rgb(201, 119, 11);
       cursor: pointer;
   }
-  
+
   .button-back{
     margin-bottom: 10px;
     display: block;
@@ -190,7 +190,7 @@ p.large {
     width: 100%;
     top: 20px;
   }
-  
+
   .button-back:hover,
   .button-back:focus,
   .button-back:active,
@@ -202,7 +202,7 @@ p.large {
       background-color: rgb(201, 119, 11);
       cursor: pointer;
   }
-  
+
 a,
 a:hover,
 a:focus,
@@ -481,14 +481,14 @@ header .intro-text .intro-heading {
     font-weight: 700;
     line-height: 50px;
     background-color: #9c313f;
-    
+
 }
 
 @media(min-width:768px) {
     header .intro-text {
         padding-top: 150;
         padding-bottom: 200px;
-  
+
     }
 
     header .intro-text .intro-lead-in {
@@ -504,8 +504,8 @@ header .intro-text .intro-heading {
         line-height: 40px;
         background-color: #000000;
         margin-right: 100%;
-        margin-left: -25%;       
-        color: #da8617; 
+        margin-left: -25%;
+        color: #da8617;
     }
 
     header .intro-text .intro-heading {
@@ -684,14 +684,14 @@ p.navbar-brand:hover{
     font: normal 16px sans-serif;
     padding: 45px 50px;
   }
-  
+
   .footer-distributed .footer-left p {
     color: #8f9296;
     font-size: 14px;
     margin: 0;
   }
   /* Footer links */
-  
+
   .footer-distributed p.footer-links {
     font-size: 18px;
     font-weight: bold;
@@ -700,7 +700,7 @@ p.navbar-brand:hover{
     padding: 0;
     transition: ease .25s;
   }
-  
+
   .footer-distributed p.footer-links a {
     display: inline-block;
     line-height: 1.8;
@@ -708,7 +708,7 @@ p.navbar-brand:hover{
     color: inherit;
     transition: ease .25s;
   }
-  
+
   .footer-distributed .footer-links a:before {
     content: "·";
     font-size: 20px;
@@ -717,17 +717,17 @@ p.navbar-brand:hover{
     display: inline-block;
     padding-right: 5px;
   }
-  
+
   .footer-distributed .footer-links .link-1:before {
     content: none;
   }
-  
+
   .footer-distributed .footer-right {
     float: right;
     margin-top: 6px;
     max-width: 180px;
   }
-  
+
   .footer-distributed .footer-right a {
     display: inline-block;
     width: 35px;
@@ -741,13 +741,13 @@ p.navbar-brand:hover{
     margin-left: 3px;
     transition:all .25s;
   }
-  
+
   .footer-distributed .footer-right a:hover{transform:scale(1.1); -webkit-transform:scale(1.1);}
-  
+
   .footer-distributed p.footer-links a:hover{text-decoration:underline;}
-  
+
   /* Media Queries */
-  
+
   @media (max-width: 600px) {
     .footer-distributed .footer-left, .footer-distributed .footer-right {
       text-align: center;

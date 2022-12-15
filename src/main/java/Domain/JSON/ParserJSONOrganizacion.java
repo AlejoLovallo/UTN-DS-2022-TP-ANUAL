@@ -3,6 +3,7 @@ package Domain.JSON;
 import Domain.Organizacion.AgenteSectorial;
 import Domain.Organizacion.ClasificacionOrganizacion;
 import Domain.Organizacion.Organizacion;
+import Domain.Organizacion.Sector;
 import Domain.Usuarios.Admin;
 import Domain.Usuarios.Contacto;
 import com.google.gson.JsonArray;
@@ -42,18 +43,38 @@ public class ParserJSONOrganizacion {
 
     public static JsonElement organizacionesJsonElement(List<Organizacion> organizaciones){
 
+     if (organizaciones.isEmpty()) return null;
+
      JsonArray organizacionesJson = new JsonArray();
 
-     JsonObject organizacionJson = new JsonObject();
+     JsonObject organizacionJson ;
 
-     JsonArray sectoresJson = new JsonArray();
+     JsonArray sectoresJson ;
 
-     JsonObject sectorJson = new JsonObject();
+     JsonObject sectorJson;
 
      for(Organizacion organizacion : organizaciones){
+       organizacionJson = new JsonObject();
+       sectoresJson = new JsonArray();
+
        organizacionJson.addProperty("nombre",organizacion.getRazonSocial());
        organizacionJson.addProperty("id",organizacion.getId());
 
+
+       if(!organizacion.getSectores().isEmpty()){
+         for(Sector sector: organizacion.getSectores()){
+           sectorJson = new JsonObject();
+           sectorJson.addProperty("nombre",sector.getNombre());
+           sectorJson.addProperty("idSector",sector.getId_sector());
+           sectoresJson.add(sectorJson);
+         }
+       }
+       else
+         sectoresJson = null;
+
+
+       organizacionJson.add("sectores",sectoresJson);
+       organizacionesJson.add(organizacionJson);
      }
 
 
