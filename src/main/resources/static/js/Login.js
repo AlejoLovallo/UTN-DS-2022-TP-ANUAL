@@ -1,15 +1,16 @@
 let attemptSignIn = 3;
 
-const API_ENDPOINT = "http://147.182.167.98:3020";
+const API_ENDPOINT = "http://localhost:9000";
 
 const validateSignIn = async () => {
   const username = document.getElementById("NombreUsuarioSignIn").value;
   const password = document.getElementById("PasswordSignIn").value;
 
-  console.log(username);
-  console.log(password);
 
-  await fetch(`${API_ENDPOINT}/menu_login`, {
+console.log(username);
+console.log(password);
+
+ await fetch(`${API_ENDPOINT}/menu_login`, {
     method: "POST",
 
     body: JSON.stringify({
@@ -21,65 +22,53 @@ const validateSignIn = async () => {
       "Content-type": "application/json; charset=UTF-8",
     },
   })
-    .then((res) => res.json())
-    .then((res) => {
+    .then(res => res.json())
+    .then(res => {
       console.log(res);
       console.log(res.message);
       console.log(document.cookie);
-      if (res.message == "error de JSON") {
+      if(res.message == 'error de JSON'){
         alert(res.message);
       }
-      if (res.message == "error de contra") {
+      if(res.message =='error de contra'){
         console.log(res.data);
         alert(res.data);
       }
-      if (res.message == "error de usuario") {
+      if(res.message =='error de usuario'){
         alert(res.message);
       }
-      if (res.message == "pantalla organizacion") {
-        document.cookie =
-          `idSesion=${res.data}; expires=` +
-          new Date(9999, 0, 1).toUTCString() +
-          `; path=/`;
+      if(res.message =='pantalla organizacion'){
+        document.cookie = `idSesion=${res.data}; expires=`+new Date(9999,0,1).toUTCString()+`; path=/`;
         //window.localStorage.setItem('idSesion', res.data);
         //window.sessionStorage.setItem('idSesion', res.data);
         location.replace(`${API_ENDPOINT}/menu_organizacion`);
       }
-      if (res.message == "Pantalla Admin") {
-        document.cookie =
-          `idSesion=${res.data}; expires=` +
-          new Date(9999, 0, 1).toUTCString() +
-          `; path=/`;
+      if(res.message =='Pantalla Admin'){
+        document.cookie = `idSesion=${res.data}; expires=`+new Date(9999,0,1).toUTCString()+`; path=/`;
         //window.localStorage.setItem('idSesion', res.data);
         window.location.replace(`${API_ENDPOINT}/menu_organizacion`);
       }
-      if (res.message == "pantalla persona") {
-        document.cookie =
-          `idSesion=${res.data}; expires=` +
-          new Date(9999, 0, 1).toUTCString() +
-          `; path=/`;
+      if(res.message =='pantalla persona'){
+        document.cookie = `idSesion=${res.data}; expires=`+new Date(9999,0,1).toUTCString()+`; path=/`;
         //window.localStorage.setItem('idSesion', res.data);
         window.location.replace(`${API_ENDPOINT}/menu_miembro`);
       }
-      if (res.message == "pantalla usuario default") {
-        document.cookie =
-          `idSesion=${res.data}; expires=` +
-          new Date(9999, 0, 1).toUTCString() +
-          `; path=/`;
+      if(res.message =='pantalla usuario default'){
+        document.cookie = `idSesion=${res.data}; expires=`+new Date(9999,0,1).toUTCString()+`; path=/`;
         //document.cookie = `idSesion=${res.message}`;
-        window.localStorage.setItem("idSesion", res.data);
+        window.localStorage.setItem('idSesion', res.data);
         alert("usuario default");
       }
-    })
+     })
     .catch((error) => {
-      console.log(error);
+      console.log(error)
     });
 };
 
 const singUpOrganizacion = async () => {
   const username = document.getElementById("NombreUsuarioOrg").value;
   const password = document.getElementById("PasswordUserOrg").value;
-  const password_copia = document.getElementById("PasswordRepeatUserOrg").value;
+  const password_copia = document.getElementById("PasswordRepeatUserOrg").value
   const razon_social = document.getElementById("RazonSocial").value;
   const cuit = document.getElementById("Cuit").value;
   const clasificacion = document.getElementById("ClasificacionOrg").value;
@@ -87,15 +76,15 @@ const singUpOrganizacion = async () => {
   const localidad = document.getElementById("LocalidadOrg").value;
   const mail = document.getElementById("EmailUserOrg").value;
 
-  if (password != password_copia) {
+  if(password != password_copia){
     alert("Las contraseñas deben ser iguales");
     return;
   }
 
-  console.log(username);
-  console.log(password);
+console.log(username);
+console.log(password);
 
-  fetch(`${API_ENDPOINT}/registrar_org`, {
+ fetch(`${API_ENDPOINT}/registrar_org`, {
     method: "POST",
 
     body: JSON.stringify({
@@ -117,23 +106,23 @@ const singUpOrganizacion = async () => {
     //   console.log(res)
     //   //return res.json()
     // } )
-    .then((res) => res.json())
-    .then((res) => {
+    .then(res => res.json())
+    .then(res => {
       console.log(res);
       console.log(res.message);
-      if (res.message == "pantalla organizacion") {
+      if(res.message =='pantalla organizacion'){
         window.location.replace(`${API_ENDPOINT}/menu_organizacion`);
       }
-    })
+     })
     .catch((error) => {
-      console.log(error);
+      console.log(error)
     });
 };
 
 const singUpPersona = async () => {
   const username = document.getElementById("UsernameMember").value;
   const password = document.getElementById("PasswordMember").value;
-  const password_copia = document.getElementById("PasswordRepeatMember").value;
+  const password_copia = document.getElementById("PasswordRepeatMember").value
   const nombre = document.getElementById("NombreMember").value;
   const apellido = document.getElementById("ApellidoMember").value;
   const fechaNac = document.getElementById("NacimientoMember").value;
@@ -142,15 +131,15 @@ const singUpPersona = async () => {
   const localidad = document.getElementById("LocalidadMember").value;
   const mail = document.getElementById("EmailMember").value;
 
-  if (password != password_copia) {
+  if(password != password_copia){
     alert("Las contraseñas deben ser iguales");
     return;
   }
 
-  console.log(username);
-  console.log(password);
+console.log(username);
+console.log(password);
 
-  fetch(`${API_ENDPOINT}/registrar_org`, {
+ fetch(`${API_ENDPOINT}/registrar_org`, {
     method: "POST",
 
     body: JSON.stringify({
@@ -169,27 +158,29 @@ const singUpPersona = async () => {
     //   console.log(res)
     //   //return res.json()
     // } )
-    .then((res) => res.json())
-    .then((res) => {
+    .then(res => res.json())
+    .then(res => {
       console.log(res);
       console.log(res.message);
-      if (res.message == "pantalla miembro") {
+      if(res.message =='pantalla miembro'){
         window.location.replace(`${API_ENDPOINT}/menu_miembro`);
       }
-    })
+     })
     .catch((error) => {
-      console.log(error);
+      console.log(error)
     });
 };
 
+
+
 const verifyOrgFields = () => {
-  //TODO: falta documento y tipo de documento
+//TODO: falta documento y tipo de documento
   const socialReason = document.getElementById("RazonSocial").value;
   const cuit = document.getElementById("Cuit").value;
   const clasification = document.getElementById("ClasificacionOrg").value;
   const type = document.getElementById("TipoOrg").value;
   const location = document.getElementById("LocalidadOrg").value;
-  const diasSemana = document.getElementById("dias_semana").value;
+  const diasSemana = document.getElementById("dias_semana").value
 
   return {
     socialReason,
@@ -224,7 +215,7 @@ const verifyUserOrgFields = () => {
 const validateOrganizationCreation = async () => {
   const org = verifyOrgFields();
   const user = verifyUserOrgFields();
-  if (org && JSON.stringify(user) != "{}") {
+  if (org && JSON.stringify(user) != '{}') {
     const res = await fetch(`${API_ENDPOINT}/registrar_org`, {
       method: "POST",
 
@@ -255,11 +246,11 @@ const validateOrganizationCreation = async () => {
     } else {
       alert("Organizacion creada con exito.");
 
-      /*document.cookies.set({
+        /*document.cookies.set({
           name: "username",
           value: Request.Cookies[username]
         });*/
-      window.location.replace(`${API_ENDPOINT}/menu_organizacion`);
+       window.location.replace(`${API_ENDPOINT}/menu_organizacion`);
     }
   }
 };
@@ -276,7 +267,7 @@ const validateRegisterMember = async () => {
   const password = document.getElementById("PasswordMember").value;
   const repeatPassword = document.getElementById("PasswordRepeatMember").value;
   const tipoDocumento = document.getElementById("TipoDocumento").value;
-  const documento = document.getElementById("Documento").value;
+  const documento = document.getElementById("Documento").value
 
   if (password != repeatPassword) {
     alert("Las contraseñas no coinciden");
@@ -305,8 +296,8 @@ const validateRegisterMember = async () => {
     },
   })
     .then((res) => {
-      alert("Persona registrada con exito");
-      window.location.replace(`${API_ENDPOINT}/menu_miembro`);
+        alert("Persona registrada con exito");
+        window.location.replace(`${API_ENDPOINT}/menu_miembro`);
     })
     .catch((error) => {
       console.log("ERROR");

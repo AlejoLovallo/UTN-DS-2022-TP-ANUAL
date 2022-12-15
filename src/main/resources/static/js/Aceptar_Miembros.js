@@ -1,4 +1,4 @@
-const API_ENDPOINT = "http://147.182.167.98:3020";
+const API_ENDPOINT = "http://127.0.0.1:9000";
 
 const aceptarMiembro = async () => {
   const name = document.getElementById("nombre").innerText;
@@ -7,6 +7,7 @@ const aceptarMiembro = async () => {
   const dni = document.getElementById("dni").innerText;
   const sector = document.getElementById("nombreSector").innerText;
   const id_sector = document.getElementById("idSector").innerText;
+
 
   await fetch(`${API_ENDPOINT}/aceptar_miembro`, {
     method: "POST",
@@ -36,48 +37,49 @@ const aceptarMiembro = async () => {
 };
 
 const rechazarMiembro = async () => {
-  const nombre = document.getElementById("nombre").innerText;
-  const apellido = document.getElementById("apellido").innerText;
-  const tipoDeDocumento = document.getElementById("tipoDeDocumento").innerText;
-  const dni = document.getElementById("dni").innerText;
-  const sector = document.getElementById("nombreSector").innerText;
-  const id_sector = document.getElementById("idSector").innerText;
+    const nombre = document.getElementById("nombre").innerText;
+    const apellido = document.getElementById("apellido").innerText;
+    const tipoDeDocumento = document.getElementById("tipoDeDocumento").innerText;
+    const dni = document.getElementById("dni").innerText;
+    const sector = document.getElementById("nombreSector").innerText;
+    const id_sector = document.getElementById("idSector").innerText;
 
-  await fetch(`${API_ENDPOINT}/rechazar_miembro`, {
-    method: "POST",
+    await fetch(`${API_ENDPOINT}/rechazar_miembro`, {
+      method: "POST",
 
-    body: JSON.stringify({
-      nombre,
-      apellido,
-      tipoDeDocumento,
-      dni,
-      sector,
-      id_sector,
-    }),
-
-    headers: {
-      "Content-type": "application/json; charset=UTF-8",
-    },
-  })
-    .then((res) => {
-      console.log("OKKKK");
-      console.log(res);
-      alert(res);
-      window.location.href = "/sol_miembros";
+      body: JSON.stringify({
+        nombre,
+        apellido,
+        tipoDeDocumento,
+        dni,
+        sector,
+        id_sector
+      }),
+  
+      headers: {
+        "Content-type": "application/json; charset=UTF-8",
+      },
     })
-    .catch((e) => {
-      console.log(e);
-    });
+      .then((res) => {
+        console.log("OKKKK");
+        console.log(res);
+        alert(res);
+        window.location.href = "/sol_miembros";
+      })
+      .catch((e) => {
+        console.log(e);
+      });
 };
 
 const buscarListaMiembros = async () => {
+
   return fetch(`${API_ENDPOINT}/solicitudes_miembro`, {
     method: "GET",
   })
     .then((response) => response.json())
     .then((data) => {
       console.log(data);
-      for (let i = 0; i < data.length; i++) {
+      for(let i = 0;i < data.length;i++){
         const miembro = data[i];
         const item = `<tr>
           <td id="nombre">${miembro.persona.nombre}</td>
@@ -89,7 +91,7 @@ const buscarListaMiembros = async () => {
           <td><button type="submit" class="button button-accept" onclick="aceptarMiembro()"> Aceptar </button></td>
           <td><button type="submit" class="button button-deny" onclick="rechazarMiembro()"> Rechazar </button></td>
           </tr>`;
-        $("#ListaMiembrosBody").append(item);
+          $('#ListaMiembrosBody').append(item);
       }
       console.log("OKKKK");
     })
@@ -97,5 +99,6 @@ const buscarListaMiembros = async () => {
       console.log(e);
     });
 };
+
 
 buscarListaMiembros();
