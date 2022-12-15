@@ -8,6 +8,7 @@
 
 # Package Files #
 *.jar
+!tpfinal-jar-with-dependencies.jar
 *.war
 *.nar
 *.ear

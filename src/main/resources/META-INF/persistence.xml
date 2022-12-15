@@ -55,7 +55,7 @@
             <property name="hibernate.archive.autodetection" value="class"/>
             <!-- CONNECTION SETTINGS -->
             <property name="hibernate.connection.driver_class" value="com.mysql.cj.jdbc.Driver" />
-            <property name="hibernate.connection.url" value="jdbc:mysql://localhost:3306/impactoambiental" />
+            <property name="hibernate.connection.url" value="jdbc:mysql://localhost:3308/impactoambiental" />
             <property name="hibernate.connection.username" value="sa" />
             <property name="hibernate.connection.password" value="dike2361!"/>
             <!-- HIBERNATE CONFIG SETTINGS -->

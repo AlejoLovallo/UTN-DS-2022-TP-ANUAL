@@ -6,6 +6,6 @@ RUN apk add maven
 
 WORKDIR /code
 
-ADD target/tpfinal-jar-with-dependencies.jar tpfinal-jar-with-dependencies.jar
+ADD ./tpfinal-jar-with-dependencies.jar tpfinal-jar-with-dependencies.jar
 ENTRYPOINT ["java", "-jar", "tpfinal-jar-with-dependencies.jar"]
 EXPOSE 9000
