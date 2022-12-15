@@ -1,4 +1,4 @@
-const API_ENDPOINT = "http://127.0.0.1:9000";
+const API_ENDPOINT = "http://147.182.167.98:3020";
 
 const solicitar_vinculacion = async () => {
   const organizacion = document.getElementById("Organizacion").value;
@@ -9,7 +9,7 @@ const solicitar_vinculacion = async () => {
 
     body: JSON.stringify({
       organizacion,
-      sector
+      sector,
     }),
 
     headers: {
