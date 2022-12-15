@@ -584,9 +584,11 @@ a.page-scroll:hover, a.page-scroll:focus {
     width: 110%;
   }
 
+
 .page-scroll:hover {color:#fff !important}
 
 .page-scroll{
+    color: #bdbbbb;
     border: 21px #fe0303 !important;
     font-size: 16px;
     background: #da171770;

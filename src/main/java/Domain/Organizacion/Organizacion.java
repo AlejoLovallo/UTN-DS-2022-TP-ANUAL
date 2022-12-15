@@ -62,6 +62,10 @@ public class Organizacion {
   @NotFound(action = NotFoundAction.IGNORE)
   private List<Reporte> reportes = new ArrayList<>();
 
+  @OneToMany(mappedBy = "organizacion",cascade = CascadeType.ALL)
+  @NotFound(action = NotFoundAction.IGNORE)
+  private List<Recomendacion> recomendaciones = new ArrayList<>();
+
   @OneToOne(cascade = CascadeType.DETACH)
   @NotFound(action = NotFoundAction.IGNORE)
   @JoinColumn(name="id_usuario",referencedColumnName = "id_usuario")
@@ -154,6 +158,8 @@ public class Organizacion {
   public List<Reporte> getReportes() {
     return reportes;
   }
+
+  public List<Recomendacion> getRecomendaciones() {return recomendaciones;}
 
   public Usuario getUsuario() {
     return usuario;

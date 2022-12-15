@@ -5,11 +5,8 @@ import Domain.JSON.ParserJSONMiembro;
 import Domain.JSON.ParserJSONOrganizacion;
 import Domain.Miembro.Miembro;
 import Domain.Miembro.Persona;
-import Domain.Organizacion.ClasificacionOrganizacion;
+import Domain.Organizacion.*;
 import Domain.Organizacion.Excepciones.OrganizacionException;
-import Domain.Organizacion.Organizacion;
-import Domain.Organizacion.Sector;
-import Domain.Organizacion.TipoOrganizacion;
 import Domain.Reportes.*;
 import Domain.Repositorios.*;
 import Domain.Usuarios.Usuario;
@@ -437,7 +434,34 @@ public class OrganizacionController {
         return new ModelAndView(params, "Reporte.hbs");
     }
 
+    public ModelAndView listarRecomendaciones(Request request, Response response){
 
+        HashMap<String, Object> params = new HashMap<>();
+
+        String idSesion = request.cookie("idSesion");
+
+        Optional<String> username = Optional.ofNullable(SesionManager.get().obtenerAtributos(idSesion).get("username").toString());
+
+        RepositorioOrganizacionesDB repositorioOrganizacionesDB = new RepositorioOrganizacionesDB();
+
+        RepositorioUsuariosDB repositorioUsuariosDB = new RepositorioUsuariosDB();
+
+        Usuario usuario = repositorioUsuariosDB.buscarUsuario(username.get());
+
+        Organizacion organizacion = repositorioOrganizacionesDB.buscarOrganizacionPorUsuario(usuario);
+
+        ArrayList<String> listaRecomendaciones = new ArrayList<>();
+
+        for(Recomendacion recomendacion : organizacion.getRecomendaciones()){
+            listaRecomendaciones.add(recomendacion.getRecomendacion());
+        }
+
+        params.put("recomendaciones", listaRecomendaciones);
+
+        return new ModelAndView(params, "Recomendaciones.hbs");
+    }
+
+/*
     public ModelAndView listarRecomendaciones(Request request, Response response){
         HashMap<String, Object> params = new HashMap<>();
 
@@ -451,6 +475,8 @@ public class OrganizacionController {
 
         return new ModelAndView(params, "Recomendaciones.hbs");
     }
+
+ */
 
     public ModelAndView menuOrganizacion(Request request, Response response) {
         Map<String, Object> parametros = new HashMap<>();
