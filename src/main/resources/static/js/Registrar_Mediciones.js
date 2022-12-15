@@ -8,7 +8,7 @@ const registrarMediciones = async () => {
 
     await fetch(`./organizacion/cargar_mediciones`, {
         method: "POST",
-    
+
         body: file_upload,
 
       })
@@ -28,7 +28,7 @@ const logout = async () => {
   delete_cookie("idSesion")
 
   window.location.replace("./")
-   // await fetch(`${API_ENDPOINT}/cerrar_sesion`, {
+   // await fetch(`./cerrar_sesion`, {
    //    method: "GET",
    //
    //    headers: {

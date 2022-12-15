@@ -178,7 +178,7 @@ $('.form').find('input, textarea').on('keyup blur focus', function (e) {
     delete_cookie("idSesion")
 
     window.location.replace("./")
-     // await fetch(`${API_ENDPOINT}/cerrar_sesion`, {
+     // await fetch(`./cerrar_sesion`, {
      //    method: "GET",
      //
      //    headers: {
