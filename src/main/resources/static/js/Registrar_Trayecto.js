@@ -14,7 +14,7 @@ const validateRegistrarTrayecto = async () => {
   const fechaInicio = document.getElementById("FechaInicio").value;
   const fechaFin = document.getElementById("FechaFin").value;
 
-  await fetch(`${API_ENDPOINT}/agregar_trayecto`, {
+  await fetch(`./agregar_trayecto`, {
     method: "POST",
 
     body: JSON.stringify({
@@ -45,7 +45,7 @@ $('.form').find('input, textarea').on('keyup blur focus', function (e) {
 
     var $this = $(this),
       label = $this.prev('label');
-  
+
     if (e.type === 'keyup') {
       if ($this.val() === '') {
         label.removeClass('active highlight');
@@ -59,7 +59,7 @@ $('.form').find('input, textarea').on('keyup blur focus', function (e) {
         label.removeClass('highlight');
       }
     } else if (e.type === 'focus') {
-  
+
       if ($this.val() === '') {
         label.removeClass('highlight');
       }
@@ -67,37 +67,37 @@ $('.form').find('input, textarea').on('keyup blur focus', function (e) {
         label.addClass('highlight');
       }
     }
-  
+
   });
-  
+
   $('.tab a').on('click', function (e) {
-  
+
     e.preventDefault();
-  
+
     $(this).parent().addClass('active');
     $(this).parent().siblings().removeClass('active');
-  
+
     target = $(this).attr('href');
-  
+
     $('.tab-content > div').not(target).hide();
-  
+
     $(target).fadeIn(600);
-  
+
   });
 
   var modal = document.getElementById("myModal");
-  
+
   // Get the button that opens the modal
   var btn = document.getElementById("myBtn");
-  
+
   // Get the <span> element that closes the modal
   var span = document.getElementsByClassName("close")[0];
-  
-  // When the user clicks the button, open the modal 
+
+  // When the user clicks the button, open the modal
   btn.onclick = function () {
     modal.style.display = "block";
   }
-  
+
   // When the user clicks on <span> (x), close the modal
   span.onclick = function () {
     modal.style.display = "none";

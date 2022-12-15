@@ -9,7 +9,7 @@ const solicitar_vinculacion = async () => {
 
     console.log(idSesion);
 
-  fetch(`${API_ENDPOINT}/enviar_solicitud`, {
+  fetch(`./enviar_solicitud`, {
     method: "POST",
 
     body: JSON.stringify({
