@@ -34,13 +34,18 @@ public class ParserJSONMiembro {
             if(aux != null)
                 return aux;
             else{
-                repositorioVehiculoParticularDB.crearVehiculoParticular(
+                return new VehiculoParticular(
+                        TipoVehiculo.valueOf((String)obj.get("TipoVehiculo")),
+                        TipoCombustible.valueOf((String)obj.get("TipoCombustible")),
+                        Integer.parseInt(obj.get("CantidadPasajeros").toString()),
+                        Double.parseDouble(obj.get("ConsumoPorKm").toString()));
+                /*return repositorioVehiculoParticularDB.crearVehiculoParticular(
                         TipoVehiculo.valueOf((String)obj.get("TipoVehiculo")),
                         TipoCombustible.valueOf((String)obj.get("TipoCombustible")),
                         Integer.parseInt(obj.get("CantidadPasajeros").toString()),
                         Integer.parseInt(obj.get("ConsumoPorKm").toString())
-                );
-                return repositorioVehiculoParticularDB.buscarVehiculoParticular((String)obj.get("vehiculo"), (String)obj.get("combustible"), ((Long)obj.get("cantidadPasajeros")).intValue(), Double.parseDouble(obj.get("ConsumoPorKm").toString()) );
+                );*/
+                //return repositorioVehiculoParticularDB.buscarVehiculoParticular((String)obj.get("vehiculo"), (String)obj.get("combustible"), ((Long)obj.get("cantidadPasajeros")).intValue(), Double.parseDouble(obj.get("ConsumoPorKm").toString()) );
             }
         }
         else if(obj.get("tipo").toString().equals("transportePublico"))
