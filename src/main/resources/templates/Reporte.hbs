@@ -65,8 +65,8 @@
         <div class="form">
             <br>
 
-            <h1>Reporte</h1>
-            <h2>Composicion</h2>
+            <h1 class="reporte-title">Reporte</h1>
+            <h2 class="reporte-subtitle">Composicion</h2>
             {{#each composicion}}
                 {{#with this}}
                 <p class="orange-text">Id: {{id_reporte}}<p>
@@ -89,7 +89,7 @@
             <br>
             {{/each}}
             <br>
-            <h2>Evolucion</h2>
+            <h2 class="reporte-subtitle">Evolucion</h2>
             {{#each evolucion}}
                 <p class="orange-text">Id: {{this.id_reporte}}</p>
                 <p class="orange-text">Desde</p>
@@ -102,16 +102,16 @@
                     <table class="scroll" id="tablaEvolucion" style="overflow-y:auto;">
 
                         <thead>
-                            <th class="orange-text">Año</th>
-                            <th class="orange-text">Mes</th>
+                            <th class="orange-text">Año  </th>
+                            <th class="orange-text">Mes  </th>
                             <th class="orange-text">Consumo</th>
                         </thead>
 
                         <tbody>
                             {{#each this.consumos}}
                             <tr>
-                                <td class="data">{{this.anio}}</td>
-                                <td class="data">{{this.mes}}</td>
+                                <td class="data">{{this.anio}}  </td>
+                                <td class="data">{{this.mes}}  </td>
                                 <td class="data">{{this.consumo}}</td>
                             </tr>
                             {{/each}}
@@ -121,7 +121,7 @@
                 </div>
             {{/each}}
             <br>
-            <h2>Total</h2>
+            <h2 class="reporte-subtitle">Total</h2>
             {{#each total}}
                 <p class="orange-text">Id: {{this.id_reporte}}</p>
                 <p class="orange-text">Desde:</p>
