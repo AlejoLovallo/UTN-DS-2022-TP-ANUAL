@@ -105,7 +105,7 @@ public class Router {
 
     Spark.get("/recomendaciones", organizacionController::listarRecomendaciones, Router.engine);
     Spark.get("/reportes", organizacionController::mostrarReportes, Router.engine);
-
+    Spark.get("/pedidoMenuCalcularHC", organizacionController::pedidoMenuCalcularHC);
     //Spark.get("/cerrar_sesion",loginController::logout);
 
   }

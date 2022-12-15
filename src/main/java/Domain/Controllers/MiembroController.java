@@ -56,7 +56,7 @@ public class MiembroController {
                     true
             );
 
-            repositorioPersonasDB.crearPersona(
+            Persona persona1 = repositorioPersonasDB.crearPersona(
                     persona.get("name").toString(),
                     persona.get("surname").toString(),
                     TipoDocumento.values()[(Integer.parseInt(persona.get("tipoDocumento").toString())) -1],
@@ -65,6 +65,11 @@ public class MiembroController {
             );
 //            res.cookie("username", usuario.getUsername());
 //            res.cookie("organizacion",  persona.get("name").toString());
+        SesionManager sesionManager = SesionManager.get();
+        String idSesion = sesionManager.crearSesion("username", usuario.getUsername());
+        sesionManager.agregarAtributo(idSesion, "rol","persona");
+        sesionManager.agregarAtributo(idSesion,"documento",persona1.getNroDocumento());
+        res.cookie("idSesion",idSesion);
 
             return new Gson()
                     .toJson(new StandardResponse(StatusResponse.SUCCESS,"pantalla miembro"));
@@ -142,7 +147,8 @@ public class MiembroController {
     }
 
     public Object visualizarTrayectos(Request request, Response response) {
-        String username = request.cookie("username");
+        String id = request.cookie("idSesion");
+        String username = (String) SesionManager.get().obtenerAtributos(id).get("username");
 
         RepositorioPersonasDB repositorioPersonasDB = new RepositorioPersonasDB();
         Persona persona = repositorioPersonasDB.buscarPersonaPorUsername(username);
@@ -183,7 +189,8 @@ public class MiembroController {
     }
 
     public Object respuestaCalcularHC(Request request, Response response) throws IOException, ParseException {
-        String username = request.cookie("username");
+        String id = request.cookie("idSesion");
+        String username = (String) SesionManager.get().obtenerAtributos(id).get("username");
 
         JSONParser jsonParser = new JSONParser();
         JSONObject pedido = (JSONObject) jsonParser.parse(request.body());
