@@ -90,4 +90,9 @@ public class VehiculoParticular extends MedioDeTransporte{
     em.detach(vehiculoParticular);
     return vehiculoParticular;
   }
+
+  @Override
+  public TipoVehiculo getTipoMedio() {
+    return this.tipoVehiculo;
+  }
 }

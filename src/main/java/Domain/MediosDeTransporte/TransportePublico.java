@@ -79,6 +79,11 @@ public class TransportePublico extends MedioDeTransporte {
     //updateTransportePublico();
   }
 
+  @Override
+  public TipoVehiculo getTipoMedio() {
+    return null;
+  }
+
   /*
 
   public void updateTransportePublico(){
