@@ -9,8 +9,7 @@ public class Server {
     port(9000);
     //get("/ping_health", (req, res) -> "Hello World");
     Router.init();
-
-    SchedulerCron schedulerCron = new SchedulerCron();
-    schedulerCron.comenzar();
+//    SchedulerCron schedulerCron = new SchedulerCron();
+//    schedulerCron.comenzar();
   }
 }
