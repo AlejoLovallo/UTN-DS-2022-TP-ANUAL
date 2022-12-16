@@ -55,7 +55,7 @@
               <h4>Vinculate a una organización</h4>
 
               <br>
-
+              <!--
               <div id="form">
                 <div class="field-wrap">
                     <label>
@@ -85,95 +85,119 @@
                 </div>
                 <br>
                 <br>
+
+
+
                 <button class="btn btn-primary" v-on:click="solicitar_vinculacionSlider" >Solicitar Vinculacion</button>
+              </div>-->
+              <div class="field-wrap">
+                  <label>
+                      Selecciona la organización<span class="req">*</span>
+                  </label>
+                  <br>
+                  <br>
+                  <input type="text" required autocomplete="off" id="Organizacion">
               </div>
 
+              <div class="field-wrap">
+                  <label>
+                      Selecciona el sector<span class="req">*</span>
+                  </label>
+                  <br>
+                  <br>
+                  <input type="text" required autocomplete="off" id="Sector">
+              </div>
+
+              <br>
+              <button type="submit" id="myBtn" onclick="solicitar_vinculacion()" class="button button-back">Solicitar Vinculacion</button>
+              <br>
+              <br>
 
         </div>
     </section>
 
     <script>
 
-      var form = new Vue({
-              el: "#form",
-              data: {
-                  organizacionSeleccionada: "",
-                  sectorSeleccionado:"",
-                  organizacionesJSON: [],
-                  activeColor: "black" ,
-                  fontSize: 20
-              },
-              methods: {
-                  solicitar_vinculacionSlider: function () {
-
-                      //Armar objeto request
-                      var request = {
-                          organizacionSeleccionada: this.organizacionSeleccionada,
-                          sectorSeleccionado: this.sectorSeleccionado,
-
-                      }
-
-                      if (request.organizacionSeleccionada == "") {
-                          alert("Debes seleccionar una organizacion")
-                          return;
-                      }
-                      if (request.sectorSeleccionado == "") {
-                          alert("Debes seleccionar un sector")
-                          return;
-                      }
-
-
-                      const organizacion = request.organizacionSeleccionada.nombre;
-                      const sector = request.sectorSeleccionado.nombreSector;
-                      const idSesion = getCookie("idSesion");
-                      //POST al API REST
-                      //luego puede ser una redirección o mostrar un mensaje
-
-                      console.log("fetch");
-                      console.log(organizacion);
-                      console.log(sector);
-                      console.log(idSesion);
-
-                      fetch(`./enviar_solicitud`, {
-                        method: "POST",
-
-                        body: JSON.stringify({
-                          organizacion,
-                          sector,
-                          idSesion,
-                        }),
-
-                        headers: {
-                          "Content-type": "application/json; charset=UTF-8",
-                        },
-                      })
-                        .then((res) => {
-                          console.log("OKKKK");
-                          console.log(res);
-                          alert("Solicitud enviada");
-                          window.location.href = "/menu_miembro";
-                        })
-                        .catch((e) => {
-                          console.log(e);
-                        });
-
-                  }
-              },
-              created() {
-                  fetch('./organizacionesGet',{
-                    method: "GET",
-                    headers: {
-                      "Content-type": "application/json; charset=UTF-8",
-                    },
-                  })
-                      .then(response => response.json())
-                      .then(response => {
-                        this.organizacionesJSON = response.data.organizaciones
-                        console.log(this.organizacionesJSON);
-                        console.log(JSON.stringify(this.organizacionesJSON));
-                      })
-              }
-          })
+      // var form = new Vue({
+      //         el: "#form",
+      //         data: {
+      //             organizacionSeleccionada: "",
+      //             sectorSeleccionado:"",
+      //             organizacionesJSON: [],
+      //             activeColor: "black" ,
+      //             fontSize: 20
+      //         },
+      //         methods: {
+      //             solicitar_vinculacionSlider: function () {
+      //
+      //                 //Armar objeto request
+      //                 var request = {
+      //                     organizacionSeleccionada: this.organizacionSeleccionada,
+      //                     sectorSeleccionado: this.sectorSeleccionado,
+      //
+      //                 }
+      //
+      //                 if (request.organizacionSeleccionada == "") {
+      //                     alert("Debes seleccionar una organizacion")
+      //                     return;
+      //                 }
+      //                 if (request.sectorSeleccionado == "") {
+      //                     alert("Debes seleccionar un sector")
+      //                     return;
+      //                 }
+      //
+      //
+      //                 const organizacion = request.organizacionSeleccionada.nombre;
+      //                 const sector = request.sectorSeleccionado.nombreSector;
+      //                 const idSesion = getCookie("idSesion");
+      //                 //POST al API REST
+      //                 //luego puede ser una redirección o mostrar un mensaje
+      //
+      //                 console.log("fetch");
+      //                 console.log(organizacion);
+      //                 console.log(sector);
+      //                 console.log(idSesion);
+      //
+      //                 fetch(`./enviar_solicitud`, {
+      //                   method: "POST",
+      //
+      //                   body: JSON.stringify({
+      //                     organizacion,
+      //                     sector,
+      //                     idSesion,
+      //                   }),
+      //
+      //                   headers: {
+      //                     "Content-type": "application/json; charset=UTF-8",
+      //                   },
+      //                 })
+      //                   .then((res) => {
+      //                     console.log("OKKKK");
+      //                     console.log(res);
+      //                     alert("Solicitud enviada");
+      //                     window.location.href = "/menu_miembro";
+      //                   })
+      //                   .catch((e) => {
+      //                     console.log(e);
+      //                   });
+      //
+      //             }
+      //         },
+      //         created() {
+      //             fetch('./organizacionesGet',{
+      //               method: "GET",
+      //               headers: {
+      //                 "Content-type": "application/json; charset=UTF-8",
+      //               },
+      //             })
+      //                 .then(response => response.json())
+      //                 .then(response => {
+      //                   this.organizacionesJSON = response.data.organizaciones
+      //                   console.log(this.organizacionesJSON);
+      //                   console.log(JSON.stringify(this.organizacionesJSON));
+      //                 })
+      //         }
+      //     })
     </script>
 
 </body>

@@ -14,6 +14,7 @@
         <class>Domain.MediosDeTransporte.MedioDeTransporte</class>
         <class>Domain.MediosDeTransporte.DistanciaDouble</class>
 
+
         <class>Domain.Espacios.Espacio</class>
         <class>Domain.Espacios.Estacion</class>
         <class>Domain.Espacios.Direccion</class>

@@ -74,8 +74,8 @@ const rechazarMiembro = async () => {
       .then((res) => {
         console.log("OKKKK");
         console.log(res);
-        alert(res);
-        window.location.href = "/sol_miembros";
+        alert("miembro rechazado");
+        window.location.href = "./";
       })
       .catch((e) => {
         console.log(e);
