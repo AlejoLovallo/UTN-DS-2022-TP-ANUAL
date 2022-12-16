@@ -8,10 +8,6 @@ import java.util.concurrent.CountDownLatch;
 public class SchedulerCron {
   private final CountDownLatch contadorSincronico = new CountDownLatch(4);
 
-  public static void main(String[] args) {
-    SchedulerCron schedulerCron = new SchedulerCron();
-    schedulerCron.comenzar();
-  }
 
   public void comenzar()  {
 
@@ -39,7 +35,7 @@ public class SchedulerCron {
 
       // Construccion de Trigger
 
-      String cronLunes7AM = "0 7 * * 1";
+      String cronCada1Hora = "0 0 0/1 1/1 * ? *";
 
       String cron5Seg = "0/5 * * ? * * *";
 
@@ -48,7 +44,7 @@ public class SchedulerCron {
       Trigger trigger = TriggerBuilder.newTrigger()
           .withIdentity("unTrigger")
           .startAt(new Date())
-          .withSchedule(CronScheduleBuilder.cronSchedule(cron5Seg))
+          .withSchedule(CronScheduleBuilder.cronSchedule(cronCada1Hora))
           .build();
 
       // Asignacion del job y el trigger a la inst de scheduler

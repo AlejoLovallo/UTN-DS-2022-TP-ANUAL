@@ -32,7 +32,7 @@ const validateRegistrarTrayecto = async () => {
     .then((res) => {
       console.log("OKKKK");
       console.log(res);
-      alert(res);
+      alert("Se registro el trayecto correctamente");
       window.location.href = "/menu_miembro";
     })
     .catch((e) => {

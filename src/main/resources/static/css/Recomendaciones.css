@@ -818,3 +818,14 @@ p.navbar-brand:hover{
     color:rgb(226, 226, 226) !important;
     background-color: #706e6eaf !important;
 }
+
+.recomendaciones-title{
+    font-size: 30px;
+    color: #da8617;
+  }
+
+
+  .data{
+    font-size: 15px;
+    color: #bfbcbc;
+  }

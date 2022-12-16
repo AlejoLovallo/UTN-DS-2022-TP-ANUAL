@@ -1,5 +1,6 @@
 package Domain.CalculadorHC;
 
+import Domain.MediosDeTransporte.TipoVehiculo;
 import Domain.MediosDeTransporte.VehiculoParticular;
 import Domain.Miembro.Miembro;
 import Domain.Organizacion.*;
@@ -80,8 +81,10 @@ public class CalculadorHC {
             ){
                 for(Tramo tramo : trayecto.getTramos()){
                     if(tramo.getMedioTransporte() instanceof VehiculoParticular){
-                        Double unidadesConsumidas = tramo.determinarDistancia() * tramo.getMedioTransporte().getConsumoPorKm();
-                        cantidadHC += unidadesConsumidas * factorDeEmision / ((VehiculoParticular) tramo.getMedioTransporte()).getCantPasajeros();
+                        if(! (tramo.getMedioTransporte().getTipoMedio() == TipoVehiculo.BiciPie )){
+                            Double unidadesConsumidas = tramo.determinarDistancia() * tramo.getMedioTransporte().getConsumoPorKm();
+                            cantidadHC += unidadesConsumidas * factorDeEmision / ((VehiculoParticular) tramo.getMedioTransporte()).getCantPasajeros();
+                        }
                     }else{
                         Double unidadesConsumidas = tramo.determinarDistancia() * tramo.getMedioTransporte().getConsumoPorKm();
                         cantidadHC += unidadesConsumidas * factorDeEmision;
