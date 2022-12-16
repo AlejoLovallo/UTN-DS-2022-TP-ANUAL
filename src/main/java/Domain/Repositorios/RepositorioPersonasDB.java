@@ -102,7 +102,7 @@ public class RepositorioPersonasDB extends Repositorio<Persona>{
 
     //Predicate condicionExisteUsuario = criteriaBuilder.and(condicionNombreDeUsuario, condicionContrasenia);
 
-    personaCriteriaQuery.where(criteriaBuilder.like(personaUsuarioJoin.get("username"),"%"+ nombreDeUsuario+"%"));
+    personaCriteriaQuery.where(criteriaBuilder.equal(personaUsuarioJoin.get("username"), nombreDeUsuario));
 
     return new BusquedaCondicional(null, personaCriteriaQuery);
   }

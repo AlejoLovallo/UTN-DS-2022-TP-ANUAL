@@ -29,6 +29,9 @@ public class ParserJSONMiembro {
     {
         if(obj.get("tipo").toString().equals("vehiculoParticular"))
         {
+            if(obj.get("TipoVehiculo").toString().equals("BiciPie")){
+                return new VehiculoParticular(TipoVehiculo.BiciPie, TipoCombustible.NoConsume, 1);
+            }
             //TODO: revisar que pasa si hay 2 vehiculos con los mismos atributos excepto por 'consumoPorKm'
             RepositorioVehiculoParticularDB repositorioVehiculoParticularDB = new RepositorioVehiculoParticularDB();
             VehiculoParticular aux = repositorioVehiculoParticularDB.buscarVehiculoParticular(obj.get("TipoVehiculo").toString(), obj.get("TipoCombustible").toString(), Integer.parseInt(obj.get("CantidadPasajeros").toString()), Double.parseDouble(obj.get("ConsumoPorKm").toString()));
@@ -51,14 +54,12 @@ public class ParserJSONMiembro {
         }
         else if(obj.get("tipo").toString().equals("transportePublico"))
         {
+
             RepositorioTransportePublicoDB repositorioTransportePublicoDB = new RepositorioTransportePublicoDB();
             TransportePublico transportePublico = repositorioTransportePublicoDB.buscarTransportePublicoPorLinea(obj.get("Linea").toString());
             return transportePublico;
         }
-        else
-        {
-            return new VehiculoParticular(TipoVehiculo.BiciPie, TipoCombustible.NoConsume, 1);
-        }
+        return null;
     }
 
 
