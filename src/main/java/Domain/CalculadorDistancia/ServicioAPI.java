@@ -212,7 +212,7 @@ public class ServicioAPI extends ServicioDistancia{
             puntoLLegada.getCalle(), puntoLLegada.getAltura().toString());
     System.out.println("Valor: " + ret.getValor() + " " + ret.getUnidad());
     distanciaTotal = Double.parseDouble(ret.getValor());
-    return distanciaTotal;
+    return 1.0;//distanciaTotal;
   }
 
   public static void main(String [] args) throws IOException {

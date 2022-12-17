@@ -37,7 +37,7 @@ const calcularHC = async () => {
         console.log(response);
         console.log(response.tipoUsuario);
         if(response.tipoUsuario == "organizacion"){
-                  fetch(`$./organizacion/calcularHC`, {
+                  fetch(`./organizacion/calcularHC`, {
                     method: "POST",
 
                     body: JSON.stringify({

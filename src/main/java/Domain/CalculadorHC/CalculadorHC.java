@@ -83,7 +83,7 @@ public class CalculadorHC {
                     if(tramo.getMedioTransporte() instanceof VehiculoParticular){
                         if(! (tramo.getMedioTransporte().getTipoMedio() == TipoVehiculo.BiciPie )){
                             Double unidadesConsumidas = tramo.determinarDistancia() * tramo.getMedioTransporte().getConsumoPorKm();
-                            cantidadHC += unidadesConsumidas * factorDeEmision / ((VehiculoParticular) tramo.getMedioTransporte()).getCantPasajeros();
+                            cantidadHC += (unidadesConsumidas * factorDeEmision) / ((VehiculoParticular) tramo.getMedioTransporte()).getCantPasajeros();
                         }
                     }else{
                         Double unidadesConsumidas = tramo.determinarDistancia() * tramo.getMedioTransporte().getConsumoPorKm();
@@ -91,8 +91,8 @@ public class CalculadorHC {
                     }
                 }
             }
-            cantidadHC *= ((trayecto.diasDelMesActivo(mes, anio)/7.0) * (trayecto.getFrecuenciaSemanal()) * (miembro.getSector().getOrganizacion().getNumDiasPorSemana()));
-        } 
+            cantidadHC *= ((trayecto.diasDelMesActivo(mes, anio)/7.0) * (trayecto.getFrecuenciaSemanal())); //* (miembro.getSector().getOrganizacion().getNumDiasPorSemana()));
+        }
         return cantidadHC;
     }
 
@@ -166,7 +166,7 @@ public class CalculadorHC {
         Integer mesHasta = fechaHasta.getMonthValue();
         Integer anioHasta = fechaHasta.getYear();
 
-        if(anioDesde == anioHasta){
+        if(anioDesde.equals(anioHasta)){
             for (int mes = mesDesde; mes <= mesHasta; mes++)
                 cantidadHC += calcularHC(organizacion, mes, anioDesde);
         }
@@ -192,7 +192,7 @@ public class CalculadorHC {
         Integer mesHasta = fechaHasta.getMonthValue();
         Integer anioHasta = fechaHasta.getYear();
 
-        if(anioDesde == anioHasta){
+        if(anioDesde.equals(anioHasta)){
             for (int mes = mesDesde; mes <= mesHasta; mes++)
                 cantidadHC += cacluarHcActividad(actividad, mes, anioDesde);
         }

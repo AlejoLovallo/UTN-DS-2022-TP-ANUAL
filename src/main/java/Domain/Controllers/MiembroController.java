@@ -196,8 +196,8 @@ public class MiembroController {
         JSONObject pedido = (JSONObject) jsonParser.parse(request.body());
         String mesDesde = pedido.get("mesDesde").toString();
         String anioDesde = pedido.get("añoDesde").toString();
-        String mesHasta = pedido.get("mesDesde").toString();
-        String anioHasta = pedido.get("añoDesde").toString();
+        String mesHasta = pedido.get("mesHasta").toString();
+        String anioHasta = pedido.get("añoHasta").toString();
 
         RepositorioPersonasDB repositorioPersonasDB = new RepositorioPersonasDB();
         Persona persona = repositorioPersonasDB.buscarPersonaPorUsername(username);

@@ -131,7 +131,7 @@ public class Miembro {
 
   public Double calcularHCPeriodo(Integer mesDesde, Integer anioDesde, Integer mesHasta, Integer anioHasta) throws IOException {
     Double cantidadHC = 0.0;
-    if(anioDesde == anioHasta){
+    if(anioDesde.equals(anioHasta)){
       for (int mes = mesDesde; mes <= mesHasta; mes++)
         cantidadHC += calcularHC(mes, anioDesde);
     }
