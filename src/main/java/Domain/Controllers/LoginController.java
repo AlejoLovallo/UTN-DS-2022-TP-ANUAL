@@ -150,11 +150,16 @@ public class LoginController {
     return new ModelAndView(parametros,"index.html");
   }
 
-//  public String logout(Request request, Response response){
-//
-//    //response.removeCookie("idSesion");
-//    response.redirect("/menu_login");
-//
-//    return "";
-//  }
+  public String logout(Request request, Response response){
+
+    response.type("application/json");
+    //response.removeCookie("idSesion");
+
+    SesionManager sesionManager = SesionManager.get();
+    sesionManager.eliminar(request.cookie("idSesion"));
+
+    response.body(new Gson().toJson(new StandardResponse(StatusResponse.SUCCESS,"cierro sesion")));
+
+    return new Gson().toJson(new StandardResponse(StatusResponse.SUCCESS,"cierro sesion"));
+  }
 }

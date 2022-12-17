@@ -42,19 +42,24 @@ function getCookie(name) {
 
 const logout = async () => {
 
-  delete_cookie("idSesion")
+   await fetch(`./cerrar_sesion`,{
+      method:"GET",
 
-  window.location.replace("./")
-   // await fetch(`./cerrar_sesion`, {
-   //    method: "GET",
-   //
-   //    headers: {
-   //      "Content-type": "application/json; charset=UTF-8",
-   //    },
-   //  })
-   //  .catch((error) => {
-   //    console.log(error)
-   //  });
+      headers: {
+        'Content-Type': 'application/json'
+      }
+   })
+   .then(res => res.json())
+   .then(res =>{
+        console.log(res.message);
+        alert(res.message);
+        delete_cookie("idSesion");
+
+        window.location.replace("./");
+   })
+    .catch((error) => {
+      console.log(error)
+    });
 };
 
 var delete_cookie = function(name) {

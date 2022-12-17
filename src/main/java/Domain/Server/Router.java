@@ -75,7 +75,7 @@ public class Router {
     /*** MIEMBROS ROUTES ***/
     Spark.get("/menu_miembro", miembroController::menu_miembro, Router.engine);
     Spark.get("/registrarTrayectoHTML", miembroController::registrarTrayectoHTML,Router.engine);
-    Spark.get("/solicitarVinculacionHTML", miembroController::solicitarVinculacionHTML, Router.engine);
+    Spark.get("/solicitarVinculacionHTML", miembroController::solicitarVinculacionHTML,Router.engine);
     Spark.get("/visualizar_trayectos", miembroController::visualizarTrayectos);
     Spark.get("/calcularHTMLmiembro", miembroController::calcularHTMLmiembro, Router.engine);
     Spark.get("/miembro/:username/:organizacion", miembroController::getMiembro);
@@ -106,7 +106,7 @@ public class Router {
     Spark.get("/recomendaciones", organizacionController::listarRecomendaciones, Router.engine);
     Spark.get("/reportes", organizacionController::mostrarReportes, Router.engine);
     Spark.get("/pedidoMenuCalcularHC", organizacionController::pedidoMenuCalcularHC);
-    //Spark.get("/cerrar_sesion",loginController::logout);
+    Spark.get("/cerrar_sesion",loginController::logout);
 
   }
 }
