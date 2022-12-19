@@ -22,6 +22,7 @@ public class DistanciaDouble {
   public DistanciaDouble(Double value) {
     this.distancia= value;
   }
+  public DistanciaDouble(){}
 
   public double getDistancia() {
     return distancia;

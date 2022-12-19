@@ -168,8 +168,8 @@ public class Miembro {
   public void agregarTrayecto(Trayecto trayecto){
     trayectos.add(trayecto);
 
-    RepositorioPersonasDB repositorioPersonasDB = new RepositorioPersonasDB();
-    repositorioPersonasDB.modificar(this.getPersona());
+    //RepositorioPersonasDB repositorioPersonasDB = new RepositorioPersonasDB();
+    //repositorioPersonasDB.modificar(this.getPersona());
   }
 
   public void recalcularHC(Integer mesDesde, Integer anioDesde, Integer mesHasta, Integer anioHasta) throws IOException {
@@ -180,6 +180,11 @@ public class Miembro {
     {
       if(resultadoHCMiembro.getAnio() > anioDesde && anioHasta > resultadoHCMiembro.getAnio())
       {
+        resultadoHCMiembro.setResultado(
+                this.calculadorHC.actualizarHC(this, resultadoHCMiembro.getMes(), resultadoHCMiembro.getAnio())
+        );
+      }
+      else if(resultadoHCMiembro.getAnio().equals(anioHasta) && resultadoHCMiembro.getAnio().equals(anioDesde)){
         resultadoHCMiembro.setResultado(
                 this.calculadorHC.actualizarHC(this, resultadoHCMiembro.getMes(), resultadoHCMiembro.getAnio())
         );

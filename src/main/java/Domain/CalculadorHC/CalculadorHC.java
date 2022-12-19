@@ -103,6 +103,7 @@ public class CalculadorHC {
         Double factorDeEmision = this.factoresDeEmision.getFactorDeEmisionSegunActividad(TipoDeActividad.COMBUSTION_MOVIL).getNumero();
 
         for(Trayecto trayecto : miembro.getTrayectos()){
+            Double cantidadHCTrayecto = 0.0;
             if(
                     trayecto.getFechaInicio().getYear() <= anio
                             && trayecto.getFechaInicio().getMonthValue() <= mes
@@ -113,15 +114,16 @@ public class CalculadorHC {
                     if(tramo.getMedioTransporte() instanceof VehiculoParticular){
                         if(! (tramo.getMedioTransporte().getTipoMedio() == TipoVehiculo.BiciPie )){
                             Double unidadesConsumidas = tramo.determinarDistancia() * tramo.getMedioTransporte().getConsumoPorKm();
-                            cantidadHC += (unidadesConsumidas * factorDeEmision) / ((VehiculoParticular) tramo.getMedioTransporte()).getCantPasajeros();
+                            cantidadHCTrayecto += (unidadesConsumidas * factorDeEmision) / ((VehiculoParticular) tramo.getMedioTransporte()).getCantPasajeros();
                         }
                     }else{
                         Double unidadesConsumidas = tramo.determinarDistancia() * tramo.getMedioTransporte().getConsumoPorKm();
-                        cantidadHC += unidadesConsumidas * factorDeEmision;
+                        cantidadHCTrayecto += unidadesConsumidas * factorDeEmision;
                     }
                 }
             }
-            cantidadHC *= ((trayecto.diasDelMesActivo(mes, anio)/7.0) * Integer.min(trayecto.getFrecuenciaSemanal(),miembro.getSector().getOrganizacion().getNumDiasPorSemana()));
+            cantidadHCTrayecto *= ((trayecto.diasDelMesActivo(mes, anio)/7.0) * Integer.min(trayecto.getFrecuenciaSemanal(),miembro.getSector().getOrganizacion().getNumDiasPorSemana()));
+            cantidadHC += cantidadHCTrayecto;
 
         }
 
