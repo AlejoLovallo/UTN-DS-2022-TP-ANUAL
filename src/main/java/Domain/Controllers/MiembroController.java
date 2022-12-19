@@ -100,7 +100,7 @@ public class MiembroController {
         return null;
     }
 
-    public Object agregarTrayecto(Request request, Response response) throws ParseException {
+    public Object agregarTrayecto(Request request, Response response) throws ParseException, IOException {
 
         String id = request.cookie("idSesion");
         String username = (String) SesionManager.get().obtenerAtributos(id).get("username");
@@ -136,11 +136,19 @@ public class MiembroController {
 
                 miembro.agregarTrayecto(trayecto);
 
+                miembro.recalcularHC(
+                        trayecto.getFechaInicio().getMonthValue(),
+                        trayecto.getFechaInicio().getYear(),
+                        trayecto.getFechaFin().getMonthValue(),
+                        trayecto.getFechaFin().getYear()
+                );
+
                 response.type("text/javascript");
                 response.status(200);
                 return "window.alert(\"Trayecto registrado\")";
             }
         }
+
         response.type("text/javascript");
         response.status(404);
         return "window.alert(\"Miembro no encontrado\")";

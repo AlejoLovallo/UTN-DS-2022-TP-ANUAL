@@ -23,4 +23,8 @@ public class ResultadoHCMiembro extends ResultadoHC{
     }
 
     public ResultadoHCMiembro(){}
+
+    public Miembro getMiembro() {
+        return miembro;
+    }
 }

@@ -377,6 +377,8 @@ public class OrganizacionController {
 
         repositorioOrganizacionesDB.modificar(organizacion);
 
+        organizacion.actualizarHC();
+
         response.type("text/javascript");
         response.status(200);
         response.body("window.alert(\"Operacion realizada exitosamente\")");

@@ -60,15 +60,12 @@ public class CalculadorHC {
             for (Sector sector : organizacion.getSectores()){
                 cantidadHC += calcularHC(sector, mes, anio);
             }
+
+            ResultadoHCOrg resultadoHCOrg = new ResultadoHCOrg(mes, anio, cantidadHC, organizacion);
+            organizacion.getResultadosHC().add(resultadoHCOrg);
+
+            return cantidadHC;
         }
-
-        ResultadoHCOrg resultadoHCOrg = new ResultadoHCOrg(mes, anio, cantidadHC, organizacion);
-        organizacion.getResultadosHC().add(resultadoHCOrg);
-
-        RepositorioOrganizacionesDB repositorioOrganizacionesDB = new RepositorioOrganizacionesDB();
-        repositorioOrganizacionesDB.modificar(organizacion);
-
-        return cantidadHC;
     }
 
 
@@ -91,40 +88,44 @@ public class CalculadorHC {
         }
         catch (NoSuchElementException e)
         {
-            Double cantidadHC = 0.0;
-
-            Double factorDeEmision = this.factoresDeEmision.getFactorDeEmisionSegunActividad(TipoDeActividad.COMBUSTION_MOVIL).getNumero();
-
-            for(Trayecto trayecto : miembro.getTrayectos()){
-                if(
-                        trayecto.getFechaInicio().getYear() <= anio
-                                && trayecto.getFechaInicio().getMonthValue() <= mes
-                                && trayecto.getFechaFin().getYear() >= anio
-                                && trayecto.getFechaFin().getMonthValue() >= mes
-                ){
-                    for(Tramo tramo : trayecto.getTramos()){
-                        if(tramo.getMedioTransporte() instanceof VehiculoParticular){
-                            if(! (tramo.getMedioTransporte().getTipoMedio() == TipoVehiculo.BiciPie )){
-                                Double unidadesConsumidas = tramo.determinarDistancia() * tramo.getMedioTransporte().getConsumoPorKm();
-                                cantidadHC += (unidadesConsumidas * factorDeEmision) / ((VehiculoParticular) tramo.getMedioTransporte()).getCantPasajeros();
-                            }
-                        }else{
-                            Double unidadesConsumidas = tramo.determinarDistancia() * tramo.getMedioTransporte().getConsumoPorKm();
-                            cantidadHC += unidadesConsumidas * factorDeEmision;
-                        }
-                    }
-                }
-                cantidadHC *= ((trayecto.diasDelMesActivo(mes, anio)/7.0) * (trayecto.getFrecuenciaSemanal())); //* (miembro.getSector().getOrganizacion().getNumDiasPorSemana()));
-            }
+            Double cantidadHC = this.actualizarHC(miembro, mes, anio);
 
             ResultadoHCMiembro resultadoHCMiembro = new ResultadoHCMiembro(mes, anio, cantidadHC, miembro);
             miembro.getResultadosHC().add(resultadoHCMiembro);
 
-            RepositorioPersonasDB repositorioPersonasDB = new RepositorioPersonasDB();
-            repositorioPersonasDB.modificar(miembro.getPersona());
-
             return cantidadHC;
         }
+    }
+
+    public Double actualizarHC(Miembro miembro, Integer mes, Integer anio) throws IOException {
+        Double cantidadHC = 0.0;
+
+        Double factorDeEmision = this.factoresDeEmision.getFactorDeEmisionSegunActividad(TipoDeActividad.COMBUSTION_MOVIL).getNumero();
+
+        for(Trayecto trayecto : miembro.getTrayectos()){
+            if(
+                    trayecto.getFechaInicio().getYear() <= anio
+                            && trayecto.getFechaInicio().getMonthValue() <= mes
+                            && trayecto.getFechaFin().getYear() >= anio
+                            && trayecto.getFechaFin().getMonthValue() >= mes
+            ){
+                for(Tramo tramo : trayecto.getTramos()){
+                    if(tramo.getMedioTransporte() instanceof VehiculoParticular){
+                        if(! (tramo.getMedioTransporte().getTipoMedio() == TipoVehiculo.BiciPie )){
+                            Double unidadesConsumidas = tramo.determinarDistancia() * tramo.getMedioTransporte().getConsumoPorKm();
+                            cantidadHC += (unidadesConsumidas * factorDeEmision) / ((VehiculoParticular) tramo.getMedioTransporte()).getCantPasajeros();
+                        }
+                    }else{
+                        Double unidadesConsumidas = tramo.determinarDistancia() * tramo.getMedioTransporte().getConsumoPorKm();
+                        cantidadHC += unidadesConsumidas * factorDeEmision;
+                    }
+                }
+            }
+            cantidadHC *= ((trayecto.diasDelMesActivo(mes, anio)/7.0) * Integer.min(trayecto.getFrecuenciaSemanal(),miembro.getSector().getOrganizacion().getNumDiasPorSemana()));
+
+        }
+
+        return cantidadHC;
     }
 
 
@@ -158,6 +159,35 @@ public class CalculadorHC {
             }
         }
         return cantidadHC;
+    }
+
+    public void actualizarResultadoHCMiembro(ResultadoHCMiembro resultadoHCMiembro) throws IOException {
+        resultadoHCMiembro.setResultado(
+                resultadoHCMiembro.getMiembro().calcularHC(
+                        resultadoHCMiembro.getMes(),
+                        resultadoHCMiembro.getAnio()
+                )
+        );
+    }
+
+    public void actualizarHCMiembro(Miembro miembro) throws IOException {
+        for(ResultadoHCMiembro resultadoHCMiembro : miembro.getResultadosHC())
+            this.actualizarResultadoHCMiembro(resultadoHCMiembro);
+    }
+
+    public void actualizarResultadoHCOrganizacion(ResultadoHCOrg resultadoHCOrg) throws IOException {
+        resultadoHCOrg.setResultado(
+                resultadoHCOrg.getOrganizacion().calcularHC(
+                        resultadoHCOrg.getMes(),
+                        resultadoHCOrg.getAnio()
+                )
+        );
+    }
+
+    public void actualizarHCOrganizacion(Organizacion organizacion) throws IOException {
+        for(ResultadoHCOrg resultadoHCOrg : organizacion.getResultadosHC()){
+            this.actualizarResultadoHCOrganizacion(resultadoHCOrg);
+        }
     }
 /*
     public Double calcularHcTotal(Organizacion organizacion) throws IOException {

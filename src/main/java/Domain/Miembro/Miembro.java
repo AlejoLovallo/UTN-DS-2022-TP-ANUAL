@@ -12,6 +12,7 @@ import org.hibernate.annotations.NotFound;
 import org.hibernate.annotations.NotFoundAction;
 
 import java.io.IOException;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.*;
@@ -157,11 +158,45 @@ public class Miembro {
         for (int mes = 1; mes <= 12; mes++)
           cantidadHC += calcularHC(mes, anio);
     }
+
+    RepositorioPersonasDB repositorioPersonasDB = new RepositorioPersonasDB();
+    repositorioPersonasDB.modificar(this.getPersona());
+
     return cantidadHC;
   }
 
   public void agregarTrayecto(Trayecto trayecto){
-        trayectos.add(trayecto);
+    trayectos.add(trayecto);
+
+    RepositorioPersonasDB repositorioPersonasDB = new RepositorioPersonasDB();
+    repositorioPersonasDB.modificar(this.getPersona());
+  }
+
+  public void recalcularHC(Integer mesDesde, Integer anioDesde, Integer mesHasta, Integer anioHasta) throws IOException {
+    if(this.calculadorHC == null){
+      this.calculadorHC = CalculadorHC.getInstance();
+    }
+    for(ResultadoHCMiembro resultadoHCMiembro : this.getResultadosHC())
+    {
+      if(resultadoHCMiembro.getAnio() > anioDesde && anioHasta > resultadoHCMiembro.getAnio())
+      {
+        resultadoHCMiembro.setResultado(
+                this.calculadorHC.actualizarHC(this, resultadoHCMiembro.getMes(), resultadoHCMiembro.getAnio())
+        );
+      }
+      else{
+        if(resultadoHCMiembro.getAnio().equals(anioDesde) && resultadoHCMiembro.getMes() >= mesDesde){
+          resultadoHCMiembro.setResultado(
+                  this.calculadorHC.actualizarHC(this, resultadoHCMiembro.getMes(), resultadoHCMiembro.getAnio())
+          );
+        }
+        else if(resultadoHCMiembro.getAnio().equals(anioHasta) && resultadoHCMiembro.getMes() <= mesHasta){
+          resultadoHCMiembro.setResultado(
+                  this.calculadorHC.actualizarHC(this, resultadoHCMiembro.getMes(), resultadoHCMiembro.getAnio())
+          );
+        }
+      }
+    }
     RepositorioPersonasDB repositorioPersonasDB = new RepositorioPersonasDB();
     repositorioPersonasDB.modificar(this.getPersona());
   }

@@ -253,27 +253,14 @@ public class Organizacion {
     return calculadorHC.calcularHC(this, mes, anio);
   }
 
-  public void actualizarHC(Integer mes, Integer anio, Double valor)
-  {
-    try{
-      Optional<ResultadoHCOrg> resultadoHC  = this.resultadosHC.stream().filter(unResultado -> mes.equals(unResultado.getMes()) && anio.equals(unResultado.getAnio())).findAny();
-      ResultadoHC res = resultadoHC.get();
-      res.setResultado(valor);
+  public void actualizarHC() throws IOException {
+    if(this.calculadorHC == null){
+      this.calculadorHC = CalculadorHC.getInstance();
     }
-    catch (NoSuchElementException e)
-    {
-      ResultadoHCOrg res = new ResultadoHCOrg(mes, anio, valor,this);
-      this.resultadosHC.add(res);
-    }
-  }
+    this.calculadorHC.actualizarHCOrganizacion(this);
 
-  public void actualizarHCTotal(){
-    for(Actividad actividad : this.actividades){
-      for(Consumo consumo : actividad.getConsumos()){
-        Double valorHC = this.calculadorHC.cacluarHcActividad(actividad, consumo.getMes(), consumo.getAnio());
-        this.actualizarHC(consumo.getMes(),consumo.getAnio(), valorHC);
-      }
-    }
+    RepositorioOrganizacionesDB repositorioOrganizacionesDB = new RepositorioOrganizacionesDB();
+    repositorioOrganizacionesDB.modificar(this);
   }
 
   public Reporte conseguirReporte(TipoDeReporte tipoDeReporte, LocalDate fechaDesde, LocalDate fechaHasta) throws IOException{
