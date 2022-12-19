@@ -46,6 +46,9 @@
 
 
         <class>Domain.CalculadorHC.FactorEmision</class>
+        <class>Domain.CalculadorHC.ResultadoHC</class>
+        <class>Domain.CalculadorHC.ResultadoHCMiembro</class>
+        <class>Domain.CalculadorHC.ResultadoHCOrg</class>
 
 
         <exclude-unlisted-classes>true</exclude-unlisted-classes>

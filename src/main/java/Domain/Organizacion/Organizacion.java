@@ -1,5 +1,7 @@
 package Domain.Organizacion;
 import Domain.CalculadorHC.CalculadorHC;
+import Domain.CalculadorHC.ResultadoHC;
+import Domain.CalculadorHC.ResultadoHCOrg;
 import Domain.Miembro.Miembro;
 import Domain.Reportes.GeneradorReportes;
 import Domain.Reportes.Reporte;
@@ -16,6 +18,8 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.io.IOException;
 import java.util.List;
+import java.util.NoSuchElementException;
+import java.util.Optional;
 import javax.persistence.*;
 
 
@@ -66,6 +70,10 @@ public class Organizacion {
   @NotFound(action = NotFoundAction.IGNORE)
   private List<Recomendacion> recomendaciones = new ArrayList<>();
 
+  @OneToMany(mappedBy = "organizacion",cascade = CascadeType.ALL)
+  @NotFound(action = NotFoundAction.IGNORE)
+  private List<ResultadoHCOrg> resultadosHC = new ArrayList<>();
+
   @OneToOne(cascade = CascadeType.DETACH)
   @NotFound(action = NotFoundAction.IGNORE)
   @JoinColumn(name="id_usuario",referencedColumnName = "id_usuario")
@@ -113,6 +121,12 @@ public class Organizacion {
   }
 
   //////////////////////////////////  GETTERS
+
+
+  public List<ResultadoHCOrg> getResultadosHC() {
+    return resultadosHC;
+  }
+
   public TipoOrganizacion getTipo() {
     return tipo;
   }
@@ -229,11 +243,37 @@ public class Organizacion {
     }
 
     RepositorioOrganizacionesDB repositorioOrganizacionesDB = new RepositorioOrganizacionesDB();
+
+    //this.actualizarHCTotal();
+
     repositorioOrganizacionesDB.modificar(this);
   }
 
   public Double calcularHC(Integer mes, Integer anio) throws IOException {
     return calculadorHC.calcularHC(this, mes, anio);
+  }
+
+  public void actualizarHC(Integer mes, Integer anio, Double valor)
+  {
+    try{
+      Optional<ResultadoHCOrg> resultadoHC  = this.resultadosHC.stream().filter(unResultado -> mes.equals(unResultado.getMes()) && anio.equals(unResultado.getAnio())).findAny();
+      ResultadoHC res = resultadoHC.get();
+      res.setResultado(valor);
+    }
+    catch (NoSuchElementException e)
+    {
+      ResultadoHCOrg res = new ResultadoHCOrg(mes, anio, valor,this);
+      this.resultadosHC.add(res);
+    }
+  }
+
+  public void actualizarHCTotal(){
+    for(Actividad actividad : this.actividades){
+      for(Consumo consumo : actividad.getConsumos()){
+        Double valorHC = this.calculadorHC.cacluarHcActividad(actividad, consumo.getMes(), consumo.getAnio());
+        this.actualizarHC(consumo.getMes(),consumo.getAnio(), valorHC);
+      }
+    }
   }
 
   public Reporte conseguirReporte(TipoDeReporte tipoDeReporte, LocalDate fechaDesde, LocalDate fechaHasta) throws IOException{

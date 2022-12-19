@@ -88,7 +88,7 @@ public class GeneradorReportes {
                 
                 cantidadHC += calculadorHC.cacluarHcActividadPeriodo(actividad, fechaDesde, fechaHasta);
 
-                Actividad act = new Actividad(actividad.getNombre(), actividad.getTipoConsumo(), organizacion);
+                Actividad act = new Actividad(actividad.getNombre(), actividad.getTipoConsumo(), actividad.getPeriodicidad(), organizacion);
                 Consumo con = new Consumo(1, 1, cantidadHC, act);
                 ArrayList <Consumo> lista = new ArrayList<>();
                 lista.add(con);
@@ -118,7 +118,7 @@ public class GeneradorReportes {
                 for(Actividad actividad : organizacion.getActividades()){
                     Double cantidadHC = 0.0;
                     if(listaActividades.stream().filter(unaActividad -> unaActividad.getNombre().equals(actividad.getNombre())).count() == 0){
-                        Actividad act = new Actividad(actividad.getNombre(), actividad.getTipoConsumo(), organizacion);
+                        Actividad act = new Actividad(actividad.getNombre(), actividad.getTipoConsumo(), actividad.getPeriodicidad(), organizacion);
                         cantidadHC += calculadorHC.cacluarHcActividadPeriodo(actividad, fechaDesde, fechaHasta);
                         Consumo con = new Consumo(1, 1, cantidadHC, act);
                         ArrayList <Consumo> lista = new ArrayList<>();
@@ -161,7 +161,7 @@ public class GeneradorReportes {
                     for(Actividad actividad : aux.getActividades()){
                         Double cantidadHC = 0.0;
                         if(listaActividades.stream().filter(unaActividad -> unaActividad.getNombre().equals(actividad.getNombre())).count() == 0){
-                            Actividad act = new Actividad(actividad.getNombre(), actividad.getTipoConsumo(), organizacion);
+                            Actividad act = new Actividad(actividad.getNombre(), actividad.getTipoConsumo(), actividad.getPeriodicidad(), organizacion);
                             cantidadHC += calculadorHC.cacluarHcActividadPeriodo(actividad, fechaDesde, fechaHasta);
                             Consumo con = new Consumo(1, 1, cantidadHC, act);
                             ArrayList <Consumo> lista = new ArrayList<>();

@@ -1,11 +1,15 @@
 package Domain.Miembro;
 import Domain.CalculadorHC.CalculadorHC;
+import Domain.CalculadorHC.ResultadoHCMiembro;
+import Domain.CalculadorHC.ResultadoHCOrg;
 import Domain.Miembro.Excepciones.MiembroNoPerteneceAOrganizacionException;
 import Domain.Miembro.Excepciones.UnicoSectorPorOrganizacionException;
 import Domain.Organizacion.Organizacion;
 import Domain.Organizacion.Sector;
 import Domain.Repositorios.RepositorioPersonasDB;
 import Domain.Trayecto.Trayecto;
+import org.hibernate.annotations.NotFound;
+import org.hibernate.annotations.NotFoundAction;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -41,6 +45,9 @@ public class Miembro {
   @Transient
   private CalculadorHC calculadorHC = CalculadorHC.getInstance();
 
+  @OneToMany(mappedBy = "miembro",cascade = CascadeType.ALL)
+  @NotFound(action = NotFoundAction.IGNORE)
+  private List<ResultadoHCMiembro> resultadosHC = new ArrayList<>();
 
   //////////////////////////////////  CONSTRUCTOR
   private Miembro(){
@@ -58,6 +65,10 @@ public class Miembro {
 
   //////////////////////////////////  GETTERS
 
+
+  public List<ResultadoHCMiembro> getResultadosHC() {
+    return resultadosHC;
+  }
 
   public Boolean getActivo() {
     return activo;
@@ -92,9 +103,11 @@ public class Miembro {
     this.trayectos = trayectos;
   }
 
+  public void setResultadosHC(List<ResultadoHCMiembro> resultadosHC) {
+    this.resultadosHC = resultadosHC;
+  }
 
-
-  //////////////////////////////////  INTERFACE
+//////////////////////////////////  INTERFACE
 
   public void vincularSector(Sector _sector){
     if (this.sector != null)

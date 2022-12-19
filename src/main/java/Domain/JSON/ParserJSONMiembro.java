@@ -15,6 +15,9 @@ import Domain.Repositorios.RepositorioTransportePublicoDB;
 import Domain.Repositorios.RepositorioVehiculoParticularDB;
 import Domain.Trayecto.Tramo;
 import Domain.Trayecto.Trayecto;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
@@ -160,6 +163,29 @@ public class ParserJSONMiembro {
             obj.put("nombre", estacion.getNombre());
         }
         return obj;
+    }
+
+    public static JsonElement direccionesAJson(List<Direccion> direcciones){
+        if (direcciones.isEmpty()) return null;
+
+        JsonObject direccionesJson = new JsonObject();
+
+        JsonArray direccionesJsonArray = new JsonArray();
+
+        JsonObject dir;
+        for(Direccion direccion : direcciones){
+            dir = new JsonObject();
+            dir.addProperty("calle", direccion.getCalle());
+            dir.addProperty("altura", direccion.getAltura().toString());
+            dir.addProperty("localidad", direccion.getLocalidad());
+            dir.addProperty("municipio", direccion.getMunicipio());
+            dir.addProperty("provincia", direccion.getProvincia());
+            dir.addProperty("pais", direccion.getPais());
+
+            direccionesJsonArray.add(dir);
+        }
+        direccionesJson.add("direcciones", direccionesJsonArray);
+        return direccionesJson;
     }
 
     public static JSONObject tramoAJSONObject(Tramo tramo)

@@ -1,6 +1,9 @@
 package Domain.Controllers;
 
 import Domain.CalculadorHC.CalculadorHC;
+import Domain.Espacios.Direccion;
+import Domain.Espacios.Espacio;
+import Domain.Espacios.TipoDireccion;
 import Domain.JSON.ParserJSONMiembro;
 import Domain.JSON.ParserJSONOrganizacion;
 import Domain.Miembro.Miembro;
@@ -581,4 +584,72 @@ public class OrganizacionController {
         return true;
     }
 
+    public String getAllDirecciones(Request request, Response response) {
+        response.type("application/json");
+
+        RepositorioDireccionDB repositorioDireccionDB = new RepositorioDireccionDB();
+
+        Optional<List<Direccion>> direcciones = Optional.ofNullable(repositorioDireccionDB.buscarTodos());
+
+
+        if(direcciones.isPresent()){
+            //TODO: seguir
+            JsonElement direccionesJSON = ParserJSONMiembro.direccionesAJson(direcciones.get());
+
+            response.body(new Gson().toJson(new StandardResponse(StatusResponse.SUCCESS,"envio organizaciones",direccionesJSON )));
+            response.status(200);
+
+            return new Gson().toJson(new StandardResponse(StatusResponse.SUCCESS,"envio organizaciones",direccionesJSON ));
+        }
+
+
+        response.body(new Gson().toJson(new StandardResponse(StatusResponse.SUCCESS,"no hay ninguna organizacion",null)));
+        response.status(200);
+
+        return new Gson().toJson(new StandardResponse(StatusResponse.SUCCESS,"no hay ninguna organizacion",null));
+    }
+
+    public Object crearSector(Request request, Response response) throws ParseException {
+        String idSesion = request.cookie("idSesion");
+
+        String username = SesionManager.get().obtenerAtributos(idSesion).get("username").toString();
+
+        RepositorioOrganizacionesDB repositorioOrganizacionesDB = new RepositorioOrganizacionesDB();
+        Organizacion organizacion = repositorioOrganizacionesDB.buscarOrganizacionPorUsername(username);
+
+        JSONParser jsonParser = new JSONParser();
+        JSONObject jsonObject = (JSONObject) jsonParser.parse(request.body());
+
+        RepositorioDireccionDB repositorioDireccionDB = new RepositorioDireccionDB();
+        Direccion direccion = repositorioDireccionDB.buscarDireccion(
+                jsonObject.get("pais").toString(),
+                jsonObject.get("provincia").toString(),
+                jsonObject.get("municipio").toString(),
+                jsonObject.get("localidad").toString(),
+                jsonObject.get("calle").toString(),
+                Integer.parseInt(jsonObject.get("altura").toString()),
+                TipoDireccion.Trabajo.toString()
+        );
+        Sector sector = new Sector(
+                jsonObject.get("nombre").toString(),
+                direccion,
+                organizacion
+        );
+
+        organizacion.getSectores().add(sector);
+
+        repositorioOrganizacionesDB.modificar(organizacion);
+
+        return new Gson().toJson(new StandardResponse(StatusResponse.SUCCESS,"sector registrado" ));
+    }
+
+    public ModelAndView crearSectorHTML(Request request, Response response) {
+        HashMap<String, String> params = new HashMap<>();
+
+        if (!chequearCookie(request,response)){
+            return new ModelAndView(params,"index.html");
+        }
+
+        return new ModelAndView(params, "Registrar_sector.html");
+    }
 }

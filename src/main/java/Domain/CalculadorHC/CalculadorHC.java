@@ -6,12 +6,15 @@ import Domain.Miembro.Miembro;
 import Domain.Organizacion.*;
 import Domain.Repositorios.RepositorioFactoresEmisionDB;
 import Domain.Repositorios.RepositorioOrganizacionesDB;
+import Domain.Repositorios.RepositorioPersonasDB;
 import Domain.Trayecto.Tramo;
 import Domain.Trayecto.Trayecto;
 //import org.graalvm.compiler.nodes.virtual.CommitAllocationNode;
 
 import java.io.IOException;
 import java.time.LocalDate;
+import java.util.NoSuchElementException;
+import java.util.Optional;
 
 // import org.apache.poi.ss.formula.PlainCellCache.Loc;
 
@@ -43,13 +46,27 @@ public class CalculadorHC {
     
         Double cantidadHC = 0.0;
 
-        for(Actividad actividad : organizacion.getActividades()){
-            cantidadHC += cacluarHcActividad(actividad, mes, anio);
+        try{
+            Optional<ResultadoHCOrg> resultadoHCOrg  = organizacion.getResultadosHC().stream().filter(unHC -> mes.equals(unHC.getMes()) && anio.equals(unHC.getAnio())).findAny();
+            return resultadoHCOrg.get().getResultado();
+
+        }
+        catch (NoSuchElementException e)
+        {
+            for(Actividad actividad : organizacion.getActividades()){
+                cantidadHC += cacluarHcActividad(actividad, mes, anio);
+            }
+
+            for (Sector sector : organizacion.getSectores()){
+                cantidadHC += calcularHC(sector, mes, anio);
+            }
         }
 
-        for (Sector sector : organizacion.getSectores()){
-            cantidadHC += calcularHC(sector, mes, anio);
-        }
+        ResultadoHCOrg resultadoHCOrg = new ResultadoHCOrg(mes, anio, cantidadHC, organizacion);
+        organizacion.getResultadosHC().add(resultadoHCOrg);
+
+        RepositorioOrganizacionesDB repositorioOrganizacionesDB = new RepositorioOrganizacionesDB();
+        repositorioOrganizacionesDB.modificar(organizacion);
 
         return cantidadHC;
     }
@@ -68,32 +85,46 @@ public class CalculadorHC {
             return 0.0;
         }
 
-        Double cantidadHC = 0.0;
+        try{
+            Optional<ResultadoHCMiembro> resultadoHCMiembro  = miembro.getResultadosHC().stream().filter(unHC -> mes.equals(unHC.getMes()) && anio.equals(unHC.getAnio())).findAny();
+            return resultadoHCMiembro.get().getResultado();
+        }
+        catch (NoSuchElementException e)
+        {
+            Double cantidadHC = 0.0;
 
-        Double factorDeEmision = this.factoresDeEmision.getFactorDeEmisionSegunActividad(TipoDeActividad.COMBUSTION_MOVIL).getNumero();
+            Double factorDeEmision = this.factoresDeEmision.getFactorDeEmisionSegunActividad(TipoDeActividad.COMBUSTION_MOVIL).getNumero();
 
-        for(Trayecto trayecto : miembro.getTrayectos()){
-            if(
-                    trayecto.getFechaInicio().getYear() <= anio
-                    && trayecto.getFechaInicio().getMonthValue() <= mes
-                    && trayecto.getFechaFin().getYear() >= anio
-                    && trayecto.getFechaFin().getMonthValue() >= mes
-            ){
-                for(Tramo tramo : trayecto.getTramos()){
-                    if(tramo.getMedioTransporte() instanceof VehiculoParticular){
-                        if(! (tramo.getMedioTransporte().getTipoMedio() == TipoVehiculo.BiciPie )){
+            for(Trayecto trayecto : miembro.getTrayectos()){
+                if(
+                        trayecto.getFechaInicio().getYear() <= anio
+                                && trayecto.getFechaInicio().getMonthValue() <= mes
+                                && trayecto.getFechaFin().getYear() >= anio
+                                && trayecto.getFechaFin().getMonthValue() >= mes
+                ){
+                    for(Tramo tramo : trayecto.getTramos()){
+                        if(tramo.getMedioTransporte() instanceof VehiculoParticular){
+                            if(! (tramo.getMedioTransporte().getTipoMedio() == TipoVehiculo.BiciPie )){
+                                Double unidadesConsumidas = tramo.determinarDistancia() * tramo.getMedioTransporte().getConsumoPorKm();
+                                cantidadHC += (unidadesConsumidas * factorDeEmision) / ((VehiculoParticular) tramo.getMedioTransporte()).getCantPasajeros();
+                            }
+                        }else{
                             Double unidadesConsumidas = tramo.determinarDistancia() * tramo.getMedioTransporte().getConsumoPorKm();
-                            cantidadHC += (unidadesConsumidas * factorDeEmision) / ((VehiculoParticular) tramo.getMedioTransporte()).getCantPasajeros();
+                            cantidadHC += unidadesConsumidas * factorDeEmision;
                         }
-                    }else{
-                        Double unidadesConsumidas = tramo.determinarDistancia() * tramo.getMedioTransporte().getConsumoPorKm();
-                        cantidadHC += unidadesConsumidas * factorDeEmision;
                     }
                 }
+                cantidadHC *= ((trayecto.diasDelMesActivo(mes, anio)/7.0) * (trayecto.getFrecuenciaSemanal())); //* (miembro.getSector().getOrganizacion().getNumDiasPorSemana()));
             }
-            cantidadHC *= ((trayecto.diasDelMesActivo(mes, anio)/7.0) * (trayecto.getFrecuenciaSemanal())); //* (miembro.getSector().getOrganizacion().getNumDiasPorSemana()));
+
+            ResultadoHCMiembro resultadoHCMiembro = new ResultadoHCMiembro(mes, anio, cantidadHC, miembro);
+            miembro.getResultadosHC().add(resultadoHCMiembro);
+
+            RepositorioPersonasDB repositorioPersonasDB = new RepositorioPersonasDB();
+            repositorioPersonasDB.modificar(miembro.getPersona());
+
+            return cantidadHC;
         }
-        return cantidadHC;
     }
 
 
