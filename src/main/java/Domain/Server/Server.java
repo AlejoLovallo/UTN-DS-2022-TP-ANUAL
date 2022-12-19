@@ -1,15 +1,21 @@
 package Domain.Server;
 
-import Domain.Cron.SchedulerCron;
-
-import static spark.Spark.*;
+import Domain.Server.Router;
+import spark.Spark;
 
 public class Server {
+
   public static void main(String[] args) {
-    port(9000);
-    //get("/ping_health", (req, res) -> "Hello World");
+
+    Spark.port(getHerokuAssignedPort());
     Router.init();
-//    SchedulerCron schedulerCron = new SchedulerCron();
-//    schedulerCron.comenzar();
+
+  }
+  static int getHerokuAssignedPort() {
+    ProcessBuilder processBuilder = new ProcessBuilder();
+    if (processBuilder.environment().get("PORT") != null) {
+      return Integer.parseInt(processBuilder.environment().get("PORT"));
+    }
+    return 4567; //return default port if heroku-port isn't set (i.e. on localhost)
   }
 }
