@@ -46,9 +46,16 @@ public class CalculadorHC {
     
         Double cantidadHC = 0.0;
 
+        Double hc_miembros = 0.0;
+
+        for (Sector sector : organizacion.getSectores()) {
+            hc_miembros += calcularHC(sector, mes, anio);
+        }
+
         try{
             Optional<ResultadoHCOrg> resultadoHCOrg  = organizacion.getResultadosHC().stream().filter(unHC -> mes.equals(unHC.getMes()) && anio.equals(unHC.getAnio())).findAny();
-            return resultadoHCOrg.get().getResultado();
+
+            return resultadoHCOrg.get().getResultado() + hc_miembros;
 
         }
         catch (NoSuchElementException e)
@@ -57,15 +64,20 @@ public class CalculadorHC {
                 cantidadHC += cacluarHcActividad(actividad, mes, anio);
             }
 
-            for (Sector sector : organizacion.getSectores()){
-                cantidadHC += calcularHC(sector, mes, anio);
-            }
-
             ResultadoHCOrg resultadoHCOrg = new ResultadoHCOrg(mes, anio, cantidadHC, organizacion);
             organizacion.getResultadosHC().add(resultadoHCOrg);
 
-            return cantidadHC;
+            return cantidadHC + hc_miembros;
         }
+    }
+
+    public Double actualizarHC(Organizacion organizacion, Integer mes, Integer anio) throws IOException {
+        Double cantidadHC = 0.0;
+        for(Actividad actividad : organizacion.getActividades()){
+            cantidadHC += cacluarHcActividad(actividad, mes, anio);
+        }
+
+        return cantidadHC;
     }
 
 

@@ -147,6 +147,8 @@ public class MiembroController {
                         trayecto.getFechaFin().getYear()
                 );
 
+                repositorioPersonasDB.modificar(miembro.getPersona());
+
                 response.type("text/javascript");
                 response.status(200);
                 return "window.alert(\"Trayecto registrado\")";

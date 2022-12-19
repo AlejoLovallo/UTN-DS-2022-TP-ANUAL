@@ -202,8 +202,8 @@ public class Miembro {
         }
       }
     }
-    RepositorioPersonasDB repositorioPersonasDB = new RepositorioPersonasDB();
-    repositorioPersonasDB.modificar(this.getPersona());
+    //RepositorioPersonasDB repositorioPersonasDB = new RepositorioPersonasDB();
+    //repositorioPersonasDB.modificar(this.getPersona());
   }
 
   public void desvincularTrayecto(Trayecto trayecto){

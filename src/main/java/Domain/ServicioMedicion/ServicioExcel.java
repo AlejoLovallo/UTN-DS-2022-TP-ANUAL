@@ -101,6 +101,9 @@ public class ServicioExcel extends ServicioMediciones{
           Actividad actividad = act.get(); // CHEQUEAR ESTO PORQUE ES UN DESASTRE
 
           actividad.cargarConsumos(mes, anio, valorConsumo);
+
+          actualizarHCActividad(org, periodicidad, mes, anio);
+
         }
         catch (NoSuchElementException e)
         {
@@ -115,16 +118,12 @@ public class ServicioExcel extends ServicioMediciones{
 
             act2.get().cargarConsumos(mes, anio, valorConsumo);
 
-            /*if(periodicidad.equals(FrecuenciaServicio.MENSUAL.toString())){
-              act2.get().agregarConsumo(mes, anio, valorConsumo);
-            }else{
-              for(int i = 1; i < mes; i++){
-                act2.get().agregarConsumo(i, anio, valorConsumo/(mes -1));
-              }
-            }*/
+            actualizarHCActividad(org, periodicidad, mes, anio);
+
           }
           catch(NoSuchElementException e2){
             actividades.add(crearActividad(tipoActividad, tipoConsumo, periodicidad, mes, anio, valorConsumo, org));
+            actualizarHCActividad(org, periodicidad, mes, anio);
           }
         }
 
@@ -140,6 +139,23 @@ public class ServicioExcel extends ServicioMediciones{
       // e.printStackTrace();
     }
     return actividades;
+  }
+
+  public void actualizarHCActividad(Organizacion organizacion, String periodicidad, Integer mes, Integer anio) throws IOException {
+    if(periodicidad.equals("MENSUAL")){
+      if(mes.equals(1))
+        organizacion.recalcularHC(12, anio -1, 12, anio -1);
+      else
+        organizacion.recalcularHC(mes-1, anio, mes-1, anio);
+    }
+    else{
+      if(mes.equals(1)){
+        organizacion.recalcularHC(1, anio-1, 12, anio-1);
+      }
+      else{
+        organizacion.recalcularHC(1, anio, mes-1, anio);
+      }
+    }
   }
 
   public Actividad crearActividad(String tipoActividad,

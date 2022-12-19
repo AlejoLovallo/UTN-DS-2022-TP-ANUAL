@@ -301,6 +301,8 @@ public class OrganizacionController {
 
         Double resultado = calculadorHC.calcularHcPeriodo(organizacion, fechaDesde, fechaHasta);
 
+        repositorioOrganizacionesDB.modificar(organizacion);
+
         response.type("application/json");
 
         JSONObject calculo = new JSONObject();
@@ -376,8 +378,6 @@ public class OrganizacionController {
         organizacion.cargarMedicionesInternas(username + ".xls");
 
         repositorioOrganizacionesDB.modificar(organizacion);
-
-        organizacion.actualizarHC();
 
         response.type("text/javascript");
         response.status(200);
