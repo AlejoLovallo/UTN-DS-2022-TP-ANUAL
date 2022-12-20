@@ -1,5 +1,6 @@
 package Domain.Organizacion;
 
+import Domain.CalculadorHC.CalculadorHC;
 import Domain.CalculadorHC.FactorEmision;
 import Domain.Reportes.ReporteComposicion;
 import org.apache.commons.lang3.ObjectUtils;
@@ -37,6 +38,9 @@ public class Actividad {
   @ManyToMany(mappedBy = "actividades")
   private List<ReporteComposicion> reporteComposicions;
 
+  @Enumerated(EnumType.STRING)
+  private TipoPeriodicidad periodicidad;
+
 /*
   @Enumerated(EnumType.STRING)
   private TipoDeActividad nombre;*/
@@ -51,9 +55,10 @@ public class Actividad {
   }
 
 
-  public Actividad(TipoDeActividad _tipoActividad,TipoDeConsumo _tipoDeConsumo, Organizacion _organizacion, FactorEmision _factorEmision){
+  public Actividad(TipoDeActividad _tipoActividad,TipoDeConsumo _tipoDeConsumo, TipoPeriodicidad _tipoPeriodicidad, Organizacion _organizacion, FactorEmision _factorEmision){
     this.tipoActividad=_tipoActividad;
     this.tipoConsumo =_tipoDeConsumo;
+    this.periodicidad = _tipoPeriodicidad;
     //this.unidadDeConsumo=_unidadConsumo;
     this.organizacion = _organizacion;
     this.factorEmision = _factorEmision;
@@ -61,9 +66,10 @@ public class Actividad {
   }
 
   //TODO: revisar si generar reporte necesita factor de emision
-  public Actividad(TipoDeActividad _tipoActividad,TipoDeConsumo _tipoDeConsumo, Organizacion _organizacion){
+  public Actividad(TipoDeActividad _tipoActividad,TipoDeConsumo _tipoDeConsumo, TipoPeriodicidad _tipoPeriodicidad, Organizacion _organizacion){
     this.tipoActividad=_tipoActividad;
     this.tipoConsumo =_tipoDeConsumo;
+    this.periodicidad = _tipoPeriodicidad;
     //this.unidadDeConsumo=_unidadConsumo;
     this.organizacion = _organizacion;
     this.consumosActividad = new ArrayList<>();
@@ -72,6 +78,11 @@ public class Actividad {
   //////////////////////////////////  GETTERS
 
   //getters
+
+
+  public TipoPeriodicidad getPeriodicidad() {
+    return periodicidad;
+  }
 
   public TipoDeActividad getTipoActividad(){return tipoActividad;}
   public TipoDeActividad getNombre() {return tipoActividad;}
@@ -107,12 +118,45 @@ public class Actividad {
 
   //METHODS
 
+  public void cargarConsumos(Integer mes, Integer anio, Double valorConsumo){
+    if(periodicidad.equals(TipoPeriodicidad.MENSUAL))
+    {
+      if(mes.equals(1))
+      {
+        this.agregarConsumo(12, anio -1, valorConsumo);
+      }
+      else
+      {
+        this.agregarConsumo(mes -1, anio, valorConsumo);
+      }
+    }
+    else
+    {
+      if(mes.equals(1))
+      {
+        for(int i = 1; i <= 12; i++)
+        {
+          this.agregarConsumo(i, anio -1, valorConsumo / 12);
+          //org.actualizarHC(i, anio-1);
+        }
+      }
+      else
+      {
+        for(int i = 1; i < mes; i++)
+        {
+          this.agregarConsumo(i, anio, valorConsumo / (mes - 1));
+          //org.actualizarHC(i, anio);
+        }
+      }
+    }
+  }
+
   public void agregarConsumo(Integer mes, Integer anio, Double consumo){
 
     try{
       Optional<Consumo> consumoActividad  = this.consumosActividad.stream().filter(unConsumo -> mes.equals(unConsumo.getMes()) && anio.equals(unConsumo.getAnio())).findAny();
       Consumo con = consumoActividad.get();
-      con.setConsumo(con.getConsumo() + consumo);
+      con.setConsumo(consumo);
     }
     catch (NoSuchElementException e)
     {

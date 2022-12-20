@@ -1,13 +1,18 @@
 package Domain.Miembro;
 import Domain.CalculadorHC.CalculadorHC;
+import Domain.CalculadorHC.ResultadoHCMiembro;
+import Domain.CalculadorHC.ResultadoHCOrg;
 import Domain.Miembro.Excepciones.MiembroNoPerteneceAOrganizacionException;
 import Domain.Miembro.Excepciones.UnicoSectorPorOrganizacionException;
 import Domain.Organizacion.Organizacion;
 import Domain.Organizacion.Sector;
 import Domain.Repositorios.RepositorioPersonasDB;
 import Domain.Trayecto.Trayecto;
+import org.hibernate.annotations.NotFound;
+import org.hibernate.annotations.NotFoundAction;
 
 import java.io.IOException;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.*;
@@ -41,6 +46,9 @@ public class Miembro {
   @Transient
   private CalculadorHC calculadorHC = CalculadorHC.getInstance();
 
+  @OneToMany(mappedBy = "miembro",cascade = CascadeType.ALL)
+  @NotFound(action = NotFoundAction.IGNORE)
+  private List<ResultadoHCMiembro> resultadosHC = new ArrayList<>();
 
   //////////////////////////////////  CONSTRUCTOR
   private Miembro(){
@@ -58,6 +66,10 @@ public class Miembro {
 
   //////////////////////////////////  GETTERS
 
+
+  public List<ResultadoHCMiembro> getResultadosHC() {
+    return resultadosHC;
+  }
 
   public Boolean getActivo() {
     return activo;
@@ -92,9 +104,11 @@ public class Miembro {
     this.trayectos = trayectos;
   }
 
+  public void setResultadosHC(List<ResultadoHCMiembro> resultadosHC) {
+    this.resultadosHC = resultadosHC;
+  }
 
-
-  //////////////////////////////////  INTERFACE
+//////////////////////////////////  INTERFACE
 
   public void vincularSector(Sector _sector){
     if (this.sector != null)
@@ -144,13 +158,52 @@ public class Miembro {
         for (int mes = 1; mes <= 12; mes++)
           cantidadHC += calcularHC(mes, anio);
     }
+
+    RepositorioPersonasDB repositorioPersonasDB = new RepositorioPersonasDB();
+    repositorioPersonasDB.modificar(this.getPersona());
+
     return cantidadHC;
   }
 
   public void agregarTrayecto(Trayecto trayecto){
-        trayectos.add(trayecto);
-    RepositorioPersonasDB repositorioPersonasDB = new RepositorioPersonasDB();
-    repositorioPersonasDB.modificar(this.getPersona());
+    trayectos.add(trayecto);
+
+    //RepositorioPersonasDB repositorioPersonasDB = new RepositorioPersonasDB();
+    //repositorioPersonasDB.modificar(this.getPersona());
+  }
+
+  public void recalcularHC(Integer mesDesde, Integer anioDesde, Integer mesHasta, Integer anioHasta) throws IOException {
+    if(this.calculadorHC == null){
+      this.calculadorHC = CalculadorHC.getInstance();
+    }
+    for(ResultadoHCMiembro resultadoHCMiembro : this.getResultadosHC())
+    {
+      if(resultadoHCMiembro.getAnio() > anioDesde && anioHasta > resultadoHCMiembro.getAnio())
+      {
+        resultadoHCMiembro.setResultado(
+                this.calculadorHC.actualizarHC(this, resultadoHCMiembro.getMes(), resultadoHCMiembro.getAnio())
+        );
+      }
+      else if(resultadoHCMiembro.getAnio().equals(anioHasta) && resultadoHCMiembro.getAnio().equals(anioDesde)){
+        resultadoHCMiembro.setResultado(
+                this.calculadorHC.actualizarHC(this, resultadoHCMiembro.getMes(), resultadoHCMiembro.getAnio())
+        );
+      }
+      else{
+        if(resultadoHCMiembro.getAnio().equals(anioDesde) && resultadoHCMiembro.getMes() >= mesDesde){
+          resultadoHCMiembro.setResultado(
+                  this.calculadorHC.actualizarHC(this, resultadoHCMiembro.getMes(), resultadoHCMiembro.getAnio())
+          );
+        }
+        else if(resultadoHCMiembro.getAnio().equals(anioHasta) && resultadoHCMiembro.getMes() <= mesHasta){
+          resultadoHCMiembro.setResultado(
+                  this.calculadorHC.actualizarHC(this, resultadoHCMiembro.getMes(), resultadoHCMiembro.getAnio())
+          );
+        }
+      }
+    }
+    //RepositorioPersonasDB repositorioPersonasDB = new RepositorioPersonasDB();
+    //repositorioPersonasDB.modificar(this.getPersona());
   }
 
   public void desvincularTrayecto(Trayecto trayecto){
