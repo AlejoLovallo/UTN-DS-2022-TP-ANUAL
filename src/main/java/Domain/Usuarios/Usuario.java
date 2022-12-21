@@ -164,7 +164,7 @@ public class Usuario{
 
     this.validadoresContrasenia = new ArrayList<>();
 
-    this.validadoresContrasenia.add(new Peores10KContra());
+    //this.validadoresContrasenia.add(new Peores10KContra());
     this.validadoresContrasenia.add(new CriterioLongitud(8,80));
 
     for (CriterioValidacion criterioValidacion : this.validadoresContrasenia) {
