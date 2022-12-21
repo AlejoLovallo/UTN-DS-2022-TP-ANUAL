@@ -22,13 +22,10 @@ public class CalculadorHC {
 
     private RepositorioFactoresEmisionDB factoresDeEmision = new RepositorioFactoresEmisionDB();
 
-    private static CalculadorHC instance = null;
+    private static CalculadorHC instance = new CalculadorHC();
 
     // CONSTRUCTOR
     public static CalculadorHC getInstance(){
-        if(instance == null){
-            instance = new CalculadorHC();
-        }
         return instance;
     }
     
