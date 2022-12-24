@@ -98,10 +98,8 @@ public class ServicioExcel extends ServicioMediciones{
                 .findAny();
 
         try{
-          Actividad actividad = act.get(); // CHEQUEAR ESTO PORQUE ES UN DESASTRE
-
+          Actividad actividad = act.get();
           actividad.cargarConsumos(mes, anio, valorConsumo);
-
           actualizarHCActividad(org, periodicidad, mes, anio);
 
         }

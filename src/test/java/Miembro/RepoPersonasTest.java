@@ -31,7 +31,6 @@ public class RepoPersonasTest {
 /*    @Test
     public void buscarPersonaxUser(){
         Usuario user= Common.getUsuario();
-
         Assertions.assertEquals("UNA PERSONA",this.repoPersonas.buscarPersonaPorUsuario(user));
     }*/
 

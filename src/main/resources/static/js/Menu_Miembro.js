@@ -1,4 +1,3 @@
-
 const logout = async () => {
 
    await fetch(`./cerrar_sesion`,{

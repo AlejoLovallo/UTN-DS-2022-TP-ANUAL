@@ -224,6 +224,7 @@ public class Organizacion {
 
   //////////////////////////////////  INTERFACE
 
+
   public void registrarSector(Sector sector){
     this.sectores.add(sector);
   }

@@ -1,5 +1,6 @@
 package Miembro;
 
+import Domain.InterfazUsuario.InterfazUsuarioPersona;
 import Domain.Miembro.Miembro;
 import Domain.Miembro.Persona;
 import Domain.Miembro.TipoDocumento;

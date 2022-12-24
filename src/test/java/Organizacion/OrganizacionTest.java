@@ -104,16 +104,16 @@ public class OrganizacionTest {
   @Test
   public void setRegistrarSector(){
 
-  Espacio espacio=new Direccion("Argentina", "Buenos Aires", "CABA", "CABA","Cordoba",3000, TipoDireccion.Trabajo);
-  Sector sector1=new Sector("Administracion",espacio, organizacionEmpresa,new ArrayList<Miembro>());
-  Sector sector2=new Sector("direccion", espacio,organizacionEmpresa,new ArrayList<Miembro>());
+    Espacio espacio=new Direccion("Argentina", "Buenos Aires", "CABA", "CABA","Cordoba",3000, TipoDireccion.Trabajo);
+    Sector sector1=new Sector("Administracion",espacio, organizacionEmpresa,new ArrayList<Miembro>());
+    Sector sector2=new Sector("direccion", espacio,organizacionEmpresa,new ArrayList<Miembro>());
 
 
-  this.organizacionEmpresa.registrarSector(sector1);
-  this.organizacionEmpresa.registrarSector(sector2);
+    this.organizacionEmpresa.registrarSector(sector1);
+    this.organizacionEmpresa.registrarSector(sector2);
 
-  Assertions.assertEquals(Arrays.asList(sector1,sector2),this.organizacionEmpresa.getSectores());
-}
+    Assertions.assertEquals(Arrays.asList(sector1,sector2),this.organizacionEmpresa.getSectores());
+  }
 
   @Test
   public void aceptarvinculacion(){
@@ -132,7 +132,7 @@ public class OrganizacionTest {
     Assertions.assertTrue(this.organizacionEmpresa.aceptarVinculacion(miembros.get(1), organizacionEmpresa.getSectores().get(0)));
   }
 
-@Test
+  @Test
   public void RepoOrganizaciones(){
   RepositorioOrganizacionesDB repoOrg = null;
 
@@ -145,6 +145,4 @@ public class OrganizacionTest {
 
   Assertions.assertNull(repoSector);
   }
-
-
 }

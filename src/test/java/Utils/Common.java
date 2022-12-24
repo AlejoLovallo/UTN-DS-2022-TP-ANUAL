@@ -20,6 +20,7 @@ import Domain.Trayecto.Trayecto;
 import Domain.Usuarios.Usuario;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class Common {
   public static Organizacion getOrganizacionMinisterio() {

@@ -67,7 +67,6 @@ $('.form').find('input, textarea').on('keyup blur focus', function (e) {
         label.addClass('highlight');
       }
     }
-
   });
 
   $('.tab a').on('click', function (e) {

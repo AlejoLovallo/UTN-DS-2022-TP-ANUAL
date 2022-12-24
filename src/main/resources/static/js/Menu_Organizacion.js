@@ -1,4 +1,3 @@
-
 const pantallaSolicitudes = async () => {
         window.location.href = "./Aceptar_Miembros.html";
   };

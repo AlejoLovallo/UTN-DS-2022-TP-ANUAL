@@ -565,8 +565,6 @@ body {
     webkit-tap-highlight-color: #1ee2e7;
 }
 
-
-
 home:hover, a.home:focus {
     color:rgb(226, 226, 226) !important;
 }

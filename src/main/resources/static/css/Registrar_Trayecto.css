@@ -88,7 +88,6 @@ color: #ffffff;
 background: #222;
 color: #ffffff;
 }
-
 .tab-content > div:last-child {
 display: none;
 }
@@ -390,7 +389,6 @@ a.page-scroll:hover {color:#fff !important}
     color: #000000;
     background-color: #fff;
 }
-
 
 .select-css {
     font-size: 14px;

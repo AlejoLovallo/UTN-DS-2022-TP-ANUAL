@@ -482,7 +482,6 @@ a.page-scroll:hover, a.page-scroll:focus {
     background-color: #da1717af !important;
 }
 
-
 .page-scroll:hover {color:#fff !important}
 
 .page-scroll{
@@ -498,7 +497,6 @@ a.page-scroll:hover, a.page-scroll:focus {
     color:rgb(226, 226, 226) !important;
     background-color: #da1717af !important;
 }
-
 p.navbar-brand{
     font-size: 20px !important;
     background: #da171700;

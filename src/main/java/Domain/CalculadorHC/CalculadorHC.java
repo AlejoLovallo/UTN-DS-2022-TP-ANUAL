@@ -203,13 +203,10 @@ public class CalculadorHC {
 /*
     public Double calcularHcTotal(Organizacion organizacion) throws IOException {
         Double cantidadHC = 0.0;
-
         //Integer anioIngreso = organizacion.getFechaIngreso().getYear();
         //Integer mesIngreso = organizacion.getFechaIngreso().getMonthValue();
-
         Integer anioActual = LocalDate.now().getYear();
         Integer mesActual = LocalDate.now().getMonthValue();
-
         if(anioActual == anioIngreso){
             for (int mes = mesIngreso; mes <= mesActual; mes++)
                 cantidadHC += organizacion.calcularHC(mes, anioIngreso);
@@ -223,7 +220,6 @@ public class CalculadorHC {
                 for (int mes = 1; mes <= 12; mes++)
                     cantidadHC += organizacion.calcularHC(mes, anio);
         }
-
         return cantidadHC;
     }*/
 
