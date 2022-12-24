@@ -1,15 +1,15 @@
 package Domain.Organizacion;
 
+import Domain.CalculadorHC.CalculadorHC;
 import Domain.CalculadorHC.FactorEmision;
 import Domain.Reportes.ReporteComposicion;
+import org.apache.commons.lang3.ObjectUtils;
 import org.hibernate.annotations.NotFound;
 import org.hibernate.annotations.NotFoundAction;
 import Domain.Organizacion.Consumo;
 
 import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 @Entity
 @Table(name ="actividad")
@@ -22,8 +22,6 @@ public class Actividad {
   private TipoDeActividad tipoActividad;
   @Enumerated(EnumType.STRING)
   private TipoDeConsumo tipoConsumo;
-  @Enumerated(EnumType.STRING)
-  private FrecuenciaServicio frecuenciaServicio;
   @Enumerated(EnumType.STRING)
   private UnidadDeConsumo unidad_Consumo;
 
@@ -40,6 +38,9 @@ public class Actividad {
   @ManyToMany(mappedBy = "actividades")
   private List<ReporteComposicion> reporteComposicions;
 
+  @Enumerated(EnumType.STRING)
+  private TipoPeriodicidad periodicidad;
+
 /*
   @Enumerated(EnumType.STRING)
   private TipoDeActividad nombre;*/
@@ -49,28 +50,48 @@ public class Actividad {
   private List<Consumo> consumosActividad;
 
   //////////////////////////////////  CONSTRUCTORES
-  public Actividad(){
+  private Actividad(){
 
   }
 
-  public Actividad(TipoDeActividad _tipoActividad,TipoDeConsumo _tipoDeConsumo){
+
+  public Actividad(TipoDeActividad _tipoActividad,TipoDeConsumo _tipoDeConsumo, TipoPeriodicidad _tipoPeriodicidad, Organizacion _organizacion, FactorEmision _factorEmision){
     this.tipoActividad=_tipoActividad;
     this.tipoConsumo =_tipoDeConsumo;
+    this.periodicidad = _tipoPeriodicidad;
     //this.unidadDeConsumo=_unidadConsumo;
+    this.organizacion = _organizacion;
+    this.factorEmision = _factorEmision;
+    this.consumosActividad = new ArrayList<>();
+  }
+
+  //TODO: revisar si generar reporte necesita factor de emision
+  public Actividad(TipoDeActividad _tipoActividad,TipoDeConsumo _tipoDeConsumo, TipoPeriodicidad _tipoPeriodicidad, Organizacion _organizacion){
+    this.tipoActividad=_tipoActividad;
+    this.tipoConsumo =_tipoDeConsumo;
+    this.periodicidad = _tipoPeriodicidad;
+    //this.unidadDeConsumo=_unidadConsumo;
+    this.organizacion = _organizacion;
+    this.consumosActividad = new ArrayList<>();
   }
 
   //////////////////////////////////  GETTERS
-  private ArrayList <Consumo> consumos;
 
   //getters
 
+
+  public TipoPeriodicidad getPeriodicidad() {
+    return periodicidad;
+  }
+
+  public TipoDeActividad getTipoActividad(){return tipoActividad;}
   public TipoDeActividad getNombre() {return tipoActividad;}
 
   public TipoDeConsumo getTipoConsumo() {return tipoConsumo;}
 
   public UnidadDeConsumo getUnidad_Consumo() {return unidad_Consumo;}
 
-  public List <Consumo> getConsumos() {return consumos;}
+  public List <Consumo> getConsumos() {return consumosActividad;}
 
   public FactorEmision getFactorEmision() {
     return factorEmision;
@@ -82,42 +103,79 @@ public class Actividad {
 
   //setters
 
+
+  public void setOrganizacion(Organizacion organizacion) {
+    this.organizacion = organizacion;
+  }
+
   public void setUnidad_Consumo(UnidadDeConsumo unidad_Consumo) {this.unidad_Consumo = unidad_Consumo;}
 
   public void setTipoConsumo(TipoDeConsumo tipoConsumo) {this.tipoConsumo = tipoConsumo;}
 
   public void setNombre(TipoDeActividad nombre) {this.tipoActividad = nombre;}
 
-  public void setConsumos(ArrayList <Consumo> consumos) {this.consumos = consumos;}
+  public void setConsumos(ArrayList <Consumo> consumos) {this.consumosActividad = consumos;}
 
   //METHODS
 
+  public void cargarConsumos(Integer mes, Integer anio, Double valorConsumo){
+    if(periodicidad.equals(TipoPeriodicidad.MENSUAL))
+    {
+      if(mes.equals(1))
+      {
+        this.agregarConsumo(12, anio -1, valorConsumo);
+      }
+      else
+      {
+        this.agregarConsumo(mes -1, anio, valorConsumo);
+      }
+    }
+    else
+    {
+      if(mes.equals(1))
+      {
+        for(int i = 1; i <= 12; i++)
+        {
+          this.agregarConsumo(i, anio -1, valorConsumo / 12);
+          //org.actualizarHC(i, anio-1);
+        }
+      }
+      else
+      {
+        for(int i = 1; i < mes; i++)
+        {
+          this.agregarConsumo(i, anio, valorConsumo / (mes - 1));
+          //org.actualizarHC(i, anio);
+        }
+      }
+    }
+  }
+
   public void agregarConsumo(Integer mes, Integer anio, Double consumo){
 
-    Optional<Consumo> consumoActividad  = this.consumos.stream().filter(unConsumo -> mes.equals(unConsumo.getMes()) && anio.equals(unConsumo.getAnio())).findAny();
-
-    Consumo con = consumoActividad.get();
-
-    if (con != null){
-      con.setConsumo(con.getConsumo() + consumo);
-    }else{
-      Consumo consu = new Consumo(mes, anio, consumo);
-      this.consumos.add(consu);
+    try{
+      Optional<Consumo> consumoActividad  = this.consumosActividad.stream().filter(unConsumo -> mes.equals(unConsumo.getMes()) && anio.equals(unConsumo.getAnio())).findAny();
+      Consumo con = consumoActividad.get();
+      con.setConsumo(consumo);
+    }
+    catch (NoSuchElementException e)
+    {
+      Consumo consu = new Consumo(mes, anio, consumo, this);
+      this.consumosActividad.add(consu);
     }
     
   }
 
   public Double encontrarConsumo(Integer mes, Integer anio){
 
-    Double consumo = 0.0;
+    Optional<Consumo> consumoActividad  = this.consumosActividad.stream().filter(unConsumo -> mes.equals(unConsumo.getMes()) && anio.equals(unConsumo.getAnio())).findAny();
 
-    Optional<Consumo> consumoActividad  = this.consumos.stream().filter(unConsumo -> mes.equals(unConsumo.getMes()) && anio.equals(unConsumo.getAnio())).findAny();
-
-    Consumo con = consumoActividad.get();
-    if (con != null){
-      consumo = con.getConsumo();
+    try{
+      Consumo con = consumoActividad.get();
+      return con.getConsumo();
     }
-
-    return consumo;
+    catch(NoSuchElementException e){
+      return 0.0;
+    }
   }
 }

@@ -10,6 +10,7 @@ import Domain.Organizacion.ClasificacionOrganizacion;
 import Domain.Organizacion.Organizacion;
 import Domain.Organizacion.Sector;
 import Domain.Organizacion.TipoOrganizacion;
+import Domain.Repositorios.RepositorioDireccionDB;
 import Domain.Repositorios.RepositorioOrganizacionesDB;
 import Domain.Repositorios.RepositorioPersonasDB;
 import Domain.Repositorios.RepositorioSectoresDB;
@@ -20,32 +21,36 @@ public class RepositorioSectorTestDB {
   public static void main(String[] args) {
     RepositorioSectoresDB repositorioSectoresDB = new RepositorioSectoresDB();
 
-
+/*
     Usuario user = new Usuario("pepitoSandCompleto","pepitoSandCompleto@gmail.com","pepitoSandCompleto54+",true);
 
     Persona persona = new Persona("pepitoSandCompleto", "pepitoSandCompleto", TipoDocumento.DNI, "101469451");
 
     Contacto contacto = new Contacto("pepitoSandCompleto", "pepitoSandCompleto", 515151541, "contacto@gmail.com");
 
-    Organizacion organizacion = new Organizacion( "Empresa Pepe Completo", TipoOrganizacion.Empresa, ClasificacionOrganizacion.EmpresaSectorSecundario, contacto, 5);
+    Organizacion organizacion = new Organizacion( "Empresa Pepe Completo", TipoOrganizacion.Empresa, ClasificacionOrganizacion.EmpresaSectorSecundario, contacto);
+*/
+    RepositorioDireccionDB repositorioDireccionDB = new RepositorioDireccionDB();
+    Direccion direccion = repositorioDireccionDB.crearDireccion("Argentina", "Buenos Aires", "Capital Federal", "pepitoSandCompleto", "pepitoSandCompleto Barros", 123, TipoDireccion.Trabajo);
+
+    RepositorioOrganizacionesDB repositorioOrganizacionesDB = new RepositorioOrganizacionesDB();
+    Organizacion organizacion = repositorioOrganizacionesDB.buscarOrganizacionPorNombre("OrganizacionPrueba2");
+
+    RepositorioPersonasDB repositorioPersonasDB = new RepositorioPersonasDB();
+    Persona persona = repositorioPersonasDB.buscarPersonaPorUsername("juan98");
 
     Miembro miembro = new Miembro(null);
 
-    Espacio espacio = new Direccion("Argentina", "Buenos Aires", "Capital Federal", "pepitoSandCompleto", "pepitoSandCompleto Barros", 123, TipoDireccion.Trabajo);
+    Sector sector = new Sector("Presidente Prueba",direccion,organizacion,miembro);
+    //repositorioSectoresDB.agregar(sector);
 
-    Sector sector = new Sector("Presidente Prueba",espacio,organizacion,miembro);
+    organizacion.getSectores().add(sector);
+    repositorioOrganizacionesDB.modificar(organizacion);
 
-
-    persona.setUsuario(user);
-
+    persona.getMiembros().add(miembro);
     miembro.setPersona(persona);
-
     miembro.vincularSector(sector);
 
-
-    repositorioSectoresDB.agregar(sector);
-
-
-
+    repositorioPersonasDB.modificar(persona);
   }
 }

@@ -2,8 +2,6 @@ package CalculadorDistanciaTest.endPointsTest;
 
 import Domain.CalculadorDistancia.Endpoints.ListadoLocalidades;
 import Domain.CalculadorDistancia.Endpoints.Localidad;
-import Domain.Organizacion.RepositorioOrganizaciones;
-import Utils.Common;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;

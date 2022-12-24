@@ -482,6 +482,21 @@ a.page-scroll:hover, a.page-scroll:focus {
     background-color: #da1717af !important;
 }
 
+.page-scroll:hover {color:#fff !important}
+
+.page-scroll{
+    color: #bdbbbb;
+    border: 21px #fe0303 !important;
+    font-size: 16px;
+    background: #da171770;
+    border-radius: 5%;
+    margin-top: 17px;
+}
+
+.page-scroll:hover, a.page-scroll:focus {
+    color:rgb(226, 226, 226) !important;
+    background-color: #da1717af !important;
+}
 p.navbar-brand{
     font-size: 20px !important;
     background: #da171700;

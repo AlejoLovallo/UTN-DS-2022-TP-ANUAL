@@ -66,7 +66,7 @@ label {
   transition: all 0.25s ease;
   -webkit-backface-visibility: hidden;
   pointer-events: none;
-  font-size: 22px;
+  font-size: 18px;
 }
 label .req {
   margin: 2px;
@@ -764,3 +764,36 @@ p.navbar-brand:hover{
   .imagen_footer{
     width: 110%;
   }
+
+
+.page-scroll:hover {color:#fff !important}
+
+.page-scroll{
+    color: #bdbbbb;
+    border: 21px #fe0303 !important;
+    font-size: 16px;
+    background: #da171770;
+    border-radius: 5%;
+    margin-top: 17px;
+}
+
+.page-scroll:hover, a.page-scroll:focus {
+    color:rgb(226, 226, 226) !important;
+    background-color: #da1717af !important;
+}
+
+.home:hover {color:#fff !important}
+
+.home{
+    border: 21px #bdbbbb !important;
+    font-size: 16px;
+    background: #bdbbbb;
+    border-radius: 5%;
+    margin-top: 17px;
+    margin-right: 10px;
+}
+
+.home:hover, a.page-scroll:focus {
+    color:rgb(226, 226, 226) !important;
+    background-color: #706e6eaf !important;
+}

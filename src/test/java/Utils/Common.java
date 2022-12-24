@@ -1,7 +1,7 @@
 package Utils;
 
 import Domain.CalculadorHC.FactorEmision;
-import Domain.CalculadorHC.Unidad;
+import Domain.Organizacion.UnidadDeConsumo;
 import Domain.Espacios.Direccion;
 import Domain.Espacios.Espacio;
 import Domain.Espacios.TipoDireccion;
@@ -14,9 +14,9 @@ import Domain.Organizacion.Organizacion;
 import Domain.Organizacion.Sector;
 import Domain.Organizacion.TipoOrganizacion;
 import Domain.Organizacion.TipoDeActividad;
+import Domain.Repositorios.RepositorioUsuariosDB;
 import Domain.Trayecto.Tramo;
 import Domain.Trayecto.Trayecto;
-import Domain.Usuarios.RepositorioUsuarios;
 import Domain.Usuarios.Usuario;
 
 import java.util.ArrayList;
@@ -24,19 +24,19 @@ import java.util.List;
 
 public class Common {
   public static Organizacion getOrganizacionMinisterio() {
-    return new Organizacion("Ministerio test", TipoOrganizacion.Gubernamental, ClasificacionOrganizacion.Ministerio, null, 5);
+    return new Organizacion("Ministerio test", TipoOrganizacion.Gubernamental, ClasificacionOrganizacion.Ministerio, null,1);
   }
 
   public static Organizacion getOrganizacionUniversidad() {
-    return new Organizacion("Universidad test", TipoOrganizacion.Institucion, ClasificacionOrganizacion.Universidad, null, 5);
+    return new Organizacion("Universidad test", TipoOrganizacion.Institucion, ClasificacionOrganizacion.Universidad, null,1);
   }
 
   public static Organizacion getOrganizacionEscuela() {
-    return new Organizacion("Escuela test", TipoOrganizacion.Institucion, ClasificacionOrganizacion.Escuela, null, 5);
+    return new Organizacion("Escuela test", TipoOrganizacion.Institucion, ClasificacionOrganizacion.Escuela, null,1);
   }
 
   public static Organizacion getOrganizacionConUnMiembro() {
-    Organizacion organizacion = new Organizacion("Escuela test", TipoOrganizacion.Institucion, ClasificacionOrganizacion.Escuela, null, 5);
+    Organizacion organizacion = new Organizacion("Escuela test", TipoOrganizacion.Institucion, ClasificacionOrganizacion.Escuela, null,1);
     ArrayList<Sector> sectores = new ArrayList<>();
     Sector sector = Common.getMiembro().getSector();
     sector.getMiembros().add(Common.getMiembro());
@@ -47,11 +47,11 @@ public class Common {
 
 
   public static Organizacion getOrganizacionEmpresaPrimaria() {
-    return new Organizacion("Empresa primaria test", TipoOrganizacion.Empresa, ClasificacionOrganizacion.EmpresaSectorPrimario, null, 5);
+    return new Organizacion("Empresa primaria test", TipoOrganizacion.Empresa, ClasificacionOrganizacion.EmpresaSectorPrimario, null,1);
   }
 
   public static Organizacion getOrganizacionEmpresaSecundaria() {
-    return new Organizacion("Empresa secundaria test", TipoOrganizacion.Empresa, ClasificacionOrganizacion.EmpresaSectorSecundario, null, 5);
+    return new Organizacion("Empresa secundaria test", TipoOrganizacion.Empresa, ClasificacionOrganizacion.EmpresaSectorSecundario, null,1);
   }
 
   public static Sector getSectorTrabajo(){
@@ -84,10 +84,12 @@ public class Common {
 
 
   public static Usuario getUsuario() {
-    return new Usuario("juan98", "email", "juan1998", true);
+    return new Usuario("juan987", "email@hotmail.com", "juan1998", true);
   }
   public static Usuario getUsuarioQueEsteEnElRepo() {
-    return RepositorioUsuarios.getInstance().crearUsuario("juan98", "email", "juan1998", true);
+    RepositorioUsuariosDB repositorioUsuariosDB = new RepositorioUsuariosDB();
+
+    return repositorioUsuariosDB.crearUsuario("juan97", "email@hotmail.com", "juan1998", true);
   }
 
 
@@ -123,11 +125,11 @@ public class Common {
   }
 
   public static FactorEmision getFactorDeEmision() {
-    return new FactorEmision(TipoDeActividad.COMBUSTION_FIJA, 2.0, Unidad.m3);
+    return new FactorEmision(TipoDeActividad.COMBUSTION_FIJA, 2.0, UnidadDeConsumo.m3);
   }
 
     public static FactorEmision getFactorDeEmisionCOMBUSTION_MOVIL() {
-      return new FactorEmision(TipoDeActividad.COMBUSTION_MOVIL, 2.0, Unidad.m3);
+      return new FactorEmision(TipoDeActividad.COMBUSTION_MOVIL, 2.0, UnidadDeConsumo.m3);
     }
 }
 

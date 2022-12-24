@@ -8,25 +8,25 @@ import Domain.MediosDeTransporte.TipoVehiculo;
 import Domain.MediosDeTransporte.VehiculoParticular;
 import Domain.Miembro.Miembro;
 import Domain.Organizacion.*;
+import Domain.Repositorios.RepositorioFactoresEmisionDB;
+import Domain.Trayecto.Tramo;
+import Domain.Trayecto.Trayecto;
 import Domain.ServicioMedicion.ServicioExcel;
 import Domain.Organizacion.TipoDeActividad;
 import Domain.Usuarios.Contacto;
-import Domain.Trayecto.*;
-import Utils.Common;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
-import java.text.ParseException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 
 public class CalculadorHCTest {
     protected Contacto contacto = new Contacto("Organizacion", "ApellidoEmpresa", 987654321, "org@gmail.com");
 
-    protected Organizacion organizacion = new Organizacion("A", TipoOrganizacion.Empresa, ClasificacionOrganizacion.EmpresaSectorPrimario, contacto, 5);
+    protected Organizacion organizacion = new Organizacion("A", TipoOrganizacion.Empresa, ClasificacionOrganizacion.EmpresaSectorPrimario, contacto ,1);
     protected Espacio espacio1 = new Direccion("Argentina", "Buenos Aires", "GENERAL LAVALLE", "GENERAL LAVALLE","Cordoba",3000, TipoDireccion.Trabajo);
     protected Espacio espacio2 = new Direccion("Argentina", "Buenos Aires", "GENERAL LAVALLE", "PAVON","O'Higgins",3000, TipoDireccion.Trabajo);
     protected Sector sector = new Sector("RRHH", espacio1, organizacion,new ArrayList<Miembro>());
@@ -37,6 +37,8 @@ public class CalculadorHCTest {
     @BeforeEach
     public void iniciarVariables()
     {
+        RepositorioFactoresEmisionDB repositorioFactoresEmisionDB = new RepositorioFactoresEmisionDB();
+
         Tramo tramo = new Tramo(espacio1, espacio2, new VehiculoParticular(TipoVehiculo.Auto, TipoCombustible.Nafta, 1));
         tramo.getMedioTransporte().setConsumoPorKm(1d);
 
@@ -55,8 +57,8 @@ public class CalculadorHCTest {
         organizacion.getSectores().add(sector);
         sector.getMiembros().add(miembro);
 
-        RepositorioFactores.getInstance().agregarFactorDeEmision(new FactorEmision(TipoDeActividad.COMBUSTION_MOVIL, 0.5, Unidad.lt));
-        RepositorioFactores.getInstance().agregarFactorDeEmision(new FactorEmision(TipoDeActividad.COMBUSTION_FIJA, 2.0, Unidad.lt));
+        repositorioFactoresEmisionDB.agregarFactorDeEmision(new FactorEmision(TipoDeActividad.COMBUSTION_MOVIL, 0.5, UnidadDeConsumo.lts));
+        repositorioFactoresEmisionDB.agregarFactorDeEmision(new FactorEmision(TipoDeActividad.COMBUSTION_FIJA, 2.0, UnidadDeConsumo.lts));
 
         agenteSectorial.getOrganizaciones().add(organizacion);
     }
@@ -68,14 +70,14 @@ public class CalculadorHCTest {
 
     @Test
     public void calculoHCMiembroCorrectoVehiculoParticualr() throws IOException {
-        Integer mes = 4;
+        Integer mes = 12;
         Integer anio = 2015;
         Double resultadoHC = miembro.calcularHC(mes, anio);
         Assertions.assertNotNull(resultadoHC);
         Assertions.assertNotEquals(0, resultadoHC);
     }
 /*
-    //TODO volver a testear
+
     @Test
     public void calculoHCOrganizacion() throws IOException, ParseException {
         ArrayList<FactorEmision> factoresDeEmision = new ArrayList<>();

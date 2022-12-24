@@ -1,11 +1,18 @@
 package Domain.Organizacion;
 import Domain.CalculadorHC.CalculadorHC;
+import Domain.CalculadorHC.ResultadoHC;
+import Domain.CalculadorHC.ResultadoHCMiembro;
+import Domain.CalculadorHC.ResultadoHCOrg;
 import Domain.Miembro.Miembro;
 import Domain.Reportes.GeneradorReportes;
 import Domain.Reportes.Reporte;
 import Domain.Reportes.TipoDeReporte;
+import Domain.Repositorios.RepositorioOrganizacionesDB;
+import Domain.Repositorios.RepositorioPersonasDB;
+import Domain.ServicioMedicion.ServicioExcel;
 import Domain.ServicioMedicion.ServicioMediciones;
 import Domain.Usuarios.Contacto;
+import Domain.Usuarios.Usuario;
 import org.hibernate.annotations.NotFound;
 import org.hibernate.annotations.NotFoundAction;
 
@@ -13,11 +20,10 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.io.IOException;
 import java.util.List;
+import java.util.NoSuchElementException;
+import java.util.Optional;
 import javax.persistence.*;
 
-import org.hibernate.jpa.event.internal.jpa.ListenerFactoryBeanManagerStandardImpl;
-
-//import org.apache.poi.ss.formula.PlainCellCache.Loc;
 
 @Entity
 @Table(name="organizacion")
@@ -62,6 +68,19 @@ public class Organizacion {
   @NotFound(action = NotFoundAction.IGNORE)
   private List<Reporte> reportes = new ArrayList<>();
 
+  @OneToMany(mappedBy = "organizacion",cascade = CascadeType.ALL)
+  @NotFound(action = NotFoundAction.IGNORE)
+  private List<Recomendacion> recomendaciones = new ArrayList<>();
+
+  @OneToMany(mappedBy = "organizacion",cascade = CascadeType.ALL)
+  @NotFound(action = NotFoundAction.IGNORE)
+  private List<ResultadoHCOrg> resultadosHC = new ArrayList<>();
+
+  @OneToOne(cascade = CascadeType.DETACH)
+  @NotFound(action = NotFoundAction.IGNORE)
+  @JoinColumn(name="id_usuario",referencedColumnName = "id_usuario")
+  private Usuario usuario;
+
   @Transient
   //TODO
   private LocalDate fechaIngreso;
@@ -87,12 +106,12 @@ public class Organizacion {
 
   }
 
-  public Organizacion(String _razonSocial, TipoOrganizacion _tipo, ClasificacionOrganizacion _clasificacion, Contacto contacto, Integer numDiasPorSemana){
+  public Organizacion(String _razonSocial, TipoOrganizacion _tipo, ClasificacionOrganizacion _clasificacion, Contacto contacto, Integer _numDiasSemana){
     this.razonSocial = _razonSocial;
     this.tipo = _tipo;
     this.clasificacion = _clasificacion;
     this.contacto = contacto;
-    this.numDiasPorSemana = numDiasPorSemana;
+    this.numDiasPorSemana = _numDiasSemana;
     /*if(contacto != null)
       contacto.setOrganizacion(this);*/
   }
@@ -104,6 +123,12 @@ public class Organizacion {
   }
 
   //////////////////////////////////  GETTERS
+
+
+  public List<ResultadoHCOrg> getResultadosHC() {
+    return resultadosHC;
+  }
+
   public TipoOrganizacion getTipo() {
     return tipo;
   }
@@ -134,7 +159,9 @@ public class Organizacion {
 
   public String getArchivoMediciones() { return archivoMediciones; }
 
-
+  public int getId() {
+    return id_organizacion;
+  }
 
   public List <Actividad> getActividades() {
     return actividades;
@@ -146,6 +173,16 @@ public class Organizacion {
 
   public List<Reporte> getReportes() {
     return reportes;
+  }
+
+  public List<Recomendacion> getRecomendaciones() {return recomendaciones;}
+
+  public Usuario getUsuario() {
+    return usuario;
+  }
+
+  public void setUsuario(Usuario usuario) {
+    this.usuario = usuario;
   }
 
   //////////////////////////////////  SETTERS
@@ -200,14 +237,56 @@ public class Organizacion {
   }
 
   public void cargarMedicionesInternas(String fileName) throws IOException {
+    if(servicioMediciones == null)
+      servicioMediciones = ServicioExcel.getInstance();
+
     ArrayList <Actividad> act = servicioMediciones.cargarMediciones(fileName, this);
     for (Actividad actividad : act){
       this.actividades.add(actividad);
     }
+
+    //RepositorioOrganizacionesDB repositorioOrganizacionesDB = new RepositorioOrganizacionesDB();
+
+
+    //repositorioOrganizacionesDB.modificar(this);
   }
 
   public Double calcularHC(Integer mes, Integer anio) throws IOException {
     return calculadorHC.calcularHC(this, mes, anio);
+  }
+
+  public void recalcularHC(Integer mesDesde, Integer anioDesde, Integer mesHasta, Integer anioHasta) throws IOException {
+    if(this.calculadorHC == null){
+      this.calculadorHC = CalculadorHC.getInstance();
+    }
+    for(ResultadoHCOrg resultadoHCOrg : this.getResultadosHC())
+    {
+      if(resultadoHCOrg.getAnio() > anioDesde && anioHasta > resultadoHCOrg.getAnio())
+      {
+        resultadoHCOrg.setResultado(
+                this.calculadorHC.actualizarHC(this, resultadoHCOrg.getMes(), resultadoHCOrg.getAnio())
+        );
+      }
+      else if(resultadoHCOrg.getAnio().equals(anioHasta) && resultadoHCOrg.getAnio().equals(anioDesde)){
+        resultadoHCOrg.setResultado(
+                this.calculadorHC.actualizarHC(this, resultadoHCOrg.getMes(), resultadoHCOrg.getAnio())
+        );
+      }
+      else{
+        if(resultadoHCOrg.getAnio().equals(anioDesde) && resultadoHCOrg.getMes() >= mesDesde){
+          resultadoHCOrg.setResultado(
+                  this.calculadorHC.actualizarHC(this, resultadoHCOrg.getMes(), resultadoHCOrg.getAnio())
+          );
+        }
+        else if(resultadoHCOrg.getAnio().equals(anioHasta) && resultadoHCOrg.getMes() <= mesHasta){
+          resultadoHCOrg.setResultado(
+                  this.calculadorHC.actualizarHC(this, resultadoHCOrg.getMes(), resultadoHCOrg.getAnio())
+          );
+        }
+      }
+    }
+//    RepositorioOrganizacionesDB repositorioOrganizacionesDB = new RepositorioOrganizacionesDB();
+//    repositorioOrganizacionesDB.modificar(this);
   }
 
   public Reporte conseguirReporte(TipoDeReporte tipoDeReporte, LocalDate fechaDesde, LocalDate fechaHasta) throws IOException{

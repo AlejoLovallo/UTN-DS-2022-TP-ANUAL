@@ -1,6 +1,5 @@
 package Domain.Trayecto;
 
-import Domain.BaseDeDatos.EntityManagerHelper;
 import Domain.CalculadorDistancia.ServicioAPI;
 import Domain.CalculadorDistancia.ServicioManual;
 import Domain.Espacios.Espacio;
@@ -8,11 +7,8 @@ import Domain.CalculadorDistancia.ServicioDistancia;
 import Domain.MediosDeTransporte.MedioDeTransporte;
 import Domain.MediosDeTransporte.TransportePublico;
 import Domain.MediosDeTransporte.VehiculoParticular;
-import Domain.Usuarios.Usuario;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
 import javax.persistence.*;
 
 @Entity
@@ -33,7 +29,7 @@ public class Tramo {
   @JoinColumn(name="puntoLlegada",referencedColumnName = "id_espacio")
   private Espacio puntoLLegada;
 
-  @ManyToOne
+  @ManyToOne(cascade = CascadeType.ALL)//TODO: revisar
   @JoinColumn(name="id_transporte",referencedColumnName = "id_transporte")
   private MedioDeTransporte medio;
 
@@ -75,6 +71,11 @@ public class Tramo {
 
   //////////////////////////////////  SETTERS
 
+
+  public void setTrayecto(Trayecto trayecto) {
+    this.trayecto = trayecto;
+  }
+
   public void setPuntoPartida(Espacio puntoPartida) {
     this.puntoPartida = puntoPartida;
     //update();
@@ -94,6 +95,11 @@ public class Tramo {
   //////////////////////////////////  INTERFACE
 
   public Double determinarDistancia() throws IOException {
+    if (medio instanceof TransportePublico){
+      this.estrategia = new ServicioManual();
+    } else if(medio instanceof VehiculoParticular){
+      this.estrategia = ServicioAPI.getInstance();
+    }
     return estrategia.calcularDistancia(medio, puntoPartida, puntoLLegada);
   }
 

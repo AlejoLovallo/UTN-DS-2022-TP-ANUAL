@@ -1,9 +1,10 @@
 package Usuarios;
 
 
+import Domain.Miembro.Excepciones.UnicoSectorPorOrganizacionException;
+import Domain.Repositorios.RepositorioUsuariosDB;
 import Domain.Usuarios.Admin;
 import Domain.Usuarios.Excepciones.ContraseniaEsInvalidaException;
-import Domain.Usuarios.RepositorioUsuarios;
 import Domain.Usuarios.Usuario;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
@@ -17,7 +18,7 @@ public class UsuariosTest {
     protected String email = "mail@ejemplo.com";
     protected String contra = "calle474palabrarandompuertapared";
     protected boolean validado = true;
-    protected RepositorioUsuarios repositorioUsuariosTest;
+    protected RepositorioUsuariosDB repositorioUsuariosTest;
     protected Admin admin;
 
     private void initializeUsuario(){
@@ -26,7 +27,7 @@ public class UsuariosTest {
     }
 
     private void initializeRepoUsuario(){
-        this.repositorioUsuariosTest = RepositorioUsuarios.getInstance();
+        this.repositorioUsuariosTest = new RepositorioUsuariosDB();
 
     }
 
@@ -107,8 +108,12 @@ public class UsuariosTest {
 
 
     @Test
-    public void iniciarSesion_ContraseniaInvalida(){
-        Assertions.assertNull(this.repositorioUsuariosTest.validarLogueoUsuario(username,"1234"));
+    public void iniciarSesion_ContraseniaInvalida() {
+        Assertions.assertThrows(ContraseniaEsInvalidaException.class,
+                () -> {
+                    this.repositorioUsuariosTest.validarLogueoUsuario(username,"1234");
+                });
+
     }
 
     @Test

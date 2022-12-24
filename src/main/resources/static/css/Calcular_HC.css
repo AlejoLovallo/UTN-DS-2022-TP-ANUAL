@@ -66,7 +66,7 @@ label {
   transition: all 0.25s ease;
   -webkit-backface-visibility: hidden;
   pointer-events: none;
-  font-size: 22px;
+  font-size: 18px;
 }
 label .req {
   margin: 2px;
@@ -785,3 +785,75 @@ p.navbar-brand:hover{
   .imagen_footer{
     width: 110%;
   }
+
+  .modal-hc {
+    width: 100vw;
+    height: 100vh;
+    position: fixed;
+    top: 0;
+    left: 0;
+    align-items: center;
+    justify-content: center;
+    z-index: 1;
+    display: none;
+}
+  .modal-overlay {
+    width: 100vw;
+    height: 100vh;
+    background: black;
+    opacity: 0.4;
+    position: fixed;
+    top: 0;
+    left: 0;
+  }
+
+  .modal-container {
+    max-width: 800px;
+    width: 100%;
+    max-height: 80vh;
+    background: #3c6f3d;
+    z-index: 10;
+    padding: 25px;
+    border-radius: 4px;
+    overflow: scroll;
+  }
+
+  .valorHC {
+    justify-content: center;
+    margin: 0 auto;
+    color: #da8617;
+    font-size: 50px;
+}
+
+
+.page-scroll:hover {color:#fff !important}
+
+.page-scroll{
+    color: #bdbbbb;
+    border: 21px #fe0303 !important;
+    font-size: 16px;
+    background: #da171770;
+    border-radius: 5%;
+    margin-top: 17px;
+}
+
+.page-scroll:hover, a.page-scroll:focus {
+    color:rgb(226, 226, 226) !important;
+    background-color: #da1717af !important;
+}
+
+.home:hover {color:#fff !important}
+
+.home{
+    border: 21px #bdbbbb !important;
+    font-size: 16px;
+    background: #bdbbbb;
+    border-radius: 5%;
+    margin-top: 17px;
+    margin-right: 10px;
+}
+
+.home:hover, a.page-scroll:focus {
+    color:rgb(226, 226, 226) !important;
+    background-color: #706e6eaf !important;
+}

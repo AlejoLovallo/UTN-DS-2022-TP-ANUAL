@@ -29,6 +29,9 @@ public class Usuario{
   @Column
   private Boolean validado;
 
+  @Transient
+  private String contraSinHash;
+
   //@Transient
   //@Column
   //private Boolean isAdmin;
@@ -100,9 +103,26 @@ public class Usuario{
     //update();
   }
 
+  public void setUltIntentoCorrecto(Boolean ultIntentoCorrecto){
+    this.ultimointento.setUltIntentoCorrecto(ultIntentoCorrecto);
+  }
+
   public void setContraHasheada(String contraHasheada) {
     this.contraHasheada = contraHasheada;
     //update();
+  }
+
+  public void setContraSinHash(String contra) {
+    this.contraSinHash = contra;
+    //update();
+  }
+
+  public UltimoIntento getUltimointento() {
+    return ultimointento;
+  }
+
+  public String getContraSinHash() {
+    return contraSinHash;
   }
 
   //////////////////////////////////  SETTERS
@@ -144,7 +164,7 @@ public class Usuario{
 
     this.validadoresContrasenia = new ArrayList<>();
 
-    this.validadoresContrasenia.add(new Peores10KContra());
+    //this.validadoresContrasenia.add(new Peores10KContra());
     this.validadoresContrasenia.add(new CriterioLongitud(8,80));
 
     for (CriterioValidacion criterioValidacion : this.validadoresContrasenia) {

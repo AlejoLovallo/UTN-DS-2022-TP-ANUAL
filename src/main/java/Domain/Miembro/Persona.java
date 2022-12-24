@@ -1,6 +1,7 @@
 package Domain.Miembro;
 
 import Domain.BaseDeDatos.EntityManagerHelper;
+import Domain.Repositorios.RepositorioPersonasDB;
 import Domain.Usuarios.Usuario;
 import org.hibernate.annotations.NotFound;
 import org.hibernate.annotations.NotFoundAction;
@@ -34,7 +35,7 @@ public class Persona {
  // @JoinColumn(name="id_miembro",referencedColumnName = "id_miembro")
   private List<Miembro> listaMiembros;
 
-  @OneToOne(cascade = CascadeType.ALL)
+  @OneToOne(cascade = CascadeType.DETACH)
   @NotFound(action = NotFoundAction.IGNORE)
   @JoinColumn(name="id_usuario",referencedColumnName = "id_usuario")
   private Usuario usuario;
@@ -53,6 +54,9 @@ public class Persona {
   }
 
   //////////////////////////////////  GETTERS
+
+
+  public int getId_persona() { return id_persona;}
 
   public String getNombre() {
     return nombre;
@@ -102,6 +106,9 @@ public class Persona {
 
   public void agregarMiembro(Miembro miembro){
     this.listaMiembros.add(miembro);
+    miembro.setPersona(this);
+    RepositorioPersonasDB repositorioPersonasDB = new RepositorioPersonasDB();
+    repositorioPersonasDB.modificar(this);
   }
 
   //////////////////////////////////  INTERFACE

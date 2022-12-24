@@ -1,18 +1,19 @@
 package AgenteSectorial;
 
 import Domain.Organizacion.*;
+import Domain.Repositorios.RepositorioAgentesDB;
+import Domain.Repositorios.RepositorioOrganizacionesDB;
 import Domain.Usuarios.Contacto;
 import Utils.Common;
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
-
-import java.util.ArrayList;
+import org.junit.jupiter.api.*;
 import java.util.List;
+import java.util.stream.Collectors;
 
+@TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 public class AgenteSectorialTest {
     private AgenteSectorial agenteSectorialTest;
+
+
 
     private void initializeAgenteSectorial(){
         this.agenteSectorialTest = new AgenteSectorial("AgenteSectorialTest", "territorio", TipoSectorTerritorial.Ministerio);
@@ -31,6 +32,7 @@ public class AgenteSectorialTest {
 
 
     @Test
+    @Order(1)
     public void agenteSectorialCreadoCorrectamente() {
         Assertions.assertEquals("AgenteSectorialTest",this.agenteSectorialTest.getNombre());
         Assertions.assertEquals("territorio", this.agenteSectorialTest.getTerritorio());
@@ -38,6 +40,7 @@ public class AgenteSectorialTest {
     }
 
     @Test
+    @Order(1)
     public void setNombre(){
         //GIVEN DADO
         String nombreActual = this.agenteSectorialTest.getNombre();
@@ -50,6 +53,7 @@ public class AgenteSectorialTest {
     }
 
     @Test
+    @Order(2)
     public void setTerritorio(){
         //GIVEN DADO
         String territorioActual = this.agenteSectorialTest.getTerritorio();
@@ -62,6 +66,7 @@ public class AgenteSectorialTest {
     }
 
     @Test
+    @Order(3)
     public void setTipoSectorTerritorial(){
         //GIVEN DADO
         TipoSectorTerritorial tipoSectorTerritorialActual = this.agenteSectorialTest.getTipoSectorTerritorial();
@@ -74,11 +79,12 @@ public class AgenteSectorialTest {
     }
 
     @Test
+    @Order(4)
     public void agregarOrganizacion(){
         //GIVEN DADO
-        Contacto contactoOrganizacion = new Contacto("Nombre", "Apellido", 1234, "email@gmail.com");
+        /*Contacto contactoOrganizacion = new Contacto("Nombre", "Apellido", 1234, "email@gmail.com");
         List<Organizacion> organizacioneslActual = this.agenteSectorialTest.getOrganizaciones();
-        Organizacion nuevaOrganizacion = new Organizacion("razonSocaial", TipoOrganizacion.Empresa,ClasificacionOrganizacion.EmpresaSectorPrimario,contactoOrganizacion, 5);
+        Organizacion nuevaOrganizacion = new Organizacion("razonSocaial", TipoOrganizacion.Empresa,ClasificacionOrganizacion.EmpresaSectorPrimario,contactoOrganizacion);
         List<Organizacion> organizacionesActualizadas = organizacioneslActual;
         organizacionesActualizadas.add(nuevaOrganizacion);
         //WHEN CUANDO
@@ -91,36 +97,43 @@ public class AgenteSectorialTest {
     }
 
     @Test
-    public void asignarseOrganizaciones(){
-        //GIVEN DADO
-        Contacto contactoOrganizacion = new Contacto("Nombre", "Apellido", 1234, "email@gmail.com");
-        List<Organizacion> organizacioneslActual = this.agenteSectorialTest.getOrganizaciones();
-        Organizacion nuevaOrganizacion = new Organizacion("razonSocaial", TipoOrganizacion.Empresa,ClasificacionOrganizacion.EmpresaSectorPrimario,contactoOrganizacion, 5);
-        List<Organizacion> organizacionesActualizadas = organizacioneslActual;
-        organizacionesActualizadas.add(nuevaOrganizacion);
-        //WHEN CUANDO
-        RepositorioAgentes.GetInstance().agregarOrganizacionAAgente(agenteSectorialTest, nuevaOrganizacion);
-        //THEN ENTONCES
-        Assertions.assertEquals(organizacionesActualizadas, agenteSectorialTest.getOrganizaciones());
-        //TODO TESTEAR ESTO CUANDO BAJEMOS LO QUE SUBIO TOMI
-        Assertions.assertEquals(nuevaOrganizacion.getAgenteSectorial(), agenteSectorialTest);
-    }
-
-    @Test
+    @Order(5)
     public void crearAgente(){
-        AgenteSectorial agenteSectorial = RepositorioAgentes.GetInstance().crearAgente("Nombre", "Territorio",TipoSectorTerritorial.Ministerio);
+        RepositorioAgentesDB repoagentesDB = new RepositorioAgentesDB();
+        AgenteSectorial agenteSectorial= repoagentesDB.crearAgente("Nombre", "Territorio",TipoSectorTerritorial.Ministerio);
 
         Assertions.assertEquals(agenteSectorial.getNombre(), "Nombre");
         Assertions.assertEquals(agenteSectorial.getTerritorio(), "Territorio");
         Assertions.assertEquals(agenteSectorial.getTipoSectorTerritorial(), TipoSectorTerritorial.Ministerio);
     }
 
+
     @Test
+    @Order(6)
     public void agregarOrganizacionAAgente(){
         Organizacion unaOrganizacion =  Common.getOrganizacionMinisterio();
-        RepositorioAgentes.GetInstance().crearAgente("nombre", "territorio", TipoSectorTerritorial.Provincia);
-        AgenteSectorial unAgente =  RepositorioAgentes.GetInstance().buscarAgente("nombre");
-        RepositorioAgentes.GetInstance().agregarOrganizacionAAgente(unAgente, unaOrganizacion);
-        Assertions.assertTrue(unAgente.getOrganizaciones().contains(unaOrganizacion));
+        RepositorioAgentesDB repoagentesDB = new RepositorioAgentesDB();
+        RepositorioOrganizacionesDB repoOrganizacionesDB = new RepositorioOrganizacionesDB();
+
+        unaOrganizacion.setUsuario(Common.getUsuario());
+
+        unaOrganizacion.getUsuario().setUsername(unaOrganizacion.getUsuario().getUsername()+" Org Prueba 456");
+
+
+
+        unaOrganizacion = repoOrganizacionesDB.crearOrganizacion(unaOrganizacion.getRazonSocial()+" Prueba456",
+                                                        unaOrganizacion.getClasificacion(),unaOrganizacion.getTipo(),
+                                                        unaOrganizacion.getContacto(),
+                                                        unaOrganizacion.getUsuario());
+
+        // AgenteSectorial agente=repoagentesDB.crearAgente("nombre", "territorio", TipoSectorTerritorial.Provincia);
+
+
+        AgenteSectorial unAgente =  repoagentesDB.buscarAgente("Nombre");
+
+
+        repoagentesDB.agregarOrganizacionAAgente(unAgente, unaOrganizacion);
+        List<Integer> organizacionesDeAgente = unAgente.getOrganizaciones().stream().map(organizacion -> organizacion.getId()).collect(Collectors.toList());
+        Assertions.assertTrue(organizacionesDeAgente.contains(unaOrganizacion.getId()));*/
     }
 }

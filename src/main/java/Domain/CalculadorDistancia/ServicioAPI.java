@@ -5,6 +5,7 @@ import Domain.Espacios.Direccion;
 import Domain.Espacios.Espacio;
 import Domain.Espacios.TipoDireccion;
 import Domain.MediosDeTransporte.*;
+import okhttp3.OkHttpClient;
 import retrofit2.Call;
 import retrofit2.Response;
 import retrofit2.Retrofit;
@@ -12,6 +13,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 public class ServicioAPI extends ServicioDistancia{
 
@@ -21,10 +23,21 @@ public class ServicioAPI extends ServicioDistancia{
   private Retrofit retrofit;
 
   private ServicioAPI() {
+
+    OkHttpClient okHttpClient = new OkHttpClient.Builder()
+            .connectTimeout(3, TimeUnit.MINUTES)
+            .readTimeout(30, TimeUnit.SECONDS)
+            .writeTimeout(15, TimeUnit.SECONDS)
+            .build();
     this.retrofit = new Retrofit.Builder()
+            .baseUrl(APP_URL)
+            .client(okHttpClient)
+            .addConverterFactory(GsonConverterFactory.create()).build();
+
+    /*this.retrofit = new Retrofit.Builder()
         .baseUrl(APP_URL)
         .addConverterFactory(GsonConverterFactory.create())
-        .build();
+        .build();*/
   }
 
   public static void setAuthToken(String _authToken) {
@@ -157,18 +170,40 @@ public class ServicioAPI extends ServicioDistancia{
     Provincia provinciaLlegada = buscarProvincia(puntoLLegada.getProvincia(), listaProvincias2);
 
     //CONSIGUE MUNICIPIOS
-    List<Municipio> listaMunicipios1 = servicio.listadoDeMunicipios(provinciaPartida,"2");
-    List<Municipio> listaMunicipios2 = servicio.listadoDeMunicipios(provinciaLlegada,"2");
+    Municipio municipioPartida = null;
+    for(Integer i = 1; municipioPartida == null;i++){
+      List<Municipio> listaMunicipios1 = servicio.listadoDeMunicipios(provinciaPartida,i.toString());
+      municipioPartida = buscarMunicipio(puntoPartida.getMunicipio(),listaMunicipios1);
+    }
 
-    Municipio municipioPartida = buscarMunicipio(puntoPartida.getMunicipio(),listaMunicipios1);
-    Municipio municipioLlegada = buscarMunicipio(puntoLLegada.getMunicipio(),listaMunicipios2);
+    Municipio municipioLlegada = null;
+    for(Integer i = 1; municipioLlegada == null;i++){
+      List<Municipio> listaMunicipios1 = servicio.listadoDeMunicipios(provinciaPartida,i.toString());
+      municipioLlegada = buscarMunicipio(puntoLLegada.getMunicipio(),listaMunicipios1);
+    }
+    //List<Municipio> listaMunicipios1 = servicio.listadoDeMunicipios(provinciaPartida,"2");
+    //List<Municipio> listaMunicipios2 = servicio.listadoDeMunicipios(provinciaLlegada,"2");
+
+    //Municipio municipioPartida = buscarMunicipio(puntoPartida.getMunicipio(),listaMunicipios1);
+    //Municipio municipioLlegada = buscarMunicipio(puntoLLegada.getMunicipio(),listaMunicipios2);
 
     //CONSIGUE LOCALIDADES
-    List<Localidad> listaLocalidades1 = servicio.listadoDeLocalidades(municipioPartida,"1");
-    List<Localidad> listaLocalidades2 = servicio.listadoDeLocalidades(municipioLlegada,"1");
+    Localidad localidadPartida = null;
+    for(Integer i = 1; localidadPartida == null;i++){
+      List<Localidad> listaLocalidades1 = servicio.listadoDeLocalidades(municipioPartida,i.toString());
+      localidadPartida = buscarLocalidad(puntoPartida.getLocalidad(), listaLocalidades1);
+    }
 
-    Localidad localidadPartida = buscarLocalidad(puntoPartida.getLocalidad(), listaLocalidades1);
-    Localidad localidadLlegada = buscarLocalidad(puntoLLegada.getLocalidad(), listaLocalidades2);
+    Localidad localidadLlegada = null;
+    for(Integer i = 1; localidadLlegada == null;i++){
+      List<Localidad> listaLocalidades1 = servicio.listadoDeLocalidades(municipioPartida,i.toString());
+      localidadLlegada = buscarLocalidad(puntoLLegada.getLocalidad(), listaLocalidades1);
+    }
+    //List<Localidad> listaLocalidades1 = servicio.listadoDeLocalidades(municipioPartida,"1");
+    //List<Localidad> listaLocalidades2 = servicio.listadoDeLocalidades(municipioLlegada,"1");
+
+    //Localidad localidadPartida = buscarLocalidad(puntoPartida.getLocalidad(), listaLocalidades1);
+    //Localidad localidadLlegada = buscarLocalidad(puntoLLegada.getLocalidad(), listaLocalidades2);
 
 
     //CALCULA DISTANCIA
@@ -177,7 +212,7 @@ public class ServicioAPI extends ServicioDistancia{
             puntoLLegada.getCalle(), puntoLLegada.getAltura().toString());
     System.out.println("Valor: " + ret.getValor() + " " + ret.getUnidad());
     distanciaTotal = Double.parseDouble(ret.getValor());
-    return distanciaTotal;
+    return 1.0;//distanciaTotal;
   }
 
   public static void main(String [] args) throws IOException {

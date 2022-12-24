@@ -1,19 +1,29 @@
-$(function() {
-    $('a.page-scroll').bind('click', function(event) {
-        var $anchor = $(this);
-        $('html, body').stop().animate({
-            scrollTop: $($anchor.attr('href')).offset().top
-        }, 1500, 'easeInOutExpo');
-        event.preventDefault();
-    });
-});
+const pantallaSolicitudes = async () => {
+        window.location.href = "./Aceptar_Miembros.html";
+  };
 
-// Highlight the top nav as scrolling occurs
-$('body').scrollspy({
-    target: '.navbar-fixed-top'
-})
+  const logout = async () => {
 
-// Closes the Responsive Menu on Menu Item Click
-$('.navbar-collapse ul li a').click(function() {
-    $('.navbar-toggle:visible').click();
-});
+     await fetch(`./cerrar_sesion`,{
+        method:"GET",
+
+        headers: {
+          'Content-Type': 'application/json'
+        }
+     })
+     .then(res => res.json())
+     .then(res =>{
+          console.log(res.message);
+          alert(res.message);
+          delete_cookie("idSesion");
+
+          window.location.replace("./");
+     })
+      .catch((error) => {
+        console.log(error)
+      });
+  };
+
+var delete_cookie = function(name) {
+  document.cookie = name + '=;expires=Thu, 01 Jan 1970 00:00:01 GMT;';
+};

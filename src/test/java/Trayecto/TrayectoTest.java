@@ -1,15 +1,6 @@
 package Trayecto;
 
-import Domain.Espacios.Direccion;
-import Domain.Espacios.Espacio;
-import Domain.Espacios.TipoDireccion;
-import Domain.MediosDeTransporte.TipoCombustible;
-import Domain.MediosDeTransporte.TipoVehiculo;
-import Domain.MediosDeTransporte.VehiculoParticular;
 import Domain.Miembro.Miembro;
-import Domain.Organizacion.ClasificacionOrganizacion;
-import Domain.Organizacion.Organizacion;
-import Domain.Organizacion.TipoOrganizacion;
 import Domain.Trayecto.Tramo;
 import Domain.Trayecto.Trayecto;
 import Utils.Common;
@@ -18,7 +9,6 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import java.io.IOException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;

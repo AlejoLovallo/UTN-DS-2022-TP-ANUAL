@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registrar sector</title>
+    <link rel="stylesheet" type="text/css" href="/css/Registrar_Trayecto.css">
+    <script src="/js/Registrar_sector.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
+    <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.2/themes/smoothness/jquery-ui.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+    <link href='https://fonts.googleapis.com/css?family=Titillium+Web:400,300,600' rel='stylesheet' type='text/css'>
+</head>
+
+<body id="page-top" class="index" data-pinterest-extension-installed="cr1.3.4">
+
+<!-- Navigation -->
+<nav class="navbar navbar-default navbar-fixed-top navbar-shrink">
+    <div class="container">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header">
+            <p class="navbar-brand" href="#page-top">Mi impacto ambiental</p>
+        </div>
+
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav navbar-right">
+                <li class="hidden active">
+                    <a href="#page-top"></a>
+                </li>
+                <li>
+                    <button type="button" class="home" onclick="volverAlInicio()">Volver al Inicio</button>
+                </li>
+                <li>
+                    <button type="button" class="page-scroll" onclick="logout()">Cerrar Sesion</button>
+                </li>
+            </ul>
+        </div>
+
+        <!-- /.navbar-collapse -->
+    </div>
+    <!-- /.container-fluid -->
+</nav>
+
+<br>
+<br>
+<br>
+
+<section id="team" class="bg-light-gray">
+    <div class="form">
+        <form class="" style="">
+            <div id="append">
+
+                <h2>Registrá un sector</h2>
+
+                <br>
+                <div id="form" class="top-row">
+                    <div class="field-wrap">
+                        <label>
+                            Sector<span class="req">*</span>
+                        </label>
+                        <br>
+                        <br>
+                        <input type="text" required autocomplete="off" id="Sector">
+                    </div>
+
+                    <select v-model="direccionSeleccionada" class="select-css">
+                        <option disabled value="">Seleccione un elemento</option>
+                        <option  v-for="dir in direccionesJSON" v-bind:value="dir" v-bind:style="{ color: activeColor, fontSize: fontSize + 'px' }" >
+                            \{{dir.calle}} \{{dir.altura}} \{{dir.localidad}} \{{dir.municipio}} \{{dir.provincia}} \{{dir.pais}}
+                        </option>
+                    </select>
+                    <br>
+                    <br>
+
+                    <button type="button" id="myBtn" class="button button-back"
+                            v-on:click="crear_sectorSlider()">Registrar sector</button>
+                </div>
+
+            </div>
+
+        </form>
+    </div>
+
+    <script>
+
+      var form = new Vue({
+              el: "#form",
+              data: {
+                  direccionSeleccionada: "",
+                  direccionesJSON: [],
+                  activeColor: "black" ,
+                  fontSize: 12
+              },
+              methods: {
+                  crear_sectorSlider: function () {
+
+                      //Armar objeto request
+                      var request = {
+                          direccionSeleccionada: this.direccionSeleccionada,
+                      }
+
+                      if (request.direccionSeleccionada == "") {
+                          alert("Debes seleccionar una direccion")
+                          return;
+                      }
+
+
+                      const calle = request.direccionSeleccionada.calle;
+                      const altura = request.direccionSeleccionada.altura;
+                      const localidad = request.direccionSeleccionada.localidad;
+                      const municipio = request.direccionSeleccionada.municipio;
+                      const provincia = request.direccionSeleccionada.provincia;
+                      const pais = request.direccionSeleccionada.pais;
+                      const idSesion = getCookie("idSesion");
+                      //POST al API REST
+                      //luego puede ser una redirección o mostrar un mensaje
+
+                      console.log("fetch");
+                      console.log(idSesion);
+
+                      fetch(`./crearSector`, {
+                        method: "POST",
+
+                        body: JSON.stringify({
+                        nombre: document.getElementById("Sector").value,
+                          calle,
+                          altura,
+                          localidad,
+                          municipio,
+                          provincia,
+                          pais,
+                          idSesion,
+                        }),
+
+                        headers: {
+                          "Content-type": "application/json; charset=UTF-8",
+                        },
+                      })
+                        .then((res) => {
+                          console.log("OKKKK");
+                          console.log(res);
+                          alert("Sector registrado");
+                          window.location.href = "/menu_organizacion";
+                        })
+                        .catch((e) => {
+                          console.log(e);
+                        });
+
+                  }
+              },
+              created() {
+                  fetch('./direccionesGet',{
+                    method: "GET",
+                    headers: {
+                      "Content-type": "application/json; charset=UTF-8",
+                    },
+                  })
+                      .then(response => response.json())
+                      .then(response => {
+                        this.direccionesJSON = response.data.direcciones;
+                        console.log(this.direccionesJSON);
+                        console.log(JSON.stringify(this.direccionesJSON));
+                      })
+              }
+          })
+    </script>
+
+</section>
+<div class="modal-trayecto" id="seb">
+    <div class="modal-overlay"></div>
+    <div class="modal-container" id="modal-container">
+    </div>
+</div>
+
+<script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
+</body>
+
+<footer class="footer-distributed">
+
+    <div class="footer-right">
+
+        <a href="https://github.com/AlejoLovallo/UTN-DS-2022-TP-ANUAL"><img src="/images/logo_github.jpeg"
+                                                                            class="imagen_footer" alt="icon"></a>
+
+    </div>
+
+    <div class="footer-left">
+
+        <p class="footer-links">
+
+            <a href="#">Acerca de nosotros</a>
+
+            <a href="#">Contacto</a>
+        </p>
+
+        <p>Diseño de Sistemas &copy; 2022</p>
+    </div>
+
+</footer>

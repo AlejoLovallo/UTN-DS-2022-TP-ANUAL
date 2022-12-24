@@ -2,6 +2,8 @@ package Domain.CalculadorHC;
 
 import Domain.BaseDeDatos.EntityManagerHelper;
 import Domain.Organizacion.TipoDeActividad;
+import Domain.Organizacion.UnidadDeConsumo;
+
 import javax.persistence.*;
 
 @Entity
@@ -18,15 +20,17 @@ public class FactorEmision {
     @Column
     @Enumerated(EnumType.STRING)
     private TipoDeActividad tipoActividad;
+
     @Column
-    private Unidad unidad;
+    @Enumerated(EnumType.STRING)
+    private UnidadDeConsumo unidad;
 
     // CONSTRUCTOR
     public FactorEmision(){
 
     }
 
-    public FactorEmision(TipoDeActividad tipoDeActividad, Double numero, Unidad unidad) {
+    public FactorEmision(TipoDeActividad tipoDeActividad, Double numero, UnidadDeConsumo unidad) {
         this.tipoActividad = tipoDeActividad;
         this.numero = numero;
         this.unidad = unidad;
@@ -42,7 +46,7 @@ public class FactorEmision {
         return numero;
     }
 
-    public Unidad getUnidad() {
+    public UnidadDeConsumo getUnidad() {
         return unidad;
     }
 
@@ -63,7 +67,7 @@ public class FactorEmision {
         updateFactorEmision();
     }
 
-    public void setUnidad(Unidad unidad) {
+    public void setUnidad(UnidadDeConsumo unidad) {
         this.unidad = unidad;
         updateFactorEmision();
     }

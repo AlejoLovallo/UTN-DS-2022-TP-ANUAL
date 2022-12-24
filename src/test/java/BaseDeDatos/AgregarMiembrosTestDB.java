@@ -18,18 +18,18 @@ import Domain.Usuarios.Usuario;
 
 public class AgregarMiembrosTestDB {
   public static void main(String[] args) {
-    RepositorioPersonasDB repositorioPersonas = new RepositorioPersonasDB();
+    /*RepositorioPersonasDB repositorioPersonas = new RepositorioPersonasDB();
     RepositorioOrganizacionesDB repositorioOrganizacionesDB = new RepositorioOrganizacionesDB();
     RepositorioSectoresDB repositorioSectoresDB = new RepositorioSectoresDB();
 
 
-    Usuario user = new Usuario("pepitoSandCompleto","pepitoSandCompleto@gmail.com","pepitoSandCompleto54+",true);
+    Usuario user = new Usuario("userMiembro","userMiembro@gmail.com","userMiembro12+",true);
 
-    Persona persona = new Persona("pepitoSandCompleto", "pepitoSandCompleto", TipoDocumento.DNI, "101469451");
+    Persona persona = new Persona("miembro", "miembroPrueba", TipoDocumento.DNI, "101469451");
 
-    Contacto contacto = new Contacto("pepitoSandCompleto", "pepitoSandCompleto", 515151541, "contacto@gmail.com");
+    Contacto contacto = new Contacto("contacto2", "contacto2", 515151541, "contacto2@gmail.com");
 
-    Organizacion organizacion = new Organizacion( "Empresa Pepe Completo", TipoOrganizacion.Empresa, ClasificacionOrganizacion.EmpresaSectorSecundario, contacto, 5);
+    Organizacion organizacion = new Organizacion( "Empresa 2", TipoOrganizacion.Empresa, ClasificacionOrganizacion.EmpresaSectorSecundario, contacto);
 
     Miembro miembro = new Miembro(null);
 
@@ -49,8 +49,8 @@ public class AgregarMiembrosTestDB {
     //repositorioSectoresDB.agregar(sector);
 
 
-    repositorioPersonas.agregar(persona);
-
+    repositorioPersonas.agregarPersona(persona);
+*/
 
   }
 }

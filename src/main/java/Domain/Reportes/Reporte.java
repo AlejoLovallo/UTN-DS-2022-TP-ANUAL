@@ -48,7 +48,14 @@ public abstract class Reporte {
         this.fechaHasta = _fechaHasta;
     }
 
+    public Reporte(){}
+
     // GETTERS
+
+
+    public int getId_reporte() {
+        return id_reporte;
+    }
 
     public String getNombre(){
         return nombre;
@@ -68,6 +75,11 @@ public abstract class Reporte {
     }
 
     // SETTERS
+
+
+    public void setOrganizacion(Organizacion organizacion) {
+        this.organizacion = organizacion;
+    }
 
     public void setNombre(String nombre){
         this.nombre = nombre;

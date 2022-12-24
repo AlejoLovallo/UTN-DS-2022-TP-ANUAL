@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Calculadora HC</title>
-    <link rel="stylesheet" type="text/css" href="../static/css/Calcular_HC.css">
+    <link rel="stylesheet" type="text/css" href="/css/Calcular_HC.css">
     <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.2/themes/smoothness/jquery-ui.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
     <link rel="stylesheet"
@@ -29,11 +29,11 @@
                     <li class="hidden active">
                         <a href="#page-top"></a>
                     </li>
-                    <li class="">
-                        <a class="home" href="./Menu_Organizacion.html"> Home </a>
+                    <li>
+                        <button type="button" class="home" onclick="volverAlInicio()">Volver al Inicio</button>
                     </li>
                     <li>
-                        <a class="page-scroll" href="./Login.html">Cerrar Sesión</a>
+                        <button type="button" class="page-scroll" onclick="logout()">Cerrar Sesion</button>
                     </li>
                 </ul>
             </div>
@@ -46,12 +46,11 @@
     <br>
     <br>
     <br>
-    
     <section id="team" class="bg-light-gray">
         <div class="form">
             <form class="" style="">
 
-                <h2>Caclulá tu huella de carbono</h2>
+                <h2>Calculá tu huella de carbono</h2>
 
                 <br>
 
@@ -65,7 +64,7 @@
                     </label>
                     <br>
                     <br>
-                    <select class ="select-css" name="seleccionDeSexo" id="Sexo" onChange=changetextbox()>
+                    <select class ="select-css" name="MesDesde" id="MesDesde">
                         <option value="0">Seleccione el mes</option>
                         <option value="1">1</option>
                         <option value="2">2</option>
@@ -89,11 +88,11 @@
                     </label>
                     <br>
                     <br>
-                    <select class ="select-css" name="seleccionDeSexo" id="Sexo" onChange=changetextbox()>
+                    <select class ="select-css" name="AñoDesde" id="AñoDesde">
                         <option value="0">Seleccione el año</option>
-                        <option value="1">2020</option>
-                        <option value="2">2021</option>
-                        <option value="3">2022</option>
+                        <option value="2020">2020</option>
+                        <option value="2021">2021</option>
+                        <option value="2022">2022</option>
     
                     </select>
                 </div>
@@ -110,7 +109,7 @@
                     </label>
                     <br>
                     <br>
-                    <select class ="select-css" name="seleccionDeSexo" id="Sexo" onChange=changetextbox()>
+                    <select class ="select-css" name="MesHasta" id="MesHasta">
                         <option value="0">Seleccione el mes</option>
                         <option value="1">1</option>
                         <option value="2">2</option>
@@ -134,48 +133,52 @@
                     </label>
                     <br>
                     <br>
-                    <select class ="select-css" name="seleccionDeSexo" id="Sexo" onChange=changetextbox()>
+                    <select class ="select-css" name="AñoHasta" id="AñoHasta">
                         <option value="0">Seleccione el año</option>
-                        <option value="1">2020</option>
-                        <option value="2">2021</option>
-                        <option value="3">2022</option>
+                        <option value="2020">2020</option>
+                        <option value="2021">2021</option>
+                        <option value="2022">2022</option>
     
                     </select>
                 </div>
             
                 </div>
                 <br>
-        
-                    <button type="submit" id="myBtn" class="button button-back">Calcular HC</button>
-                 </form>
-            </div>
-            </div>
+                <button type="button" id="CalcularHC" class="button button-back" onclick="calcularHC()">Calcular
+                    HC</button>
+            </form>
+        </div>
+        </div>
         </form>
         </div>
     </section>
 
+    <div class="modal-hc" id="seb">
+        <div class="modal-overlay"></div>
+        <div class="modal-container" id="modal-container">
+        </div>
+    </div>
+
     <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
-    <script src="../static/js/Calcular_HC.js"></script>
+    <script src="/js/Calcular_HC.js"></script>
 </body>
 
 <footer class="footer-distributed">
 
     <div class="footer-right">
-    
-        <a href="https://github.com/AlejoLovallo/UTN-DS-2022-TP-ANUAL"><img src="../images/logo_github.jpeg"
-        class="imagen_footer" alt="icon"></a>
-    
+        <a href="https://github.com/AlejoLovallo/UTN-DS-2022-TP-ANUAL"><img src="/images/logo_github.jpeg"
+                class="imagen_footer" alt="icon"></a>
+
     </div>
-    
+
     <div class="footer-left">
-    
+
         <p class="footer-links">
-    
-        <a href="#">Acerca de nosotros</a>
-    
-        <a href="#">Contacto</a>
+
+            <a href="#">Acerca de nosotros</a>
+
+            <a href="#">Contacto</a>
         </p>
-    
         <p>Diseño de Sistemas &copy; 2022</p>
     </div>
 
