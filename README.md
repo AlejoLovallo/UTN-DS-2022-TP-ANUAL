@@ -50,10 +50,7 @@ Debe poder
 ## Integrantes
 
 * Casadoumecq, Tomás
-* Garcia, Sabrina Veronica
-* Lapa Ramos, Alejandro
 * Lovallo, Alejo Ezequiel
-* Otero, Erik Leonel
 * Rossi, Sebastián
 * Trucco Salowski, Joaquín
 
